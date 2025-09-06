@@ -11,6 +11,7 @@ import {
 } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
 import { Link } from "react-router";
+import Filters from "../../filters";
 
 interface ISideBar {
   primary?: boolean;
@@ -76,32 +77,7 @@ const SideBar: React.FC<ISideBar> = ({ ...props }) => {
             </button>
           </Tooltip>
         </div>
-
-        <ul>
-          {items?.map((item) => {
-            return (
-              <>
-                <li
-                  className={` rounded-md ${
-                    sectionSelected === item?.link &&
-                    `bg-gray-300 dark:bg-slate-800 `
-                  } cursor-pointer hover:bg-gray-300 dark:hover:bg-slate-800`}
-                  key={item.title}
-                >
-                  <Link
-                    key={item.link}
-                    to={item?.link}
-                    onClick={() => setSectionSelected(item?.link)}
-                    className="py-3 px-5 flex gap-2 items-center  w-full"
-                  >
-                    {item.icon}
-                    {expanded && item.title}
-                  </Link>
-                </li>
-              </>
-            );
-          })}
-        </ul>
+            <Filters/>
       </aside>
     </>
   );
