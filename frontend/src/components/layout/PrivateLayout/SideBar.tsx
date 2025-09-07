@@ -1,52 +1,22 @@
-import { useEffect, useState } from "react";
 import ProfileBar from "../../profileBar";
-import {
-  Home,
-  Folder,
-  FilterAlt,
-  Groups2,
-  SettingsApplications,
-  HelpCenter,
-  ArrowForwardIos,
-} from "@mui/icons-material";
+import { ArrowForwardIos } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
-import { Link } from "react-router";
 import Filters from "../../filters";
+import { useSelector, useDispatch } from "react-redux";
+import { setSideBarStatus } from "../../../store/appSlice";
 
 interface ISideBar {
   primary?: boolean;
 }
 
-type SideBarItem = {
-  title: string;
-  link: string;
-  icon: React.ReactNode | string;
-};
-
-const items: SideBarItem[] = [
-  {
-    title: "Dashboard",
-    link: "/",
-    icon: <Home />,
-  },
-  {
-    title: "Impostazioni",
-    link: "/impostazioni",
-    icon: <SettingsApplications />,
-  },
-];
-
 const SideBar: React.FC<ISideBar> = ({ ...props }) => {
-  const [expanded, setExpanded] = useState<boolean>(true);
-  const [sectionSelected, setSectionSelected] = useState<string>("");
+  const sidebar = useSelector((state: any) => state.app.sideBar);
+  const { expanded } = sidebar;
 
-  useEffect(() => {
-    const url = window.location.pathname;
-    setSectionSelected(url);
-  }, []);
+  const dispatch = useDispatch();
 
   const handleSideExpansion = () => {
-    setExpanded((prev) => !prev);
+    dispatch(setSideBarStatus(!expanded));
   };
 
   return (
@@ -77,7 +47,7 @@ const SideBar: React.FC<ISideBar> = ({ ...props }) => {
             </button>
           </Tooltip>
         </div>
-            <Filters/>
+        <Filters />
       </aside>
     </>
   );

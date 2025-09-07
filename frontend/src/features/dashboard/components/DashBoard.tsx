@@ -10,9 +10,9 @@ const DashBoard: React.FC = () => {
     <>
       <div className="w-full flex flex-col gap-5 " >
         <DashBoardHeader />
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 p-6 border">
-          <KeyPerformanceIndicator />
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 p-6 ">
           <WeatherWidget/>
+          <KeyPerformanceIndicator />
           <SocialWidget/>
           <CryptoWidget/>
         </section>

@@ -1,58 +1,19 @@
 // store.ts
-import { createSlice, configureStore } from "@reduxjs/toolkit";
-// We can also separate slice from the store.
+
+import {  configureStore } from "@reduxjs/toolkit";
+import { weatherSlice } from "./weatherSlice";
+import { appSlice } from "./appSlice";
+import { filterSlice } from "./filterSlice";
 
 // Actually im not really using userdata. 
-const userdata = {
-  username: "",
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-};
 
-
-export type IGlobalAlertStatus = "error" | "success" | "warn" | "";
-
-interface IGlobalAlert {
-  status: IGlobalAlertStatus
-  message: string
-  description: string
-}
-
-const initialState = {
-  userdata,
-  token: "",
-  hasAuth: false,
-  globalLoad: false,
-  internalLoad: false,
-  globalAlert : {
-    status: "" as IGlobalAlertStatus,
-    message: "", 
-    description: ""
-  } as IGlobalAlert }
-
-  // Application slice.
-
-  const appSlice = createSlice({
-  name: "app",
-  initialState,
-  reducers: {
-    setGlobalAlert: (state, action) => {
-      const { payload } = action
-      const { status, message ,description} = payload
-
-      state.globalAlert = {status, message, description}
-    }
-  },
-});
-
-export const {  setGlobalAlert } = appSlice.actions;
 
 
 export const appStore = configureStore({
   reducer: {
     app: appSlice.reducer,
+    weather: weatherSlice.reducer,
+    filters: filterSlice.reducer
   },
 });
 
