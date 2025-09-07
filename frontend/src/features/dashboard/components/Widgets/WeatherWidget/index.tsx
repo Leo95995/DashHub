@@ -51,7 +51,7 @@ const WeatherWidget: React.FC = () => {
     );
 
     return (
-      <div className="transition-opacity duration-500">
+      <div className="transition-opacity duration-500 min-w-20">
         <div className="flex items-center justify-between">
           <h3 className="text-2xl font-bold flex gap-2 items-center">
             {name}, {state}

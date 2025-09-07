@@ -1,6 +1,10 @@
 import type { IFilters } from "./interfaces/interfaces";
 import { createSlice } from "@reduxjs/toolkit";
 
+
+export type VisualMode = 'large' | 'small' | 'medium'
+
+
 const initialFilterOptions: IFilters = {
   weatherFilters: {
     expanded: false,
@@ -27,8 +31,6 @@ const initialState = {
   widgetLayout: {
     grid_col: {
         large: 3,
-        medium: 2,
-        small: 1
     }
   }
 };
@@ -53,14 +55,12 @@ export const filterSlice = createSlice({
       const { widget, visibility } = payload;
       state.filters.widgetVisibility[widget] = visibility;
     },
-    setWidgetLayout: (state, action)=> {
+    setWidgetLayout: (state, action : {payload: { type: VisualMode, value: number}}) => {
         const { payload } = action
-        const {small, large, medium} = payload;
-        state.widgetLayout.grid_col.large = large;
-        state.widgetLayout.grid_col.medium = medium
-        state.widgetLayout.grid_col.medium = small
+        const { type, value} = payload
+        state.widgetLayout.grid_col.large = value
     }
   },
 });
 
-export const { changeWidgetVisibility } = filterSlice.actions;
+export const { changeWidgetVisibility, setWidgetLayout } = filterSlice.actions;

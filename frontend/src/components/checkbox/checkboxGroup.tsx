@@ -5,10 +5,7 @@ import CustomCheckbox from "./checkbox";
 
 
 const CheckboxGroup: React.FC<CheckboxGroupProps> = ({ options, onChange, selectedList}) => {
-
   
-
-
   return (
     <div className="flex flex-col gap-2">
       {options.map((option) => (

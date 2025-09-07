@@ -1,4 +1,3 @@
-// Qui metto semplicemente insieme le mie sezioni (Niente business logic)
 import DashBoardHeader from "./header/header";
 import CryptoWidget from "./Widgets/CryptoWidget";
 import KeyPerformanceIndicator from "./Widgets/KpiWidget";
@@ -12,18 +11,23 @@ const DashBoard: React.FC = () => {
 
   const layout = useSelector((state: any) => state.filters.widgetLayout);
 
-  console.log(layout);
-
-
   return (
     <>
       <div className="w-full flex flex-col gap-5 ">
         <DashBoardHeader />
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 p-6 ">
-         {filters.weather && <WeatherWidget />}
+        <section
+          className={`grid gap-6 p-6 ${
+            layout.grid_col.large === 3
+              ? "grid-cols-3"
+              : layout.grid_col.large === 2
+              ? "grid-cols-2"
+              : "grid-cols-1"
+          }`}
+        >
+          {filters.weather && <WeatherWidget />}
           {filters.kpi && <KeyPerformanceIndicator />}
-         {filters.social && <SocialWidget />}
-         {filters.crypto && <CryptoWidget />}
+          {filters.social && <SocialWidget />}
+          {filters.crypto && <CryptoWidget />}
         </section>
       </div>
     </>
