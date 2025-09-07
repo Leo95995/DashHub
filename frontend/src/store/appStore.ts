@@ -5,9 +5,6 @@ import { weatherSlice } from "./weatherSlice";
 import { appSlice } from "./appSlice";
 import { filterSlice } from "./filterSlice";
 
-// Actually im not really using userdata. 
-
-
 
 export const appStore = configureStore({
   reducer: {
