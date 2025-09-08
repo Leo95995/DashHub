@@ -15,8 +15,8 @@ const Loader = styled.div`
     height: 48px;
     border-radius: 50%;
     display: inline-block;
-    border-top: 3px solid #fff;
-    border-right: 3px solid transparent;
+    border-top: 3px solid;
+    border-right: 3px solid transparent!important;
     box-sizing: border-box;
     animation: ${key} 1s linear infinite;
   }
@@ -29,7 +29,7 @@ interface IReactLoaderProps {
 const ReactLoader: React.FC<IReactLoaderProps> = () => {
   return (
     <Loader>
-      <div className="loader" />
+      <div className="loader dark:border-t-3 dark:border-white border-black"  />
     </Loader>
   );
 };

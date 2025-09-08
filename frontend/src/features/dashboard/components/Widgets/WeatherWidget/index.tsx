@@ -5,12 +5,13 @@ import {
   get_temperatures,
   getHoursAndMin,
 } from "../../../../../utils/weather-utils";
+//  Loader
 import ReactLoader from "../../../../../components/loader";
+// Icons
 import { Wind, Droplet, Gauge } from "lucide-react";
 
 const WeatherWidget: React.FC = () => {
   const weatherData = useSelector((state: any) => state.weather);
- 
 
   const { coordinates, weather, temperatureType, loading, error } = weatherData;
 

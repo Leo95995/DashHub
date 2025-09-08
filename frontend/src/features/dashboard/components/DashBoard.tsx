@@ -1,7 +1,7 @@
 import DashBoardHeader from "./header/header";
 import CryptoWidget from "./Widgets/CryptoWidget";
-import KeyPerformanceIndicator from "./Widgets/KpiWidget";
-import SocialWidget from "./Widgets/SocialWidget";
+import GithubWidget from "./Widgets/GithubWidget";
+import NasaWidget from "./Widgets/NasaWidget";
 import WeatherWidget from "./Widgets/WeatherWidget";
 import { useSelector } from "react-redux";
 const DashBoard: React.FC = () => {
@@ -16,7 +16,7 @@ const DashBoard: React.FC = () => {
       <div className="w-full flex flex-col gap-5 ">
         <DashBoardHeader />
         <section
-          className={`grid gap-6 p-6 ${
+          className={`grid gap-6 px-6 py-2 ${
             layout.grid_col.large === 3
               ? "grid-cols-3"
               : layout.grid_col.large === 2
@@ -25,8 +25,8 @@ const DashBoard: React.FC = () => {
           }`}
         >
           {filters.weather && <WeatherWidget />}
-          {filters.kpi && <KeyPerformanceIndicator />}
-          {filters.social && <SocialWidget />}
+          {filters.github && <GithubWidget />}
+          {filters.nasa && <NasaWidget />}
           {filters.crypto && <CryptoWidget />}
         </section>
       </div>

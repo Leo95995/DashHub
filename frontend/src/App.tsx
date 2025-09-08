@@ -1,13 +1,15 @@
-import { useState, lazy, Suspense } from "react";
+// React lazy
+import { lazy, Suspense } from "react";
 import { routes } from "./routes";
+// React router info
 import { Routes, Route } from "react-router";
+//  Components
 import PrivateLayout from "./components/layout/PrivateLayout/Layout";
-import { protectedRoutes } from "./routes/protectedRoutes";
 import ReactLoader from "./components/loader";
 
 // Public Routes
 const DashBoardPage = lazy(() => import("./pages/privates/DashboardPage"));
-const SettingsPage = lazy(() => import("./pages/privates/SettingsPage"));
+// const SettingsPage = lazy(() => import("./pages/privates/SettingsPage"));
 
 function App() {
   return (
@@ -16,13 +18,16 @@ function App() {
         <Routes>
           <Route element={<PrivateLayout />}>
             <Route
-              path={protectedRoutes.dashboard}
+              path={routes.protectedRoutes.dashboard}
               element={
                 <>
                   <Suspense
                     fallback={
                       <>
-                        <ReactLoader /> Caricamento Dashboard..
+                        <div className="flex flex-col gap-5 w-full h-96 items-center justify-center">
+                          <p> Caricamento Dashboard..</p>
+                          <ReactLoader />
+                        </div>
                       </>
                     }
                   >

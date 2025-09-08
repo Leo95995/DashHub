@@ -12,16 +12,16 @@ const initialFilterOptions: IFilters = {
   cryptoFilters: {
     expanded: false,
   },
-  socialFilters: {
+  nasaFilters: {
     expanded: false,
   },
-  kpiFilters: {
+  githubFilters: {
     expanded: false,
   },
   widgetVisibility: {
     weather: true,
-    kpi: true,
-    social: true,
+    github: true,
+    nasa: true,
     crypto: true,
   },
 };

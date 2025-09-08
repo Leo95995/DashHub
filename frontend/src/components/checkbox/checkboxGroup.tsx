@@ -9,7 +9,7 @@ const CheckboxGroup: React.FC<CheckboxGroupProps> = ({ options, onChange, select
   return (
     <div className="flex flex-col gap-2">
       {options.map((option) => (
-        <CustomCheckbox selectedList={selectedList} onChange={onChange} option={option} />
+        <CustomCheckbox selectedList={selectedList} key={option.label} onChange={onChange} option={option} />
       ))}
     </div>
   );

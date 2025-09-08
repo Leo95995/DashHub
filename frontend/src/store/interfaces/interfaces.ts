@@ -1,13 +1,10 @@
 export type IGlobalAlertStatus = "error" | "success" | "warn" | "";
 
 export interface IGlobalAlert {
-  status: IGlobalAlertStatus
-  message: string
-  description: string
+  status: IGlobalAlertStatus;
+  message: string;
+  description: string;
 }
-
-
-
 /**
  * Filters Slice Interfaces
  */
@@ -19,16 +16,29 @@ export interface IFilters {
   cryptoFilters: {
     expanded: boolean;
   };
-  socialFilters: {
+  nasaFilters: {
     expanded: boolean;
   };
-  kpiFilters: {
+  githubFilters: {
     expanded: boolean;
   };
   widgetVisibility: {
     weather: boolean;
-    kpi: boolean;
-    social: boolean;
+    github: boolean;
+    nasa: boolean;
     crypto: boolean;
   };
+}
+
+/**
+ *  -------------- NASA INTERFACES ----------------------
+ */
+export interface NasaApod {
+  date: Date;
+  explanation: string;
+  hdurl: string;
+  media_type: string;
+  service_version: string;
+  title: string;
+  url: string;
 }
