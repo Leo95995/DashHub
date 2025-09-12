@@ -1,7 +1,8 @@
 import type React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchNasaData } from "../../../../../store/nasaSlice";
+import { fetch_apod_data } from "../../../../../store/nasaSlice";
 import { useEffect } from "react";
+import NasaService from "../../../../../services/nasa-service";
 
 const NasaWidget: React.FC = () => {
   const nasa_info = useSelector((state: any) => state.nasa);
@@ -11,7 +12,7 @@ const NasaWidget: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchNasaData() as any);
+    dispatch(fetch_apod_data() as any);
   }, []);
 
   /**

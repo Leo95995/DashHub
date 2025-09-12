@@ -33,7 +33,10 @@ export interface IFilters {
 /**
  *  -------------- NASA INTERFACES ----------------------
  */
-export interface NasaApod {
+
+
+// --------------- NASA APOD WIDGET ---------------------
+export interface INasaApod {
   date: Date;
   explanation: string;
   hdurl: string;
@@ -41,4 +44,15 @@ export interface NasaApod {
   service_version: string;
   title: string;
   url: string;
+}
+
+// -------------- NASA ROVER WIDGET -------------------
+
+export interface INasaRover {
+
+}
+// -------------- NASA NEOWS WIDGET -------------------
+
+export interface INeoWsWidget {
+
 }
