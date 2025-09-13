@@ -1,13 +1,10 @@
 export type IGlobalAlertStatus = "error" | "success" | "warn" | "";
 
 export interface IGlobalAlert {
-  status: IGlobalAlertStatus
-  message: string
-  description: string
+  status: IGlobalAlertStatus;
+  message: string;
+  description: string;
 }
-
-
-
 /**
  * Filters Slice Interfaces
  */
@@ -19,16 +16,82 @@ export interface IFilters {
   cryptoFilters: {
     expanded: boolean;
   };
-  socialFilters: {
+  nasaFilters: {
     expanded: boolean;
   };
-  kpiFilters: {
+  githubFilters: {
     expanded: boolean;
   };
   widgetVisibility: {
     weather: boolean;
-    kpi: boolean;
-    social: boolean;
+    github: boolean;
+    nasa: boolean;
     crypto: boolean;
   };
 }
+
+/**
+ *  -------------- NASA INTERFACES ----------------------
+ */
+
+export type NasaWidgets = "apod" | "rover"| "neows"
+
+
+export interface NasaItemStatus<T>{
+  data: T | T [] // Thats pretty flexible. but it requires more check
+  loading: boolean
+  error: string | null
+}
+// --------------- NASA APOD WIDGET ---------------------
+
+export interface INasaApodData {
+  date: Date;
+  explanation: string;
+  hdurl: string;
+  media_type: string;
+  service_version: string;
+  title: string;
+  url: string;
+}
+
+// -------------- NASA NEOWS WIDGET -------------------
+
+export interface INeoWsData {
+  key: number;
+  name: string;
+  estimated_diameter_max: number;
+  kilometers_per_hour: number;
+  miss_distance_lunar: number;
+  is_potentially_hazardous: boolean;
+  close_approach_date: string;
+}
+
+// -------------- NASA ROVER WIDGET -------------------
+
+export interface RoverDetails {
+  id: number
+  camera: RoverCamera
+  img_src: string
+  earth_date: string
+  rover: Rover
+}
+
+export interface RoverCamera {
+  id: number
+  name: string
+  rover_id: number
+  full_name: string
+}
+
+export interface Rover {
+  id: number
+  name: string
+  landing_date: string
+  launch_date: string
+  status: string
+}
+//  PARTIALS 
+
+export type PartialApod = Partial<INasaApodData>;
+export type PartialNeoWs = Partial<INeoWsData[]>;
+export type PartialRover = Partial<RoverDetails[]>

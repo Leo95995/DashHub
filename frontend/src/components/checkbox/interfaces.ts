@@ -6,10 +6,12 @@ export interface CheckboxOption {
 }
 export interface ICheckbox {
   option: CheckboxOption;
+  selectedList: any
   onChange?: (
     widget: keyof IFilters["widgetVisibility"],
     visibility: boolean
   ) => void;
+
 }
 
 export interface CheckboxGroupProps {
@@ -18,4 +20,6 @@ export interface CheckboxGroupProps {
     widget: keyof IFilters["widgetVisibility"],
     visibility: boolean
   ) => void;
+  selectedList: any
+
 }

@@ -1,6 +1,7 @@
 import WeatherFilters from "./weather-filters";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+// Widget filters
 import WidgetFilters from "./widget-filters";
 
 const Filters: React.FC = () => {
@@ -13,8 +14,7 @@ const Filters: React.FC = () => {
     if (expanded) {
       setShow(true);
     } else {
-      // se vuoi far sparire con transizione
-      const timeout = setTimeout(() => setShow(false), 300); // durata transizione
+      const timeout = setTimeout(() => setShow(false), 300); 
       return () => clearTimeout(timeout);
     }
   }, [expanded]);

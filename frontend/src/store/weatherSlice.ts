@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import WeatherService from "../features/dashboard/services/weather-service";
+import WeatherService from "../services/weather-service";
 import type {
   IWeatherData,
   LocationCoordinates,
-} from "../features/dashboard/services/interfaces/interfaces";
+} from "../services/interfaces/interfaces";
 
 export const fetchWeatherByCity = createAsyncThunk(
   "weather/fetchByCity",

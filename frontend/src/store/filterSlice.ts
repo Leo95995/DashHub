@@ -1,5 +1,10 @@
+import type { ScreenMode } from "../interfaces/common/interfaces";
 import type { IFilters } from "./interfaces/interfaces";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+
+
+export type VisualMode = 'large' | 'small' | 'medium'
+
 
 const initialFilterOptions: IFilters = {
   weatherFilters: {
@@ -8,22 +13,30 @@ const initialFilterOptions: IFilters = {
   cryptoFilters: {
     expanded: false,
   },
-  socialFilters: {
+  nasaFilters: {
     expanded: false,
   },
-  kpiFilters: {
+  githubFilters: {
     expanded: false,
   },
   widgetVisibility: {
     weather: true,
-    kpi: true,
-    social: true,
+    github: true,
+    nasa: true,
     crypto: true,
   },
 };
 
 const initialState = {
   filters: initialFilterOptions,
+  widgetLayout: {
+    grid_col: {
+        large: 2,
+        medium: 2,
+        small: 1
+    },
+    layoutMode:  ""
+  }
 };
 
 // Application slice.
@@ -46,7 +59,21 @@ export const filterSlice = createSlice({
       const { widget, visibility } = payload;
       state.filters.widgetVisibility[widget] = visibility;
     },
+    setWidgetLayout: (state, action : {payload: { type: VisualMode, value: number}}) => {
+        const { payload } = action
+        const { type, value} = payload
+        if(type == 'large'){
+          state.widgetLayout.grid_col.large = value
+        }else if(type === 'medium'){
+          state.widgetLayout.grid_col.medium = value
+        }else {
+          state.widgetLayout.grid_col.small = value
+        }
+    },
+    setLayoutMode(state, action: PayloadAction<ScreenMode>){
+      state.widgetLayout.layoutMode = action.payload
+    }
   },
 });
 
-export const { changeWidgetVisibility } = appSlice.actions;
+export const { changeWidgetVisibility, setWidgetLayout, setLayoutMode } = filterSlice.actions;

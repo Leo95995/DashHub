@@ -1,11 +1,14 @@
 // Filters for weathers
-
 import type React from "react";
 import { useDispatch } from "react-redux";
-import { setTemperatureType } from "../../store/weatherSlice";
 import CheckboxGroup from "../checkbox/checkboxGroup";
-import { changeWidgetVisibility } from "../../store/filterSlice";
+import { changeWidgetVisibility,  type VisualMode } from "../../store/filterSlice";
 import type { IFilters } from "../../store/interfaces/interfaces";
+import { filterUtils } from "../../utils/filter-utils";
+import { useSelector } from "react-redux";
+import { setWidgetLayout } from "../../store/filterSlice";
+import type { ScreenMode } from "../../interfaces/common/interfaces";
+import { CircleCheck } from "lucide-react";
 
 interface IWidgetFilters {
   expanded: boolean;
@@ -13,12 +16,47 @@ interface IWidgetFilters {
 
 const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
   const dispatch = useDispatch();
+  const filters = useSelector(
+    (state: any) => state.filters.filters.widgetVisibility
+  );
+  const layout  =useSelector((state: any) => state.filters.widgetLayout.layoutMode)
 
-  const changeVisibility = (widget: keyof IFilters["widgetVisibility"], visibility: boolean) => {
+  const changeVisibility = (
+    widget: keyof IFilters["widgetVisibility"],
+    visibility: boolean
+  ) => {
     dispatch(
       changeWidgetVisibility({ widget: widget, visibility: visibility })
     );
   };
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(
+      setWidgetLayout({
+        type: e.currentTarget.name as VisualMode,
+        value: Number(e.currentTarget.value),
+      })
+    );
+  };
+
+  const optionlist = filterUtils(filters);
+
+  const CurrentLayout: React.FC<{target: ScreenMode} > = ({target}) => {
+  if (layout !== target) return null;
+
+  return (
+    <span
+      className="
+        inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold
+        bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-sm gap-1
+      "
+    >
+    <CircleCheck size={16}/> Attuale
+    </span>
+  );
+};
+
+
 
   return (
     <div
@@ -37,36 +75,94 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
           Widget Visibili
         </label>
         <div className="flex">
-          <CheckboxGroup options={[{ label: "fix", value: "test" }]} onChange={changeVisibility}/>
+          <CheckboxGroup
+            selectedList={filters}
+            options={optionlist}
+            onChange={changeVisibility}
+          />
         </div>
       </div>
-      <div className="flex flex-col gap-2 w-48 py-4">
-        <label
-          htmlFor="temperature"
-          className="font-semibold text-gray-700 dark:text-gray-200"
-        >
-          Seleziona formato
-        </label>
-        <select
-          onChange={(e) =>
-            dispatch(setTemperatureType(e.currentTarget.value.toLowerCase()))
-          }
-          name="temperature"
-          id="temperature"
-          className="
-      border border-gray-300 dark:border-gray-600
-      rounded-lg
-      px-3 py-2
-      bg-white dark:bg-gray-800
-      text-gray-900 dark:text-gray-100
-      focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-600
-      transition-colors duration-200
-      cursor-pointer
-    "
-        >
-          <option>Celsius</option>
-          <option>Kelvin</option>
-        </select>
+      <div className="flex flex-col gap-4 w-60 p-4 my-6 bg-white dark:bg-gray-800 rounded-xl shadow-md">
+        <div className="mb-2">
+          <p className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+            Layout Widget
+          </p>
+          <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+            Numero di widget per colonna
+          </p>
+          <div className="flex flex-col gap-2 w-48 py-4">
+            <label
+              htmlFor="large"
+              className="font-semibold text-gray-700 dark:text-gray-200"
+            >
+             
+              Desktop <CurrentLayout target={'desktop'} />
+            </label>
+            <select
+              onChange={(e) => handleChange(e)}
+              name="large"
+              className="
+                border border-gray-300 dark:border-gray-600
+                rounded-lg
+                px-3 py-2
+                bg-white dark:bg-gray-800
+                text-gray-900 dark:text-gray-100
+                focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-600
+                transition-colors duration-200
+                cursor-pointer
+              "
+            >
+              <option>2</option>
+              <option>3</option>
+              <option>1</option>
+            </select>
+            <label
+              htmlFor="medium"
+              className="font-semibold text-gray-700 dark:text-gray-200"
+            >
+              Tablet <CurrentLayout target={'tablet'} />
+            </label>
+            <select
+              onChange={(e) => handleChange(e)}
+              name="medium"
+              className="
+                border border-gray-300 dark:border-gray-600
+                rounded-lg
+                px-3 py-2
+                bg-white dark:bg-gray-800
+                text-gray-900 dark:text-gray-100
+                focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-600
+                transition-colors duration-200
+                cursor-pointer
+              "
+            >
+              <option>2</option>
+              <option>1</option>
+            </select>
+            <label
+              htmlFor="small"
+              className="font-semibold text-gray-700 dark:text-gray-200"
+            >
+              Mobile <CurrentLayout target={'mobile'} />
+            </label>
+            <select
+              onChange={(e) => handleChange(e)}
+              name="small"
+              className="
+                border border-gray-300 dark:border-gray-600
+                rounded-lg
+                px-3 py-2
+                bg-white dark:bg-gray-800
+                text-gray-900 dark:text-gray-100
+                focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-600
+                transition-colors duration-200
+                cursor-pointer
+              "
+            >
+              <option>1</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
   );
