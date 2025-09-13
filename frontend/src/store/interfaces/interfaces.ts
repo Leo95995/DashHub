@@ -35,8 +35,14 @@ export interface IFilters {
  */
 
 
+export interface NasaItemStatus<T>{
+  data: T | T [] // Thats pretty flexible. but it requires more check
+  loading: boolean
+  error: string | null
+}
 // --------------- NASA APOD WIDGET ---------------------
-export interface INasaApod {
+
+export interface INasaApodData {
   date: Date;
   explanation: string;
   hdurl: string;
@@ -46,13 +52,22 @@ export interface INasaApod {
   url: string;
 }
 
+// -------------- NASA NEOWS WIDGET -------------------
+
+export interface INeoWsData {
+  key: number;
+  name: string;
+  estimated_diameter_max: number;
+  kilometers_per_hour: number;
+  miss_distance_lunar: number;
+  is_potentially_hazardous: boolean;
+  close_approach_date: string;
+}
+
+
+
 // -------------- NASA ROVER WIDGET -------------------
 
 export interface INasaRover {
-
-}
-// -------------- NASA NEOWS WIDGET -------------------
-
-export interface INeoWsWidget {
 
 }

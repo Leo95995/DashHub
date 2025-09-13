@@ -2,7 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 // Nasda service
 import NasaService from "../services/nasa-service";
-import type { INasaApod } from "./interfaces/interfaces";
+import type {
+  INasaApodData,
+  INeoWsData,
+  NasaItemStatus,
+} from "./interfaces/interfaces";
 
 const { get_apod_data, get_mars_rover_data, get_neoWs_data } = NasaService();
 
@@ -45,51 +49,96 @@ export const fetch_neows_data = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const nasa_neows_data = await get_neoWs_data();
-      if (nasa_apod_data.error || !nasa_apod_data.nasaData) {
+      if (nasa_neows_data.error || !nasa_neows_data.neoData) {
         return rejectWithValue("Errore nel recupero");
       }
+      const { neoData } = nasa_neows_data;
+      const { neows_data } = neoData;
+      return { neows_data };
     } catch (err) {
       return rejectWithValue("Error while fetching nasa data");
     }
   }
 );
 
-const nasa_apod_data: Partial<INasaApod> = {};
+export type NasaWidgets = "apod" | "rover"| "neows"
+
+
+type PartialApod = Partial<INasaApodData>;
+type PartialNeoWs = Partial<INeoWsData[]>;
+
+const nasa_apod_data: PartialApod = {};
+const apodStatus: NasaItemStatus<PartialApod> = {
+  data: nasa_apod_data,
+  loading: false,
+  error: null,
+};
+
+const neows_data: PartialNeoWs = [];
+const neoWsStatus: NasaItemStatus<PartialNeoWs> = {
+  data: neows_data,
+  loading: false,
+  error: null,
+};
+
+const widgetSelected : NasaWidgets = "apod" ;
+
+const roverStatus = {}
 
 const initialState = {
-  nasa_apod_data,
-  loading: false,
-  error: null as string | null,
+  apodStatus,
+  neoWsStatus,
+  widgetSelected,
+  roverStatus
 };
+
 /**
  * Nasa Slice
  */
-
 export const nasaSlice = createSlice({
   name: "nasa",
   initialState,
   reducers: {
     // doing nothing . to define
     setNasaDetail(state, action) {
-      state.nasa_apod_data = action.payload;
+      state.apodStatus.data = action.payload;
     },
+    setSelectedWidget(state, action){
+      state.widgetSelected  = action.payload;
+
+    }
   },
   extraReducers: (builder) => {
     builder
+      // Nasa apod thunk
       .addCase(fetch_apod_data.pending, (state) => {
-        state.loading = true;
-        state.error = null;
+        state.apodStatus.loading = true;
+        state.apodStatus.error = null;
       })
       .addCase(fetch_apod_data.fulfilled, (state, action) => {
-        state.nasa_apod_data = action.payload.nasaData;
-        state.loading = false;
-        state.error = null;
+        state.apodStatus.data = action.payload.nasaData;
+        state.apodStatus.loading = false;
+        state.apodStatus.error = null;
       })
       .addCase(fetch_apod_data.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
+        state.apodStatus.loading = false;
+        state.apodStatus.error = action.payload as string;
+      })
+      // Nasa neows thunk
+      .addCase(fetch_neows_data.pending, (state) => {
+        state.neoWsStatus.loading = true;
+        state.neoWsStatus.error = null;
+      })
+      .addCase(fetch_neows_data.fulfilled, (state, action) => {
+        state.neoWsStatus.data = action.payload.neows_data;
+        state.neoWsStatus.loading = false;
+        state.neoWsStatus.error = null;
+      })
+      .addCase(fetch_neows_data.rejected, (state, action) => {
+        state.neoWsStatus.loading = false;
+        state.neoWsStatus.error = action.payload as string;
       });
   },
 });
 
-export const { setNasaDetail } = nasaSlice.actions;
+export const { setNasaDetail, setSelectedWidget } = nasaSlice.actions;

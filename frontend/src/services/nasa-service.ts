@@ -1,5 +1,6 @@
-import type { INasaApod } from "../store/interfaces/interfaces";
+import type { INasaApodData } from "../store/interfaces/interfaces";
 import { nasaUtils } from "../utils/nasa-utils";
+import { NasaMappers, type NeoWsResponse } from "../mappers/nasaMapper";
 
 const key = import.meta.env.VITE_NASA_API;
 
@@ -11,7 +12,7 @@ const NasaService = () => {
     const nasa_url = `https://api.nasa.gov/planetary/apod?api_key=${key}`;
     try {
       const res = await fetch(nasa_url, { method: "GET" });
-      const data: INasaApod = await res.json();
+      const data: INasaApodData = await res.json();
       const status = res.status;
       if (data && status === 200) {
         return { nasaData: data, status: status, error: false };
@@ -50,10 +51,12 @@ const NasaService = () => {
     try {
       //  Refining your craft.
       const res = await fetch(url, { method: "GET" });
-      const data = await res.json();
+      const data : NeoWsResponse = await res.json();
       const status = res.status;
+
       if (data && status === 200) {
-        return { nasaData: data, status: status, error: false };
+        const mappedData  = NasaMappers.neowsMapper(data);
+        return { neoData: mappedData, status: status, error: false };
       } else {
         return { status: status, error: true };
       }
