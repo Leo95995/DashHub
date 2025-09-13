@@ -2,8 +2,7 @@
  * Neows data mapper
  */
 
-import * as neowsTemplate from "../services/nasa-neows-template.json";
-import type { INeoWsData } from "../store/interfaces/interfaces";
+import type { INeoWsData, RoverDetails } from "../store/interfaces/interfaces";
 
 
 export interface NeoWsResponse {
@@ -16,20 +15,14 @@ export interface INearObject {
 }
 
 type INear = keyof INearObject;
-/**
- * 
- *"name" → nome/identificativo dell’oggetto.
 
-  "estimated_diameter.kilometers.estimated_diameter_max" → diametro massimo stimato in km.
 
-"close_approach_data[0].relative_velocity.kilometers_per_hour" → velocità relativa in km/h.
+export interface MarsRoverResponse {
+  photos: RoverDetails[]
+}
 
-"close_approach_data[0].miss_distance.lunar" → distanza minima in distanze lunari (LD).
+export interface X{}
 
-"is_potentially_hazardous_asteroid" → booleano che indica se è considerato potenzialmente pericoloso.
-
-"close_approach_data[0].close_approach_date" → data di avvicinamento.
- */
 
 const neowsMapper = (neowsResponse: NeoWsResponse) => {
   const arr: Array<INeoWsData> = [];
@@ -58,20 +51,39 @@ const neowsMapper = (neowsResponse: NeoWsResponse) => {
 };
 
 /**
- * Apod data mapper
- */
-const apodMapper = () => {
-  const mappedObj = {};
-  return mappedObj;
-};
-
-/**
  * Rover data mapper
  */
-const roverMapper = () => {};
+const roverMapper = (data: MarsRoverResponse) : RoverDetails[]=> {
+  const { photos } = data
+  const toRet = []
+  for(const photo of photos){
+
+    let object: RoverDetails = {
+      id: photo.id,
+      camera: {
+        id: photo.camera.id,
+        name: photo.camera.name,
+        rover_id: photo.camera.rover_id,
+        full_name: photo.camera.full_name
+      },
+      img_src: photo.img_src,
+      earth_date: photo.earth_date,
+      rover: {
+        id: photo.rover.id ?? null,
+        name: photo.rover.name ?? '',
+        landing_date: photo.rover.landing_date ?? '',
+        launch_date: photo.rover.launch_date ?? '',
+        status: photo.rover.status ?? ''
+      }
+    }
+
+    toRet.push(object);
+  }
+
+  return toRet;
+};
 
 export const NasaMappers = {
   neowsMapper,
-  apodMapper,
   roverMapper,
 };

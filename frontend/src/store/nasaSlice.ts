@@ -2,11 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 // Nasda service
 import NasaService from "../services/nasa-service";
-import type {
-  INasaApodData,
-  INeoWsData,
-  NasaItemStatus,
-} from "./interfaces/interfaces";
+import type { RoverDetails } from "./interfaces/interfaces";
+import { initialState } from "./data/nasaData";
 
 const { get_apod_data, get_mars_rover_data, get_neoWs_data } = NasaService();
 
@@ -26,20 +23,18 @@ export const fetch_apod_data = createAsyncThunk(
   }
 );
 
-// Get the data for mars rover widget
 export const fetch_mars_rover_data = createAsyncThunk(
   "nasa/fetchRover",
   async (_, { rejectWithValue }) => {
     try {
       const nasa_rover_data = await get_mars_rover_data();
       if (!nasa_rover_data) {
-        return rejectWithValue("Errore nel recupero");
+        return rejectWithValue("Error while fetching rover data");
       }
-      // nasa rover
-      const { nasaData } = nasa_rover_data;
-      return { nasaData };
+      const { roverData } = nasa_rover_data;
+      return { roverData };
     } catch (err) {
-      return rejectWithValue("Error while fetching nasa data");
+      return rejectWithValue("Error while fetching rover data");
     }
   }
 );
@@ -61,37 +56,6 @@ export const fetch_neows_data = createAsyncThunk(
   }
 );
 
-export type NasaWidgets = "apod" | "rover"| "neows"
-
-
-type PartialApod = Partial<INasaApodData>;
-type PartialNeoWs = Partial<INeoWsData[]>;
-
-const nasa_apod_data: PartialApod = {};
-const apodStatus: NasaItemStatus<PartialApod> = {
-  data: nasa_apod_data,
-  loading: false,
-  error: null,
-};
-
-const neows_data: PartialNeoWs = [];
-const neoWsStatus: NasaItemStatus<PartialNeoWs> = {
-  data: neows_data,
-  loading: false,
-  error: null,
-};
-
-const widgetSelected : NasaWidgets = "apod" ;
-
-const roverStatus = {}
-
-const initialState = {
-  apodStatus,
-  neoWsStatus,
-  widgetSelected,
-  roverStatus
-};
-
 /**
  * Nasa Slice
  */
@@ -99,14 +63,9 @@ export const nasaSlice = createSlice({
   name: "nasa",
   initialState,
   reducers: {
-    // doing nothing . to define
-    setNasaDetail(state, action) {
-      state.apodStatus.data = action.payload;
+    setSelectedWidget(state, action) {
+      state.widgetSelected = action.payload;
     },
-    setSelectedWidget(state, action){
-      state.widgetSelected  = action.payload;
-
-    }
   },
   extraReducers: (builder) => {
     builder
@@ -124,7 +83,7 @@ export const nasaSlice = createSlice({
         state.apodStatus.loading = false;
         state.apodStatus.error = action.payload as string;
       })
-      // Nasa neows thunk
+      // Nasa Near Earth Objects thunk
       .addCase(fetch_neows_data.pending, (state) => {
         state.neoWsStatus.loading = true;
         state.neoWsStatus.error = null;
@@ -137,8 +96,22 @@ export const nasaSlice = createSlice({
       .addCase(fetch_neows_data.rejected, (state, action) => {
         state.neoWsStatus.loading = false;
         state.neoWsStatus.error = action.payload as string;
+      })
+      // Nasa Mars Rover data Thunk
+      .addCase(fetch_mars_rover_data.pending, (state) => {
+        state.roverStatus.loading = true;
+        state.neoWsStatus.error = null;
+      })
+      .addCase(fetch_mars_rover_data.fulfilled, (state, action) => {
+        state.roverStatus.data = action.payload.roverData as RoverDetails[];
+        state.roverStatus.loading = false;
+        state.roverStatus.error = null;
+      })
+      .addCase(fetch_mars_rover_data.rejected, (state, action) => {
+        state.roverStatus.loading = false;
+        state.roverStatus.error = action.payload as string;
       });
   },
 });
 
-export const { setNasaDetail, setSelectedWidget } = nasaSlice.actions;
+export const { setSelectedWidget } = nasaSlice.actions;

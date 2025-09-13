@@ -23,7 +23,7 @@ const WeatherService = () => {
 
       return { data, status };
     } catch (error) {
-      console.log("error");
+      return { error: error as string, success:false}
     }
   };
 
@@ -38,7 +38,7 @@ const WeatherService = () => {
       const status = res.status;
       return { data, status };
     } catch (error) {
-      console.log("error");
+      return { error: error as string}
     }
   };
 

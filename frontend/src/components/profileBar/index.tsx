@@ -9,7 +9,7 @@ interface IProfileBar {
 }
 
 
-const menuOptions : IMenuOption[] =[{text:'Testing' ,action:()=>console.log('culo'), shortcut: "g" } ]
+const menuOptions : IMenuOption[] =[{text:'Testing' ,action:()=>console.log('testing'), shortcut: "g" } ]
 
 const ProfileBar: React.FC<IProfileBar> = ({ expanded }) => {
 

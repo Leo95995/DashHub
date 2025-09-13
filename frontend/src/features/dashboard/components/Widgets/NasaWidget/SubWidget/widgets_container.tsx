@@ -1,26 +1,29 @@
 import type {
   INeoWsData,
   NasaItemStatus,
+  RoverDetails,
+
 } from "../../../../../../store/interfaces/interfaces";
 import type { IApodWidget } from "./nasa_apod";
 
 import ApodWidget from "./nasa_apod";
 import NeoWsWidget from "./neows";
-import MarsRoverWidget from "./mars_rover";
-import type { NasaWidgets } from "../../../../../../store/nasaSlice";
+import MarsRoverWidget from "./mars-rover.tsx/mars_rover";
+import type { NasaWidgets } from "../../../../../../store/interfaces/interfaces";
 
 interface IWidgetContainer {
   apodStatus: IApodWidget;
-  neoWStatus: NasaItemStatus<INeoWsData>;
+  neoWStatus: NasaItemStatus<INeoWsData[]>;
+  roverStatus: NasaItemStatus<RoverDetails[]>
   widgetSelected: NasaWidgets;
 }
 
 const WidgetContainer: React.FC<IWidgetContainer> = ({
   apodStatus,
   neoWStatus,
+  roverStatus,
   widgetSelected,
 }) => {
-
 
 
   // Render Logic 
@@ -56,7 +59,7 @@ const WidgetContainer: React.FC<IWidgetContainer> = ({
   };
 
   const renderMarsRover = () => {
-    return <MarsRoverWidget />;
+    return <MarsRoverWidget data={roverStatus.data} loading={roverStatus.loading} error={roverStatus.error} />;
   };
 
   return <>{renderWidgetSelected(widgetSelected)}</>;

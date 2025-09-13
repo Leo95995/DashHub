@@ -34,6 +34,8 @@ export interface IFilters {
  *  -------------- NASA INTERFACES ----------------------
  */
 
+export type NasaWidgets = "apod" | "rover"| "neows"
+
 
 export interface NasaItemStatus<T>{
   data: T | T [] // Thats pretty flexible. but it requires more check
@@ -64,10 +66,32 @@ export interface INeoWsData {
   close_approach_date: string;
 }
 
-
-
 // -------------- NASA ROVER WIDGET -------------------
 
-export interface INasaRover {
-
+export interface RoverDetails {
+  id: number
+  camera: RoverCamera
+  img_src: string
+  earth_date: string
+  rover: Rover
 }
+
+export interface RoverCamera {
+  id: number
+  name: string
+  rover_id: number
+  full_name: string
+}
+
+export interface Rover {
+  id: number
+  name: string
+  landing_date: string
+  launch_date: string
+  status: string
+}
+//  PARTIALS 
+
+export type PartialApod = Partial<INasaApodData>;
+export type PartialNeoWs = Partial<INeoWsData[]>;
+export type PartialRover = Partial<RoverDetails[]>

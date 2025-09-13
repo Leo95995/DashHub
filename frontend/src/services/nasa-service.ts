@@ -1,6 +1,6 @@
-import type { INasaApodData } from "../store/interfaces/interfaces";
+import type { INasaApodData, RoverDetails } from "../store/interfaces/interfaces";
 import { nasaUtils } from "../utils/nasa-utils";
-import { NasaMappers, type NeoWsResponse } from "../mappers/nasaMapper";
+import { NasaMappers, type MarsRoverResponse, type NeoWsResponse } from "../mappers/nasaMapper";
 
 const key = import.meta.env.VITE_NASA_API;
 
@@ -31,10 +31,12 @@ const NasaService = () => {
     const rover_url = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=${key}`;
     try {
       const res = await fetch(rover_url, { method: "GET" });
-      const data = await res.json();
+      const data : MarsRoverResponse = await res.json();
+
+      const roverData : RoverDetails[]  = NasaMappers.roverMapper(data) 
       const status = res.status;
       if (data && status === 200) {
-        return { nasaData: data, status: status, error: false };
+        return { roverData: roverData, status: status, error: false };
       } else {
         return { status: status, error: true };
       }
