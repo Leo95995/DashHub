@@ -1,8 +1,7 @@
-
 export const kelvinToCelsius = (kelvin: number) => Math.round(kelvin - 273.15);
 
-
-export const kelvinToFahrenheit = (kelvin: number) => Math.round((kelvin - 273.15) * 9/5 + 32);
+export const kelvinToFahrenheit = (kelvin: number) =>
+  Math.round(((kelvin - 273.15) * 9) / 5 + 32);
 
 export const timestampToTime = (timestamp: number, timezoneOffset: number) => {
   const date = new Date((timestamp + timezoneOffset) * 1000);
@@ -10,34 +9,33 @@ export const timestampToTime = (timestamp: number, timezoneOffset: number) => {
 };
 
 export const getHoursAndMin = (timestamp: number) => {
+  const date = new Date(timestamp * 1000);
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
 
-const date = new Date(timestamp * 1000);
-const hours = date.getHours();
-const minutes = date.getMinutes();
+  return `${hours}:${minutes}`;
+};
 
-    return `${hours}:${minutes}`
-}
-
-  export const get_temperatures = (
-    temp: number,
-    temp_min: number,
-    temp_max: number,
-    temperatureType: string
-  ) => {
-    let standard;
-    let min;
-    let max;
-    if (temperatureType === "celsius") {
-      standard = `${kelvinToCelsius(temp)} C°`;
-      min = `${kelvinToCelsius(temp_min)}  C°`;
-      max = `${kelvinToCelsius(temp_max)}  C°`;
-    } else {
-      standard = `${temp.toFixed(0)} K`;
-      min = `${temp_min.toFixed(0)} K`;
-      max = `${temp_max.toFixed(0)} K`;
-    }
-    return { standard, min, max };
-  };
+export const get_temperatures = (
+  temp: number,
+  temp_min: number,
+  temp_max: number,
+  temperatureType: string
+) => {
+  let standard;
+  let min;
+  let max;
+  if (temperatureType === "celsius") {
+    standard = `${kelvinToCelsius(temp)} C°`;
+    min = `${kelvinToCelsius(temp_min)}  C°`;
+    max = `${kelvinToCelsius(temp_max)}  C°`;
+  } else {
+    standard = `${temp.toFixed(0)} K`;
+    min = `${temp_min.toFixed(0)} K`;
+    max = `${temp_max.toFixed(0)} K`;
+  }
+  return { standard, min, max };
+};
 
 export const background_color = (weatherType: string) => {
   const weather = weatherType.toLowerCase();
@@ -77,5 +75,3 @@ export const background_color = (weatherType: string) => {
       return "from-slate-300 to-slate-500 text-black dark:from-gray-700 dark:to-gray-900 dark:text-white"; // fallback neutro
   }
 };
-
-

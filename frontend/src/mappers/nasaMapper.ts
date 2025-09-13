@@ -21,9 +21,6 @@ export interface MarsRoverResponse {
   photos: RoverDetails[]
 }
 
-export interface X{}
-
-
 const neowsMapper = (neowsResponse: NeoWsResponse) => {
   const arr: Array<INeoWsData> = [];
   const { element_count, near_earth_objects } = neowsResponse;
