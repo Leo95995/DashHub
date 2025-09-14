@@ -5,8 +5,8 @@ import {
   fetch_mars_rover_data,
   fetch_neows_data,
   setSelectedWidget,
-  type NasaWidgets,
 } from "../../../../../store/nasaSlice";
+import type { NasaWidgets } from "../../../../../store/interfaces/interfaces";
 import { useEffect } from "react";
 
 import WidgetContainer from "./SubWidget/widgets_container";

@@ -1,6 +1,6 @@
-const KpiElement : React.FC =  () =>{
+const GithubElement : React.FC =  () =>{
     return <></>
 }
 
 
-export default KpiElement
+export default GithubElement

@@ -22,6 +22,7 @@ const ApodWidget: React.FC<IApodWidget> = ({ data, error, loading }) => {
     return <>Caricamento...</>;
   }
 
+
   return (
     <>
       <div className="flex justify-between items-center mb-2 text-sm  dark:text-gray-400">
@@ -34,11 +35,17 @@ const ApodWidget: React.FC<IApodWidget> = ({ data, error, loading }) => {
         {title}
       </p>
       <div className="relative rounded-2xl mb-3 w-full max-w-[12rem] aspect-square mx-auto overflow-hidden shadow-lg">
-        <img
+         <embed
           className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
           src={url}
-          alt={title}
         />
+        {/* <img
+          className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+          src={url}
+          loading="lazy"
+          decoding="async"
+          alt={title}
+        /> */}
         <div className="absolute inset-0 bg-black/20 pointer-events-none"></div>
       </div>
       <p className="text-black-500 dark:text-gray-300 text-sm leading-relaxed line-clamp-3 overflow-ellipsis">

@@ -1,11 +1,147 @@
 import type React from "react";
-
+import GithubService from "../../../../../services/github-service";
+import { useEffect, useState } from "react";
+import type { GithubRepo } from "../../../../../mappers/githubMapper";
 const GithubWidget: React.FC = () => {
+  /**
+   * First iteration just for training purpose.
+   */
+
+  type githubSteps  = 1 | 2
+ 
+
+  const [trendingRepos, setTrendingRepos] = useState<GithubRepo[]>([]);
+  const [selectedRepo, setSelectedRepo] = useState<{
+    repo: GithubRepo;
+    stats: { [key: string]: any };
+  }>();
+  const [step, setStep] = useState<githubSteps>(1);
+  const { get_trending_repos, get_repo_trend } = GithubService();
+
+  useEffect(() => {
+    get_repos();
+  }, []);
+
+  const getRepoDetails = async (repo: GithubRepo) => {
+    const repodata = await get_repo_trend(repo.full_name);
+    if (repodata) {
+      setSelectedRepo({ repo: repo, stats: repodata.repoDetails });
+      setStep(2);
+    }
+  };
+
+  const get_repos = async () => {
+    const data = await get_trending_repos();
+    if (!data.trendingRepos) {
+      return;
+    }
+    setTrendingRepos(data?.trendingRepos);
+  };
+
+
+  const renderCurrentStep = () =>{
+    if(!step){
+      return <></>
+    }
+
+    switch(step){
+      case 1: 
+        return step1();
+      case 2:
+        return step2()
+    }
+  }
+
+
+  const step1 = () => {
+    return (
+      <>
+        <h3 className="text-xl font-semibold px-4">
+          Github most popular repos
+        </h3>
+        <ul className="grid lg:grid-cols-1 gap-4 px-2 py-2 overflow-y-scroll overflow-x-scroll  max-h-100">
+          {trendingRepos?.map((repo: GithubRepo) => (
+            <li
+              key={repo.html_url}
+              className="border border-gray-200 rounded-xl p-4 shadow hover:shadow-lg transition-shadow duration-200 bg-white flex flex-col space-y-3"
+            >
+              <div className="flex items-center justify-between">
+                <a
+                  href={repo.html_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-lg font-semibold text-blue-600 hover:underline"
+                >
+                  {repo.full_name}
+                </a>
+                {repo.language && (
+                  <span className="text-sm px-2 py-1 bg-gray-100 rounded-full text-gray-700">
+                    {repo.language}
+                  </span>
+                )}
+              </div>
+              {repo.description && (
+                <p className="text-gray-600 text-sm line-clamp-3">
+                  {repo.description}
+                </p>
+              )}
+              <div className="flex items-center justify-between text-sm text-gray-500">
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-1">
+                    ⭐ <span>{repo.stargazers_count}</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    🍴 <span>{repo.forks_count}</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    ❗ <span>{repo.open_issues_count}</span>
+                  </div>
+                </div>
+                <span className="text-xs">
+                  {new Date(repo.updated_at).toLocaleDateString()}
+                </span>
+              </div>
+
+              {/* Owner */}
+              <div className="flex items-center space-x-2 mt-2">
+                <img
+                  src={repo.owner_avatar_url}
+                  alt={repo.owner_login}
+                  loading="lazy"
+                  className="w-8 h-8 rounded-full"
+                />
+                <span className="text-gray-700 text-sm font-medium">
+                  {repo.owner_login}
+                </span>
+                <button
+                  className="px-3 py-2 rounded-md text-white font-bold text-xs 
+             bg-gradient-to-r from-indigo-500 to-indigo-700
+             shadow-md hover:from-indigo-600  hover:to-indigo-900
+             active:scale-95 transition-all duration-300 cursor-pointer"
+                  onClick={() => getRepoDetails(repo)}
+                >
+                  {" "}
+                  Statistics
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </>
+    );
+  };
+
+  const step2 = () => {
+    return <>
+     <b> {selectedRepo?.repo.full_name} statistics</b>
+    </>
+  };
+
+  console.log(trendingRepos);
   return (
     <>
-      <div className="col-span-1 rounded-lg p-6 shadow-lg">
-        <h3 className="text-xl font-semibold ">GithubWidget</h3>
-        <p className="text-gray-400 mt-2">standard description.</p>
+      <div className="col-span-1 rounded-lg p-6 shadow-lg ">
+        {renderCurrentStep()}
       </div>
     </>
   );
