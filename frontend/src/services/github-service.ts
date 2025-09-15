@@ -1,22 +1,4 @@
-/**
- * Service that get datas
- */
-
 import { githubReposMapper } from "../mappers/githubMapper";
-
-/**
- * Trending repo: 
- * https://api.github.com/search/repositories?q=stars:%3E1000&sort=stars&order=desc
- 
- **/
-/**
- *  Flusso mostro le repo + trending.
- *  Quando poi successivamente l'utente clicca su una di questa repo come oggetto
- *  allora vado a fare una chiamata all'altro endpoint che mi andrà a restituire i dati per poter
- *  realizzare un grafico dinamico e interattivos
- *
- * GET https://api.github.com/repos/{owner}/{repo}/languages
- */
 
 const GithubService = () => {
   // Trending repo
@@ -39,10 +21,11 @@ const GithubService = () => {
   };
 
   const get_repo_trend = async (repoName: string) => {
+    const [owner, repo] = repoName.split("/");
 
-    const [owner, repo ] = repoName.split('/')
-
-    const repo_detail_url = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/languages`;
+    const repo_detail_url = `https://api.github.com/repos/${encodeURIComponent(
+      owner
+    )}/${encodeURIComponent(repo)}/languages`;
     try {
       const res = await fetch(repo_detail_url, {
         method: "GET",
@@ -62,7 +45,28 @@ const GithubService = () => {
     }
   };
 
-  return { get_trending_repos, get_repo_trend };
+  const get_user_activity = async (username: string) => {
+    const url = `https://api.github.com/users/${username}/events/public`;
+    try {
+      const res = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
+        },
+      });
+      const data = await res.json();
+      const status = res.status;
+      if (data && status === 200) {
+        return { repoDetails: data, status: status, error: false };
+      } else {
+        return { status: status, error: true };
+      }
+    } catch (error) {
+      return { error: true };
+    }
+  };
+
+  return { get_trending_repos, get_repo_trend, get_user_activity };
 };
 
 export default GithubService;

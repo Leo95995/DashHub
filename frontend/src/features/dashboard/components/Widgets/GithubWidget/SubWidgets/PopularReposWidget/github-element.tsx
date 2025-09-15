@@ -1,6 +1,6 @@
 import PieChart from "./components/PieChart";
-import { populateGithubPiechart } from "../../../../../utils/github-utils";
-import type { GithubData } from "./interfaces/interface";
+import { populateGithubPiechart } from "../../../../../../../utils/github-utils";
+import type { GithubData } from "../../interfaces/interface";
 
 const GithubElement: React.FC<GithubData> = ({ object }) => {
   if (!object) {

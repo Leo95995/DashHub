@@ -1,15 +1,13 @@
 import { useState } from "react";
 
-import type { NasaWidgets } from "../../../../../../store/interfaces/interfaces";
-import GenericModal from "../../../../../../components/modal/modal";
+import GenericModal from "../../../../components/modal/modal";
+import type { WidgetSwitcher } from "./types";
 
-interface INasaSwitcher {
-  changeSelectedWidget: (newWidget: NasaWidgets) => void;
-}
-
-const Switcher: React.FC<INasaSwitcher> = ({ changeSelectedWidget }) => {
+const Switcher: React.FC<WidgetSwitcher> = ({
+  changeSelectedWidget,
+  widgetList,
+}) => {
   const [open, setOpen] = useState<boolean>(false);
-  const widgetList: NasaWidgets[] = ["apod", "neows", "rover"];
 
   const handleSelectWidget = () => {
     setOpen((prev) => !prev);

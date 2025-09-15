@@ -1,5 +1,5 @@
 import type { IChartData } from "../features/dashboard/components/Widgets/GithubWidget";
-import type { GithubData } from "../features/dashboard/components/Widgets/GithubWidget/github-element";
+import type { GithubData } from "../features/dashboard/components/Widgets/GithubWidget/SubWidgets/PopularReposWidget/github-element";
 import { generateDistinctColors } from "./generic-utils";
 
 //  Reference for piechart data

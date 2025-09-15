@@ -34,8 +34,6 @@ export interface IFilters {
  *  -------------- NASA INTERFACES ----------------------
  */
 
-export type NasaWidgets = "apod" | "rover"| "neows"
-
 
 export interface NasaItemStatus<T>{
   data: T | T [] // Thats pretty flexible. but it requires more check
