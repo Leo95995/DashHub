@@ -11,6 +11,17 @@ export interface GithubRepo {
   owner_avatar_url: string;
 }
 
+// Interface for user activity mapped result.
+export interface IUserActivityData {
+  actor_login: string;
+  actor_avatar_url: string;
+  repo_name: string;
+  repo_url: string;
+  created_at: string;
+  org_login: string;
+  org_url: string;
+}
+
 export const githubReposMapper = (repos: any[]) => {
   const github_repos_mapped: GithubRepo[] = [];
   for (const repo of repos) {
@@ -31,4 +42,22 @@ export const githubReposMapper = (repos: any[]) => {
   }
 
   return github_repos_mapped;
+};
+
+export const userActivityMapper = (userActivityData: any[]) => {
+  const user_activity = userActivityData[0];
+  if (userActivityData[0]) {
+    let repo_result: IUserActivityData = {
+      actor_login: user_activity.actor.login,
+      actor_avatar_url: user_activity.actor.avatar_url,
+      repo_name: user_activity.repo.name,
+      repo_url: user_activity.repo.url,
+      created_at: user_activity.created_at,
+      org_login: user_activity.org.login,
+      org_url: user_activity.org.url,
+    };
+    return repo_result;
+  } else {
+    return;
+  }
 };

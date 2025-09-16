@@ -4,35 +4,48 @@ import type { GithubRepo } from "../../../../../../../mappers/githubMapper";
 import { BadgeAlert, GitFork, Star } from "lucide-react";
 import type { githubSteps } from "../../interfaces/interface";
 import GithubElement from "./github-element";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTrendingRepos, fetchRepoTrend } from "../../../../../../../store/githubSlice";
+
+import { setSelectedUserRepo } from "../../../../../../../store/githubSlice";
 
 const PopularReposWidget: React.FC = () => {
   const [trendingRepos, setTrendingRepos] = useState<GithubRepo[]>([]);
-  const [selectedRepo, setSelectedRepo] = useState<{
-    repo: GithubRepo;
-    stats: { [key: string]: any };
-  }>();
+  // const [selectedRepo, setSelectedRepo] = useState<{
+  //   repo: GithubRepo;
+  //   stats: { [key: string]: any };
+  // }>();
+
+  const dispatch = useDispatch();
   const [step, setStep] = useState<githubSteps>(1);
-  const { get_trending_repos, get_repo_trend } = GithubService();
+  const { get_trending_repos, get_repo_trend, get_user_activity } = GithubService();
+  // Trending repositories
+  const trending_repositories = useSelector((state : any)=> state.github.trending_repos_data)
+  const { data: trendingData, loading: loadTrending, error:errorTrending } = trending_repositories
+  const selectedRepo = useSelector((state : any)=> state.github.repo_data)
+  // Selected r
+  const { data: repoData,  loading: loadRepo, error: errorRepo } = selectedRepo;
+
 
   useEffect(() => {
-    get_repos();
+    dispatch(fetchTrendingRepos() as any);
   }, []);
 
   const getRepoDetails = async (repo: GithubRepo) => {
-    const repodata = await get_repo_trend(repo.full_name);
-    if (repodata) {
-      setSelectedRepo({ repo: repo, stats: repodata.repoDetails });
+    await dispatch(fetchRepoTrend(repo.full_name ) as any);
+    if (repoData) {
+      setSelectedUserRepo({ repo: repo, stats:repoData.stats });
       setStep(2);
     }
   };
 
-  const get_repos = async () => {
-    const data = await get_trending_repos();
-    if (!data.trendingRepos) {
-      return;
-    }
-    setTrendingRepos(data?.trendingRepos);
-  };
+  // const get_repos = async () => {
+  //   const data = await get_trending_repos();
+  //   if (!data.trendingRepos) {
+  //     return;
+  //   }
+  //   setTrendingRepos(data?.trendingRepos);
+  // };
 
   const renderCurrentStep = () => {
     if (!step) {
@@ -47,6 +60,14 @@ const PopularReposWidget: React.FC = () => {
     }
   };
 
+
+  // chiamata valida
+  const getUserActivity =  async(username: string) => {
+    const user = await get_user_activity('leo95995');
+
+    console.log(user);
+  }
+
   const step1 = () => {
     return (
       <>
@@ -54,7 +75,7 @@ const PopularReposWidget: React.FC = () => {
           Github most popular repos
         </h3>
         <ul className="grid lg:grid-cols-1 gap-4 px-2 py-2 overflow-y-scroll overflow-x-scroll  max-h-100">
-          {trendingRepos?.map((repo: GithubRepo) => (
+          {trendingData?.map((repo: GithubRepo) => (
             <li
               key={repo.html_url}
               className="border border-gray-200 rounded-xl p-4 shadow hover:shadow-lg transition-shadow duration-200 bg-white flex flex-col space-y-3"
@@ -103,7 +124,7 @@ const PopularReposWidget: React.FC = () => {
                     loading="lazy"
                     className="w-8 h-8 rounded-full"
                   />
-                  <span className="text-gray-700 text-sm font-medium">
+                  <span  onClick={()=>getUserActivity(repo.owner_login)} className="text-gray-700 cursor-pointer hover:text-blue-600 hover:underline text-sm font-medium">
                     {repo.owner_login}
                   </span>
                 </div>
@@ -139,9 +160,9 @@ const PopularReposWidget: React.FC = () => {
           >
             Go Back
           </button>
-          <b> {selectedRepo?.repo.full_name} Data</b>
+          <b> {repoData?.repo.full_name} Data</b>
         </div>
-        <GithubElement object={selectedRepo?.stats ?? {}} />
+        <GithubElement object={repoData?.stats ?? {}} />
       </>
     );
   };

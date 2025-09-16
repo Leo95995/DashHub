@@ -1,4 +1,4 @@
-import { githubReposMapper } from "../mappers/githubMapper";
+import { githubReposMapper, userActivityMapper } from "../mappers/githubMapper";
 
 const GithubService = () => {
   // Trending repo
@@ -9,6 +9,7 @@ const GithubService = () => {
       const data = await res.json();
       const status = res.status;
 
+      // map datas to 
       const mappedRepos = await githubReposMapper(data.items);
       if (data && status === 200) {
         return { trendingRepos: mappedRepos, status: status, error: false };
@@ -35,6 +36,7 @@ const GithubService = () => {
       });
       const data = await res.json();
       const status = res.status;
+
       if (data && status === 200) {
         return { repoDetails: data, status: status, error: false };
       } else {
@@ -56,8 +58,10 @@ const GithubService = () => {
       });
       const data = await res.json();
       const status = res.status;
+      const user_activity= userActivityMapper(data)
+
       if (data && status === 200) {
-        return { repoDetails: data, status: status, error: false };
+        return { repoDetails: user_activity, status: status, error: false };
       } else {
         return { status: status, error: true };
       }

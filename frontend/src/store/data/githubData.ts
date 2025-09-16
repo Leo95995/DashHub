@@ -1,0 +1,35 @@
+import type { GithubRepo, IUserActivityData } from "../../mappers/githubMapper";
+import type { ItemStatus } from "../interfaces/interfaces";
+
+/**
+ * DATA FOR GITHUB SERVICES
+ */
+const trending_repos_data: ItemStatus<GithubRepo[]> = {
+  data: [],
+  loading: false,
+  error: null,
+};
+
+export interface SelectedGithubRepo {
+  repo: GithubRepo;
+  stats: { [key: string]: any };
+}
+
+const repo_data: ItemStatus<any> = {
+  data: { repo: {} as GithubRepo, stats: {} as any },
+  loading: false,
+  error: "",
+};
+
+const userActivityData: ItemStatus<IUserActivityData> = {
+  data: {} as IUserActivityData,
+  loading: false,
+  error: null,
+};
+
+// Exported initial state
+export const initialState = {
+  trending_repos_data,
+  repo_data,
+  userActivityData,
+};

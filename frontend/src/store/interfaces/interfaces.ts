@@ -1,3 +1,13 @@
+import type { GithubWidgets } from "../../features/dashboard/components/widgetSwitcher/types";
+
+// Flexible so that can be used everywhere
+
+export interface ItemStatus<T>{
+  data: T | T [] 
+  loading: boolean
+  error: string | null
+}
+
 export type IGlobalAlertStatus = "error" | "success" | "warn" | "";
 
 export interface IGlobalAlert {
@@ -5,10 +15,6 @@ export interface IGlobalAlert {
   message: string;
   description: string;
 }
-/**
- * Filters Slice Interfaces
- */
-
 export interface IFilters {
   weatherFilters: {
     expanded: boolean;
@@ -29,18 +35,11 @@ export interface IFilters {
     crypto: boolean;
   };
 }
-
 /**
  *  -------------- NASA INTERFACES ----------------------
  */
 
-
-export interface NasaItemStatus<T>{
-  data: T | T [] // Thats pretty flexible. but it requires more check
-  loading: boolean
-  error: string | null
-}
-// --------------- NASA APOD WIDGET ---------------------
+// ---------------1- NASA APOD WIDGET ---------------------
 
 export interface INasaApodData {
   date: Date;
@@ -52,7 +51,7 @@ export interface INasaApodData {
   url: string;
 }
 
-// -------------- NASA NEOWS WIDGET -------------------
+// --------------2- NASA NEOWS WIDGET -------------------
 
 export interface INeoWsData {
   key: number;
@@ -64,7 +63,7 @@ export interface INeoWsData {
   close_approach_date: string;
 }
 
-// -------------- NASA ROVER WIDGET -------------------
+// --------------3- NASA ROVER WIDGET -------------------
 
 export interface RoverDetails {
   id: number
@@ -88,8 +87,21 @@ export interface Rover {
   launch_date: string
   status: string
 }
-//  PARTIALS 
+//  PARTIALS  NASA
 
 export type PartialApod = Partial<INasaApodData>;
 export type PartialNeoWs = Partial<INeoWsData[]>;
 export type PartialRover = Partial<RoverDetails[]>
+// END NASA 
+
+
+
+
+/**
+ * ----------------- GITHUB INTERFACES -------------------
+ */
+
+
+export interface GithubContainer {
+  widget: GithubWidgets;
+}

@@ -1,7 +1,10 @@
+/**
+ * Generic interfaces
+ */
+
 export interface ILayout {
 
 }
-
 // type for previous and next button
 
 export type ArrowKey = "prev" | "next";
