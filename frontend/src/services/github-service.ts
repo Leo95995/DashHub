@@ -61,7 +61,7 @@ const GithubService = () => {
       const user_activity= userActivityMapper(data)
 
       if (data && status === 200) {
-        return { repoDetails: user_activity, status: status, error: false };
+        return { user_activity: user_activity, status: status, error: false };
       } else {
         return { status: status, error: true };
       }

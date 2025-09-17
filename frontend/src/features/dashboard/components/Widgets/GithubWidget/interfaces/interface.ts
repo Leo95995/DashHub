@@ -15,4 +15,4 @@ export interface IChartData<T> {
   borderWidth: number;
 }
 
-export type githubSteps = 1 | 2;
+export type githubSteps = 1 | 2 | 'user-activity';

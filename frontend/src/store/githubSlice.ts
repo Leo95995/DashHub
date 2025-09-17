@@ -48,13 +48,13 @@ export const fetchUserActivity = createAsyncThunk(
   async (username: string, { rejectWithValue }) => {
     try {
       const user_activity = await get_user_activity(username);
-      if (user_activity.error || !user_activity.repoDetails) {
+      if (user_activity.error || !user_activity.user_activity) {
         return rejectWithValue("Errore nel recupero");
       }
-      const { repoDetails } = user_activity;
-      console.log(repoDetails);
+      const { user_activity:activity } = user_activity;
+      
       // const { neows_data } = repoDetails;
-      return repoDetails;
+      return activity;
     } catch (err) {
       return rejectWithValue("Error while fetching nasa data");
     }
