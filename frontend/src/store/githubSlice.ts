@@ -7,8 +7,12 @@ import GithubService from "../services/github-service";
 import { initialState } from "./data/githubData";
 import type { GithubRepo, IUserActivityData } from "../mappers/githubMapper";
 
-const { get_user_activity, get_repo_trend, get_trending_repos } =
-  GithubService();
+const {
+  get_user_activity,
+  get_repo_trend,
+  get_trending_repos,
+  get_random_user,
+} = GithubService();
 
 export const fetchTrendingRepos = createAsyncThunk(
   "github/fetchTrendingRepos",
@@ -48,18 +52,43 @@ export const fetchUserActivity = createAsyncThunk(
   async (username: string, { rejectWithValue }) => {
     try {
       const user_activity = await get_user_activity(username);
-      if (user_activity.error || !user_activity.user_activity) {
+      console.log(user_activity);
+      if (
+        user_activity.error ||
+        !user_activity.user_activity ||
+      ) {
         return rejectWithValue("Errore nel recupero");
       }
-      const { user_activity:activity } = user_activity;
-      
+      const { user_activity: activity } = user_activity;
+
       // const { neows_data } = repoDetails;
       return activity;
+    } catch (err) {
+      return rejectWithValue("Error while fetching user activity data");
+    }
+  }
+);
+
+
+  export const fetchRandomUser = createAsyncThunk(
+  "github/fetchRandomUser",
+  async (_ ,{ rejectWithValue }) => {
+    try {
+      const user = await get_random_user();
+      
+      if ( !user.random_user|| !user.error) {
+        return rejectWithValue("Errore nel recupero di un utente randomico");
+      }
+      const { random_user } = user;
+
+
+      return random_user;
     } catch (err) {
       return rejectWithValue("Error while fetching nasa data");
     }
   }
 );
+
 
 export const githubSlice = createSlice({
   name: "github",
@@ -68,13 +97,13 @@ export const githubSlice = createSlice({
     setUserActivityData(state, action) {
       state.userActivityData.data = action.payload;
     },
-    setTrendingRepoList(state, action){
-      state.trending_repos_data.data = action.payload as GithubRepo[]
+    setTrendingRepoList(state, action) {
+      state.trending_repos_data.data = action.payload as GithubRepo[];
     },
-    setSelectedUserRepo(state, action){
+    setSelectedUserRepo(state, action) {
       // repo e stats
       state.repo_data.data = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -116,8 +145,13 @@ export const githubSlice = createSlice({
         state.userActivityData.data = action.payload as IUserActivityData;
         state.userActivityData.error = null;
         state.userActivityData.loading = false;
+      })
+      .addCase(fetchUserActivity.rejected, (state, action) => {
+        state.userActivityData.loading = false;
+        state.userActivityData.error = action.error as any;
       });
   },
 });
 
-export const { setUserActivityData, setSelectedUserRepo, setTrendingRepoList } = githubSlice.actions;
+export const { setUserActivityData, setSelectedUserRepo, setTrendingRepoList } =
+  githubSlice.actions;

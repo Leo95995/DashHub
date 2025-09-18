@@ -9,7 +9,7 @@ const GithubService = () => {
       const data = await res.json();
       const status = res.status;
 
-      // map datas to 
+      // map datas to
       const mappedRepos = await githubReposMapper(data.items);
       if (data && status === 200) {
         return { trendingRepos: mappedRepos, status: status, error: false };
@@ -58,7 +58,7 @@ const GithubService = () => {
       });
       const data = await res.json();
       const status = res.status;
-      const user_activity= userActivityMapper(data)
+      const user_activity = userActivityMapper(data);
 
       if (data && status === 200) {
         return { user_activity: user_activity, status: status, error: false };
@@ -70,7 +70,30 @@ const GithubService = () => {
     }
   };
 
-  return { get_trending_repos, get_repo_trend, get_user_activity };
+  const get_random_user = async () => {
+    try {
+      const randomId = Math.floor(Math.random() * 500000000);
+      const res = await fetch(
+        `https://api.github.com/users?since=${randomId}&per_page=1`
+      );
+      const data = await res.json();
+      const status = res.status;
+      if (data && status === 200) {
+        return { random_user: data[0], status: status, error: false };
+      } else {
+        return { status: status, error: true };
+      }
+    } catch (error) {
+      return { error: true };
+    }
+  };
+
+  return {
+    get_trending_repos,
+    get_repo_trend,
+    get_user_activity,
+    get_random_user,
+  };
 };
 
 export default GithubService;

@@ -29,3 +29,23 @@ export const generateDistinctColors = (count: number, alpha = 0.7): string[] => 
 
   return colors;
 };
+
+
+/**
+ * 
+ * we pass a function has a cb function . the delay , is the time by which will be called the func.
+ * then we have a timer.
+ * when the user stop writing for the same amount of time of the timeout it will trigger the funct
+ * 
+ * @param func 
+ * @param delay 
+ * @returns 
+ */
+
+export const debounce = (func: any, delay: any) => {
+  let timeoutId: number | undefined;
+  return (...args: any) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func(...args), delay);
+  };
+}

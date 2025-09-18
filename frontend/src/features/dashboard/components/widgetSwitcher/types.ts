@@ -5,7 +5,7 @@ export interface WidgetSwitcher {
 
 export type NasaWidgets  =  "apod" | "rover"| "neows"
 
-export type GithubWidgets = 'repos' | 'user-activity'
+export type GithubWidgets = 'repos' | 'user-activity'| 'Random User'
 
 export type WidgetTypes  = NasaWidgets | GithubWidgets
 
