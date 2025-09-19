@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { fn } from "storybook/test";
 
 import SideBar from "../../components/layout/PrivateLayout/SideBar";
 

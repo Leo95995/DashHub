@@ -53,10 +53,7 @@ export const fetchUserActivity = createAsyncThunk(
     try {
       const user_activity = await get_user_activity(username);
       console.log(user_activity);
-      if (
-        user_activity.error ||
-        !user_activity.user_activity ||
-      ) {
+      if (user_activity.error || !user_activity.user_activity) {
         return rejectWithValue("Errore nel recupero");
       }
       const { user_activity: activity } = user_activity;
@@ -69,26 +66,24 @@ export const fetchUserActivity = createAsyncThunk(
   }
 );
 
-
-  export const fetchRandomUser = createAsyncThunk(
+export const fetchRandomUser = createAsyncThunk(
   "github/fetchRandomUser",
-  async (_ ,{ rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const user = await get_random_user();
-      
-      if ( !user.random_user|| !user.error) {
+      console.log(user);
+
+      if (!user.random_user || user.error) {
         return rejectWithValue("Errore nel recupero di un utente randomico");
       }
       const { random_user } = user;
-
-
+  
       return random_user;
     } catch (err) {
       return rejectWithValue("Error while fetching nasa data");
     }
   }
 );
-
 
 export const githubSlice = createSlice({
   name: "github",
@@ -149,6 +144,20 @@ export const githubSlice = createSlice({
       .addCase(fetchUserActivity.rejected, (state, action) => {
         state.userActivityData.loading = false;
         state.userActivityData.error = action.error as any;
+      })
+        .addCase(fetchRandomUser.pending, (state) => {
+        state.randomUserData.loading = true;
+        state.randomUserData.error = null;
+      })
+      .addCase(fetchRandomUser.fulfilled, (state, action) => {
+        state.randomUserData.data = action.payload;
+        state.randomUserData.error = null;
+        state.randomUserData.loading = false;
+      })
+      .addCase(fetchRandomUser.rejected, (state, action) => {
+        state.randomUserData.loading = false;
+        state.randomUserData.error = action.error as any;
+        state.randomUserData.data = {}
       });
   },
 });

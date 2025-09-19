@@ -27,9 +27,17 @@ const userActivityData: ItemStatus<IUserActivityData> = {
   error: null,
 };
 
+const randomUserData: ItemStatus<any> = {
+  data: {} as any,
+  loading: false,
+  error: null,
+};
+
+
 // Exported initial state
 export const initialState = {
   trending_repos_data,
   repo_data,
   userActivityData,
+  randomUserData
 };

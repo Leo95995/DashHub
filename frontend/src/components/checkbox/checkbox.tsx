@@ -6,7 +6,7 @@ const CustomCheckbox: React.FC<ICheckbox> = ({ option, onChange, selectedList })
   return (
     <label
       htmlFor={option.value}
-      className="flex items-center gap-3 cursor-pointer select-none"
+      className="flex items-center gap-3 cursor-pointer border-transparent  border-b-2 select-none hover:brightness-120 hover:font-medium"
     >
       <input
         id={option.value}
@@ -22,7 +22,7 @@ const CustomCheckbox: React.FC<ICheckbox> = ({ option, onChange, selectedList })
           flex items-center justify-center
           transition-colors duration-200
           peer-checked:bg-blue-500 peer-checked:border-blue-500
-          peer-focus:ring-2 peer-focus:ring-blue-400
+          peer-focus:ring-2 peer-focus:ring-blue-400 hover:bg-blue-800
         `}
       >
         {selected && (

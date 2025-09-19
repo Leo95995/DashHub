@@ -7,7 +7,6 @@ import type { IUserActivityData } from "../../../../../../../mappers/githubMappe
 import type { ItemStatus } from "../../../../../../../store/interfaces/interfaces";
 import UserActivityCard from "../../components/user-activity-card";
 import { Infinity } from "lucide-react";
-import { ArrowBack } from "@mui/icons-material";
 /**
  *
  * This widget allow users to research a github repo

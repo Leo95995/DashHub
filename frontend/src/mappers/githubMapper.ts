@@ -44,6 +44,31 @@ export interface IUserActivityData {
   org_avatar_url?: string;
 }
 
+
+export interface RandomUserProps {
+  login: string;
+  id: number;
+  node_id: string;
+  avatar_url: string;
+  gravatar_id: string;
+  url: string;
+  html_url: string;
+  followers_url: string;
+  following_url: string;
+  gists_url: string;
+  starred_url: string;
+  subscriptions_url: string;
+  organizations_url: string;
+  repos_url: string;
+  events_url: string;
+  received_events_url: string;
+  type: string;
+  user_view_type: string;
+  site_admin: boolean;
+}
+
+
+
 export const githubReposMapper = (repos: any[]) => {
   const github_repos_mapped: GithubRepo[] = [];
 
@@ -73,37 +98,27 @@ export const userActivityMapper = (userActivityData: any[]) => {
   console.log(userActivityData[0]);
   if (userActivityData[0]) {
     let repo_result: IUserActivityData = {
-      // Utente
       actor_login: user_activity.actor.login,
       actor_avatar_url: user_activity.actor.avatar_url,
       actor_url: user_activity.actor.url,
       actor_type: user_activity.actor.type,
       site_admin: user_activity.actor.site_admin,
-
-      // Evento
       event_type: user_activity.type,
       created_at: user_activity.created_at,
       public: user_activity.public,
-
-      // Repository originale
       repo_name: user_activity.repo.name,
       repo_url: user_activity.repo.url,
       repo_description: user_activity.payload?.forkee?.description || "",
       repo_language: user_activity.payload?.forkee?.language || null,
-      repo_stargazers_count:
-        user_activity.payload?.forkee?.stargazers_count || 0,
+      repo_stargazers_count: user_activity.payload?.forkee?.stargazers_count || 0,
       repo_forks_count: user_activity.payload?.forkee?.forks_count || 0,
       repo_size_kb: user_activity.payload?.forkee?.size || 0,
       repo_default_branch: user_activity.payload?.forkee?.default_branch || "",
       repo_license_name: user_activity.payload?.forkee?.license?.name || "",
       repo_homepage: user_activity.payload?.forkee?.homepage || "",
-
-      // Fork creato dall'utente (se presente)
       fork_name: user_activity.payload?.forkee?.full_name || "",
       fork_url: user_activity.payload?.forkee?.html_url || "",
       fork_private: user_activity.payload?.forkee?.private || false,
-
-      // Organizzazione
       org_login: user_activity.org?.login || "",
       org_url: user_activity.org?.url || "",
       org_avatar_url: user_activity.org?.avatar_url || "",

@@ -1,6 +1,6 @@
 import type {
   INeoWsData,
-  NasaItemStatus,
+  ItemStatus,
   RoverDetails,
 
 } from "../../../../../../store/interfaces/interfaces";
@@ -9,12 +9,12 @@ import type { IApodWidget } from "./nasa_apod";
 import ApodWidget from "./nasa_apod";
 import NeoWsWidget from "./neows";
 import MarsRoverWidget from "./mars-rover.tsx/mars_rover";
-import type { NasaWidgets } from "../../../../../../store/interfaces/interfaces";
+import type { NasaWidgets } from "../../../widgetSwitcher/types";
 
 interface IWidgetContainer {
   apodStatus: IApodWidget;
-  neoWStatus: NasaItemStatus<INeoWsData[]>;
-  roverStatus: NasaItemStatus<RoverDetails[]>
+  neoWStatus: ItemStatus<INeoWsData[]>;
+  roverStatus: ItemStatus<RoverDetails[]>
   widgetSelected: NasaWidgets;
 }
 
