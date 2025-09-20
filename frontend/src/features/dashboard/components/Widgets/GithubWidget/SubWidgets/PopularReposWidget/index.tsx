@@ -3,7 +3,7 @@ import type {
   GithubRepo,
   IUserActivityData,
 } from "../../../../../../../mappers/githubMapper";
-import { BadgeAlert, GitFork, Star } from "lucide-react";
+import { BadgeAlert, Ban, GitFork, Star } from "lucide-react";
 import type { githubSteps } from "../../interfaces/interface";
 import GithubElement from "./github-element";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +16,7 @@ import { setSelectedUserRepo } from "../../../../../../../store/githubSlice";
 import { ArrowBack } from "@mui/icons-material";
 
 import UserActivityCard from "../../components/user-activity-card";
+import ReactLoader from "../../../../../../../components/loader";
 
 const PopularReposWidget: React.FC = () => {
   const dispatch = useDispatch();
@@ -34,7 +35,6 @@ const PopularReposWidget: React.FC = () => {
   const { data: repoData, loading: loadRepo, error: errorRepo } = selectedRepo;
   // User activities
 
-  
   const userActivity = useSelector(
     (state: any) =>
       state.github.userActivityData as {
@@ -43,9 +43,6 @@ const PopularReposWidget: React.FC = () => {
         error: string | null;
       }
   );
-  
-
-
 
   useEffect(() => {
     dispatch(fetchTrendingRepos() as any);
@@ -74,21 +71,43 @@ const PopularReposWidget: React.FC = () => {
     }
   };
 
-
-
-const renderUserActivity = () => {
-
-
-  return (
-    <>
-      <div> <button className="cursor-pointer" onClick={()=> setStep(1)}> <ArrowBack/></button></div>
-      <UserActivityCard item={userActivity}/>
+  const renderUserActivity = () => {
+    return (
+      <>
+        <div>
+          {" "}
+          <button className="cursor-pointer" onClick={() => setStep(1)}>
+            {" "}
+            <ArrowBack />
+          </button>
+        </div>
+        <UserActivityCard item={userActivity} />
       </>
-  );
-};
-
+    );
+  };
 
   const step1 = () => {
+    if (loadTrending) {
+      return (
+        <>
+          <div className="flex flex-col gap-1 items-center justify-center transition h-40 duration-300">
+            {" "}
+            <ReactLoader /> Loading trending repositories
+          </div>
+        </>
+      );
+    }
+
+    if (errorTrending) {
+      return (
+        <div className="flex flex-col items-center justify-center transition duration-300 h-40 gap-2">
+          <Ban />
+          <div>{errorTrending}</div>
+          <div> Error while fetching trending repositories</div>
+        </div>
+      );
+    }
+
     return (
       <>
         <h3 className="text-xl font-semibold py-2 px-2">

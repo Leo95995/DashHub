@@ -50,6 +50,11 @@ const UserActivityCard: React.FC<{ item: ItemStatus<IUserActivityData> }> = ({
   };
 
   const renderUserActivity = () => {
+
+    if(errorUser || loadUser){
+      return <></>
+    }
+
     if (!Object.keys(userActivityData)?.length) {
       return (
         <div className="flex flex-col w-full h-50 items-center justify-center dark:text-white text-gray-700 font-bold">
@@ -61,9 +66,7 @@ const UserActivityCard: React.FC<{ item: ItemStatus<IUserActivityData> }> = ({
 
     return (
       <>
-        {" "}
         <div>
-          {" "}
           <img
             src={userActivityData.actor_avatar_url}
             alt={userActivityData.actor_login}
