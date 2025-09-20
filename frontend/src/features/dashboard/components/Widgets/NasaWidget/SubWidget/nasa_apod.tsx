@@ -33,12 +33,22 @@ const ApodWidget: React.FC<IApodWidget> = ({ data, error, loading }) => {
       <p className="text-center text-gray-700 dark:text-gray-300 mb-3 font-medium text-sm">
         {title}
       </p>
+      {/* It will show the image only if url is present */}
+
       <div className="relative rounded-2xl mb-3 w-full max-w-[12rem] aspect-square mx-auto overflow-hidden shadow-lg">
-        <img
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-          src={url}
-          alt={title}
-        />
+        {url ? (
+          <embed
+            className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+            src={url}
+          />
+        ) : (
+          <div className="items-center flex justify-center h-full px-4">
+            <span className="bg-gradient-to-br from-indigo-300 text-white  to-blue-600 shadow-2xl rounded-4xl flex justify-center items-center px-2 py-2">
+              No media available
+            </span>
+          </div>
+        )}
+
         <div className="absolute inset-0 bg-black/20 pointer-events-none"></div>
       </div>
       <p className="text-black-500 dark:text-gray-300 text-sm leading-relaxed line-clamp-3 overflow-ellipsis">

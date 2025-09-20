@@ -73,3 +73,4 @@ export interface LocationCoordinates {
 export interface LocalNames {
   [key: string]: string;
 }
+

@@ -19,7 +19,7 @@ const GenericModal: React.FC<IGenericModal> = ({ status, children, title }) => {
         <div className="flex justify-between items-center p-2 border-b">
           {title && <h2 className="font-semibold">{title}</h2>}
           <button
-            className="p-1 cursor-pointer border hover:bg-gray-200 rounded-md"
+            className="p-1 cursor-pointer border border-gray-100 hover:bg-gray-100 transition-all duration-100 rounded-md"
             onClick={() => setOpen(false)}
           >
             Close

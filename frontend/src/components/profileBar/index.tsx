@@ -1,4 +1,3 @@
-import { Search } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import GenericMenu from "../menu/genericMenu";
 import type { IMenuOption } from "../menu/interfaces";
@@ -31,10 +30,6 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded }) => {
         {expanded && (
           <>
             <p>userData</p>
-            <button >
-              <Search />
-            </button>
-            <button></button>
           </>
         )}
       </div>

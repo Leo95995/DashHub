@@ -5,14 +5,15 @@ import { weatherSlice } from "./weatherSlice";
 import { appSlice } from "./appSlice";
 import { filterSlice } from "./filterSlice";
 import { nasaSlice } from "./nasaSlice";
-
+import { githubSlice } from "./githubSlice";
 
 export const appStore = configureStore({
   reducer: {
     app: appSlice.reducer,
     weather: weatherSlice.reducer,
     filters: filterSlice.reducer,
-    nasa: nasaSlice.reducer
+    nasa: nasaSlice.reducer,
+    github: githubSlice.reducer
   },
 });
 
