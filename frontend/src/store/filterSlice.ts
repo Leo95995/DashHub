@@ -20,9 +20,9 @@ const initialFilterOptions: IFilters = {
     expanded: false,
   },
   widgetVisibility: {
-    weather: true,
-    github: true,
-    nasa: true,
+    weather: false,
+    github: false,
+    nasa: false,
     crypto: true,
   },
 };
