@@ -1,6 +1,9 @@
 export interface WidgetSwitcher {
   changeSelectedWidget: (newWidget: WidgetTypes) => void;
-  widgetList : WidgetTypes[]
+  widgetList : WidgetTypes[];
+  switcherTitle?: string;
+  switcherButtonText?: string;
+
 }
 
 export type NasaWidgets  =  "apod" | "rover"| "neows"

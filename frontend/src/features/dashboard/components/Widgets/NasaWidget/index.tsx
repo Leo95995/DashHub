@@ -38,7 +38,7 @@ const NasaWidget: React.FC = () => {
   return (
     <div className="relative min-w-64 min-h-110 col-span-1 rounded-2xl bg-gradient-to-br from-gray-200 via-gray-100 to-blue-50 dark:from-gray-800 dark:via-gray-700 dark:to-gray-900 p-4 shadow-2xl border border-gray-300 hover:scale-105 transform transition-all duration-300">
       <div>
-        <Switcher widgetList={nasa_widgets} changeSelectedWidget={changeSelectedWidget} />
+        <Switcher widgetList={nasa_widgets} changeSelectedWidget={changeSelectedWidget} switcherButtonText="Change Nasa Widget" />
         <WidgetContainer
           apodStatus={apodStatus}
           neoWStatus={neoWsStatus}

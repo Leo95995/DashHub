@@ -7,6 +7,7 @@ import {
   Home,
   Clock,
   Ban,
+  UserRound,
 } from "lucide-react";
 import ReactLoader from "../../../../../../components/loader";
 import type { IUserActivityData } from "../../../../../../mappers/githubMapper";
@@ -58,7 +59,7 @@ const UserActivityCard: React.FC<{ item: ItemStatus<IUserActivityData> }> = ({
     if (!Object.keys(userActivityData)?.length) {
       return (
         <div className="flex flex-col w-full h-50 items-center justify-center dark:text-white text-gray-700 font-bold">
-          <Ban />
+          <UserRound />
           No user selected
         </div>
       );
@@ -206,7 +207,7 @@ const UserActivityCard: React.FC<{ item: ItemStatus<IUserActivityData> }> = ({
 
   return (
     <>
-      <div className="flex items-center gap-4 mb-6">
+      <div className="flex items-center  gap-4 mb-6">
         {renderError()}
         {renderLoading()}
         {renderUserActivity()}

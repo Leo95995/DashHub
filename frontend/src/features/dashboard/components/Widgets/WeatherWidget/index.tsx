@@ -12,6 +12,7 @@ import { Wind, Droplet, Gauge } from "lucide-react";
 
 const WeatherWidget: React.FC = () => {
   const weatherData = useSelector((state: any) => state.weather);
+  console.log(weatherData);
 
   const { coordinates, weather, temperatureType, loading, error } = weatherData;
 
@@ -160,9 +161,10 @@ const WeatherWidget: React.FC = () => {
         weatherInfo?.main ?? "clear"
       )} overflow-hidden`}
     >
+       {renderLoading()}
       {renderError()}
       {renderWeather()}
-      {renderLoading()}
+  
     </div>
   );
 };

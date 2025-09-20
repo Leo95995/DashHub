@@ -68,7 +68,7 @@ const RandomUserWidget: React.FC = () => {
       );
     }
     return (
-      <div className="rounded-2xl min-h-40 py-6 min-w-fit transition-colors duration-300 ">
+      <div className="rounded-2xl min-h-40  transition-opacity duration-500 py-6 min-w-fit ">
         <div className="flex items-center space-x-4">
           <img
             src={data?.avatar_url}
@@ -161,7 +161,7 @@ const RandomUserWidget: React.FC = () => {
   return (
     <>
       <div className="flex flex-col">
-        <div className="items-center flex justify-center flex-col">
+        <div className="items-center flex justify-center gap-4 flex-col">
           <h2 className="font-bold text-2xl"> Random user widget</h2>
           <button
             onClick={fetchRandomUntilData}

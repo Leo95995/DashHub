@@ -36,14 +36,13 @@ const UserActivityWidget: React.FC = () => {
 
   return (
     <>
-      <div>
+      <div className="dark:text-white">
         <h2 className="text-xl font-bold dark:text-white text-gray-700">User search widget</h2>
       </div>
       <div className="py-4 flex justify-between">
         <InputSearch
           onChange={onSearchChange}
-          placeholder="Search user on github"
-        />
+          placeholder="Search user on github" isLoading={userActivity?.loading}/>
       </div>
       <div className="w-full max-w-4xl min-h-45 rounded-2xl overflow-auto transition-colors">
         <UserActivityCard item={userActivity} />
