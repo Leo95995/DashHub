@@ -74,14 +74,19 @@ const GithubService = () => {
     try {
       const randomId = Math.floor(Math.random() * 500000000);
       const res = await fetch(
-        `https://api.github.com/users?since=${randomId}&per_page=1`
+        `https://api.github.com/users?since=${randomId}&per_page=1`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
+          },
+        }
       );
       const data = await res.json();
       const status = res.status;
       if (data && status === 200) {
-
         console.log(data);
-        if(!data.length){
+        if (!data.length) {
           return { status: status, error: true };
         }
         return { random_user: data[0], status: status, error: false };

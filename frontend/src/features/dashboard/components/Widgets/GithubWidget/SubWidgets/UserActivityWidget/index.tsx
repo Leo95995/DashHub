@@ -34,21 +34,16 @@ const UserActivityWidget: React.FC = () => {
     handleSearch(e);
   };
 
-  const randomUser = () => {};
-
   return (
     <>
       <div>
-        <h2 className="text-xl font-bold">User search widget</h2>
+        <h2 className="text-xl font-bold dark:text-white text-gray-700">User search widget</h2>
       </div>
       <div className="py-4 flex justify-between">
         <InputSearch
           onChange={onSearchChange}
           placeholder="Search user on github"
         />
-        <button onClick={randomUser} className="border p-2 flex rounded-md">
-          Search Random <Infinity />
-        </button>
       </div>
       <div className="w-full max-w-4xl min-h-45 rounded-2xl overflow-auto transition-colors">
         <UserActivityCard item={userActivity} />

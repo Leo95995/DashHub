@@ -80,7 +80,7 @@ export const fetchRandomUser = createAsyncThunk(
   
       return random_user;
     } catch (err) {
-      return rejectWithValue("Error while fetching nasa data");
+      return rejectWithValue("Error while fetching random user data");
     }
   }
 );
@@ -156,7 +156,9 @@ export const githubSlice = createSlice({
       })
       .addCase(fetchRandomUser.rejected, (state, action) => {
         state.randomUserData.loading = false;
-        state.randomUserData.error = action.error as any;
+        // Passing the error as payload
+        console.log(action.payload);
+        state.randomUserData.error = action.payload as any;
         state.randomUserData.data = {}
       });
   },
