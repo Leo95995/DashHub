@@ -9,11 +9,18 @@ export interface ICryptoTrendings  {
   [key:string] : CryptoItem
 }
 
-interface ICryptoTrendResponse {
+export type ICryptoDetails  = Array<Array<Number>>;
 
+
+export interface ICryptoTopGainers { 
+   id: string,
+  name: string,
+  symbol: string,
+  image: "https://coin-images.coingecko.com/coins/images/1/large/bitcoin.png",
+  price: number,
+  change24h: number,        // % in 24h
+  marketCap: 1959280345049
 }
-
-interface ITopGainersAndLosers { }
 
 // Nothing goes mapped here.
 const cryptoTrendingMapper= (data: ICryptoTrendings) :  ICryptoTrendings| any => {
@@ -21,8 +28,36 @@ const cryptoTrendingMapper= (data: ICryptoTrendings) :  ICryptoTrendings| any =>
     return data as ICryptoTrendings
 }
 
+// Crypto details mapper
+const cryptoDetailsMapper = (data : any) => {
+    return data['prices'] as ICryptoDetails;
+}
+
+// crypto top gainers
+const cryptoTopGainersMapper = (data: any) :  ICryptoTopGainers[] => {
+  const crypto_gain_arr : ICryptoTopGainers[] = []
+
+   data.map((coin: any)=> {
+    const coinData: ICryptoTopGainers = {
+      id: coin.id,
+      name: coin.name,
+      symbol: coin.symbol,
+      image: coin.image,
+      price: coin.current_price,
+      change24h: coin.price_change_24h,
+      marketCap: coin.market_cap
+    }
+    crypto_gain_arr.push(coinData)
+
+   })
+
+
+   return crypto_gain_arr as ICryptoTopGainers[]
+}
 
 
 export const CryptoMappers = {
-    cryptoTrendingMapper
+    cryptoTrendingMapper,
+    cryptoDetailsMapper,
+    cryptoTopGainersMapper
 }

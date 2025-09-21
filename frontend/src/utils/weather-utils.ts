@@ -7,6 +7,10 @@ export const timestampToTime = (timestamp: number, timezoneOffset: number) => {
   const date = new Date((timestamp + timezoneOffset) * 1000);
   return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 };
+export const regularTimeStampToTime = (timestamp: number, timezoneOffset: number) => {
+  const date = new Date((timestamp + timezoneOffset));
+  return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+};
 
 export const getHoursAndMin = (timestamp: number) => {
   const date = new Date(timestamp * 1000);
