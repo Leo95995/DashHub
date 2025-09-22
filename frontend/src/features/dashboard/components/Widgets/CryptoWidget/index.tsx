@@ -18,9 +18,9 @@ const CryptoWidget: React.FC = () => {
 
 
   const getAllWidgetsData = async() =>{
-    await dispatch(fetchCryptoTrendings() as any)
-    await dispatch(fetchCryptoDetails() as any)
-    await dispatch(fetchTopGainers() as any)
+    // await dispatch(fetchCryptoTrendings() as any)
+    // await dispatch(fetchCryptoDetails() as any)
+    // await dispatch(fetchTopGainers() as any)
   }
 
 

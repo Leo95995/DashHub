@@ -4,11 +4,15 @@ import type {
   ICryptoDetails,
   ICryptoTopGainers,
 } from "../../mappers/cryptoMapper";
+import { fetchCryptoCurrenciesList } from "../cryptoSlice";
 import type { ItemStatus } from "../interfaces/interfaces";
 
-/**
- * DATA FOR GITHUB SERVICES
- */
+const currenciesList: ItemStatus<string> = {
+  data: [] as string[],
+  loading: false,
+  error: null,
+};
+
 const cryptoData: ItemStatus<ICryptoTrendings> = {
   data: {} as ICryptoTrendings,
   loading: false,
@@ -29,10 +33,44 @@ const crypto_top_data: ItemStatus<ICryptoTopGainers> = {
 
 const selectedWidget: CryptoWidgets = "Trending Cryptos";
 
+type currency = "eur" | "usd";
+
+interface ICryptoFilterData {
+  genericFilters: {
+    currency: currency;
+  };
+  cryptoTrendingFilters: {
+    ids: string[];
+  };
+  cryptoDetailFilters: {
+    days: string;
+    id: string; // The crypto currency name to take details
+  };
+}
+
+
+/**
+ * This datas then should be drilled down
+ */
+const filterData: ICryptoFilterData = {
+  genericFilters: {
+    currency: "eur"
+  },
+  cryptoTrendingFilters: {
+    ids: ["bitcoin", "ethereum", "cardano"],
+  },
+  cryptoDetailFilters: {
+    days: "1",
+    id: "bitcoin",
+  },
+};
+
 // Exported initial state
 export const initialState = {
+  currenciesList,
   cryptoData, // Data related to trending crypto
   crypto_details_data,
   crypto_top_data,
   selectedWidget,
+  filterData, // Handles all the filters details
 };

@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+// import { StrictMode } from "react"; Removed strict to avoid extra api calls
 import { createRoot } from "react-dom/client";
 import { appStore } from "./store/appStore.ts";
 import { BrowserRouter } from "react-router";
@@ -8,7 +8,6 @@ import "./styles/index.css";
 import App from "./App.tsx";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
     <ThemeProvider>
     <Provider store={appStore}>
       <BrowserRouter>
@@ -16,5 +15,4 @@ createRoot(document.getElementById("root")!).render(
       </BrowserRouter>
     </Provider>
     </ThemeProvider>
-  </StrictMode>
 );

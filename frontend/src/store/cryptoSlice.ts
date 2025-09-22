@@ -6,7 +6,28 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { initialState } from "./data/cryptoData";
 import CryptoService from "../services/crypto-service";
 
-const { getAllCryptosTrend, getCryptoDetails, getTopGainersAndLosers } = CryptoService();
+const {
+  getAllCryptoCurrencies,
+  getAllCryptosTrend,
+  getCryptoDetails,
+  getTopGainersAndLosers,
+} = CryptoService();
+
+export const fetchCryptoCurrenciesList = createAsyncThunk(
+  "cryptos/fetchCryptoCurrenciesList",
+  async (_, { rejectWithValue }) => {
+    try {
+      const currencyList = await getAllCryptoCurrencies();
+      if (currencyList.error || !currencyList.currencyList) {
+        return rejectWithValue("Error while fetching crytpto datas");
+      }
+      const { currencyList: crypto_currencies } = currencyList;
+      return crypto_currencies;
+    } catch (err) {
+      return rejectWithValue("Error while fetching crytpto datas");
+    }
+  }
+);
 
 export const fetchCryptoTrendings = createAsyncThunk(
   "cryptos/fetchCryptoTrendings",
@@ -17,7 +38,7 @@ export const fetchCryptoTrendings = createAsyncThunk(
         return rejectWithValue("Error while fetching crytpto datas");
       }
       const { trending_cryptos } = crypto_trendings;
-      return trending_cryptos ;
+      return trending_cryptos;
     } catch (err) {
       return rejectWithValue("Error while fetching crytpto datas");
     }
@@ -32,20 +53,18 @@ export const fetchCryptoDetails = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const cryptoDetails = await getCryptoDetails();
-      //  
+      //
       if (cryptoDetails.error || !cryptoDetails.crypto_details) {
         return rejectWithValue("Error while fetching crytpto datas");
       }
       const { crypto_details } = cryptoDetails;
       console.log(crypto_details);
-      return crypto_details ;
+      return crypto_details;
     } catch (err) {
       return rejectWithValue("Error while fetching crytpto datas");
     }
   }
 );
-
-
 
 export const fetchTopGainers = createAsyncThunk(
   "cryptos/fetchCryptoTopGainers",
@@ -56,31 +75,55 @@ export const fetchTopGainers = createAsyncThunk(
         return rejectWithValue("Error while fetching crytpto datas");
       }
       const { topGainers } = topGainersData;
-      return topGainers ;
+      return topGainers;
     } catch (err) {
       return rejectWithValue("Error while fetching crytpto datas");
     }
   }
 );
 
+/**
+ * Here i should Show the current filters. usend then by the services-
+ */
 
 export const cryptoSlice = createSlice({
   name: "crypto",
   initialState,
+
   reducers: {
-    setCryptoTrendings(state, action) {
-      state.cryptoData.data = action.payload;
+    setGenericCryptoFilters(state, action){
+      state.filterData.genericFilters = action.payload
     },
+    setCryptoTrendingFilters(state, action){
+      state.filterData.cryptoTrendingFilters = action.payload
+    },
+    setCryptoDetailFilters(state, action){
+      state.filterData.cryptoDetailFilters = action.payload
+    }
   },
   extraReducers: (builder) => {
     builder
+      // Crypto currencies list
+      .addCase(fetchCryptoCurrenciesList.pending, (state) => {
+        state.currenciesList.loading = true;
+        state.currenciesList.error = null;
+      })
+      .addCase(fetchCryptoCurrenciesList.fulfilled, (state, action) => {
+        state.currenciesList.data = action.payload;
+        state.currenciesList.error = null;
+        state.currenciesList.loading = false;
+      })
+      .addCase(fetchCryptoCurrenciesList.rejected, (state, action) => {
+        state.currenciesList.loading = false;
+        state.currenciesList.error = action.payload as string;
+      })
       // Trending cryptos
       .addCase(fetchCryptoTrendings.pending, (state) => {
         state.cryptoData.loading = true;
         state.cryptoData.error = null;
       })
       .addCase(fetchCryptoTrendings.fulfilled, (state, action) => {
-        state.cryptoData.data = action.payload 
+        state.cryptoData.data = action.payload;
         state.cryptoData.error = null;
         state.cryptoData.loading = false;
       })
@@ -88,12 +131,13 @@ export const cryptoSlice = createSlice({
         state.cryptoData.loading = false;
         state.cryptoData.error = action.payload as string;
       })
-       .addCase(fetchCryptoDetails.pending, (state) => {
+      // Crypto details
+      .addCase(fetchCryptoDetails.pending, (state) => {
         state.crypto_details_data.loading = true;
         state.crypto_details_data.error = null;
       })
       .addCase(fetchCryptoDetails.fulfilled, (state, action) => {
-        state.crypto_details_data.data = action.payload 
+        state.crypto_details_data.data = action.payload;
         state.crypto_details_data.error = null;
         state.crypto_details_data.loading = false;
       })
@@ -101,12 +145,13 @@ export const cryptoSlice = createSlice({
         state.crypto_details_data.loading = false;
         state.crypto_details_data.error = action.payload as string;
       })
-       .addCase(fetchTopGainers.pending, (state) => {
+      // Crypto top currencies
+      .addCase(fetchTopGainers.pending, (state) => {
         state.crypto_top_data.loading = true;
         state.crypto_top_data.error = null;
       })
       .addCase(fetchTopGainers.fulfilled, (state, action) => {
-        state.crypto_top_data.data = action.payload 
+        state.crypto_top_data.data = action.payload;
         state.crypto_top_data.error = null;
         state.crypto_top_data.loading = false;
       })
@@ -116,3 +161,5 @@ export const cryptoSlice = createSlice({
       });
   },
 });
+
+export const { setGenericCryptoFilters, setCryptoTrendingFilters, setCryptoDetailFilters  } = cryptoSlice.actions;
