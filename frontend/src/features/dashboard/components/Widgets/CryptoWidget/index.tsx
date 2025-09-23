@@ -5,7 +5,7 @@ import type { CryptoWidgets, WidgetTypes } from "../../widgetSwitcher/types";
 import { useEffect, useState } from "react";
 import { crypto_widgets } from "../../widgetSwitcher/datas";
 //  CRYPTO DATA
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // Fetch datas and set them
 import { fetchCryptoTrendings, fetchCryptoDetails, fetchTopGainers } from "../../../../../store/cryptoSlice";
 
@@ -16,9 +16,11 @@ const CryptoWidget: React.FC = () => {
   const [selectedWidget, setSelectedWidget] =
     useState<WidgetTypes>("Trending Cryptos");
 
+  const cryptoFilterData = useSelector((state: any)=> state.crypto.filterData)
+  console.log(cryptoFilterData);
 
   const getAllWidgetsData = async() =>{
-    // await dispatch(fetchCryptoTrendings() as any)
+    // await dispatch(fetchCryptoTrendings(cryptoFilterData) as any)
     // await dispatch(fetchCryptoDetails() as any)
     // await dispatch(fetchTopGainers() as any)
   }

@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 // Thunk
 import { createAsyncThunk } from "@reduxjs/toolkit";
 // Github Service
-import { initialState } from "./data/cryptoData";
+import { initialState, type ICryptoFilterData } from "./data/cryptoData";
 import CryptoService from "../services/crypto-service";
 
 const {
@@ -31,9 +31,12 @@ export const fetchCryptoCurrenciesList = createAsyncThunk(
 
 export const fetchCryptoTrendings = createAsyncThunk(
   "cryptos/fetchCryptoTrendings",
-  async (_, { rejectWithValue }) => {
+  async (trendingFilters : Pick<ICryptoFilterData, 'cryptoTrendingFilters'>, { rejectWithValue }) => {
+
+    // mi passo lqui semplicemente gli ids
+
     try {
-      const crypto_trendings = await getAllCryptosTrend();
+      const crypto_trendings = await getAllCryptosTrend(trendingFilters);
       if (crypto_trendings.error || !crypto_trendings.trending_cryptos) {
         return rejectWithValue("Error while fetching crytpto datas");
       }

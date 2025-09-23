@@ -35,7 +35,7 @@ const selectedWidget: CryptoWidgets = "Trending Cryptos";
 
 type currency = "eur" | "usd";
 
-interface ICryptoFilterData {
+export interface ICryptoFilterData {
   genericFilters: {
     currency: currency;
   };

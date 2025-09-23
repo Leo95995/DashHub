@@ -1,7 +1,13 @@
 import { CryptoMappers } from "../mappers/cryptoMapper";
+import type { ICryptoFilterData } from "../store/data/cryptoData";
 
 const CryptoService = () => {
-  const { cryptoTrendingMapper, cryptoDetailsMapper, cryptoTopGainersMapper, CryptoCurrenciesMapper } = CryptoMappers;
+  const {
+    cryptoTrendingMapper,
+    cryptoDetailsMapper,
+    cryptoTopGainersMapper,
+    CryptoCurrenciesMapper,
+  } = CryptoMappers;
 
   /**
    * get all currencies for the cryptos to be selected. so show them as values to select. we naap only the id.
@@ -30,13 +36,20 @@ const CryptoService = () => {
     }
   };
 
-  const getAllCryptosTrend = async () => {
+  const getAllCryptosTrend = async (
+    filters: Pick<ICryptoFilterData, "cryptoTrendingFilters">
+  ) => {
     /**
      *  params to pass -> ids, currencies, time for change?
      * the we refine each one
      */
+    const idList = filters.cryptoTrendingFilters.ids;
 
-    const cryptos_url = `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,cardano&vs_currencies=usd,eur&include_24hr_change=true`;
+    let filterList = "";
+    idList.map((filter, index)=> index !== (idList.length -1) ? filterList += `${filter},` as string : filterList += filter as string) 
+
+
+    const cryptos_url = `https://api.coingecko.com/api/v3/simple/price?ids=${filterList}&vs_currencies=usd,eur&include_24hr_change=true`;
     try {
       const res = await fetch(cryptos_url, { method: "GET" });
       const data = await res.json();
@@ -70,7 +83,6 @@ const CryptoService = () => {
       const res = await fetch(crypto_details_url, { method: "GET" });
       const data = await res.json();
       const status = res.status;
-      console.log(data);
       // map datas to
       const mappedCryptoDetails = cryptoDetailsMapper(data);
       if (data && status === 200) {
@@ -118,4 +130,3 @@ const CryptoService = () => {
 };
 
 export default CryptoService;
-
