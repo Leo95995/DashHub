@@ -53,9 +53,9 @@ export const fetchCryptoTrendings = createAsyncThunk(
  */
 export const fetchCryptoDetails = createAsyncThunk(
   "cryptos/fetchCryptoDetails",
-  async (_, { rejectWithValue }) => {
+  async (detailFilters : Pick<ICryptoFilterData, 'cryptoDetailFilters'>, { rejectWithValue }) => {
     try {
-      const cryptoDetails = await getCryptoDetails();
+      const cryptoDetails = await getCryptoDetails(detailFilters);
       //
       if (cryptoDetails.error || !cryptoDetails.crypto_details) {
         return rejectWithValue("Error while fetching crytpto datas");

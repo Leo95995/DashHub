@@ -7,8 +7,11 @@ import { crypto_widgets } from "../../widgetSwitcher/datas";
 //  CRYPTO DATA
 import { useDispatch, useSelector } from "react-redux";
 // Fetch datas and set them
-import { fetchCryptoTrendings, fetchCryptoDetails, fetchTopGainers } from "../../../../../store/cryptoSlice";
-
+import {
+  fetchCryptoTrendings,
+  fetchCryptoDetails,
+  fetchTopGainers,
+} from "../../../../../store/cryptoSlice";
 
 const CryptoWidget: React.FC = () => {
   // Dispatched datas
@@ -16,20 +19,44 @@ const CryptoWidget: React.FC = () => {
   const [selectedWidget, setSelectedWidget] =
     useState<WidgetTypes>("Trending Cryptos");
 
-  const cryptoFilterData = useSelector((state: any)=> state.crypto.filterData)
+  const cryptoFilterData = useSelector((state: any) => state.crypto.filterData);
   console.log(cryptoFilterData);
+  const { cryptoDetailFilters } = cryptoFilterData;
 
-  const getAllWidgetsData = async() =>{
-    // await dispatch(fetchCryptoTrendings(cryptoFilterData) as any)
+  /**
+   * Per avere sempre i dati disponibili conviene fetcharsi tutti i dati i nun db e cam
+   */
+
+  const getAllWidgetsData = async () => {
     // await dispatch(fetchCryptoDetails() as any)
     // await dispatch(fetchTopGainers() as any)
-  }
+  };
 
+  const getDetailedFilters = async () => {
+    await dispatch(fetchCryptoDetails(cryptoFilterData) as any);
+  };
+
+  const getCryptoTrends = async () => {
+    await dispatch(fetchCryptoTrendings(cryptoFilterData) as any);
+  };
+
+  /**
+   * Must prepare data from backend next. now this work. add filters then abstract
+   * all the logic. or i prepare an apply filter button
+   */
+  // useEffect(() => {
+  //   // dispatch(fetchCryptoTrendings() as any);
+  //   // getAllWidgetsData()
+  //   getCryptoTrends()
+
+  // }, []);
 
   useEffect(() => {
-    // dispatch(fetchCryptoTrendings() as any);
-    getAllWidgetsData()
-  }, []);
+    console.log("ripassa");
+    if (!cryptoDetailFilters) {
+      getDetailedFilters();
+    }
+  }, [cryptoDetailFilters]);
 
   return (
     <>

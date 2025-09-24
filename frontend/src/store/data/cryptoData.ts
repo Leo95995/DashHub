@@ -4,7 +4,6 @@ import type {
   ICryptoDetails,
   ICryptoTopGainers,
 } from "../../mappers/cryptoMapper";
-import { fetchCryptoCurrenciesList } from "../cryptoSlice";
 import type { ItemStatus } from "../interfaces/interfaces";
 
 const currenciesList: ItemStatus<string> = {

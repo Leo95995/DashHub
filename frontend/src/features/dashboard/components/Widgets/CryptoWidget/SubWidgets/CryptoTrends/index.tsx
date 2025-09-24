@@ -24,7 +24,6 @@ const CryptoTrendings: React.FC = () => {
   // Data for crypto filters
   const filterData = useSelector((state: any) => state.crypto.filterData);
   const { ids } = filterData?.cryptoTrendingFilters;
-  console.log(ids);
 
   const renderData = () => {
     if (loading) {
@@ -42,6 +41,11 @@ const CryptoTrendings: React.FC = () => {
     return <> {renderTrendingCrypto()}</>;
   };
 
+
+
+
+
+
   // Ui
 
   const dispatchSelection = (option: string) => {
@@ -51,10 +55,10 @@ const CryptoTrendings: React.FC = () => {
     } else {
       newIds = [...ids, option];
     }
-    if (newIds.length <= 4) {
+    if (newIds.length <= 4 && newIds.length >= 1) {
       dispatch(setCryptoTrendingFilters({ ids: newIds }));
     } else {
-      alert("you have selected too many crypto");
+      alert("You can't select more than 4 and lesser than 1 cryptoz");
     }
   };
 
@@ -64,6 +68,7 @@ const CryptoTrendings: React.FC = () => {
     return (
       <div className="flex flex-wrap gap-2 justify-center">
         <h2 className="text-xl font-medium pt-4">Crypto Trendings</h2>
+        {/* Should be extracted. this is the logic for crypto trending section */}
         <div className="flex justify-end pb-6 w-full relative h-20 px-12">
           {isOpen && (
             <button
@@ -75,7 +80,7 @@ const CryptoTrendings: React.FC = () => {
             </button>
           )}
           <ul
-            className={`absolute w-48 rounded-lg border border-gray-300 bg-white text-gray-700 shadow-md overflow-auto transition-max-h duration-300 ${
+            className={`absolute w-48 z-20 rounded-lg border border-gray-300 bg-white text-gray-700 shadow-md overflow-auto transition-max-h duration-300 ${
               isOpen ? "max-h-56" : "max-h-10 overflow-hidden"
             }`}
           >
@@ -105,7 +110,8 @@ const CryptoTrendings: React.FC = () => {
               </li>
             ))}
           </ul>
-        <div className="border h-4 absolute top-12"> </div>
+          {/* List of filters selected */}
+        <div className="py-2 absolute left-0 rounded-md overflow-scroll text-nowrap flex gap-2 w-full  top-12">{ids.map((id: string)=> <span className="px-2 py-1 border hover:bg-gray-800 hover:text-white text-sm hover:filter flex items-center justify-center gap-1 rounded-2xl">{id} <button className="cursor-pointer hover:scale-105" onClick={()=>dispatchSelection(id) as any}><Close className="hover:scale-120" style={{fontSize:'12px'}}/></button></span>)} </div>
         </div>
 
         {(Object.keys(data) as Array<keyof ICryptoTrendings>).map(

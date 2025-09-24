@@ -73,12 +73,14 @@ const CryptoService = () => {
 
   //  Get crypto details
 
-  const getCryptoDetails = async () => {
+  const getCryptoDetails = async (  filters: Pick<ICryptoFilterData, "cryptoDetailFilters">) => {
     /**
      * Passing dinamically
      * coint type, currency type and days types.
      */
-    const crypto_details_url = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=eur&days=1`;
+
+    const { id, days } = filters?.cryptoDetailFilters 
+    const crypto_details_url = `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=eur&days=${days}`;
     try {
       const res = await fetch(crypto_details_url, { method: "GET" });
       const data = await res.json();
