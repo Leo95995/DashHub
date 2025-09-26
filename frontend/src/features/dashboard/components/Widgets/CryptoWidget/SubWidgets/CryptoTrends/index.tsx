@@ -2,10 +2,12 @@ import { useSelector } from "react-redux";
 import type { ItemStatus } from "../../../../../../../store/interfaces/interfaces";
 import type { ICryptoTrendings } from "../../../../../../../mappers/cryptoMapper";
 import { setCryptoTrendingFilters } from "../../../../../../../store/cryptoSlice";
-import { Check, CircleCheck, Save } from "lucide-react";
+import { CircleCheck } from "lucide-react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Close } from "@mui/icons-material";
+import CryptoList from "./components/crypto-list";
+import FilterList from "./components/filterList/filter-list";
 
 const CryptoTrendings: React.FC = () => {
   const crypto_data = useSelector(
@@ -16,8 +18,6 @@ const CryptoTrendings: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
 
- 
-
   const {
     data: currenciesList,
     error: currenciesError,
@@ -27,7 +27,9 @@ const CryptoTrendings: React.FC = () => {
   const filterData = useSelector((state: any) => state.crypto.filterData);
   const { ids } = filterData?.cryptoTrendingFilters;
 
-   const [cryptoLocalFilters, setCryptoLocalFilters] = useState<{ids: string[]}>({ids: ids ?? []});
+  const [cryptoLocalFilters, setCryptoLocalFilters] = useState<{
+    ids: string[];
+  }>({ ids: ids ?? [] });
 
   const renderData = () => {
     if (loading) {
@@ -48,8 +50,7 @@ const CryptoTrendings: React.FC = () => {
   // Ui
 
   const dispatchSelection = () => {
-      dispatch(setCryptoTrendingFilters({ ids: cryptoLocalFilters?.ids }));
-    
+    dispatch(setCryptoTrendingFilters({ ids: cryptoLocalFilters?.ids }));
   };
 
   const changeLocalFilters = (option: string) => {
@@ -61,7 +62,7 @@ const CryptoTrendings: React.FC = () => {
       newIds = [...cryptoLocalFilters.ids, option];
     }
     if (newIds.length <= 4 && newIds.length >= 1) {
-      setCryptoLocalFilters({ids:newIds})
+      setCryptoLocalFilters({ ids: newIds });
     } else {
       alert("You can't select more than 4 and lesser than 1 cryptoz");
     }
@@ -98,7 +99,9 @@ const CryptoTrendings: React.FC = () => {
                     : () => setIsOpen(true)
                 }
                 className={`p-2 cursor-pointer hover:bg-blue-300 transition-colors flex justify-between items-center ${
-                  cryptoLocalFilters?.ids?.includes(option) ? "text-amber-500 font-medium" : ""
+                  cryptoLocalFilters?.ids?.includes(option)
+                    ? "text-amber-500 font-medium"
+                    : ""
                 }`}
               >
                 <span>{option}</span>
@@ -116,59 +119,13 @@ const CryptoTrendings: React.FC = () => {
             ))}
           </ul>
           {/* List of filters selected */}
-          <div className="py-2 absolute left-0 rounded-md overflow-scroll text-nowrap flex gap-2 w-full  top-12">
-            {cryptoLocalFilters?.ids?.map((id: string) => (
-              <span className="px-2 py-1 border hover:bg-gray-800 hover:text-white text-sm hover:filter flex items-center justify-center gap-1 rounded-2xl">
-                {id}{" "}
-                <button
-                  className="cursor-pointer hover:scale-105"
-                  onClick={() => changeLocalFilters(id) as any}
-                >
-                  <Close
-                    className="hover:scale-120"
-                    style={{ fontSize: "12px" }}
-                  />
-                </button>
-              </span>
-            ))}
-            <button onClick={()=> dispatch(dispatchSelection()as any)} className="border px-2 rounded-2xl hover:scale-105 cursor-pointer transition-all duration-100">
-              Apply filters
-            </button>
-          </div>
+          <FilterList
+            filters={cryptoLocalFilters?.ids}
+            onClick={changeLocalFilters}
+          />
         </div>
-
-        {(Object.keys(data) as Array<keyof ICryptoTrendings>).map(
-          (crypto_coin) => {
-            const current = data[crypto_coin];
-            const eurChangeColor =
-              current?.eur_24h_change >= 0 ? "text-green-500" : "text-red-500";
-            const usdChangeColor =
-              current?.usd_24h_change >= 0 ? "text-green-500" : "text-red-500";
-
-            return (
-              <div
-                key={crypto_coin}
-                className="bg-gray-700 text-white p-2 w-full max-w-82 rounded-md flex flex-col hover:bg-gray-600 transition-colors duration-200"
-              >
-                <h3 className="text-sm font-bold uppercase">{crypto_coin}</h3>
-                <p className="text-xs ">
-                  <span className="font-semibold">EUR: </span>{" "}
-                  {current.eur.toFixed(2)}{" "}
-                  <span className={eurChangeColor}>
-                    {current.eur_24h_change.toFixed(2)}%
-                  </span>
-                </p>
-                <p className="text-xs">
-                  <span className="font-semibold">USD: </span>{" "}
-                  {current.usd.toFixed(2)}{" "}
-                  <span className={usdChangeColor}>
-                    {current.usd_24h_change.toFixed(2)}%
-                  </span>
-                </p>
-              </div>
-            );
-          }
-        )}
+        {/* Item list of crypto datas */}
+        <CryptoList items={data} />
       </div>
     );
   };

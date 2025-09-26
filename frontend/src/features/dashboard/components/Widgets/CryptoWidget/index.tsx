@@ -28,11 +28,6 @@ const CryptoWidget: React.FC = () => {
    * Per avere sempre i dati disponibili conviene fetcharsi tutti i dati i nun db e cam
    */
 
-  const getAllWidgetsData = async () => {
-    // await dispatch(fetchCryptoDetails() as any)
-    // await dispatch(fetchTopGainers() as any)
-  };
-
   const getDetailedFilters = async () => {
     await dispatch(fetchCryptoDetails(cryptoFilterData) as any);
   };
