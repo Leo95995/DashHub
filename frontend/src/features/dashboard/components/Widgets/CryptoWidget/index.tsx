@@ -12,6 +12,8 @@ import {
   fetchCryptoDetails,
   fetchTopGainers,
 } from "../../../../../store/cryptoSlice";
+import type { ICryptoFilterData } from "../../../../../store/data/cryptoData";
+
 
 const CryptoWidget: React.FC = () => {
   // Dispatched datas
@@ -19,9 +21,8 @@ const CryptoWidget: React.FC = () => {
   const [selectedWidget, setSelectedWidget] =
     useState<WidgetTypes>("Trending Cryptos");
 
-  const cryptoFilterData = useSelector((state: any) => state.crypto.filterData);
-  console.log(cryptoFilterData);
-  const { cryptoDetailFilters } = cryptoFilterData;
+  const cryptoFilterData : ICryptoFilterData= useSelector((state: any) => state.crypto.filterData as ICryptoFilterData);
+  const { cryptoDetailFilters , cryptoTrendingFilters} = cryptoFilterData;
 
   /**
    * Per avere sempre i dati disponibili conviene fetcharsi tutti i dati i nun db e cam
@@ -40,20 +41,28 @@ const CryptoWidget: React.FC = () => {
     await dispatch(fetchCryptoTrendings(cryptoFilterData) as any);
   };
 
+  const getTopGainers = async() => {
+    await dispatch(fetchTopGainers() as any);
+  }
+
   /**
    * Must prepare data from backend next. now this work. add filters then abstract
    * all the logic. or i prepare an apply filter button
    */
-  // useEffect(() => {
-  //   // dispatch(fetchCryptoTrendings() as any);
-  //   // getAllWidgetsData()
-  //   getCryptoTrends()
+  useEffect(() => {
+    // dispatch(fetchCryptoTrendings() as any);
+    // getAllWidgetsData()
+    
+    getTopGainers()
+  }, []);
 
-  // }, []);
+  useEffect(()=> {
+     getCryptoTrends()
+  }, [cryptoTrendingFilters])
 
   useEffect(() => {
-    console.log("ripassa");
-    if (!cryptoDetailFilters) {
+
+    if (cryptoDetailFilters) {
       getDetailedFilters();
     }
   }, [cryptoDetailFilters]);

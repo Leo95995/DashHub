@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { regularTimeStampToTime } from "../../../../../../../utils/weather-utils";
 import { setCryptoDetailFilters } from "../../../../../../../store/cryptoSlice";
 import { setGenericCryptoFilters } from "../../../../../../../store/cryptoSlice";
-import type { ICryptoFilterData } from "../../../../../../../store/data/cryptoData";
+import { days, type ICryptoFilterData } from "../../../../../../../store/data/cryptoData";
 
 const CryptoDetail: React.FC = () => {
   // Data to drill down to the linear chart
@@ -77,7 +77,6 @@ const CryptoDetail: React.FC = () => {
     }
   }, [detailData]);
 
-  const days = ["1", "2", "3", "4", "5", "6", "7"];
 
   const handleFilterSet = () => {
     dispatch(setCryptoDetailFilters(detailFilters) as any);
@@ -113,7 +112,7 @@ const CryptoDetail: React.FC = () => {
             }
             className="px-3 py-2 w-fit rounded-lg border border-gray-300 bg-white text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-200"
           >
-            {days.map((option: string) => {
+            {days?.map((option: string) => {
               return (
                 <option key={option} value={option}>
                   {option}
@@ -151,7 +150,7 @@ const CryptoDetail: React.FC = () => {
           </button>
         </div>
       </div>
-      {chartData.data && <LineChart data={chartData?.data} />}
+      {chartData?.data && <LineChart data={chartData?.data} />}
     </>
   );
 };

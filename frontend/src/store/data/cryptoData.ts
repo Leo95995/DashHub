@@ -64,6 +64,12 @@ const filterData: ICryptoFilterData = {
   },
 };
 
+
+  // Default crypto data 
+
+  export const days = ["1", "2", "3", "4", "5", "6", "7"];
+
+
 // Exported initial state
 export const initialState = {
   currenciesList,

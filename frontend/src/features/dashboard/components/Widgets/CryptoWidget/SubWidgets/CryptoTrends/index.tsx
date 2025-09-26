@@ -16,6 +16,8 @@ const CryptoTrendings: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
 
+ 
+
   const {
     data: currenciesList,
     error: currenciesError,
@@ -24,6 +26,8 @@ const CryptoTrendings: React.FC = () => {
   // Data for crypto filters
   const filterData = useSelector((state: any) => state.crypto.filterData);
   const { ids } = filterData?.cryptoTrendingFilters;
+
+   const [cryptoLocalFilters, setCryptoLocalFilters] = useState<{ids: string[]}>({ids: ids ?? []});
 
   const renderData = () => {
     if (loading) {
@@ -41,22 +45,23 @@ const CryptoTrendings: React.FC = () => {
     return <> {renderTrendingCrypto()}</>;
   };
 
-
-
-
-
-
   // Ui
 
-  const dispatchSelection = (option: string) => {
+  const dispatchSelection = () => {
+      dispatch(setCryptoTrendingFilters({ ids: cryptoLocalFilters?.ids }));
+    
+  };
+
+  const changeLocalFilters = (option: string) => {
     let newIds = [];
-    if (ids.includes(option)) {
-      newIds = ids.filter((opt: string) => opt !== option);
+
+    if (cryptoLocalFilters.ids.includes(option)) {
+      newIds = cryptoLocalFilters.ids.filter((opt: string) => opt !== option);
     } else {
-      newIds = [...ids, option];
+      newIds = [...cryptoLocalFilters.ids, option];
     }
     if (newIds.length <= 4 && newIds.length >= 1) {
-      dispatch(setCryptoTrendingFilters({ ids: newIds }));
+      setCryptoLocalFilters({ids:newIds})
     } else {
       alert("You can't select more than 4 and lesser than 1 cryptoz");
     }
@@ -69,7 +74,7 @@ const CryptoTrendings: React.FC = () => {
       <div className="flex flex-wrap gap-2 justify-center">
         <h2 className="text-xl font-medium pt-4">Crypto Trendings</h2>
         {/* Should be extracted. this is the logic for crypto trending section */}
-        <div className="flex justify-end pb-6 w-full relative h-20 px-12">
+        <div className="flex justify-end pb-6 w-full relative h-28 px-12">
           {isOpen && (
             <button
               onClick={() => setIsOpen(false)}
@@ -89,15 +94,15 @@ const CryptoTrendings: React.FC = () => {
                 key={option}
                 onClick={
                   isOpen
-                    ? () => dispatchSelection(option)
+                    ? () => changeLocalFilters(option)
                     : () => setIsOpen(true)
                 }
                 className={`p-2 cursor-pointer hover:bg-blue-300 transition-colors flex justify-between items-center ${
-                  ids.includes(option) ? "text-amber-500 font-medium" : ""
+                  cryptoLocalFilters?.ids?.includes(option) ? "text-amber-500 font-medium" : ""
                 }`}
               >
                 <span>{option}</span>
-                {ids.includes(option) && (
+                {cryptoLocalFilters?.ids?.includes(option) && (
                   <span
                     className="
               inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold
@@ -111,7 +116,25 @@ const CryptoTrendings: React.FC = () => {
             ))}
           </ul>
           {/* List of filters selected */}
-        <div className="py-2 absolute left-0 rounded-md overflow-scroll text-nowrap flex gap-2 w-full  top-12">{ids.map((id: string)=> <span className="px-2 py-1 border hover:bg-gray-800 hover:text-white text-sm hover:filter flex items-center justify-center gap-1 rounded-2xl">{id} <button className="cursor-pointer hover:scale-105" onClick={()=>dispatchSelection(id) as any}><Close className="hover:scale-120" style={{fontSize:'12px'}}/></button></span>)} </div>
+          <div className="py-2 absolute left-0 rounded-md overflow-scroll text-nowrap flex gap-2 w-full  top-12">
+            {cryptoLocalFilters?.ids?.map((id: string) => (
+              <span className="px-2 py-1 border hover:bg-gray-800 hover:text-white text-sm hover:filter flex items-center justify-center gap-1 rounded-2xl">
+                {id}{" "}
+                <button
+                  className="cursor-pointer hover:scale-105"
+                  onClick={() => changeLocalFilters(id) as any}
+                >
+                  <Close
+                    className="hover:scale-120"
+                    style={{ fontSize: "12px" }}
+                  />
+                </button>
+              </span>
+            ))}
+            <button onClick={()=> dispatch(dispatchSelection()as any)} className="border px-2 rounded-2xl hover:scale-105 cursor-pointer transition-all duration-100">
+              Apply filters
+            </button>
+          </div>
         </div>
 
         {(Object.keys(data) as Array<keyof ICryptoTrendings>).map(

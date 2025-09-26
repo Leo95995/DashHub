@@ -9,7 +9,7 @@ const CryptoGainersAndLosers: React.FC = () => {
   const { data, loading, error } = topGainerData;
 
   useEffect(() => {
-    console.log(data, loading, error);
+    console.log(data, loading, error, 'PASS FROM THERE');
   }, []);
 
   if (loading) {
