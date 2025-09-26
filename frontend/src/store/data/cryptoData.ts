@@ -67,7 +67,7 @@ const filterData: ICryptoFilterData = {
 
   // Default crypto data 
 
-  export const days = ["1", "2", "3", "4", "5", "6", "7"];
+  export const days = ["1", "7", "30", "90", "180", "365"];
 
 
 // Exported initial state

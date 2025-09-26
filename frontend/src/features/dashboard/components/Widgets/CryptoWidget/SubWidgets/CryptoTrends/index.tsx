@@ -86,42 +86,54 @@ const CryptoTrendings: React.FC = () => {
             </button>
           )}
           <ul
-            className={`absolute w-48 z-20 rounded-lg border border-gray-300 bg-white text-gray-700 shadow-md overflow-auto transition-max-h duration-300 ${
-              isOpen ? "max-h-56" : "max-h-10 overflow-hidden"
+            className={`absolute z-20 rounded-lg border border-gray-300 bg-white text-gray-700 shadow-md overflow-auto transition-max-h duration-300 ${
+              isOpen ? "max-h-56 w-48" : "h-10 flex cursor-pointer hover:bg-blue-300 overflow-hidden w-30"
             }`}
           >
-            {currenciesList?.map((option: string) => (
-              <li
-                key={option}
-                onClick={
-                  isOpen
-                    ? () => changeLocalFilters(option)
-                    : () => setIsOpen(true)
-                }
-                className={`p-2 cursor-pointer hover:bg-blue-300 transition-colors flex justify-between items-center ${
+            {isOpen ? ( 
+              currenciesList?.map((option: string) => (
+                <li
+                  key={option}
+                  onClick={() => changeLocalFilters(option)}
+                  className={`
+                px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 
+                cursor-pointer 
+                hover:bg-blue-300 transition-colors 
+                flex justify-between items-center 
+                text-sm sm:text-base md:text-lg
+                ${
                   cryptoLocalFilters?.ids?.includes(option)
                     ? "text-amber-500 font-medium"
                     : ""
-                }`}
-              >
-                <span>{option}</span>
-                {cryptoLocalFilters?.ids?.includes(option) && (
-                  <span
-                    className="
-              inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold
-              bg-green-500 text-white shadow-sm gap-1
-            "
-                  >
-                    <CircleCheck size={14} /> Selected
-                  </span>
-                )}
-              </li>
-            ))}
+                }
+              `}
+                >
+                  <span className="truncate">{option}</span>
+                  {cryptoLocalFilters?.ids?.includes(option) && (
+                    <span
+                      className="
+                    inline-flex items-center 
+                    px-1.5 py-0.5 sm:px-2 sm:py-0.5 
+                    rounded-full 
+                    text-[10px] sm:text-xs md:text-sm 
+                    font-semibold
+                    bg-green-500 text-white shadow-sm gap-1
+                  "
+                    >
+                      <CircleCheck size={14} /> Selected
+                    </span>
+                  )}
+                </li>
+              ))
+            ) : (
+              <><span className="p-2" onClick={() => setIsOpen(true)}>Select Crypto</span></>
+            )}
           </ul>
           {/* List of filters selected */}
           <FilterList
             filters={cryptoLocalFilters?.ids}
             onClick={changeLocalFilters}
+            applyFilters={() => dispatch(dispatchSelection() as any)}
           />
         </div>
         {/* Item list of crypto datas */}
