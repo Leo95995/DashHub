@@ -72,7 +72,7 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
           htmlFor="location"
           className="text-md font-semibold text-gray-700 dark:text-gray-200 py-1"
         >
-          Widget Visibili
+          Visible widgets
         </label>
         <div className="flex">
           <CheckboxGroup
