@@ -1,17 +1,29 @@
 // React lazy
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { routes } from "./routes";
 // React router info
 import { Routes, Route } from "react-router";
 //  Components
 import PrivateLayout from "./components/layout/PrivateLayout/Layout";
 import ReactLoader from "./components/loader";
+import { useDispatch } from "react-redux";
+import { fetchCryptoCurrenciesList } from "./store/cryptoSlice";
+
 
 // Public Routes
 const DashBoardPage = lazy(() => import("./pages/privates/DashboardPage"));
 // const SettingsPage = lazy(() => import("./pages/privates/SettingsPage"));
 
 function App() {
+  const dispatch = useDispatch()
+
+  // Fetch all the datas that can be used in all part of app and should not refresh so
+  // often
+  useEffect(()=> {
+    dispatch(fetchCryptoCurrenciesList() as any)
+    console.log('crypto currencies fetching')
+  }, [])
+
   return (
     <>
       <>

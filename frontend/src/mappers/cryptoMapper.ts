@@ -1,0 +1,76 @@
+export interface CryptoItem {
+  usd: number;
+  usd_24h_change: number;
+  eur: number;
+  eur_24h_change: number;
+}
+
+export interface ICryptoTrendings {
+  [key: string]: CryptoItem;
+}
+
+export type ICryptoDetails = Array<Array<Number>>;
+
+export interface ICryptoTopGainers {
+  id: string;
+  name: string;
+  symbol: string;
+  image: "https://coin-images.coingecko.com/coins/images/1/large/bitcoin.png";
+  price: number;
+  change24h: number; // % in 24h
+  marketCap: 1959280345049;
+}
+
+/**
+ * Function who return a list of ids representing all the crypto currencies
+ * available.
+ * @params data any
+ * @returns string[]
+ */
+const CryptoCurrenciesMapper = (data: any[]): string[] => {
+  const currencyList: string[] = [];
+  data.map((currency_details) => {
+    currencyList.push(currency_details.id as string);
+  });
+
+  return currencyList as string[];
+};
+
+// Nothing goes mapped here.
+const cryptoTrendingMapper = (
+  data: ICryptoTrendings
+): ICryptoTrendings | any => {
+  return data as ICryptoTrendings;
+};
+
+// Crypto details mapper
+const cryptoDetailsMapper = (data: any) => {
+  return data["prices"] as ICryptoDetails;
+};
+
+// crypto top gainers
+const cryptoTopGainersMapper = (data: any): ICryptoTopGainers[] => {
+  const crypto_gain_arr: ICryptoTopGainers[] = [];
+
+  data.map((coin: any) => {
+    const coinData: ICryptoTopGainers = {
+      id: coin.id,
+      name: coin.name,
+      symbol: coin.symbol,
+      image: coin.image,
+      price: coin.current_price,
+      change24h: coin.price_change_24h,
+      marketCap: coin.market_cap,
+    };
+    crypto_gain_arr.push(coinData);
+  });
+
+  return crypto_gain_arr as ICryptoTopGainers[];
+};
+
+export const CryptoMappers = {
+  CryptoCurrenciesMapper,
+  cryptoTrendingMapper,
+  cryptoDetailsMapper,
+  cryptoTopGainersMapper
+};
