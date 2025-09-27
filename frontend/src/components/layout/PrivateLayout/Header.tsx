@@ -1,5 +1,6 @@
 import dashHub from "../../../assets/icons/dashhub.png";
 import ModeToggler from "../../toggler";
+import MobileFilters from "./MobileFilters";
 
 const Header: React.FC = () => {
   return (
@@ -17,6 +18,8 @@ const Header: React.FC = () => {
         </p>
         <p>DashHub</p>
         <ModeToggler/>
+      <MobileFilters/>
+
       </header>
     </>
   );

@@ -31,7 +31,7 @@ const Switcher: React.FC<WidgetSwitcher> = ({
                   changeSelectedWidget(e);
                   handleSelectWidget();
                 }}
-                className="border-gray-200 border-b p-2 relative flex items-center justify-center w-full hover:border-transparent hover:rounded-sm  hover:from  hover:bg-gradient-to-r from-indigo-600  to-blue-950 hover:font-bold hover:text-white cursor-pointer"
+                className="border-gray-200 dark:border-gray-600 border-b p-2 relative flex items-center justify-center w-full hover:border-transparent hover:rounded-sm  hover:from  hover:bg-gradient-to-r from-indigo-600  to-blue-950 hover:font-bold hover:text-white cursor-pointer"
               >
                 {e}
                 {widgetSelected === e && (

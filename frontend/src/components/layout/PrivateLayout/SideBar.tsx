@@ -24,7 +24,7 @@ const SideBar: React.FC<ISideBar> = ({ ...props }) => {
       <aside
         className={`px-2 py-1 h-screen ${
           expanded ? "w-80" : "w-20"
-        } bg-slate-100 border-gray-200  dark:bg-slate-700 text-black dark:text-white  md:block hidden border-t-0 transition-all  `}
+        } bg-slate-100 border-gray-200  dark:bg-slate-700 text-black dark:text-white  xl:block hidden border-t-0 transition-all  `}
       >
         <ProfileBar expanded={expanded} />
         <div

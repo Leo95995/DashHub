@@ -4,7 +4,11 @@ import { useState, useEffect } from "react";
 // Widget filters
 import WidgetFilters from "./widget-filters";
 
-const Filters: React.FC = () => {
+interface IFilters {
+  isMobile?: boolean;
+}
+
+const Filters: React.FC<IFilters> = ({ isMobile }) => {
   const sidebar = useSelector((state: any) => state.app.sideBar);
   const { expanded } = sidebar;
 
@@ -14,23 +18,25 @@ const Filters: React.FC = () => {
     if (expanded) {
       setShow(true);
     } else {
-      const timeout = setTimeout(() => setShow(false), 300); 
+      const timeout = setTimeout(() => setShow(false), 300);
       return () => clearTimeout(timeout);
     }
   }, [expanded]);
 
-  if (!expanded && !show) return null;
+  if (!expanded && !show && !isMobile) return null;
 
   return (
     <div
-      className={`h-full p-4 transform transition-all duration-300 
-        ${expanded ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}
+      className={`h-full p-4 transform transition-all duration-300 ${isMobile && 'flex flex-col w-full  items-center'}
+        ${expanded || isMobile ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4" }
       `}
     >
-      <h2 className="text-2xl mb-4"><b>Filtri</b></h2>
-        <div> 
-        <WidgetFilters expanded={expanded}/>
-        </div>
+      <h2 className="text-2xl mb-4">
+        <b>Filters</b>
+      </h2>
+      <div>
+        <WidgetFilters expanded={expanded} />
+      </div>
       <div className="py-4">
         <WeatherFilters expanded={expanded} />
       </div>
