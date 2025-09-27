@@ -53,7 +53,7 @@ export const fetchCryptoTrendings = createAsyncThunk(
  */
 export const fetchCryptoDetails = createAsyncThunk(
   "cryptos/fetchCryptoDetails",
-  async (detailFilters : Pick<ICryptoFilterData, 'cryptoDetailFilters'>, { rejectWithValue }) => {
+  async (detailFilters : Pick<ICryptoFilterData, 'cryptoDetailFilters' | 'genericFilters'>, { rejectWithValue }) => {
     try {
       const cryptoDetails = await getCryptoDetails(detailFilters);
       //
@@ -71,9 +71,9 @@ export const fetchCryptoDetails = createAsyncThunk(
 
 export const fetchTopGainers = createAsyncThunk(
   "cryptos/fetchCryptoTopGainers",
-  async (_, { rejectWithValue }) => {
+  async (genericFilters: Pick<ICryptoFilterData, 'genericFilters'>, { rejectWithValue }) => {
     try {
-      const topGainersData = await getTopGainersAndLosers();
+      const topGainersData = await getTopGainersAndLosers(genericFilters);
       if (topGainersData.error || !topGainersData.topGainers) {
         return rejectWithValue("Error while fetching crytpto datas");
       }

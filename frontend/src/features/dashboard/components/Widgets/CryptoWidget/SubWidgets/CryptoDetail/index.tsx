@@ -4,7 +4,13 @@ import { useEffect, useState } from "react";
 import { regularTimeStampToTime } from "../../../../../../../utils/weather-utils";
 import { setCryptoDetailFilters } from "../../../../../../../store/cryptoSlice";
 import { setGenericCryptoFilters } from "../../../../../../../store/cryptoSlice";
-import { days, type ICryptoFilterData } from "../../../../../../../store/data/cryptoData";
+import {
+  days,
+  filterCurrenciesList,
+  type ICryptoFilterData,
+} from "../../../../../../../store/data/cryptoData";
+import GenericSelect from "../../../../../../../components/select";
+import ErrorMessage from "../../../../../../../components/Error/error";
 
 const CryptoDetail: React.FC = () => {
   // Data to drill down to the linear chart
@@ -35,6 +41,10 @@ const CryptoDetail: React.FC = () => {
     error: currenciesError,
   } = cryptoCurrencyList;
 
+  const { genericFilters } = useSelector(
+    (state: any) => state.crypto.filterData
+  );
+
   const filterData = useSelector(
     (state: any) => state.crypto.filterData.cryptoDetailFilters
   );
@@ -43,7 +53,6 @@ const CryptoDetail: React.FC = () => {
     days: string;
     id: string;
   }>(filterData);
-
 
   const prepareLineChartData = (datas: any[]) => {
     if (!Array.isArray(datas) || !datas.length) {
@@ -77,7 +86,6 @@ const CryptoDetail: React.FC = () => {
     }
   }, [detailData]);
 
-
   const handleFilterSet = () => {
     dispatch(setCryptoDetailFilters(detailFilters) as any);
   };
@@ -87,17 +95,29 @@ const CryptoDetail: React.FC = () => {
   }
 
   if (detailError) {
-    return <> Error </>;
+    return <ErrorMessage message="Error while fetching crypto details data"/>;
   }
 
   if (!detailData) {
     return <> no data to display</>;
   }
 
+  const handleSelection = (value: string) => {
+    if (genericFilters.currency === value) {
+      return;
+    }
+    dispatch(setGenericCryptoFilters({ currency: value }) as any);
+  };
+
   return (
     <>
       <h2 className="text-xl font-medium pt-4">Crypto details</h2>
-
+        <GenericSelect
+          itemList={filterCurrenciesList}
+          onSelection={(value) => handleSelection(value)}
+          defaultText={"Select currency"}
+          selectedList={[genericFilters?.currency]}
+        />
       <div className="flex items-end py-2 justify-start gap-2">
         <div className="flex flex-col gap-2 w-24">
           <label htmlFor="timespan">Select days</label>
@@ -124,7 +144,7 @@ const CryptoDetail: React.FC = () => {
         <div className="flex flex-col  gap-2">
           <label htmlFor="crypto-selector">Select currency </label>
           <select
-          value={detailFilters.id}
+            value={detailFilters.id}
             name="crypto-selector"
             onChange={(e) =>
               setDetailFilters({

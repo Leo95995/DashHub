@@ -73,14 +73,15 @@ const CryptoService = () => {
 
   //  Get crypto details
 
-  const getCryptoDetails = async (  filters: Pick<ICryptoFilterData, "cryptoDetailFilters">) => {
+  const getCryptoDetails = async (  filters: Pick<ICryptoFilterData, "cryptoDetailFilters"| 'genericFilters'>) => {
     /**
      * Passing dinamically
      * coint type, currency type and days types.
      */
 
     const { id, days } = filters?.cryptoDetailFilters 
-    const crypto_details_url = `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=eur&days=${days}`;
+    const {currency } = filters?.genericFilters
+    const crypto_details_url = `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=${currency}&days=${days}`;
     try {
       const res = await fetch(crypto_details_url, { method: "GET" });
       const data = await res.json();
@@ -103,8 +104,10 @@ const CryptoService = () => {
 
   // get top gainer and losers
 
-  const getTopGainersAndLosers = async () => {
-    const crypto_top_gainer_url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&order=market_cap_desc&per_page=10&page=1&price_change_percentage=24h
+  const getTopGainersAndLosers = async (filters: Pick<ICryptoFilterData, "genericFilters">) => {
+    const { currency } = filters?.genericFilters;
+
+    const crypto_top_gainer_url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}r&order=market_cap_desc&per_page=10&page=1&price_change_percentage=24h
 `;
     try {
       const res = await fetch(crypto_top_gainer_url, { method: "GET" });

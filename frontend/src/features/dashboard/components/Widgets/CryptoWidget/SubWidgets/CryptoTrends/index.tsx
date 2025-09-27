@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { Close } from "@mui/icons-material";
 import CryptoList from "./components/crypto-list";
 import FilterList from "./components/filterList/filter-list";
+import ErrorMessage from "../../../../../../../components/Error/error";
 
 const CryptoTrendings: React.FC = () => {
   const crypto_data = useSelector(
@@ -37,7 +38,7 @@ const CryptoTrendings: React.FC = () => {
     }
 
     if (error) {
-      return <>{error as string}</>;
+      return <>  <ErrorMessage message="Error while fetching crypto trendings data"/></>;
     }
 
     if (!data) {

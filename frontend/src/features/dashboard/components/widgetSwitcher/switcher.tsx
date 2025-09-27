@@ -61,7 +61,7 @@ const Switcher: React.FC<WidgetSwitcher> = ({
         className="px-3 py-2 rounded-md text-white font-bold text-xs 
              bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500
              shadow-md hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 
-             active:scale-95 transition-all duration-300 cursor-pointer"
+             active:scale-95 transition-all duration-300 cursor-pointer w-36"
       >
         {switcherButtonText ?? `Change widget`}
       </button>

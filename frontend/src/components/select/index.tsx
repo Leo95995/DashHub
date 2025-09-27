@@ -3,10 +3,10 @@ import { CircleCheck } from "lucide-react";
 import React, { useState } from "react";
 
 interface IGenericSelect<T> {
-  itemList: Array<T>;
+  itemList: Array<T> | T;
+  selectedList: Array<T>;
   onSelection: (value: any) => void;
   defaultText: string;
-  multipleSelection: boolean;
 }
 
 /**
@@ -15,17 +15,21 @@ interface IGenericSelect<T> {
 
 const GenericSelect: React.FC<IGenericSelect<any>> = ({
   itemList,
+  selectedList,
   onSelection,
+  defaultText,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  console.log(selectedList);
 
   return (
+    <>
     <div className="flex justify-end pb-6 w-full relative h-28 px-12">
       {isOpen && (
         <button
-          onClick={() => setIsOpen(false)}
-          className="absolute top-0 right-5 cursor-pointer z-20 text-red-600 rounded-sm hover:bg-red-600 hover:text-white transition-colors"
-          aria-label="Chiudi dropdown"
+        onClick={() => setIsOpen(false)}
+        className="absolute top-0 right-5 cursor-pointer z-20 text-red-600 rounded-sm hover:bg-red-600 hover:text-white transition-colors"
+        aria-label="Chiudi dropdown"
         >
           <Close />
         </button>
@@ -49,12 +53,14 @@ const GenericSelect: React.FC<IGenericSelect<any>> = ({
                 flex justify-between items-center 
                 text-sm sm:text-base md:text-lg
                 ${
-                  itemList?.includes(option) ? "text-amber-500 font-medium" : ""
+                  selectedList?.includes(option)
+                    ? "text-amber-500 font-medium"
+                    : ""
                 }
               `}
             >
               <span className="truncate">{option}</span>
-              {itemList?.includes(option) && (
+              {selectedList?.includes(option) && (
                 <span
                   className="
                     inline-flex items-center 
@@ -73,12 +79,13 @@ const GenericSelect: React.FC<IGenericSelect<any>> = ({
         ) : (
           <>
             <span className="p-2" onClick={() => setIsOpen(true)}>
-              {text}
+              {defaultText}
             </span>
           </>
         )}
       </ul>
     </div>
+    </>
   );
 };
 

@@ -22,7 +22,7 @@ const CryptoWidget: React.FC = () => {
     useState<WidgetTypes>("Trending Cryptos");
 
   const cryptoFilterData : ICryptoFilterData= useSelector((state: any) => state.crypto.filterData as ICryptoFilterData);
-  const { cryptoDetailFilters , cryptoTrendingFilters} = cryptoFilterData;
+  const { cryptoDetailFilters , cryptoTrendingFilters, genericFilters} = cryptoFilterData;
 
   /**
    * Per avere sempre i dati disponibili conviene fetcharsi tutti i dati i nun db e cam
@@ -37,7 +37,7 @@ const CryptoWidget: React.FC = () => {
   };
 
   const getTopGainers = async() => {
-    await dispatch(fetchTopGainers() as any);
+    await dispatch(fetchTopGainers(cryptoFilterData) as any);
   }
 
   /**
@@ -45,11 +45,8 @@ const CryptoWidget: React.FC = () => {
    * all the logic. or i prepare an apply filter button
    */
   useEffect(() => {
-    // dispatch(fetchCryptoTrendings() as any);
-    // getAllWidgetsData()
-    
     getTopGainers()
-  }, []);
+  }, [genericFilters]);
 
   useEffect(()=> {
      getCryptoTrends()
@@ -66,12 +63,14 @@ const CryptoWidget: React.FC = () => {
     <>
       <div className="col-span-1 hover:scale-105 transition-all rounded-lg p-6 border border-gray-200 dark:border-gray-700 shadow-lg">
         <h3 className="text-xl font-semibold ">Crypto Widget</h3>
+        <div className="flex flex-col py-4 gap-4">
         <Switcher
           changeSelectedWidget={setSelectedWidget}
           widgetSelected={selectedWidget}
           widgetList={crypto_widgets}
         />
         <CryptoWidgetContainer widget={selectedWidget as CryptoWidgets} />
+        </div>
       </div>
     </>
   );

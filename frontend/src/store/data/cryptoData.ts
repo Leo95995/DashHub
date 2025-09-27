@@ -32,7 +32,9 @@ const crypto_top_data: ItemStatus<ICryptoTopGainers> = {
 
 const selectedWidget: CryptoWidgets = "Trending Cryptos";
 
-type currency = "eur" | "usd";
+export type currency = "eur" | "usd";
+
+export const filterCurrenciesList : currency[]= ['eur', 'usd']
 
 export interface ICryptoFilterData {
   genericFilters: {
