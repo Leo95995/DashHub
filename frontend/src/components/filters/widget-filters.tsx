@@ -64,7 +64,7 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
     ${expanded ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}
     >
       <h2 className="text-md font-semibold mb-4 text-gray-700 dark:text-blue-300">
-        Impostazioni widget
+        Widget Settings
       </h2>
 
       <div className="flex flex-col gap-2">

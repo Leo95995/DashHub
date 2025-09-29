@@ -11,6 +11,7 @@ import {
   fetchCryptoTrendings,
   fetchCryptoDetails,
   fetchTopGainers,
+  setSelectedCryptoWidget,
 } from "../../../../../store/cryptoSlice";
 import type { ICryptoFilterData } from "../../../../../store/data/cryptoData";
 
@@ -18,11 +19,17 @@ import type { ICryptoFilterData } from "../../../../../store/data/cryptoData";
 const CryptoWidget: React.FC = () => {
   // Dispatched datas
   const dispatch = useDispatch();
-  const [selectedWidget, setSelectedWidget] =
-    useState<WidgetTypes>("Trending Cryptos");
-
   const cryptoFilterData : ICryptoFilterData= useSelector((state: any) => state.crypto.filterData as ICryptoFilterData);
   const { cryptoDetailFilters , cryptoTrendingFilters, genericFilters} = cryptoFilterData;
+  const selectCryptoWidget = useSelector((state: any) => state.crypto.selectedWidget);
+
+  const handleCryptoWidgetChange = (widget: WidgetTypes) => {
+    if (widget) {
+      dispatch(setSelectedCryptoWidget(widget));
+    }
+  };
+
+
 
   /**
    * Per avere sempre i dati disponibili conviene fetcharsi tutti i dati i nun db e cam
@@ -65,11 +72,11 @@ const CryptoWidget: React.FC = () => {
         <h3 className="text-xl font-semibold ">Crypto Widget</h3>
         <div className="flex flex-col py-4 gap-4">
         <Switcher
-          changeSelectedWidget={setSelectedWidget}
-          widgetSelected={selectedWidget}
+          changeSelectedWidget={handleCryptoWidgetChange}
+          widgetSelected={selectCryptoWidget}
           widgetList={crypto_widgets}
         />
-        <CryptoWidgetContainer widget={selectedWidget as CryptoWidgets} />
+        <CryptoWidgetContainer widget={selectCryptoWidget as CryptoWidgets} />
         </div>
       </div>
     </>

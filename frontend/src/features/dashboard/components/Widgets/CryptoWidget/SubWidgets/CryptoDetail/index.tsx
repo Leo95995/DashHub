@@ -112,13 +112,18 @@ const CryptoDetail: React.FC = () => {
   return (
     <>
       <h2 className="text-xl font-medium pt-4">Crypto details</h2>
-        <GenericSelect
+      <div className="flex justify-start ">
+       <GenericSelect
           itemList={filterCurrenciesList}
           onSelection={(value) => handleSelection(value)}
           defaultText={"Select currency"}
           selectedList={[genericFilters?.currency]}
+          placement="start"
+          minHeigth="min-h-8"
         />
+        </div>
       <div className="flex items-end py-2 justify-start gap-2">
+         
         <div className="flex flex-col gap-2 w-24">
           <label htmlFor="timespan">Select days</label>
           <select

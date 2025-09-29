@@ -1,8 +1,10 @@
-import WeatherFilters from "./weather-filters";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 // Widget filters
 import WidgetFilters from "./widget-filters";
+import WeatherFilters from "./weather-filters";
+import NasaFilters from "./nasa-filters";
+import CryptoFilters from "./crypto-filters";
 
 interface IFilters {
   isMobile?: boolean;
@@ -27,7 +29,7 @@ const Filters: React.FC<IFilters> = ({ isMobile }) => {
 
   return (
     <div
-      className={`h-full p-4 transform transition-all duration-300 ${isMobile && 'flex flex-col w-full  items-center'}
+      className={`h-full p-4 mb-12 transform transition-all duration-300 overflow-scroll ${isMobile && 'flex flex-col w-full  items-center'}
         ${expanded || isMobile ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4" }
       `}
     >
@@ -39,6 +41,13 @@ const Filters: React.FC<IFilters> = ({ isMobile }) => {
       </div>
       <div className="py-4">
         <WeatherFilters expanded={expanded} />
+      </div>
+
+       <div className="py-4">
+        <NasaFilters expanded={expanded} />
+      </div>
+      <div className="py-4">
+        <CryptoFilters expanded={expanded} />
       </div>
     </div>
   );
