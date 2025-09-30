@@ -62,7 +62,7 @@ const WeatherWidget: React.FC = () => {
               decoding="async"
               loading="lazy"
               src={`http://catamphetamine.github.io/country-flag-icons/3x2/${country}.svg`}
-              alt="flag"
+              alt="coountry flag"
             />
           </h3>
           <img

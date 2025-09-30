@@ -25,7 +25,7 @@ const CryptoFilters: React.FC<ICryptoFilters> = ({ expanded }) => {
         ${expanded ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}
       >
         <span className="text-xl z-1 font-semibold mb-4 text-gray-900 dark:text-blue-300">
-         Crypto Widget
+         Crypto Filters
         </span>
 
         <div className="flex flex-col  gap-2 w-full py-4">

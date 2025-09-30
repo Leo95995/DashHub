@@ -51,7 +51,7 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
         bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-sm gap-1
       "
     >
-    <CircleCheck size={16}/> Attuale
+    <CircleCheck size={16}/> Current
     </span>
   );
 };
