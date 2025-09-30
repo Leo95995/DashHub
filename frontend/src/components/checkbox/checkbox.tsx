@@ -5,7 +5,7 @@ const CustomCheckbox: React.FC<ICheckbox> = ({ option, onChange, selectedList })
 
   return (
     <label
-      htmlFor={`#${option.value}`}
+      htmlFor={option.value}
       className="flex items-center gap-3 cursor-pointer border-transparent  border-b-2 select-none hover:brightness-120 hover:font-medium"
     >
       <input

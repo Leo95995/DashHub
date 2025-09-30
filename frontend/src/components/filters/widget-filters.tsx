@@ -2,7 +2,10 @@
 import type React from "react";
 import { useDispatch } from "react-redux";
 import CheckboxGroup from "../checkbox/checkboxGroup";
-import { changeWidgetVisibility,  type VisualMode } from "../../store/filterSlice";
+import {
+  changeWidgetVisibility,
+  type VisualMode,
+} from "../../store/filterSlice";
 import type { IFilters } from "../../store/interfaces/interfaces";
 import { filterUtils } from "../../utils/filter-utils";
 import { useSelector } from "react-redux";
@@ -19,7 +22,9 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
   const filters = useSelector(
     (state: any) => state.filters.filters.widgetVisibility
   );
-  const layout  =useSelector((state: any) => state.filters.widgetLayout.layoutMode)
+  const layout = useSelector(
+    (state: any) => state.filters.widgetLayout.layoutMode
+  );
 
   const changeVisibility = (
     widget: keyof IFilters["widgetVisibility"],
@@ -41,22 +46,20 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
 
   const optionlist = filterUtils(filters);
 
-  const CurrentLayout: React.FC<{target: ScreenMode} > = ({target}) => {
-  if (layout !== target) return null;
+  const CurrentLayout: React.FC<{ target: ScreenMode }> = ({ target }) => {
+    if (layout !== target) return null;
 
-  return (
-    <span
-      className="
+    return (
+      <span
+        className="
         inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold
         bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-sm gap-1
       "
-    >
-    <CircleCheck size={16}/> Current
-    </span>
-  );
-};
-
-
+      >
+        <CircleCheck size={16} /> Current
+      </span>
+    );
+  };
 
   return (
     <div
@@ -82,21 +85,20 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
           />
         </div>
       </div>
-      <div className="flex flex-col gap-4 w-60 p-4 my-6 bg-white dark:bg-gray-800 rounded-xl shadow-md">
+      <p className="text-md pt-2 font-semibold text-gray-800 dark:text-gray-100">
+        Layout Widget
+      </p>
+      <div className="flex flex-col gap-4 w-60 p-4 my-2 bg-white dark:bg-gray-800 rounded-xl shadow-md">
         <div className="mb-2">
-          <p className="text-lg font-semibold text-gray-800 dark:text-gray-100">
-            Layout Widget
-          </p>
           <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-            Numero di widget per colonna
+            Number Columns
           </p>
           <div className="flex flex-col gap-2 w-48 py-4">
             <label
               htmlFor="large"
               className="font-semibold text-gray-700 dark:text-gray-200"
             >
-             
-              Desktop <CurrentLayout target={'desktop'} />
+              Desktop <CurrentLayout target={"desktop"} />
             </label>
             <select
               onChange={(e) => handleChange(e)}
@@ -120,7 +122,7 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
               htmlFor="medium"
               className="font-semibold text-gray-700 dark:text-gray-200"
             >
-              Tablet <CurrentLayout target={'tablet'} />
+              Tablet <CurrentLayout target={"tablet"} />
             </label>
             <select
               onChange={(e) => handleChange(e)}
@@ -143,7 +145,7 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
               htmlFor="small"
               className="font-semibold text-gray-700 dark:text-gray-200"
             >
-              Mobile <CurrentLayout target={'mobile'} />
+              Mobile <CurrentLayout target={"mobile"} />
             </label>
             <select
               onChange={(e) => handleChange(e)}

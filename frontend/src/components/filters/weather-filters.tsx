@@ -6,12 +6,11 @@ import { fetchWeatherByCity } from "../../store/weatherSlice";
 import { useDispatch } from "react-redux";
 import { setTemperatureType } from "../../store/weatherSlice";
 
-
 interface WeatherFilters {
-  expanded: boolean
+  expanded: boolean;
 }
 
-const WeatherFilters: React.FC<WeatherFilters> = ({expanded}) => {
+const WeatherFilters: React.FC<WeatherFilters> = ({ expanded }) => {
   const [weatherSearchText, setWeatherSearchText] = useState<string>("empoli");
   const dispatch = useDispatch();
 
@@ -19,29 +18,30 @@ const WeatherFilters: React.FC<WeatherFilters> = ({expanded}) => {
     dispatch(fetchWeatherByCity(weatherSearchText) as any);
   }, []);
 
-
-  
   return (
- <div
-  className={`h-full transform transition-all duration-300 overflow-hidden 
+    <div
+      className={`h-full transform transition-all duration-300 overflow-hidden 
     ${expanded ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}
->
-  <h2 className="text-md font-semibold mb-4 text-gray-700 dark:text-blue-300">
-    Weather Filters
-  </h2>
+    >
+      <h2 className="text-md font-semibold mb-2 text-gray-700 dark:text-blue-300">
+        Weather Filters
+      </h2>
 
-  <div className="flex flex-col gap-2">
-    <label htmlFor="location" className="text-md font-semibold text-gray-700 dark:text-gray-200 py-1">
-      City
-    </label>
-  <div className="flex">
-    <input
-      type="text"
-      name="location"
-      id="location"
-      onChange={(e) => setWeatherSearchText(e.currentTarget.value)}
-      placeholder="Inserisci città..."
-      className="
+      <div className="flex flex-col gap-2">
+        <label
+          htmlFor="location"
+          className="text-md font-semibold text-gray-700 dark:text-gray-200 py-1"
+        >
+          City
+        </label>
+        <div className="flex">
+          <input
+            type="text"
+            name="location"
+            id="location"
+            onChange={(e) => setWeatherSearchText(e.currentTarget.value)}
+            placeholder="Inserisci città..."
+            className="
         border border-gray-300 dark:border-gray-600
         rounded-l-md
         w-50
@@ -51,10 +51,12 @@ const WeatherFilters: React.FC<WeatherFilters> = ({expanded}) => {
         focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-600
         transition-colors duration-200
       "
-    />
-    <button
-      onClick={() => dispatch(fetchWeatherByCity(weatherSearchText) as any)}
-      className="
+          />
+          <button
+            onClick={() =>
+              dispatch(fetchWeatherByCity(weatherSearchText) as any)
+            }
+            className="
         border border-gray-300 dark:border-gray-600 border-l-0
         rounded-r-md
         px-4 py-2
@@ -65,22 +67,25 @@ const WeatherFilters: React.FC<WeatherFilters> = ({expanded}) => {
         transition-colors duration-200
         cursor-pointer
       "
-    >
-      Cerca
-    </button>
-  </div>
-</div>
-  <div className="flex flex-col gap-2 w-48 py-4">
-  <label htmlFor="temperature" className="font-semibold text-gray-700 dark:text-gray-200">
-    Seleziona formato
-  </label>
-  <select
-    onChange={(e) =>
-      dispatch(setTemperatureType(e.currentTarget.value.toLowerCase()))
-    }
-    name="temperature"
-    id="temperature"
-    className="
+          >
+            Cerca
+          </button>
+        </div>
+      </div>
+      <div className="flex flex-col gap-2 w-48 py-4">
+        <label
+          htmlFor="temperature"
+          className="font-semibold text-gray-700 dark:text-gray-200"
+        >
+          Select temperature
+        </label>
+        <select
+          onChange={(e) =>
+            dispatch(setTemperatureType(e.currentTarget.value.toLowerCase()))
+          }
+          name="temperature"
+          id="temperature"
+          className="
       border border-gray-300 dark:border-gray-600
       rounded-lg
       px-3 py-2
@@ -90,13 +95,11 @@ const WeatherFilters: React.FC<WeatherFilters> = ({expanded}) => {
       transition-colors duration-200
       cursor-pointer
     "
-  >
-    <option>Celsius</option>
-    <option>Kelvin</option>
-  </select>
-</div>
-
-     
+        >
+          <option>Celsius</option>
+          <option>Kelvin</option>
+        </select>
+      </div>
     </div>
   );
 };
