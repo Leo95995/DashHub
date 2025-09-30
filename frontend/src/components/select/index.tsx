@@ -7,6 +7,9 @@ interface IGenericSelect<T> {
   selectedList: Array<T>;
   onSelection: (value: any) => void;
   defaultText: string;
+  placement?: 'start' | 'end' | 'center'
+  padding?: string
+  minHeigth?: string
 }
 
 /**
@@ -18,27 +21,29 @@ const GenericSelect: React.FC<IGenericSelect<any>> = ({
   selectedList,
   onSelection,
   defaultText,
+  placement = 'end',
+  padding = 'p-0', // if not specified set padding to 0
+  minHeigth
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  console.log(selectedList);
 
   return (
     <>
-    <div className="flex justify-end pb-6 w-full relative h-28 px-12">
+    <div className={`flex justify-${placement} z-20 w-full ${minHeigth} relative h-full ${padding} `}>
       {isOpen && (
         <button
         onClick={() => setIsOpen(false)}
-        className="absolute top-0 right-5 cursor-pointer z-20 text-red-600 rounded-sm hover:bg-red-600 hover:text-white transition-colors"
+        className="absolute top-0 right-10 cursor-pointer z-20 text-red-600 rounded-sm hover:bg-red-600 hover:text-white transition-colors"
         aria-label="Chiudi dropdown"
         >
           <Close />
         </button>
       )}
       <ul
-        className={`absolute z-20 rounded-lg border border-gray-300 bg-white text-gray-700 shadow-md overflow-auto transition-max-h duration-300 ${
+        className={`absolute z-[9999] rounded-lg border border-gray-300 bg-white text-gray-700 shadow-md overflow-auto transition-max-h duration-300 ${
           isOpen
             ? "max-h-56 w-48"
-            : "h-10 flex cursor-pointer hover:bg-blue-300 overflow-hidden w-30"
+            : "h-10 flex cursor-pointer hover:bg-blue-300  w-40"
         }`}
       >
         {isOpen ? (
@@ -47,6 +52,7 @@ const GenericSelect: React.FC<IGenericSelect<any>> = ({
               key={option}
               onClick={() => onSelection(option)}
               className={`
+                z-20
                 px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 
                 cursor-pointer 
                 hover:bg-blue-300 transition-colors 
@@ -78,7 +84,7 @@ const GenericSelect: React.FC<IGenericSelect<any>> = ({
           ))
         ) : (
           <>
-            <span className="p-2" onClick={() => setIsOpen(true)}>
+            <span className="p-2 w-full z-20" onClick={() => setIsOpen(true)}>
               {defaultText}
             </span>
           </>

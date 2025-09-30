@@ -94,6 +94,9 @@ export const cryptoSlice = createSlice({
   initialState,
 
   reducers: {
+    setSelectedCryptoWidget(state, action){
+      state.selectedWidget = action.payload;
+    },
     setGenericCryptoFilters(state, action){
       state.filterData.genericFilters = action.payload
     },
@@ -165,4 +168,4 @@ export const cryptoSlice = createSlice({
   },
 });
 
-export const { setGenericCryptoFilters, setCryptoTrendingFilters, setCryptoDetailFilters  } = cryptoSlice.actions;
+export const {setSelectedCryptoWidget, setGenericCryptoFilters, setCryptoTrendingFilters, setCryptoDetailFilters  } = cryptoSlice.actions;
