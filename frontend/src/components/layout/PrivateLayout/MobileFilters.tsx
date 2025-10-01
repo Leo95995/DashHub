@@ -3,7 +3,7 @@ import GenericModal from "../../modal/modal";
 import Filters from "../../filters";
 import { useState } from "react";
 /**
- *
+ * Filters For mobile
  */
 const MobileFilters: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);

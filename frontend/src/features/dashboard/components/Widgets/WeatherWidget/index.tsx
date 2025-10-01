@@ -9,10 +9,10 @@ import {
 import ReactLoader from "../../../../../components/loader";
 // Icons
 import { Wind, Droplet, Gauge } from "lucide-react";
+import type { IGenericWidget } from "../../../interfaces";
 
-const WeatherWidget: React.FC = () => {
+const WeatherWidget: React.FC<IGenericWidget> = ({ isEditMode }) => {
   const weatherData = useSelector((state: any) => state.weather);
-  console.log(weatherData);
 
   const { coordinates, weather, temperatureType, loading, error } = weatherData;
 
@@ -161,10 +161,13 @@ const WeatherWidget: React.FC = () => {
         weatherInfo?.main ?? "clear"
       )} overflow-hidden`}
     >
-       {renderLoading()}
+      {" "}
+      <div className="flex gap-5">
+        {isEditMode ? <span>Edit Mode</span> : <span>No edit mode</span>}
+      </div>
+      {renderLoading()}
       {renderError()}
       {renderWeather()}
-  
     </div>
   );
 };

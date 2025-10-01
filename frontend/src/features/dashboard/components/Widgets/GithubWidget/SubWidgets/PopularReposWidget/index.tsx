@@ -75,9 +75,7 @@ const PopularReposWidget: React.FC = () => {
     return (
       <>
         <div>
-          {" "}
           <button className="cursor-pointer" onClick={() => setStep(1)}>
-            {" "}
             <ArrowBack />
           </button>
         </div>
@@ -91,7 +89,6 @@ const PopularReposWidget: React.FC = () => {
       return (
         <>
           <div className="flex flex-col gap-1 items-center justify-center transition h-40 duration-300">
-            {" "}
             <ReactLoader /> Loading trending repositories
           </div>
         </>

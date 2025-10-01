@@ -24,6 +24,8 @@ function App() {
     console.log('crypto currencies fetching')
   }, [])
 
+  // We can check here some things. like if user has already set his preferences or not.
+
   return (
     <>
       <>

@@ -1,11 +1,12 @@
 import { useState } from "react";
 import type {
-  NasaItemStatus,
   INeoWsData,
+  ItemStatus,
 } from "../../../../../../store/interfaces/interfaces";
 import type { ArrowKey } from "../../../../../../interfaces/common/interfaces";
+import ReactLoader from "../../../../../../components/loader";
 
-const NeoWsWidget: React.FC<NasaItemStatus<INeoWsData[]>> = ({
+const NeoWsWidget: React.FC<ItemStatus<INeoWsData[]>> = ({
   data,
   loading,
   error,
@@ -19,18 +20,21 @@ const NeoWsWidget: React.FC<NasaItemStatus<INeoWsData[]>> = ({
   });
 
   if (loading) {
-    return <>Caricamento... </>;
+    return (
+      <div className="flex flex-col gap-1 items-center justify-center transition h-40 duration-300">
+        <ReactLoader /> Loading Neows Data
+      </div>
+    );
   }
   if (error) {
     return <>{error}</>;
   }
 
-
   /**
    * It can of course be improved. and it should be.
-   * 
-   * @param currentIndex 
-   * @param direction 
+   *
+   * @param currentIndex
+   * @param direction
    */
   const changeWidget = (currentIndex: number, direction: ArrowKey) => {
     if (direction === "prev" && currentIndex > 1) {

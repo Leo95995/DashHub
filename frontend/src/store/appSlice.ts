@@ -12,6 +12,8 @@ const initialSideBar : ISideBar = {
 const initialState = {
   internalLoad: false,
   sideBar: initialSideBar,
+  userData: { userInfo: {}, preferences: { } },
+  isEditMode: false,
   globalAlert: {
     status: "" as IGlobalAlertStatus,
     message: "",
@@ -25,6 +27,15 @@ export const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
+    setEditMode: (state, action)=> {
+      state.isEditMode = action.payload as boolean;
+    },
+    setUserInfo: (state, action ) => {
+      state.userData.userInfo = action.payload
+    }, 
+    setPreferences:(state,action)=>{
+      state.userData.preferences = action.payload
+    },
     setGlobalAlert: (state, action) => {
       const { payload } = action;
       const { status, message, description } = payload;
@@ -37,4 +48,4 @@ export const appSlice = createSlice({
   },
 });
 
-export const { setGlobalAlert, setSideBarStatus } = appSlice.actions;
+export const { setEditMode, setUserInfo, setPreferences, setGlobalAlert, setSideBarStatus } = appSlice.actions;
