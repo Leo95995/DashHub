@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import DashBoardHeader from "./header/header";
 import CryptoWidget from "./Widgets/CryptoWidget";
 import GithubWidget from "./Widgets/GithubWidget";
@@ -20,6 +20,10 @@ const DashBoard: React.FC = () => {
 
   console.log(appData);
   const dispatch = useDispatch();
+  // The original widget order.
+  const [widgetOrder, setWidgetOrder] = useState<number[]>([]);
+  // If not dragged, the id should be simply null.
+  const [draggedWidgetId, setDraggedWidgetId] = useState<number | null>(null);
 
   const { getLayoutByMode, currentMode } = useScreenWidthHook(layout);
 
@@ -31,17 +35,75 @@ const DashBoard: React.FC = () => {
     dispatch(setEditMode(!status));
   };
 
+  // List of which to iterate
+  const widgetList = [
+    {
+      component: WeatherWidget,
+      widgetId: 1,
+      onHide: () => console.log(`Hide`),
+    },
+     {
+      component: WeatherWidget,
+      widgetId: 2,
+      onHide: () => console.log(`Hide`),
+    },
+     {
+      component: WeatherWidget,
+      widgetId: 3,
+      onHide: () => console.log(`Hide`),
+      visibility: filters.We
+
+    },
+     {
+      component: GithubWidget,
+      widgetId: 4,
+      onHide: () => console.log(`Hide`),
+      visibility: filters.github
+    },
+
+
+
+  ];
+
   return (
     <>
       <div className="w-full flex flex-col gap-5 ">
-        <DashBoardHeader userdata={userdata} isEditMode={isEditMode} onClick={toggleEditMode} />
+        <DashBoardHeader
+          userdata={userdata}
+          isEditMode={isEditMode}
+          onClick={toggleEditMode}
+        />
         <section className={`grid gap-6 px-6 py-2 ${getLayoutByMode()}`}>
-            <>
-              {filters.weather && <WeatherWidget isEditMode={isEditMode} />}
-              {filters.github && <GithubWidget isEditMode={isEditMode} />}
-              {filters.nasa && <NasaWidget isEditMode={isEditMode} />}
-              {filters.crypto && <CryptoWidget isEditMode={isEditMode} />}
-            </>
+          <>
+            {filters.weather && (
+              <WeatherWidget
+                isEditMode={isEditMode}
+                widgetId={1}
+                onHide={() => console.log("Hiding the widget")}
+              />
+            )}
+            {filters.github && (
+              <GithubWidget
+                isEditMode={isEditMode}
+                widgetId={2}
+                onHide={() => console.log("Hiding the widget")}
+              />
+            )}
+            {filters.nasa && (
+              <NasaWidget
+                isEditMode={isEditMode}
+                widgetId={3}
+                onHide={() => console.log("Hiding the widget")}
+              />
+            )}
+            {filters.crypto && (
+              <CryptoWidget
+                isEditMode={isEditMode}
+                widgetId={4}
+                onHide={() => console.log("Hiding the widget")}
+              />
+            )}
+          </>
         </section>
       </div>
     </>

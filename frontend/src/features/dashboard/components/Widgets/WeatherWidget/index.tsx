@@ -10,9 +10,12 @@ import ReactLoader from "../../../../../components/loader";
 // Icons
 import { Wind, Droplet, Gauge } from "lucide-react";
 import type { IGenericWidget } from "../../../interfaces";
+import Tag from "../../../../../components/Tag";
+import { useState } from "react";
 
 const WeatherWidget: React.FC<IGenericWidget> = ({ isEditMode }) => {
   const weatherData = useSelector((state: any) => state.weather);
+  const [dragging, setDragging] = useState<boolean>(false);
 
   const { coordinates, weather, temperatureType, loading, error } = weatherData;
 
@@ -157,13 +160,23 @@ const WeatherWidget: React.FC<IGenericWidget> = ({ isEditMode }) => {
     weather?.weather && weather.weather.length > 0 && weather.weather[0];
   return (
     <div
-      className={`relative hover:scale-105 duration-300 min-h-100 col-span-1 rounded-2xl p-6 shadow-2xl bg-gradient-to-r ${background_color(
+      draggable={isEditMode}
+      onDragStart={() => setDragging(true)}
+      onDragEnd={() => setDragging(false)}
+      className={` ${
+        isEditMode && "ring-2 ring-blue-400 hover:scale-105 cursor-grab"
+      }
+       ${
+         dragging
+           ? "scale-110 shadow-2xl cursor-grabbing ring-4 ring-blue-500"
+           : ""
+       } relative h-120 hover:scale-105 duration-300 min-h-100 col-span-1 rounded-2xl p-6 shadow-2xl bg-gradient-to-r ${background_color(
         weatherInfo?.main ?? "clear"
       )} overflow-hidden`}
     >
       {" "}
       <div className="flex gap-5">
-        {isEditMode ? <span>Edit Mode</span> : <span>No edit mode</span>}
+        {isEditMode ? <Tag text="Edit Mode" /> : <span>No edit mode</span>}
       </div>
       {renderLoading()}
       {renderError()}
