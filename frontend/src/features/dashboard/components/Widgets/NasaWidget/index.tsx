@@ -15,7 +15,14 @@ import { nasa_widgets } from "../../widgetSwitcher/datas";
 import type { IGenericWidget } from "../../../interfaces";
 import Tag from "../../../../../components/Tag";
 
-const NasaWidget: React.FC<IGenericWidget> = ({ isEditMode }) => {
+const NasaWidget: React.FC<IGenericWidget> = ({
+  isEditMode,
+  widgetId,
+  onHide,
+  setWidgetOrder,
+  handleDrop,
+  setDraggedWidgetId,
+}) => {
   const nasa_info = useSelector((state: any) => state.nasa);
   // Apod
   const { apodStatus, neoWsStatus, widgetSelected, roverStatus } = nasa_info;
@@ -41,14 +48,21 @@ const NasaWidget: React.FC<IGenericWidget> = ({ isEditMode }) => {
     <>
       <div
         draggable={isEditMode}
-        onDragStart={() => setDragging(true)}
-        onDragEnd={() => setDragging(false)}
+        onDragStart={() => {
+          setDragging(true);
+          setDraggedWidgetId(widgetId);
+        }}
+        onDragEnd={() => {
+          setDragging(false);
+        }}
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={() => handleDrop(widgetId)}
         className={`relative min-w-64 min-h-110 col-span-1 rounded-2xl bg-gradient-to-br from-gray-200 via-gray-100 to-blue-50
        dark:from-gray-800 dark:via-gray-700 dark:to-gray-900 p-4 shadow-2xl border border-gray-300 hover:scale-105 transform 
        ${isEditMode && "ring-2 ring-blue-400 hover:scale-105 cursor-grab"}
        ${
          dragging
-           ? "scale-110 shadow-2xl cursor-grabbing ring-4 ring-blue-500"
+           ? "scale-95 shadow-2xl cursor-grabbing ring-4 ring-blue-500"
            : ""
        }
        transition-all duration-300`}

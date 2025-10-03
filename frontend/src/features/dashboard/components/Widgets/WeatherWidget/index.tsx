@@ -13,7 +13,14 @@ import type { IGenericWidget } from "../../../interfaces";
 import Tag from "../../../../../components/Tag";
 import { useState } from "react";
 
-const WeatherWidget: React.FC<IGenericWidget> = ({ isEditMode }) => {
+const WeatherWidget: React.FC<IGenericWidget> = ({
+  isEditMode,
+  widgetId,
+  onHide,
+  setWidgetOrder,
+  handleDrop,
+  setDraggedWidgetId,
+}) => {
   const weatherData = useSelector((state: any) => state.weather);
   const [dragging, setDragging] = useState<boolean>(false);
 
@@ -161,14 +168,21 @@ const WeatherWidget: React.FC<IGenericWidget> = ({ isEditMode }) => {
   return (
     <div
       draggable={isEditMode}
-      onDragStart={() => setDragging(true)}
-      onDragEnd={() => setDragging(false)}
+      onDragStart={() => {
+        setDragging(true);
+        setDraggedWidgetId(widgetId);
+      }}
+      onDragEnd={() => {
+        setDragging(false);
+      }}
+      onDragOver={(e) => e.preventDefault()}
+      onDrop={() => handleDrop(widgetId)}
       className={` ${
         isEditMode && "ring-2 ring-blue-400 hover:scale-105 cursor-grab"
       }
        ${
          dragging
-           ? "scale-110 shadow-2xl cursor-grabbing ring-4 ring-blue-500"
+           ? "scale-95 shadow-2xl cursor-grabbing ring-4 ring-blue-500"
            : ""
        } relative h-120 hover:scale-105 duration-300 min-h-100 col-span-1 rounded-2xl p-6 shadow-2xl bg-gradient-to-r ${background_color(
         weatherInfo?.main ?? "clear"

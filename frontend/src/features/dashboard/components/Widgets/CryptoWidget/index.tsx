@@ -17,7 +17,14 @@ import type { ICryptoFilterData } from "../../../../../store/data/cryptoData";
 import type { IGenericWidget } from "../../../interfaces";
 import Tag from "../../../../../components/Tag";
 
-const CryptoWidget: React.FC<IGenericWidget> = ({ isEditMode }) => {
+const CryptoWidget: React.FC<IGenericWidget> = ({
+  isEditMode,
+  widgetId,
+  onHide,
+  setWidgetOrder,
+  handleDrop,
+  setDraggedWidgetId,
+}) => {
   // Dispatched datas
   const dispatch = useDispatch();
   const cryptoFilterData: ICryptoFilterData = useSelector(
@@ -70,13 +77,20 @@ const CryptoWidget: React.FC<IGenericWidget> = ({ isEditMode }) => {
     <>
       <div
         draggable={isEditMode}
-        onDragStart={() => setDragging(true)}
-        onDragEnd={() => setDragging(false)}
+        onDragStart={() => {
+          setDragging(true);
+          setDraggedWidgetId(widgetId);
+        }}
+        onDragEnd={() => {
+          setDragging(false);
+        }}
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={() => handleDrop(widgetId)}
         className={`col-span-1 hover:scale-105 transition-all rounded-lg p-6 border border-gray-200 dark:border-gray-700 shadow-lg ${
           isEditMode && "ring-2 ring-blue-400 hover:scale-105 cursor-grab"
         }  ${
           dragging
-            ? "scale-110 shadow-2xl cursor-grabbing ring-4 ring-blue-500"
+            ? "scale-95 shadow-2xl cursor-grabbing ring-4 ring-blue-500"
             : ""
         }`}
       >

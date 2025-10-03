@@ -9,6 +9,7 @@ import useScreenWidthHook from "../../../hooks/useScreenWidthHook";
 import { useDispatch } from "react-redux";
 import { setLayoutMode } from "../../../store/filterSlice";
 import { setEditMode } from "../../../store/appSlice";
+import { ListOrdered } from "lucide-react";
 
 const DashBoard: React.FC = () => {
   const filters = useSelector(
@@ -21,7 +22,7 @@ const DashBoard: React.FC = () => {
   console.log(appData);
   const dispatch = useDispatch();
   // The original widget order.
-  const [widgetOrder, setWidgetOrder] = useState<number[]>([]);
+  const [widgetOrder, setWidgetOrder] = useState<number[]>([3, 2, 1, 4]);
   // If not dragged, the id should be simply null.
   const [draggedWidgetId, setDraggedWidgetId] = useState<number | null>(null);
 
@@ -35,35 +36,66 @@ const DashBoard: React.FC = () => {
     dispatch(setEditMode(!status));
   };
 
-  // List of which to iterate
+  // List of which to iterate to create the widget list
   const widgetList = [
     {
       component: WeatherWidget,
       widgetId: 1,
       onHide: () => console.log(`Hide`),
+      visibility: filters.weather,
     },
-     {
-      component: WeatherWidget,
+    {
+      component: GithubWidget,
       widgetId: 2,
       onHide: () => console.log(`Hide`),
+      visibility: filters.github,
     },
-     {
-      component: WeatherWidget,
+    {
+      component: CryptoWidget,
       widgetId: 3,
       onHide: () => console.log(`Hide`),
-      visibility: filters.We
-
+      visibility: filters.crypto,
     },
-     {
-      component: GithubWidget,
+    {
+      component: NasaWidget,
       widgetId: 4,
       onHide: () => console.log(`Hide`),
-      visibility: filters.github
+      visibility: filters.github,
     },
-
-
-
   ];
+
+  const renderWidgetByOrder = () => {
+    const orderedList: any = [];
+
+    widgetOrder.map((number) => {
+      const res = widgetList.find((widget) => widget.widgetId === number);
+      orderedList.push(res);
+    });
+    console.log(orderedList);
+    return orderedList;
+  };
+
+  const handleDrop = (widgetId: number) => {
+    if (draggedWidgetId === null) return;
+
+    const indexOfDragged = widgetOrder.indexOf(draggedWidgetId);
+    const indexOfDroppedOn = widgetOrder.indexOf(widgetId);
+
+    if (indexOfDragged === -1 || indexOfDroppedOn === -1) return;
+
+    const newList = [...widgetOrder];
+
+    [newList[indexOfDragged], newList[indexOfDroppedOn]] = [
+      newList[indexOfDroppedOn],
+      newList[indexOfDragged],
+    ];
+
+    setWidgetOrder(newList);
+    setDraggedWidgetId(null);
+
+    console.log("SWAP:", draggedWidgetId, "⇄", widgetId);
+    console.log("AFTER:", newList);
+  };
 
   return (
     <>
@@ -75,34 +107,23 @@ const DashBoard: React.FC = () => {
         />
         <section className={`grid gap-6 px-6 py-2 ${getLayoutByMode()}`}>
           <>
-            {filters.weather && (
-              <WeatherWidget
-                isEditMode={isEditMode}
-                widgetId={1}
-                onHide={() => console.log("Hiding the widget")}
-              />
-            )}
-            {filters.github && (
-              <GithubWidget
-                isEditMode={isEditMode}
-                widgetId={2}
-                onHide={() => console.log("Hiding the widget")}
-              />
-            )}
-            {filters.nasa && (
-              <NasaWidget
-                isEditMode={isEditMode}
-                widgetId={3}
-                onHide={() => console.log("Hiding the widget")}
-              />
-            )}
-            {filters.crypto && (
-              <CryptoWidget
-                isEditMode={isEditMode}
-                widgetId={4}
-                onHide={() => console.log("Hiding the widget")}
-              />
-            )}
+            {renderWidgetByOrder().map((widget: any) => {
+              return (
+                <>
+                  {widget.visibility && (
+                    <widget.component
+                      widgetId={widget.widgetId}
+                      onHide={widget.onHide}
+                      isEditMode={isEditMode}
+                      setWidgetOrder={setWidgetOrder}
+                      handleDrop={handleDrop}
+                      setDraggedWidgetId={setDraggedWidgetId}
+                    />
+                  )}
+                </>
+              );
+            })}
+            {/* {renderWidgetByOrder()} */}
           </>
         </section>
       </div>
