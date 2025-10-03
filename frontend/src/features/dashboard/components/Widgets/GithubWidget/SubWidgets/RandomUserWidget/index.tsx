@@ -28,7 +28,6 @@ const RandomUserWidget: React.FC = () => {
       return (
         <>
           <div className="flex flex-col gap-1 items-center justify-center transition h-40 duration-300">
-            {" "}
             <ReactLoader /> Loading{" "}
           </div>
         </>

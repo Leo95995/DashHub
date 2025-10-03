@@ -9,10 +9,20 @@ import {
 import ReactLoader from "../../../../../components/loader";
 // Icons
 import { Wind, Droplet, Gauge } from "lucide-react";
+import type { IGenericWidget } from "../../../interfaces";
+import Tag from "../../../../../components/Tag";
+import { useState } from "react";
 
-const WeatherWidget: React.FC = () => {
+const WeatherWidget: React.FC<IGenericWidget> = ({
+  isEditMode,
+  widgetId,
+  onHide,
+  setWidgetOrder,
+  handleDrop,
+  setDraggedWidgetId,
+}) => {
   const weatherData = useSelector((state: any) => state.weather);
-  console.log(weatherData);
+  const [dragging, setDragging] = useState<boolean>(false);
 
   const { coordinates, weather, temperatureType, loading, error } = weatherData;
 
@@ -157,14 +167,34 @@ const WeatherWidget: React.FC = () => {
     weather?.weather && weather.weather.length > 0 && weather.weather[0];
   return (
     <div
-      className={`relative hover:scale-105 duration-300 min-h-100 col-span-1 rounded-2xl p-6 shadow-2xl bg-gradient-to-r ${background_color(
+      draggable={isEditMode}
+      onDragStart={() => {
+        setDragging(true);
+        setDraggedWidgetId(widgetId);
+      }}
+      onDragEnd={() => {
+        setDragging(false);
+      }}
+      onDragOver={(e) => e.preventDefault()}
+      onDrop={() => handleDrop(widgetId)}
+      className={` ${
+        isEditMode && "ring-2 ring-blue-400 hover:scale-105 cursor-grab"
+      }
+       ${
+         dragging
+           ? "scale-95 shadow-2xl cursor-grabbing ring-4 ring-blue-500"
+           : ""
+       } relative h-120 hover:scale-105 duration-300 min-h-100 col-span-1 rounded-2xl p-6 shadow-2xl bg-gradient-to-r ${background_color(
         weatherInfo?.main ?? "clear"
       )} overflow-hidden`}
     >
-       {renderLoading()}
+      {" "}
+      <div className="flex gap-5">
+        {isEditMode ? <Tag text="Edit Mode" /> : <span>No edit mode</span>}
+      </div>
+      {renderLoading()}
       {renderError()}
       {renderWeather()}
-  
     </div>
   );
 };

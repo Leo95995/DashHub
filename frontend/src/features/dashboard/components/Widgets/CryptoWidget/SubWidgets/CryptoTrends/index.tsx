@@ -9,6 +9,7 @@ import { Close } from "@mui/icons-material";
 import CryptoList from "./components/crypto-list";
 import FilterList from "./components/filterList/filter-list";
 import ErrorMessage from "../../../../../../../components/Error/error";
+import ReactLoader from "../../../../../../../components/loader";
 
 const CryptoTrendings: React.FC = () => {
   const crypto_data = useSelector(
@@ -34,11 +35,20 @@ const CryptoTrendings: React.FC = () => {
 
   const renderData = () => {
     if (loading) {
-      return <> Loading</>;
+      return (
+        <div className="flex flex-col gap-1 items-center justify-center transition h-40 duration-300">
+          <ReactLoader /> Loading trending repositories
+        </div>
+      );
     }
 
     if (error) {
-      return <>  <ErrorMessage message="Error while fetching crypto trendings data"/></>;
+      return (
+        <>
+          {" "}
+          <ErrorMessage message="Error while fetching crypto trendings data" />
+        </>
+      );
     }
 
     if (!data) {
@@ -88,10 +98,12 @@ const CryptoTrendings: React.FC = () => {
           )}
           <ul
             className={`absolute z-20 rounded-lg border border-gray-300 bg-white text-gray-700 shadow-md overflow-auto transition-max-h duration-300 ${
-              isOpen ? "max-h-56 w-48" : "h-10 flex cursor-pointer hover:bg-blue-300 overflow-hidden w-30"
+              isOpen
+                ? "max-h-56 w-48"
+                : "h-10 flex cursor-pointer hover:bg-blue-300 overflow-hidden w-30"
             }`}
           >
-            {isOpen ? ( 
+            {isOpen ? (
               currenciesList?.map((option: string) => (
                 <li
                   key={option}
@@ -127,7 +139,11 @@ const CryptoTrendings: React.FC = () => {
                 </li>
               ))
             ) : (
-              <><span className="p-2" onClick={() => setIsOpen(true)}>Select Crypto</span></>
+              <>
+                <span className="p-2" onClick={() => setIsOpen(true)}>
+                  Select Crypto
+                </span>
+              </>
             )}
           </ul>
           {/* List of filters selected */}

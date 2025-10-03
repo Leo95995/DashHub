@@ -1,3 +1,5 @@
+import ReactLoader from "../../../../../../components/loader";
+
 export interface IApodWidget {
   data: ApoData;
   loading: boolean;
@@ -19,7 +21,11 @@ const ApodWidget: React.FC<IApodWidget> = ({ data, error, loading }) => {
   }
 
   if (loading) {
-    return <>Caricamento...</>;
+    return (
+      <div className="flex flex-col gap-1 items-center justify-center transition h-40 duration-300">
+        <ReactLoader /> Loading Nasa Picture of the day
+      </div>
+    );
   }
 
   return (
@@ -37,8 +43,8 @@ const ApodWidget: React.FC<IApodWidget> = ({ data, error, loading }) => {
 
       <div className="relative rounded-2xl mb-3 w-full max-w-[12rem] aspect-square mx-auto overflow-hidden shadow-lg">
         {url ? (
-          <img 
-          alt="Nasa Pic of the day"
+          <img
+            alt="Nasa Pic of the day"
             className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
             src={url}
           />

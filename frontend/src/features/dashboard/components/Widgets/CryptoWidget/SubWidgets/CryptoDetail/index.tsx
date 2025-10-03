@@ -7,10 +7,10 @@ import { setGenericCryptoFilters } from "../../../../../../../store/cryptoSlice"
 import {
   days,
   filterCurrenciesList,
-  type ICryptoFilterData,
 } from "../../../../../../../store/data/cryptoData";
 import GenericSelect from "../../../../../../../components/select";
 import ErrorMessage from "../../../../../../../components/Error/error";
+import ReactLoader from "../../../../../../../components/loader";
 
 const CryptoDetail: React.FC = () => {
   // Data to drill down to the linear chart
@@ -91,11 +91,17 @@ const CryptoDetail: React.FC = () => {
   };
 
   if (detailLoading) {
-    return <>LOading</>;
+    return (
+      <>
+        <div className="flex flex-col gap-1 items-center justify-center transition h-40 duration-300">
+          <ReactLoader /> Loading crypto details
+        </div>
+      </>
+    );
   }
 
   if (detailError) {
-    return <ErrorMessage message="Error while fetching crypto details data"/>;
+    return <ErrorMessage message="Error while fetching crypto details data" />;
   }
 
   if (!detailData) {
@@ -113,7 +119,7 @@ const CryptoDetail: React.FC = () => {
     <>
       <h2 className="text-xl font-medium pt-4">Crypto details</h2>
       <div className="flex justify-start ">
-       <GenericSelect
+        <GenericSelect
           itemList={filterCurrenciesList}
           onSelection={(value) => handleSelection(value)}
           defaultText={"Select currency"}
@@ -121,9 +127,8 @@ const CryptoDetail: React.FC = () => {
           placement="start"
           minHeigth="min-h-8"
         />
-        </div>
+      </div>
       <div className="flex items-end py-2 justify-start gap-2">
-         
         <div className="flex flex-col gap-2 w-24">
           <label htmlFor="timespan">Select days</label>
           <select

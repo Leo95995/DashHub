@@ -1,12 +1,13 @@
 import type {
-  NasaItemStatus,
+  ItemStatus,
   RoverDetails,
 } from "../../../../../../../store/interfaces/interfaces";
 import RoverElement from "./mars-rover-element";
 import { Infinity } from "lucide-react";
 import useRoverNavigation from "./hook/useRoverNavigation";
+import ReactLoader from "../../../../../../../components/loader";
 
-const MarsRoverWidget: React.FC<NasaItemStatus<RoverDetails[]>> = ({
+const MarsRoverWidget: React.FC<ItemStatus<RoverDetails[]>> = ({
   data,
   loading,
   error,
@@ -19,7 +20,11 @@ const MarsRoverWidget: React.FC<NasaItemStatus<RoverDetails[]>> = ({
   }
 
   if (loading) {
-    return <>Caricamento</>;
+    return (
+      <div className="flex flex-col gap-1 items-center justify-center transition h-50 duration-300">
+        <ReactLoader /> Loading Mars Rover Data
+      </div>
+    );
   }
 
   if (error) {
