@@ -1,3 +1,5 @@
+// Dashboard data
+import DashboardStorage from "../../../../services/storage/dashboard";
 interface IUserData {
   userInfo: any;
   preferences: any;
@@ -7,14 +9,16 @@ interface IDashBoardHeader {
   userdata: IUserData;
   isEditMode: boolean;
   onClick: (val: boolean) => void;
+  widgetOrder: number[];
 }
 
 const DashBoardHeader: React.FC<IDashBoardHeader> = ({
   userdata,
   isEditMode,
   onClick,
+  widgetOrder
 }) => {
-  console.log(userdata, isEditMode);
+
 
   return (
     <>
@@ -27,12 +31,22 @@ const DashBoardHeader: React.FC<IDashBoardHeader> = ({
             </span>
           </b>
         </div>
-        <button
-          onClick={() => onClick(isEditMode)}
-          className="px-4 py-2 rounded-lg  cursor-pointer bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium shadow-md hover:from-blue-600 hover:to-indigo-700 active:scale-95 transition"
-        >
-          Modify Layout
-        </button>
+        <div className="flex gap-2 items-center">
+          <button
+            onClick={() => onClick(isEditMode)}
+            className="px-4 py-2 rounded-lg  cursor-pointer bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium shadow-md hover:from-blue-600 hover:to-indigo-700 active:scale-95 transition"
+          >
+            {isEditMode ? `Cancel` : "Modify Layout"}
+          </button>
+          {isEditMode && (
+            <button
+              onClick={()=>DashboardStorage.widgets.saveWidgetOrder(widgetOrder)}
+              className="px-4 py-2 rounded-lg  cursor-pointer bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium shadow-md hover:from-blue-600 hover:to-indigo-700 active:scale-95 transition"
+            >
+              Save Layout Order
+            </button>
+          )}
+        </div>
       </div>
     </>
   );

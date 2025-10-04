@@ -9,7 +9,7 @@ import useScreenWidthHook from "../../../hooks/useScreenWidthHook";
 import { useDispatch } from "react-redux";
 import { setLayoutMode } from "../../../store/filterSlice";
 import { setEditMode } from "../../../store/appSlice";
-import { ListOrdered } from "lucide-react";
+import DashboardStorage from "../../../services/storage/dashboard";
 
 const DashBoard: React.FC = () => {
   const filters = useSelector(
@@ -19,10 +19,11 @@ const DashBoard: React.FC = () => {
   const appData = useSelector((state: any) => state.app);
   const { isEditMode, userdata } = appData;
 
-  console.log(appData);
+
+  const storageWidgetOrder = DashboardStorage.widgets.getWidgetOrder()
   const dispatch = useDispatch();
   // The original widget order.
-  const [widgetOrder, setWidgetOrder] = useState<number[]>([3, 2, 1, 4]);
+  const [widgetOrder, setWidgetOrder] = useState<number[]>(storageWidgetOrder ?? [3, 2, 1, 4]);
   // If not dragged, the id should be simply null.
   const [draggedWidgetId, setDraggedWidgetId] = useState<number | null>(null);
 
@@ -60,7 +61,7 @@ const DashBoard: React.FC = () => {
       component: NasaWidget,
       widgetId: 4,
       onHide: () => console.log(`Hide`),
-      visibility: filters.github,
+      visibility: filters.nasa,
     },
   ];
 
@@ -71,10 +72,15 @@ const DashBoard: React.FC = () => {
       const res = widgetList.find((widget) => widget.widgetId === number);
       orderedList.push(res);
     });
-    console.log(orderedList);
     return orderedList;
   };
 
+  /**
+   * Func used to track the dragging and the drop with the new order
+   * 
+   * @param widgetId 
+   * @returns 
+   */
   const handleDrop = (widgetId: number) => {
     if (draggedWidgetId === null) return;
 
@@ -93,8 +99,6 @@ const DashBoard: React.FC = () => {
     setWidgetOrder(newList);
     setDraggedWidgetId(null);
 
-    console.log("SWAP:", draggedWidgetId, "⇄", widgetId);
-    console.log("AFTER:", newList);
   };
 
   return (
@@ -104,6 +108,7 @@ const DashBoard: React.FC = () => {
           userdata={userdata}
           isEditMode={isEditMode}
           onClick={toggleEditMode}
+          widgetOrder={widgetOrder}
         />
         <section className={`grid gap-6 px-6 py-2 ${getLayoutByMode()}`}>
           <>
@@ -115,7 +120,6 @@ const DashBoard: React.FC = () => {
                       widgetId={widget.widgetId}
                       onHide={widget.onHide}
                       isEditMode={isEditMode}
-                      setWidgetOrder={setWidgetOrder}
                       handleDrop={handleDrop}
                       setDraggedWidgetId={setDraggedWidgetId}
                     />

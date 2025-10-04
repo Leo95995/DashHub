@@ -29,6 +29,11 @@ const useScreenWidthHook = (layout: WidgetLayout) => {
   }, []);
 
   const getLayoutByMode = () => {
+
+    if(!layout?.grid_col){
+      return "grid-cols-2"
+    }
+
     switch (currentMode) {
       case "desktop":
         return layout.grid_col.large === 3

@@ -16,15 +16,13 @@ export interface IUserActivityData {
   // Utente
   actor_login: string;
   actor_avatar_url: string;
-  actor_url: string; // link al profilo GitHub
-  actor_type: string; // User / Bot
+  actor_url: string; 
+  actor_type: string; 
   site_admin: boolean;
-  // Evento
-  event_type: string; // ForkEvent, PushEvent, ecc.
+  event_type: string; 
   created_at: string;
-  public: boolean; // visibilità dell'evento
-  // Repository originale
-  repo_name: string;
+  public: boolean; 
+   repo_name: string;
   repo_url: string;
   repo_description: string;
   repo_language: string | null;
@@ -34,11 +32,9 @@ export interface IUserActivityData {
   repo_default_branch: string;
   repo_license_name: string;
   repo_homepage: string;
-  // Fork creato dall'utente (se presente)
   fork_name?: string;
   fork_url?: string;
   fork_private?: boolean;
-  // Organizzazione
   org_login?: string;
   org_url?: string;
   org_avatar_url?: string;

@@ -16,18 +16,19 @@ export interface IGlobalAlert {
   description: string;
 }
 export interface IFilters {
-  weatherFilters: {
-    expanded: boolean;
-  };
-  cryptoFilters: {
-    expanded: boolean;
-  };
-  nasaFilters: {
-    expanded: boolean;
-  };
-  githubFilters: {
-    expanded: boolean;
-  };
+  //  I dont think that expansion is never used frfr
+  // weatherFilters: {
+  //   expanded: boolean;
+  // };
+  // cryptoFilters: {
+  //   expanded: boolean;
+  // };
+  // nasaFilters: {
+  //   expanded: boolean;
+  // };
+  // githubFilters: {
+  //   expanded: boolean;
+  // };
   widgetVisibility: {
     weather: boolean;
     github: boolean;

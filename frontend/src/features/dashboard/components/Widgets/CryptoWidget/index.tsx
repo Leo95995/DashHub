@@ -21,7 +21,6 @@ const CryptoWidget: React.FC<IGenericWidget> = ({
   isEditMode,
   widgetId,
   onHide,
-  setWidgetOrder,
   handleDrop,
   setDraggedWidgetId,
 }) => {
@@ -55,10 +54,7 @@ const CryptoWidget: React.FC<IGenericWidget> = ({
     await dispatch(fetchTopGainers(cryptoFilterData) as any);
   };
 
-  /**
-   * Must prepare data from backend next. now this work. add filters then abstract
-   * all the logic. or i prepare an apply filter button
-   */
+ 
   useEffect(() => {
     getTopGainers();
   }, [genericFilters]);

@@ -17,7 +17,6 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
   isEditMode,
   widgetId,
   onHide,
-  setWidgetOrder,
   handleDrop,
   setDraggedWidgetId,
 }) => {

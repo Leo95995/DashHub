@@ -19,7 +19,6 @@ const NasaWidget: React.FC<IGenericWidget> = ({
   isEditMode,
   widgetId,
   onHide,
-  setWidgetOrder,
   handleDrop,
   setDraggedWidgetId,
 }) => {

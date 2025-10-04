@@ -15,10 +15,10 @@ export interface ICryptoTopGainers {
   id: string;
   name: string;
   symbol: string;
-  image: "https://coin-images.coingecko.com/coins/images/1/large/bitcoin.png";
+  image: string;
   price: number;
-  change24h: number; // % in 24h
-  marketCap: 1959280345049;
+  change24h: number;
+  marketCap: number;
 }
 
 /**
