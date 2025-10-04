@@ -7,6 +7,8 @@ import { github_widgets } from "../../widgetSwitcher/datas";
 import Switcher from "../../widgetSwitcher/switcher";
 import type { IGenericWidget } from "../../../interfaces";
 import Tag from "../../../../../components/Tag";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedGithubWidget } from "../../../../../store/githubSlice";
 
 const GithubWidget: React.FC<IGenericWidget> = ({
   isEditMode,
@@ -15,8 +17,10 @@ const GithubWidget: React.FC<IGenericWidget> = ({
   handleDrop,
   setDraggedWidgetId,
 }) => {
-  const [githubWidget, setGithubWidget] = useState<GithubWidgets>("repos");
+  // const [githubWidget, setGithubWidget] = useState<GithubWidgets>("repos");
+  const githubWidget = useSelector((state: any)=> state.github.selectedWidget )
   const [dragging, setDragging] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -44,7 +48,7 @@ const GithubWidget: React.FC<IGenericWidget> = ({
           <Switcher
             widgetSelected={githubWidget}
             switcherButtonText="Change Github Widget"
-            changeSelectedWidget={(e) => setGithubWidget(e as GithubWidgets)}
+            changeSelectedWidget={(e) => dispatch(setSelectedGithubWidget(e as GithubWidgets))}
             widgetList={github_widgets}
           />
           {isEditMode ? (

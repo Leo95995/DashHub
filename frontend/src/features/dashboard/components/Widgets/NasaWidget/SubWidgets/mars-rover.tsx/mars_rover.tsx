@@ -37,7 +37,7 @@ const MarsRoverWidget: React.FC<ItemStatus<RoverDetails[]>> = ({
         <div className="flex justify-between py-2 items-center">
           <p>
             Oggetto selezionato <b>{(selectedRover?.index as number) + 1}</b> di{" "}
-            <b>{selectedChunk.length}</b>
+            <b>{selectedChunk?.length}</b>
           </p>
           <button
             className="px-3 py-1 cursor-pointer rounded-lg 

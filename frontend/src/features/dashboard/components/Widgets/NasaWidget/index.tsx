@@ -28,6 +28,7 @@ const NasaWidget: React.FC<IGenericWidget> = ({
   const [dragging, setDragging] = useState<boolean>(false);
   // Neows
 
+  console.log(widgetSelected);
   //  Mars Rover
   const dispatch = useDispatch();
 

@@ -49,23 +49,23 @@ const Filters: React.FC<IFilters> = ({ isMobile }) => {
       <div className="py-2">
         <WidgetFilters expanded={expanded} />
       </div>
-      {filters.weather && (
+      {filters?.weather && (
         <div className="py-2">
           <WeatherFilters expanded={expanded} />
         </div>
       )}
 
-      {filters.nasa && (
+      {filters?.nasa && (
         <div className="py-2 pb-3">
           <NasaFilters expanded={expanded} />
         </div>
       )}
-      {filters.crypto && (
+      {filters?.crypto && (
         <div className="py-4">
           <CryptoFilters expanded={expanded} />
         </div>
       )}
-      {filters.github && <div className="py-12"><GithubFilters expanded={expanded} /></div>}
+      {filters?.github && <div className="py-12"><GithubFilters expanded={expanded} /></div>}
     </div>
   );
 };

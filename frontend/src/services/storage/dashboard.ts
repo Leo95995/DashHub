@@ -1,12 +1,13 @@
+import { type Temperature } from "../../store/weatherSlice";
+import type { IWeatherData, LocationCoordinates } from "../interfaces/interfaces";
+import cryptoKey from "./crypto";
+import githubKey from "./github";
+import nasaKey from "./nasa";
 import { storage } from "./storage";
 
 const DASHBOARD_KEY = "dashboard";
 
 const DashboardStorage = {
-
-
-  // WIDGETS
-
   widgets: {
     getWidgetOrder: (): number[] => {
       const res = storage.getItem(`${DASHBOARD_KEY}_widgetOrder`);
@@ -15,9 +16,31 @@ const DashboardStorage = {
     saveWidgetOrder: (toSaveOrder: number[]): void => {
       storage.setItem(`${DASHBOARD_KEY}_widgetOrder`, toSaveOrder);
     },
+    weatherWidget: {
+        getCoordinates: () => {
+          return storage.getItem(`${DASHBOARD_KEY}coordinates`)
+        }, 
+        setCoordinates: (coordinates: Partial<LocationCoordinates>)=> {
+          storage.setItem(`${DASHBOARD_KEY}_coordinates`, coordinates)
+        },
+        getWeatherData: ()=> {
+          return storage.getItem(`${DASHBOARD_KEY}_weatherData`)
+        },
+        setWeatherData: (weatherData: Partial<IWeatherData> )=> {
+          storage.setItem(`${DASHBOARD_KEY}_weatherData`, weatherData)
+        },
+        getTemperatureType: ()=> {
+         return storage.getItem(`${DASHBOARD_KEY}_temperature`)
+        },
+        setTemperatureType: (temperature: Temperature ) => {
+           storage.setItem(`${DASHBOARD_KEY}_temperature`, temperature );
+        }
 
 
-    // FILTERS
+    },
+    nasaWidget: nasaKey,
+    cryptoWidget: cryptoKey, 
+    githubWidget: githubKey
   },
    filters: {
       saveWidgetVisibility: (widgetVisibility: { [key: string]: boolean }) => {

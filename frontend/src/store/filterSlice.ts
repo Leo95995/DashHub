@@ -2,7 +2,7 @@ import type { ScreenMode } from "../interfaces/common/interfaces";
 import type { IFilters } from "./interfaces/interfaces";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import DashboardStorage from "../services/storage/dashboard";
-const { widgets, filters } = DashboardStorage;
+const { filters } = DashboardStorage;
 
 export type VisualMode = "large" | "small" | "medium";
 
@@ -25,9 +25,7 @@ const initialFilterOptions: IFilters = {
 };
 
 const getFilterOptions = (): IFilters => {
-
   const visibility = filters.getWidgetVisibility()
-  console.log(visibility , 'WIDGET Visy');
   const finalFiltersOptions: IFilters = {
     widgetVisibility: visibility
   };
@@ -37,7 +35,6 @@ const getFilterOptions = (): IFilters => {
 
 const getWidgetLayout = () => {
   const storageLayout = filters.getWidgetLayout()
-  console.log(storageLayout);
   return storageLayout;
 };
 
@@ -45,7 +42,7 @@ const widgetLayout = getWidgetLayout();
 const filterOptions = getFilterOptions();
 
 const initialState = {
-  filters: filterOptions ?? initialFilterOptions,
+  filters: filterOptions.widgetVisibility ?filterOptions : initialFilterOptions,
   widgetLayout: widgetLayout ?? {
     grid_col: {
       large: 2,

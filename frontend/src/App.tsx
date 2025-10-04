@@ -17,14 +17,11 @@ const DashBoardPage = lazy(() => import("./pages/privates/DashboardPage"));
 function App() {
   const dispatch = useDispatch()
 
-  // Fetch all the datas that can be used in all part of app and should not refresh so
-  // often
+
   useEffect(()=> {
     dispatch(fetchCryptoCurrenciesList() as any)
     console.log('crypto currencies fetching')
   }, [])
-
-  // We can check here some things. like if user has already set his preferences or not.
 
   return (
     <>

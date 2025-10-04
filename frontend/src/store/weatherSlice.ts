@@ -6,6 +6,8 @@ import type {
   LocationCoordinates,
 } from "../services/interfaces/interfaces";
 
+import DashboardStorage from "../services/storage/dashboard";
+
 export const fetchWeatherByCity = createAsyncThunk(
   "weather/fetchByCity",
   async (city: string, { rejectWithValue }) => {
@@ -34,13 +36,13 @@ const coordinates: Partial<LocationCoordinates> = {};
 const weatherData: Partial<IWeatherData> = {};
 
 
-type Temperature = "celsius"| "kelvin" 
-const temperatureType: Temperature = "celsius";
+export type Temperature = "celsius"| "kelvin" 
+const temperatureType: Temperature =  "celsius";
 
 const initialState = {
-  coordinates: coordinates,
-  weather: weatherData,
-  temperatureType,
+  coordinates:  DashboardStorage.widgets.weatherWidget.getCoordinates() ?? coordinates,
+  weather:  DashboardStorage.widgets.weatherWidget.getWeatherData() ?? weatherData,
+  temperatureType: DashboardStorage.widgets.weatherWidget.getTemperatureType() ?? temperatureType,
   loading: false,
   error: null as string | null,
 };
@@ -59,6 +61,7 @@ export const weatherSlice = createSlice({
     setTemperatureType: (state, action) =>{
         const {payload} = action
         state.temperatureType = payload
+        DashboardStorage.widgets.weatherWidget.setTemperatureType(payload)
     }
   },
   extraReducers: (builder) => {
@@ -70,6 +73,8 @@ export const weatherSlice = createSlice({
       .addCase(fetchWeatherByCity.fulfilled, (state, action) => {
         state.coordinates = action.payload.coordinates;
         state.weather = action.payload.weather;
+        DashboardStorage.widgets.weatherWidget.setCoordinates(state.coordinates)
+        DashboardStorage.widgets.weatherWidget.setWeatherData(state.weather)
         state.loading = false;
         state.error = null;
       })

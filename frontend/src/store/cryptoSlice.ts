@@ -5,7 +5,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 // Github Service
 import { initialState, type ICryptoFilterData } from "./data/cryptoData";
 import CryptoService from "../services/crypto-service";
-
+import DashboardStorage from "../services/storage/dashboard";
 const {
   getAllCryptoCurrencies,
   getAllCryptosTrend,
@@ -96,6 +96,7 @@ export const cryptoSlice = createSlice({
   reducers: {
     setSelectedCryptoWidget(state, action){
       state.selectedWidget = action.payload;
+      DashboardStorage.widgets.cryptoWidget.setSelectedWidget(action.payload)
     },
     setGenericCryptoFilters(state, action){
       state.filterData.genericFilters = action.payload

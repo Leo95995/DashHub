@@ -6,6 +6,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import GithubService from "../services/github-service";
 import { initialState } from "./data/githubData";
 import type { GithubRepo, IUserActivityData } from "../mappers/githubMapper";
+import DashboardStorage from "../services/storage/dashboard";
 
 const {
   get_user_activity,
@@ -96,9 +97,12 @@ export const githubSlice = createSlice({
       state.trending_repos_data.data = action.payload as GithubRepo[];
     },
     setSelectedUserRepo(state, action) {
-      // repo e stats
       state.repo_data.data = action.payload;
     },
+    setSelectedGithubWidget(state, action){
+      state.selectedWidget = action.payload
+      DashboardStorage.widgets.githubWidget.setSelectedWidget(action.payload)
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -164,5 +168,5 @@ export const githubSlice = createSlice({
   },
 });
 
-export const { setUserActivityData, setSelectedUserRepo, setTrendingRepoList } =
+export const { setSelectedGithubWidget, setUserActivityData, setSelectedUserRepo, setTrendingRepoList } =
   githubSlice.actions;

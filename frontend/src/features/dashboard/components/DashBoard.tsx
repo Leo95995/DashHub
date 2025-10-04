@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { setLayoutMode } from "../../../store/filterSlice";
 import { setEditMode } from "../../../store/appSlice";
 import DashboardStorage from "../../../services/storage/dashboard";
+import { useId } from "react";
 
 const DashBoard: React.FC = () => {
   const filters = useSelector(
@@ -19,6 +20,7 @@ const DashBoard: React.FC = () => {
   const appData = useSelector((state: any) => state.app);
   const { isEditMode, userdata } = appData;
 
+  const id = useId()
 
   const storageWidgetOrder = DashboardStorage.widgets.getWidgetOrder()
   const dispatch = useDispatch();
@@ -117,6 +119,7 @@ const DashBoard: React.FC = () => {
                 <>
                   {widget.visibility && (
                     <widget.component
+                    key={id}
                       widgetId={widget.widgetId}
                       onHide={widget.onHide}
                       isEditMode={isEditMode}
@@ -127,7 +130,6 @@ const DashBoard: React.FC = () => {
                 </>
               );
             })}
-            {/* {renderWidgetByOrder()} */}
           </>
         </section>
       </div>

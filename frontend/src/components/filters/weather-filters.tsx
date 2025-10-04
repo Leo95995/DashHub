@@ -3,18 +3,27 @@
 import type React from "react";
 import { useEffect, useState } from "react";
 import { fetchWeatherByCity } from "../../store/weatherSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setTemperatureType } from "../../store/weatherSlice";
-
+import DashboardStorage from "../../services/storage/dashboard";
 interface WeatherFilters {
   expanded: boolean;
 }
 
 const WeatherFilters: React.FC<WeatherFilters> = ({ expanded }) => {
-  const [weatherSearchText, setWeatherSearchText] = useState<string>("empoli");
+  const getWeatherData =
+    DashboardStorage.widgets.weatherWidget.getWeatherData();
+  const defaultSearch = getWeatherData?.name;
+  const [weatherSearchText, setWeatherSearchText] = useState<string>(
+    defaultSearch ?? "empoli"
+  );
+  const temperatureType = useSelector(
+    (state: any) => state.weather.temperatureType
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log(temperatureType);
     dispatch(fetchWeatherByCity(weatherSearchText) as any);
   }, []);
 
@@ -41,6 +50,10 @@ const WeatherFilters: React.FC<WeatherFilters> = ({ expanded }) => {
             id="location"
             onChange={(e) => setWeatherSearchText(e.currentTarget.value)}
             placeholder="Inserisci città..."
+            onKeyDown={(e) =>
+              e.key === "Enter" &&
+              dispatch(fetchWeatherByCity(weatherSearchText) as any)
+            }
             className="
         border border-gray-300 dark:border-gray-600
         rounded-l-md
@@ -79,13 +92,15 @@ const WeatherFilters: React.FC<WeatherFilters> = ({ expanded }) => {
         >
           Select temperature
         </label>
-        <select
-          onChange={(e) =>
-            dispatch(setTemperatureType(e.currentTarget.value.toLowerCase()))
-          }
-          name="temperature"
-          id="temperature"
-          className="
+        {temperatureType && (
+          <select
+            onChange={(e) =>
+              dispatch(setTemperatureType(e.currentTarget.value.toLowerCase()))
+            }
+            value={temperatureType}
+            name="temperature"
+            id="temperature"
+            className="
       border border-gray-300 dark:border-gray-600
       rounded-lg
       px-3 py-2
@@ -95,10 +110,11 @@ const WeatherFilters: React.FC<WeatherFilters> = ({ expanded }) => {
       transition-colors duration-200
       cursor-pointer
     "
-        >
-          <option>Celsius</option>
-          <option>Kelvin</option>
-        </select>
+          >
+            <option value={"celsius"}>Celsius</option>
+            <option value={"kelvin"}>Kelvin</option>
+          </select>
+        )}
       </div>
     </div>
   );
