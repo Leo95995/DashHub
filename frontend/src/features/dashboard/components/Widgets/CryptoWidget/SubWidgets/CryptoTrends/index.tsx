@@ -83,7 +83,7 @@ const CryptoTrendings: React.FC = () => {
     if (!data || Array.isArray(data)) return null;
 
     return (
-      <div className="flex flex-wrap gap-2 justify-center">
+      <div className="flex flex-wrap gap-2 justify-center overflow-scroll  max-h-95">
         <h2 className="text-xl font-medium pt-4">Crypto Trendings</h2>
         {/* Should be extracted. this is the logic for crypto trending section */}
         <div className="flex justify-end pb-6 w-full relative h-28 px-12">
@@ -146,14 +146,12 @@ const CryptoTrendings: React.FC = () => {
               </>
             )}
           </ul>
-          {/* List of filters selected */}
           <FilterList
             filters={cryptoLocalFilters?.ids}
             onClick={changeLocalFilters}
             applyFilters={() => dispatch(dispatchSelection() as any)}
           />
         </div>
-        {/* Item list of crypto datas */}
         <CryptoList items={data} />
       </div>
     );

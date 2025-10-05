@@ -32,21 +32,25 @@ export interface ILineChartData {
   };
 }
 
-const LineChart: React.FC<ILineChartData> = ({data}) => {
-
-   const defaultOptions = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "top" as const,
+const LineChart: React.FC<ILineChartData> = ({ data }) => {
+  const defaultOptions = {
+    responsive: true,
+    maintainAspectRatio: false, 
+    plugins: {
+      legend: {
+        position: "top" as const,
+      },
+      title: {
+        display: true,
+        text: `Trending values`,
+      },
     },
-    title: {
-      display: true,
-      text: "Charter",
-    },
-  },
-};
+  };
 
-  return <Line options={defaultOptions} data={data} />;
+  return (
+    <div className="w-full h-24 md:h-60">
+      <Line options={defaultOptions} data={data} />
+    </div>
+  );
 };
 export default LineChart;

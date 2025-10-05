@@ -18,7 +18,6 @@ import Tag from "../../../../../components/Tag";
 const NasaWidget: React.FC<IGenericWidget> = ({
   isEditMode,
   widgetId,
-  onHide,
   handleDrop,
   setDraggedWidgetId,
 }) => {

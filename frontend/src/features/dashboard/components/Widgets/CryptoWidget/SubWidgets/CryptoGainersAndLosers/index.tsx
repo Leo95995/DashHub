@@ -5,6 +5,8 @@ import { setGenericCryptoFilters } from "../../../../../../../store/cryptoSlice"
 import { filterCurrenciesList } from "../../../../../../../store/data/cryptoData";
 import ErrorMessage from "../../../../../../../components/Error/error";
 
+import LoaderWithMessage from "../../../../../../../components/loader/loaderAndText";
+
 const CryptoGainersAndLosers: React.FC = () => {
   const topGainerData = useSelector(
     (state: any) => state.crypto.crypto_top_data
@@ -16,10 +18,8 @@ const CryptoGainersAndLosers: React.FC = () => {
 
   const dispatch = useDispatch();
 
-
-
   if (loading) {
-    return <>LOading</>;
+    return <LoaderWithMessage text="Loading top cryptos gainers & losers datas"/>
   }
 
   if (error) {
@@ -41,15 +41,15 @@ const CryptoGainersAndLosers: React.FC = () => {
   return (
     <>
       <div className="flex gap-2">
-        <h2 className="text-xl font-medium pt-4">Gainers & Losers</h2>
+        <h2 className="text-xl font-medium pt-4 flex w-full">Gainers & Losers</h2>
         <GenericSelect
           itemList={filterCurrenciesList}
           onSelection={(value) => handleSelection(value)}
-          defaultText={"Select currency"}
+          defaultText={genericFilters?.currency}
           selectedList={[genericFilters?.currency]}
         />
       </div>
-      <div className="rounded-lg py-4 grid grid-cols-1 lg:grid-cols-2 gap-4 max-h-110 overflow-scroll overflow-x-hidden">
+      <div className="rounded-lg py-4 grid grid-cols-1 lg:grid-cols-2 gap-4 h-70  overflow-y-scroll overflow-x-hidden">
         {data?.map((coin: ICryptoTopGainers) => {
           return (
             <>
@@ -69,7 +69,7 @@ const CryptoGainersAndLosers: React.FC = () => {
                     {coin.name} ({coin.symbol.toUpperCase()})
                   </span>
                   <span className="text-sm text-gray-500">
-                    € {coin.price.toLocaleString()}
+                   {genericFilters?.currency == 'eur' ? <>€ {coin.price.toLocaleString()} </> : <>  $ {coin.price.toLocaleString()}</>}
                   </span>
                 </div>
                 <div

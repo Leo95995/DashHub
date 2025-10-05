@@ -1,5 +1,6 @@
 import type { IGlobalAlert, IGlobalAlertStatus } from "./interfaces/interfaces";
 import { createSlice } from "@reduxjs/toolkit";
+import userInfo from "../services/storage/user";
 
 interface ISideBar {
     expanded: boolean 
@@ -9,10 +10,18 @@ const initialSideBar : ISideBar = {
     expanded: true
 }
 
+const firstVisit = userInfo.getFirstVisit()
+
+const userInfoValue = userInfo.getUserPreferences()
+
+console.log(userInfoValue);
+
+
 const initialState = {
   internalLoad: false,
   sideBar: initialSideBar,
-  userData: { userInfo: {}, preferences: { } },
+  globalLoad: false,
+  userData:  { userInfo: userInfoValue ?? {username: "Guest"}, firstVisit: firstVisit ?? null },
   isEditMode: false,
   globalAlert: {
     status: "" as IGlobalAlertStatus,
@@ -32,10 +41,14 @@ export const appSlice = createSlice({
     },
     setUserInfo: (state, action ) => {
       state.userData.userInfo = action.payload
+      console.log(action.payload);
+      userInfo.setUserPreferences(action.payload)
     }, 
-    setPreferences:(state,action)=>{
-      state.userData.preferences = action.payload
+    setFirstVisit:(state,action)=>{
+      state.userData.firstVisit = action.payload
+      userInfo.setFirstVisit(action.payload)
     },
+    // This should be implemented for the notification system.
     setGlobalAlert: (state, action) => {
       const { payload } = action;
       const { status, message, description } = payload;
@@ -45,7 +58,10 @@ export const appSlice = createSlice({
       const { payload } = action;
       state.sideBar.expanded = payload;
     },
+    setGlobalLoad (state, action) {
+      state.globalLoad = action.payload
+    }
   },
 });
 
-export const { setEditMode, setUserInfo, setPreferences, setGlobalAlert, setSideBarStatus } = appSlice.actions;
+export const { setGlobalLoad, setEditMode, setUserInfo, setFirstVisit, setGlobalAlert, setSideBarStatus } = appSlice.actions;

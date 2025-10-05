@@ -13,9 +13,7 @@ const GithubFilters: React.FC<IGithubFilters> = ({ expanded }) => {
   const dispatch = useDispatch();
   const currentFilters = useSelector((state: any) => state.github.selectedWidget);
 
-
   const setGithubWidget = (widget: GithubWidgets) => {
-    console.log(widget);
     if (widget) {
       dispatch(setSelectedGithubWidget(widget)as any);
     }

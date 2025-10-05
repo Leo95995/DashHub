@@ -82,7 +82,7 @@ const CryptoWidget: React.FC<IGenericWidget> = ({
         }}
         onDragOver={(e) => e.preventDefault()}
         onDrop={() => handleDrop(widgetId)}
-        className={`col-span-1 hover:scale-105 transition-all rounded-lg p-6 border border-gray-200 dark:border-gray-700 shadow-lg ${
+        className={`col-span-1 h-120 hover:scale-105 transition-all rounded-lg p-6 border border-gray-200 dark:border-gray-700 shadow-lg ${
           isEditMode && "ring-2 ring-blue-400 hover:scale-105 cursor-grab"
         }  ${
           dragging

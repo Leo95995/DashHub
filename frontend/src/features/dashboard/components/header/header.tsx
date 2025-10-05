@@ -6,28 +6,27 @@ interface IUserData {
 }
 
 interface IDashBoardHeader {
-  userdata: IUserData;
+  userData: IUserData;
   isEditMode: boolean;
   onClick: (val: boolean) => void;
   widgetOrder: number[];
 }
 
 const DashBoardHeader: React.FC<IDashBoardHeader> = ({
-  userdata,
+  userData,
   isEditMode,
   onClick,
   widgetOrder
 }) => {
 
-
   return (
     <>
-      <div className="flex items-center">
-        <div className="text-2xl m-0 px-6 duration-500">
+      <div className="flex  flex-col md:flex-row px-6 gap-5  ">
+        <div className="text-2xl m-0 duration-500">
           <b>
             Welcome
             <span className="text-blue-500 dark:text-blue-300 ">
-              {userdata?.userInfo?.username ?? " Leo"}
+              {userData?.userInfo?.username ?? " Guest"}
             </span>
           </b>
         </div>
@@ -40,7 +39,10 @@ const DashBoardHeader: React.FC<IDashBoardHeader> = ({
           </button>
           {isEditMode && (
             <button
-              onClick={()=>DashboardStorage.widgets.saveWidgetOrder(widgetOrder)}
+              onClick={()=>{
+                DashboardStorage.widgets.saveWidgetOrder(widgetOrder)
+                onClick(isEditMode)
+              }}
               className="px-4 py-2 rounded-lg  cursor-pointer bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium shadow-md hover:from-blue-600 hover:to-indigo-700 active:scale-95 transition"
             >
               Save Layout Order

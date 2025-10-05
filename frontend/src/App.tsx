@@ -6,26 +6,38 @@ import { Routes, Route } from "react-router";
 //  Components
 import PrivateLayout from "./components/layout/PrivateLayout/Layout";
 import ReactLoader from "./components/loader";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchCryptoCurrenciesList } from "./store/cryptoSlice";
-
+import FirstVisitModal from "./features/dashboard/components/firstVisitModal";
+import { setFirstVisit } from "./store/appSlice";
+import LoaderWithMessage from "./components/loader/loaderAndText";
 
 // Public Routes
 const DashBoardPage = lazy(() => import("./pages/privates/DashboardPage"));
 // const SettingsPage = lazy(() => import("./pages/privates/SettingsPage"));
 
 function App() {
-  const dispatch = useDispatch()
+  const userdata = useSelector((state: any) => state.app.userData);
+  const { userInfo, firstVisit } = userdata;
 
+const globalLoad = useSelector((state:any) => state.app.globalLoad);
 
-  useEffect(()=> {
-    dispatch(fetchCryptoCurrenciesList() as any)
-    console.log('crypto currencies fetching')
-  }, [])
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCryptoCurrenciesList() as any);
+  }, []);
 
   return (
     <>
       <>
+        {!firstVisit  && (
+          <FirstVisitModal
+            firstVisit={!firstVisit}
+            setFirstVisit={setFirstVisit}
+            userInfo={userInfo}
+          />
+        )}
         <Routes>
           <Route element={<PrivateLayout />}>
             <Route
@@ -42,7 +54,7 @@ function App() {
                       </>
                     }
                   >
-                    <DashBoardPage />
+                    {!globalLoad ? <DashBoardPage /> : <LoaderWithMessage text="Loading page"/>}
                   </Suspense>
                 </>
               }

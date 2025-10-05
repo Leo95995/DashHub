@@ -36,7 +36,7 @@ const randomUserData: ItemStatus<any> = {
   error: null,
 };
 
-const selectedWidget :GithubWidgets = DashboardStorage.widgets.githubWidget.getSelectedWidget()
+const selectedWidget :GithubWidgets = DashboardStorage.widgets.githubWidget.getSelectedWidget() ?? "repos"
 
 // Exported initial state
 export const initialState = {

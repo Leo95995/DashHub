@@ -23,7 +23,6 @@ const WeatherFilters: React.FC<WeatherFilters> = ({ expanded }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(temperatureType);
     dispatch(fetchWeatherByCity(weatherSearchText) as any);
   }, []);
 

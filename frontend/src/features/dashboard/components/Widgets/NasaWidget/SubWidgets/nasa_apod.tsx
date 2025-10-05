@@ -1,4 +1,4 @@
-import ReactLoader from "../../../../../../components/loader";
+import LoaderWithMessage from "../../../../../../components/loader/loaderAndText";
 
 export interface IApodWidget {
   data: ApoData;
@@ -21,11 +21,7 @@ const ApodWidget: React.FC<IApodWidget> = ({ data, error, loading }) => {
   }
 
   if (loading) {
-    return (
-      <div className="flex flex-col gap-1 items-center justify-center transition h-40 duration-300">
-        <ReactLoader /> Loading Nasa Picture of the day
-      </div>
-    );
+    return <LoaderWithMessage text=" Loading Nasa Picture of the day"/>
   }
 
   return (

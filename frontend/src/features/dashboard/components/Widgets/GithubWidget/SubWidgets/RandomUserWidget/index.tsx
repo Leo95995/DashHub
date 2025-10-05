@@ -2,6 +2,8 @@ import { fetchRandomUser } from "../../../../../../../store/githubSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Ban, Infinity } from "lucide-react";
 import ReactLoader from "../../../../../../../components/loader";
+import LoaderWithMessage from "../../../../../../../components/loader/loaderAndText";
+import ErrorMessage from "../../../../../../../components/Error/error";
 const RandomUserWidget: React.FC = () => {
   const randomUserData = useSelector(
     (state: any) => state.github.randomUserData
@@ -25,13 +27,7 @@ const RandomUserWidget: React.FC = () => {
 
   const renderLoading = () => {
     if (loading) {
-      return (
-        <>
-          <div className="flex flex-col gap-1 items-center justify-center transition h-40 duration-300">
-            <ReactLoader /> Loading{" "}
-          </div>
-        </>
-      );
+      return <LoaderWithMessage text="Loading datas"/>
     }
     return <></>;
   };
@@ -60,9 +56,7 @@ const RandomUserWidget: React.FC = () => {
     if (!Object.keys(data).length) {
       return (
         <>
-          {" "}
-          No user selected , click on the button to display a random github user
-          !!
+        <ErrorMessage customTitle="No user selected " message={"click on the button to display a random github user!!"}/>
         </>
       );
     }

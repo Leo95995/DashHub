@@ -6,6 +6,7 @@ interface IGenericModal {
   title?: string;
   children: ReactNode;
   width?: string;
+  closable?: boolean
 }
 
 const GenericModal: React.FC<IGenericModal> = ({
@@ -13,6 +14,7 @@ const GenericModal: React.FC<IGenericModal> = ({
   children,
   title,
   width,
+  closable = true
 }) => {
   const { open, setOpen } = status;
   return (
@@ -28,12 +30,12 @@ const GenericModal: React.FC<IGenericModal> = ({
       >
         <div className="flex justify-between items-center p-2 border-b dark:border-gray-600 border-gray-200">
           {title && <h2 className="font-semibold">{title}</h2>}
-          <button
+         {closable && <button
             className="p-1 cursor-pointer border border-gray-100 hover:bg-gray-100 transition-all duration-100 rounded-md"
             onClick={() => setOpen(false)}
           >
             Close
-          </button>
+          </button>}
         </div>
         <div className="p-4">{children}</div>
       </div>

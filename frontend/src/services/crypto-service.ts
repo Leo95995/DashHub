@@ -80,7 +80,9 @@ const CryptoService = () => {
      */
 
     const { id, days } = filters?.cryptoDetailFilters 
-    const {currency } = filters?.genericFilters
+    const { currency } = filters?.genericFilters
+
+    console.log(currency);
     const crypto_details_url = `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=${currency}&days=${days}`;
     try {
       const res = await fetch(crypto_details_url, { method: "GET" });
@@ -107,7 +109,7 @@ const CryptoService = () => {
   const getTopGainersAndLosers = async (filters: Pick<ICryptoFilterData, "genericFilters">) => {
     const { currency } = filters?.genericFilters;
 
-    const crypto_top_gainer_url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}r&order=market_cap_desc&per_page=10&page=1&price_change_percentage=24h
+    const crypto_top_gainer_url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=10&page=1&price_change_percentage=24h
 `;
     try {
       const res = await fetch(crypto_top_gainer_url, { method: "GET" });

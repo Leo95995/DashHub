@@ -4,10 +4,12 @@ import cryptoKey from "./crypto";
 import githubKey from "./github";
 import nasaKey from "./nasa";
 import { storage } from "./storage";
+import userInfo from "./user";
 
 const DASHBOARD_KEY = "dashboard";
 
 const DashboardStorage = {
+  user: userInfo,
   widgets: {
     getWidgetOrder: (): number[] => {
       const res = storage.getItem(`${DASHBOARD_KEY}_widgetOrder`);

@@ -117,12 +117,11 @@ const CryptoDetail: React.FC = () => {
 
   return (
     <>
-      <h2 className="text-xl font-medium pt-4">Crypto details</h2>
       <div className="flex justify-start ">
         <GenericSelect
           itemList={filterCurrenciesList}
           onSelection={(value) => handleSelection(value)}
-          defaultText={"Select currency"}
+          defaultText={genericFilters?.currency}
           selectedList={[genericFilters?.currency]}
           placement="start"
           minHeigth="min-h-8"
@@ -174,13 +173,15 @@ const CryptoDetail: React.FC = () => {
         <div className="flex">
           <button
             onClick={handleFilterSet}
-            className="dark:bg-gray-800 cursor-pointer bg-gray-200 border p-1 rounded-md"
+            className="bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200  border border-gray-300 dark:border-gray-700 rounded-md px-3 py-1.5 cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700 transition-all duration-200"
           >
             Apply
           </button>
         </div>
       </div>
-      {chartData?.data && <LineChart data={chartData?.data} />}
+      {chartData?.data && (
+          <LineChart data={chartData?.data} />
+      )}
     </>
   );
 };

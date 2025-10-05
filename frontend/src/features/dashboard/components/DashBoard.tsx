@@ -18,7 +18,7 @@ const DashBoard: React.FC = () => {
   );
   const layout = useSelector((state: any) => state.filters.widgetLayout);
   const appData = useSelector((state: any) => state.app);
-  const { isEditMode, userdata } = appData;
+  const { isEditMode, userData } = appData;
 
   const id = useId()
 
@@ -107,7 +107,7 @@ const DashBoard: React.FC = () => {
     <>
       <div className="w-full flex flex-col gap-5 ">
         <DashBoardHeader
-          userdata={userdata}
+          userData={userData}
           isEditMode={isEditMode}
           onClick={toggleEditMode}
           widgetOrder={widgetOrder}

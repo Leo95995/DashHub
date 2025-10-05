@@ -5,6 +5,7 @@ import type {
 } from "../../../../../../store/interfaces/interfaces";
 import type { ArrowKey } from "../../../../../../interfaces/common/interfaces";
 import ReactLoader from "../../../../../../components/loader";
+import LoaderWithMessage from "../../../../../../components/loader/loaderAndText";
 
 const NeoWsWidget: React.FC<ItemStatus<INeoWsData[]>> = ({
   data,
@@ -26,11 +27,7 @@ const NeoWsWidget: React.FC<ItemStatus<INeoWsData[]>> = ({
   }, [data]);
 
   if (loading) {
-    return (
-      <div className="flex flex-col gap-1 items-center justify-center transition h-40 duration-300">
-        <ReactLoader /> Loading Neows Data
-      </div>
-    );
+    return <LoaderWithMessage text="Loading Neows Data"/>
   }
   if (error) {
     return <>{error}</>;
@@ -68,8 +65,9 @@ const NeoWsWidget: React.FC<ItemStatus<INeoWsData[]>> = ({
             </span>
           </b>
           <p>
-            Oggetto selezionato <b>{selectedWidget?.info?.key ? selectedWidget.info.key +1: 1 }</b> di{" "}
-            <b>{data.length}</b>
+            Oggetto selezionato{" "}
+            <b>{selectedWidget?.info?.key ? selectedWidget.info.key + 1 : 1}</b>{" "}
+            di <b>{data.length}</b>
           </p>
         </div>
         <div className="flex justify-between">
@@ -109,13 +107,15 @@ const NeoWsWidget: React.FC<ItemStatus<INeoWsData[]>> = ({
 
         <div className="flex justify-center gap-4 mt-4">
           <button
-            onClick={() => changeWidget(selectedWidget?.info?.key + 1, "prev")}
+            onClick={() =>  changeWidget((selectedWidget?.info?.key as number) + 1, "prev")}
             className="px-4 py-2 rounded-lg cursor-pointer bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium shadow-md hover:from-blue-600 hover:to-indigo-700 active:scale-95 transition"
           >
             Precedente
           </button>
           <button
-            onClick={() => changeWidget(selectedWidget?.info?.key + 1, "next")}
+            onClick={() =>
+              changeWidget((selectedWidget?.info?.key as number) + 1, "next")
+            }
             className="px-4 py-2 cursor-pointer rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium shadow-md hover:from-purple-600 hover:to-pink-600 active:scale-95 transition"
           >
             Successivo

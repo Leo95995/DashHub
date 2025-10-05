@@ -47,7 +47,8 @@ const GithubWidget: React.FC<IGenericWidget> = ({
         <div className="flex items-center justify-between w-full">
           <Switcher
             widgetSelected={githubWidget}
-            switcherButtonText="Change Github Widget"
+            switcherTitle="Select the Github widget"
+            switcherButtonText="Change Widget"
             changeSelectedWidget={(e) => dispatch(setSelectedGithubWidget(e as GithubWidgets))}
             widgetList={github_widgets}
           />

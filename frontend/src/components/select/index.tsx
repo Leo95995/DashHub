@@ -10,6 +10,7 @@ interface IGenericSelect<T> {
   placement?: 'start' | 'end' | 'center'
   padding?: string
   minHeigth?: string
+  closeBtnPlacement?: string
 }
 
 /**
@@ -33,7 +34,7 @@ const GenericSelect: React.FC<IGenericSelect<any>> = ({
       {isOpen && (
         <button
         onClick={() => setIsOpen(false)}
-        className="absolute top-0 right-10 cursor-pointer z-20 text-red-600 rounded-sm hover:bg-red-600 hover:text-white transition-colors"
+        className={`absolute top-0 right-10 cursor-pointer z-20 text-red-600 rounded-sm hover:bg-red-600 hover:text-white transition-colors`}
         aria-label="Chiudi dropdown"
         >
           <Close />
