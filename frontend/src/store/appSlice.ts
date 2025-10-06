@@ -12,16 +12,14 @@ const initialSideBar : ISideBar = {
 
 const firstVisit = userInfo.getFirstVisit()
 
-const userInfoValue = userInfo.getUserPreferences()
-
-console.log(userInfoValue);
+const userInfoValue = userInfo.getUserPreferences() ?? {}
 
 
 const initialState = {
   internalLoad: false,
   sideBar: initialSideBar,
   globalLoad: false,
-  userData:  { userInfo: userInfoValue ?? {username: "Guest"}, firstVisit: firstVisit ?? null },
+  userData:  { userInfo: userInfoValue , firstVisit: firstVisit ?? null },
   isEditMode: false,
   globalAlert: {
     status: "" as IGlobalAlertStatus,
@@ -41,7 +39,6 @@ export const appSlice = createSlice({
     },
     setUserInfo: (state, action ) => {
       state.userData.userInfo = action.payload
-      console.log(action.payload);
       userInfo.setUserPreferences(action.payload)
     }, 
     setFirstVisit:(state,action)=>{

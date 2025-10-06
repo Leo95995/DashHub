@@ -82,7 +82,6 @@ const CryptoService = () => {
     const { id, days } = filters?.cryptoDetailFilters 
     const { currency } = filters?.genericFilters
 
-    console.log(currency);
     const crypto_details_url = `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=${currency}&days=${days}`;
     try {
       const res = await fetch(crypto_details_url, { method: "GET" });

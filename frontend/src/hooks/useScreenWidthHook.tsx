@@ -24,7 +24,6 @@ const useScreenWidthHook = (layout: WidgetLayout) => {
     });
     window.removeEventListener("resize", () => {
       setScreenWidth(window.innerWidth);
-      console.log("removing");
     });
   }, []);
 

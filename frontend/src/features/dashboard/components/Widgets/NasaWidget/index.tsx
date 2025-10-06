@@ -27,7 +27,6 @@ const NasaWidget: React.FC<IGenericWidget> = ({
   const [dragging, setDragging] = useState<boolean>(false);
   // Neows
 
-  console.log(widgetSelected);
   //  Mars Rover
   const dispatch = useDispatch();
 
@@ -57,7 +56,7 @@ const NasaWidget: React.FC<IGenericWidget> = ({
         onDragOver={(e) => e.preventDefault()}
         onDrop={() => handleDrop(widgetId)}
         className={`relative min-w-64 min-h-110 col-span-1 rounded-2xl bg-gradient-to-br from-gray-200 via-gray-100 to-blue-50
-       dark:from-gray-800 dark:via-gray-700 dark:to-gray-900 p-4 shadow-2xl border border-gray-300 hover:scale-105 transform 
+       dark:from-gray-800 dark:via-gray-700 dark:to-gray-900 p-6 shadow-2xl border border-gray-300 hover:scale-105 transform 
        ${isEditMode && "ring-2 ring-blue-400 hover:scale-105 cursor-grab"}
        ${
          dragging
@@ -74,7 +73,7 @@ const NasaWidget: React.FC<IGenericWidget> = ({
               changeSelectedWidget={changeSelectedWidget}
               switcherButtonText="Change Nasa Widget"
             />
-            {isEditMode ? <Tag text="Edit Mode" /> : <span>No edit mode</span>}
+            {isEditMode && <Tag text="Edit Mode" />}
           </div>
           <WidgetContainer
             apodStatus={apodStatus}

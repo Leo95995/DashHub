@@ -61,7 +61,6 @@ export const fetchCryptoDetails = createAsyncThunk(
         return rejectWithValue("Error while fetching crytpto datas");
       }
       const { crypto_details } = cryptoDetails;
-      console.log(crypto_details);
       return crypto_details;
     } catch (err) {
       return rejectWithValue("Error while fetching crytpto datas");

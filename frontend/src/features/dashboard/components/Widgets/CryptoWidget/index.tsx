@@ -90,14 +90,14 @@ const CryptoWidget: React.FC<IGenericWidget> = ({
             : ""
         }`}
       >
-        <div className="flex flex-col py-4 gap-4">
+        <div className="flex flex-col gap-4">
           <div className="flex justify-between">
             <Switcher
               changeSelectedWidget={handleCryptoWidgetChange}
               widgetSelected={selectCryptoWidget}
               widgetList={crypto_widgets}
             />
-            {isEditMode ? <Tag text="Edit Mode" /> : <span>No edit mode</span>}
+            {isEditMode && <Tag text="Edit Mode" /> }
           </div>
           <CryptoWidgetContainer widget={selectCryptoWidget as CryptoWidgets} />
         </div>

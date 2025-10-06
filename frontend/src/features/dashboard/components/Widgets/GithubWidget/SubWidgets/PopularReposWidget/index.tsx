@@ -17,6 +17,7 @@ import { ArrowBack } from "@mui/icons-material";
 
 import UserActivityCard from "../../components/user-activity-card";
 import ReactLoader from "../../../../../../../components/loader";
+import LoaderWithMessage from "../../../../../../../components/loader/loaderAndText";
 
 const PopularReposWidget: React.FC = () => {
   const dispatch = useDispatch();
@@ -88,9 +89,7 @@ const PopularReposWidget: React.FC = () => {
     if (loadTrending) {
       return (
         <>
-          <div className="flex flex-col gap-1 items-center justify-center transition h-40 duration-300">
-            <ReactLoader /> Loading trending repositories
-          </div>
+          <LoaderWithMessage text="Loading trending repositories" />
         </>
       );
     }
@@ -110,11 +109,11 @@ const PopularReposWidget: React.FC = () => {
         <h3 className="text-xl font-semibold py-2 px-2">
           Github most popular repos
         </h3>
-        <ul className="grid lg:grid-cols-1 gap-4 px-2 py-2 overflow-y-scroll overflow-x-scroll  max-h-100">
+        <ul className="grid lg:grid-cols-1 gap-4 px-2 py-2 overflow-y-scroll  overflow-x-hidden max-h-100">
           {trendingData?.map((repo: GithubRepo) => (
             <li
               key={repo.html_url}
-              className="border border-gray-200 rounded-xl p-4 shadow hover:shadow-lg transition-shadow duration-200 bg-white flex flex-col space-y-3"
+              className="border border-gray-200 rounded-xl p-4 min-w-30 shadow hover:shadow-lg transition-shadow duration-200 bg-white flex flex-col space-y-3"
             >
               <div className="flex items-center justify-between">
                 <a

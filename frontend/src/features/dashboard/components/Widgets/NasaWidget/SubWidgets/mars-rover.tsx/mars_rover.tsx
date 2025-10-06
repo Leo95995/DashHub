@@ -46,7 +46,7 @@ const MarsRoverWidget: React.FC<ItemStatus<RoverDetails[]>> = ({
           </button>
         </div>
         {selectedRover && <RoverElement data={selectedRover?.data} />}
-        <div className="flex justify-center gap-4 mt-4">
+        <div className="flex justify-center gap-4 ">
           <button
             onClick={() =>
               changeRover((selectedRover?.index + 1) as number, "prev")

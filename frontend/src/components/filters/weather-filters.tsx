@@ -48,7 +48,7 @@ const WeatherFilters: React.FC<WeatherFilters> = ({ expanded }) => {
             name="location"
             id="location"
             onChange={(e) => setWeatherSearchText(e.currentTarget.value)}
-            placeholder="Inserisci città..."
+            placeholder="Search weather by city"
             onKeyDown={(e) =>
               e.key === "Enter" &&
               dispatch(fetchWeatherByCity(weatherSearchText) as any)

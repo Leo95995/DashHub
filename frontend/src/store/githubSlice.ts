@@ -40,7 +40,6 @@ export const fetchRepoTrend = createAsyncThunk(
         return rejectWithValue("Error while fetching rover data");
       }
       const { repoDetails } = repoTrend;
-      console.log(repoDetails);
       return { repoDetails };
     } catch (err) {
       return rejectWithValue("Error while fetching rover data");
@@ -53,7 +52,6 @@ export const fetchUserActivity = createAsyncThunk(
   async (username: string, { rejectWithValue }) => {
     try {
       const user_activity = await get_user_activity(username);
-      console.log(user_activity);
       if (user_activity.error || !user_activity.user_activity) {
         return rejectWithValue("Errore nel recupero");
       }
@@ -72,7 +70,6 @@ export const fetchRandomUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const user = await get_random_user();
-      console.log(user);
 
       if (!user.random_user || user.error) {
         return rejectWithValue("Errore nel recupero di un utente randomico");
@@ -160,8 +157,6 @@ export const githubSlice = createSlice({
       })
       .addCase(fetchRandomUser.rejected, (state, action) => {
         state.randomUserData.loading = false;
-        // Passing the error as payload
-        console.log(action.payload);
         state.randomUserData.error = action.payload as any;
         state.randomUserData.data = {}
       });

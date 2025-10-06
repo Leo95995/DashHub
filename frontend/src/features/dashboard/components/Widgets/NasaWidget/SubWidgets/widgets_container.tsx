@@ -28,7 +28,6 @@ const WidgetContainer: React.FC<IWidgetContainer> = ({
 
   // Render Logic 
   const renderWidgetSelected = (chosen: NasaWidgets = "apod") => {
-    console.log(chosen);
     switch (chosen) {
       case "apod":
         return renderApod();

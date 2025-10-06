@@ -47,6 +47,8 @@ const CryptoGainersAndLosers: React.FC = () => {
           onSelection={(value) => handleSelection(value)}
           defaultText={genericFilters?.currency}
           selectedList={[genericFilters?.currency]}
+          listPlacement="right-7"
+          closePlacement="right-0"
         />
       </div>
       <div className="rounded-lg py-4 grid grid-cols-1 lg:grid-cols-2 gap-4 h-70  overflow-y-scroll overflow-x-hidden">

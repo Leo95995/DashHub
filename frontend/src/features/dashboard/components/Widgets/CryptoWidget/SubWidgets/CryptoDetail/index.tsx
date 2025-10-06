@@ -76,7 +76,6 @@ const CryptoDetail: React.FC = () => {
       res.data.datasets[0].borderColor = "rgba(255, 99, 132, 0.5)";
     });
 
-    console.log(res);
     setChartData(res);
   };
 

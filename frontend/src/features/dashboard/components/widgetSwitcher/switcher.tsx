@@ -27,7 +27,6 @@ const Switcher: React.FC<WidgetSwitcher> = ({
             <li key={e + index}>
               <button
                 onClick={() => {
-                  console.log(e);
                   changeSelectedWidget(e);
                   handleSelectWidget();
                 }}

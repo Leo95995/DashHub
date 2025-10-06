@@ -85,7 +85,6 @@ const GithubService = () => {
       const data = await res.json();
       const status = res.status;
       if (data && status === 200) {
-        console.log(data);
         if (!data.length) {
           return { status: status, error: true };
         }

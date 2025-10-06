@@ -3,21 +3,19 @@ import InputSearch from "../../../../components/input/input";
 import GenericModal from "../../../../components/modal/modal";
 import { useDispatch } from "react-redux";
 import ModeToggler from "../../../../components/toggler";
-import { setGlobalLoad, setUserInfo } from "../../../../store/appSlice";
+import {  setUserInfo } from "../../../../store/appSlice";
 interface IFirstVisitModal {
   firstVisit: boolean;
   setFirstVisit: (val: boolean) => void;
-  userInfo: any;
 }
 
 const FirstVisitModal: React.FC<IFirstVisitModal> = ({
   firstVisit,
   setFirstVisit,
-  userInfo,
 }) => {
   const [isWriting, setIsWriting] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const [userData, setUserdata] = useState({ username: userInfo?.username });
+  const [userInfo, setUser] = useState({ username: "" });
 
   const handleGuestVisit = () => {
     dispatch(setFirstVisit(true) as any);
@@ -25,16 +23,12 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({
 
   const savePreferences = () => {
     setIsWriting(true);
-    dispatch(setUserInfo({ userData }));
+    dispatch(setUserInfo(userInfo ));
     setTimeout(() => {
       setIsWriting(false);
       dispatch(setFirstVisit(true) as any);
-      dispatch(setGlobalLoad(true));
     }, 1000);
-    setTimeout(() => {
-      dispatch(setGlobalLoad(false));
-    }, 1000);
-    dispatch(setGlobalLoad(true));
+ 
   };
 
   return (
@@ -65,7 +59,7 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({
           <InputSearch
             placeholder="Scrivi qui il tuo nome..."
             onChange={(e) => {
-              setUserdata({ ...userData, username: e });
+              setUser({ ...userInfo, username: e });
             }}
             width="w-120 md:w-full"
             isLoading={isWriting}
@@ -81,7 +75,7 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({
         <div className="flex justify-end gap-3 mt-4">
           <button
             onClick={handleGuestVisit}
-            className="px-4 py-2 rounded-lg text-gray-700 dark:text-gray-200 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+            className="px-4 py-2 rounded-lg cursor-pointer text-gray-700 dark:text-gray-200 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition"
           >
             Continue as Guest
           </button>
@@ -89,7 +83,7 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({
             onClick={() => {
               savePreferences();
             }}
-            className="px-4 py-2 rounded-lg text-white bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 transition"
+            className="px-4 py-2 rounded-lg cursor-pointer text-white bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 transition"
           >
             Save and Continue
           </button>

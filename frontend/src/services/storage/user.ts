@@ -3,7 +3,7 @@ import { storage } from "./storage";
 const USER_KEY = "user";
 
 interface IUserPreferences {
-  userData: { username: string };
+  userInfo: { username: string };
 }
 
 /**
@@ -20,8 +20,9 @@ const userInfo = {
     return storage.getItem(`${USER_KEY}_preferences`);
   },
   setUserPreferences: (userdata: IUserPreferences) => {
+    console.log(userdata);
 
-    storage.setItem(`${USER_KEY}_preferences`, userdata.userData);
+    storage.setItem(`${USER_KEY}_preferences`, userdata);
   },
 };
 

@@ -10,10 +10,36 @@ interface IProfileBar {
 
 const ProfileBar: React.FC<IProfileBar> = ({ expanded }) => {
   const [editMode, setEditMode] = useState<boolean>(false);
-  const { username } = useSelector((state:any)=> state.app.userData.userInfo)
+  const userdata = useSelector((state:any)=> state.app.userData)
 
 
+  const username  =userdata.userInfo.username;
  
+  /**
+   * Create a small
+   * 
+   * @param username 
+   * @returns 
+   */
+
+  const createShortName = (username: string) => { 
+    if(!username){
+      return "G";
+    }
+    const splittedName = username.split(' ');
+    let result  = "";
+
+    for(const name of splittedName){
+      result += name[0];
+    }
+    console.log(result);
+    return result
+
+  }
+
+
+
+
 
   return (
     <>
@@ -23,8 +49,8 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded }) => {
         }`}
       >
         <div>
-          <span className="rounded-md bg-amber-500 h-8 w-8 justify-center flex items-center border">
-            LM
+          <span className="rounded-full bg-amber-500 h-11 w-11 overflow-ellipsis p-1 justify-center flex items-center hover:scale-105 transition-all ">
+            {createShortName(username)}
           </span>
         </div>
         {expanded && (

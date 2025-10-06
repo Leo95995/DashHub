@@ -189,7 +189,7 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
     >
       {" "}
       <div className="flex gap-5">
-        {isEditMode ? <Tag text="Edit Mode" /> : <span>No edit mode</span>}
+        {isEditMode && <Tag text="Edit Mode" />}
       </div>
       {renderLoading()}
       {renderError()}

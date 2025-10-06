@@ -52,11 +52,7 @@ const GithubWidget: React.FC<IGenericWidget> = ({
             changeSelectedWidget={(e) => dispatch(setSelectedGithubWidget(e as GithubWidgets))}
             widgetList={github_widgets}
           />
-          {isEditMode ? (
-            <Tag text="Edit Mode"></Tag>
-          ) : (
-            <span>No edit mode</span>
-          )}
+          {isEditMode &&   <Tag text="Edit Mode"></Tag> }
         </div>
         <GithubWidgetContainer widget={githubWidget} />
       </div>
