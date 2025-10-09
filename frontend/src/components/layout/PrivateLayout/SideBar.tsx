@@ -22,7 +22,7 @@ const SideBar: React.FC<ISideBar> = ({ ...props }) => {
   return (
     <>
       <aside
-        className={`px-2 py-1 h-screen ${
+        className={`px-2 py-1 h-200 ${
           expanded ? "w-80" : "w-20"
         } bg-slate-100 border-gray-200  dark:bg-slate-700 text-black dark:text-white  xl:block hidden border-t-0 transition-all  `}
       >

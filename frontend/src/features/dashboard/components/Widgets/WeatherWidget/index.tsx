@@ -1,29 +1,33 @@
+import { useState } from "react";
 import type React from "react";
-import { useSelector } from "react-redux";
+// Redux React.
+import { useDispatch, useSelector } from "react-redux";
 import {
-  background_color,
-  get_temperatures,
-  getHoursAndMin,
-} from "../../../../../utils/weather-utils";
+  fetchWeatherByCity,
+  setSearchText,
+} from "../../../../../store/weatherSlice";
+// Weather utils
+import {  background_color, get_temperatures, getHoursAndMin} from "../../../../../utils/weather-utils";
 //  Loader
 import ReactLoader from "../../../../../components/loader";
 // Icons
 import { Wind, Droplet, Gauge } from "lucide-react";
+// Interfaces
 import type { IGenericWidget } from "../../../interfaces";
+// Componnts
 import Tag from "../../../../../components/Tag";
-import { useState } from "react";
+import ErrorMessage from "../../../../../components/Error/error";
 
-const WeatherWidget: React.FC<IGenericWidget> = ({
-  isEditMode,
+const WeatherWidget: React.FC<IGenericWidget> = ({ isEditMode,
   widgetId,
-  onHide,
   handleDrop,
   setDraggedWidgetId,
 }) => {
   const weatherData = useSelector((state: any) => state.weather);
   const [dragging, setDragging] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
-  const { coordinates, weather, temperatureType, loading, error } = weatherData;
+  const { coordinates, weather, temperatureType, loading, error, searchText } = weatherData;
 
   const renderLoading = () => (
     <div
@@ -37,11 +41,7 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
 
   const renderError = () => {
     if (error) {
-      return (
-        <div className="p-6 text-center text-red-600 dark:text-red-400">
-          ❌ Errore nel caricamento dei dati meteo
-        </div>
-      );
+      return  <ErrorMessage message={"Errore nel caricamento dei dati meteo"}/>
     }
   };
 
@@ -63,6 +63,42 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
 
     return (
       <div className="transition-opacity duration-500 min-w-20">
+        <div className="flex">
+          <input
+            type="text"
+            name="location"
+            id="location"
+            onChange={(e) => dispatch(setSearchText(e.currentTarget.value))}
+            placeholder="Search weather by city"
+            onKeyDown={(e) =>
+              e.key === "Enter" &&
+              dispatch(fetchWeatherByCity(searchText) as any)
+            }
+            className="
+                border border-gray-300 dark:border-gray-600
+                rounded-l-md
+                w-full
+                px-3 py-2
+                bg-white dark:bg-gray-800
+                text-gray-900 dark:text-gray-100
+                focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-600
+                transition-colors duration-200
+              "
+          />
+          <button
+            onClick={() => dispatch(fetchWeatherByCity(searchText) as any)}
+            className="border border-gray-300 dark:border-gray-600 border-l-0
+                  rounded-r-md
+                  px-4 py-2
+                  bg-blue-500 dark:bg-blue-600
+                  text-white
+                  font-semibold
+                  hover:bg-blue-600 dark:hover:bg-blue-700
+                  transition-colors duration-200
+                  cursor-pointer">
+            Cerca
+          </button>
+        </div>
         <div className="flex items-center justify-between">
           <h3 className="text-2xl font-bold flex gap-2 items-center">
             {name}, {state}
@@ -154,6 +190,7 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
           <div className="bg-yellow-200/30 dark:bg-yellow-700/30 rounded-lg px-2 py-1 flex items-center gap-1 text-gray-900 dark:text-white">
             🌅 {getHoursAndMin(weather.sys.sunrise)}
           </div>
+          <div className="flex gap-5">{isEditMode && <Tag text="Edit Mode" />}</div>
           <div className="bg-orange-200/30 dark:bg-orange-700/30 rounded-lg px-2 py-1 flex items-center gap-1 text-gray-900 dark:text-white">
             🌇 {getHoursAndMin(weather.sys.sunset)}
           </div>
@@ -188,9 +225,7 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
       )} overflow-hidden`}
     >
       {" "}
-      <div className="flex gap-5">
-        {isEditMode && <Tag text="Edit Mode" />}
-      </div>
+      
       {renderLoading()}
       {renderError()}
       {renderWeather()}

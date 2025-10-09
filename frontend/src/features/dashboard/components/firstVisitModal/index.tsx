@@ -3,7 +3,7 @@ import InputSearch from "../../../../components/input/input";
 import GenericModal from "../../../../components/modal/modal";
 import { useDispatch } from "react-redux";
 import ModeToggler from "../../../../components/toggler";
-import {  setUserInfo } from "../../../../store/appSlice";
+import { setUserInfo } from "../../../../store/appSlice";
 interface IFirstVisitModal {
   firstVisit: boolean;
   setFirstVisit: (val: boolean) => void;
@@ -15,20 +15,21 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({
 }) => {
   const [isWriting, setIsWriting] = useState<boolean>(false);
   const dispatch = useDispatch();
+
   const [userInfo, setUser] = useState({ username: "" });
 
   const handleGuestVisit = () => {
+    dispatch(setUserInfo({ username: "Guest" }));
     dispatch(setFirstVisit(true) as any);
   };
 
   const savePreferences = () => {
     setIsWriting(true);
-    dispatch(setUserInfo(userInfo ));
+    dispatch(setUserInfo(userInfo));
     setTimeout(() => {
       setIsWriting(false);
       dispatch(setFirstVisit(true) as any);
     }, 1000);
- 
   };
 
   return (

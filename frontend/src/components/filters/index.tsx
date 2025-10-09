@@ -11,6 +11,7 @@ interface IFilters {
   isMobile?: boolean;
 }
 
+// JUST FUCKING GRIND E SARA MERAVIGLIOSO
 const Filters: React.FC<IFilters> = ({ isMobile }) => {
   const sidebar = useSelector((state: any) => state.app.sideBar);
   const { expanded } = sidebar;
@@ -47,22 +48,22 @@ const Filters: React.FC<IFilters> = ({ isMobile }) => {
         <b>Filters</b>
       </h2>
       <div className="py-2">
-        <WidgetFilters expanded={expanded} />
+        <WidgetFilters expanded={expanded || isMobile} />
       </div>
       {filters?.weather && (
         <div className="py-2">
-          <WeatherFilters expanded={expanded} />
+          <WeatherFilters expanded={expanded || isMobile} />
         </div>
       )}
 
       {filters?.nasa && (
         <div className="py-2 pb-3">
-          <NasaFilters expanded={expanded} />
+          <NasaFilters expanded={expanded || isMobile} />
         </div>
       )}
       {filters?.crypto && (
         <div className="py-4">
-          <CryptoFilters expanded={expanded} />
+          <CryptoFilters expanded={expanded || isMobile} />
         </div>
       )}
       {filters?.github && <div className="py-12"><GithubFilters expanded={expanded} /></div>}

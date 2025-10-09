@@ -1,12 +1,15 @@
+// Redux imports
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+// Services
 import WeatherService from "../services/weather-service";
+import DashboardStorage from "../services/storage/dashboard";
+// Interface
 import type {
   IWeatherData,
   LocationCoordinates,
 } from "../services/interfaces/interfaces";
 
-import DashboardStorage from "../services/storage/dashboard";
 
 export const fetchWeatherByCity = createAsyncThunk(
   "weather/fetchByCity",
@@ -43,12 +46,10 @@ const initialState = {
   coordinates:  DashboardStorage.widgets.weatherWidget.getCoordinates() ?? coordinates,
   weather:  DashboardStorage.widgets.weatherWidget.getWeatherData() ?? weatherData,
   temperatureType: DashboardStorage.widgets.weatherWidget.getTemperatureType() ?? temperatureType,
+  searchText:   DashboardStorage.widgets.weatherWidget.getWeatherData()?.name ??  "empoli",
   loading: false,
   error: null as string | null,
 };
-/**
- * Weather slice
- */
 
 export const weatherSlice = createSlice({
   name: "weather",
@@ -62,7 +63,10 @@ export const weatherSlice = createSlice({
         const {payload} = action
         state.temperatureType = payload
         DashboardStorage.widgets.weatherWidget.setTemperatureType(payload)
-    }
+    },
+    setSearchText: (state, action) => {
+      state.searchText= action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -85,4 +89,4 @@ export const weatherSlice = createSlice({
   },
 });
 
-export const { setWeatherData, setTemperatureType } = weatherSlice.actions;
+export const { setSearchText, setWeatherData, setTemperatureType } = weatherSlice.actions;

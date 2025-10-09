@@ -36,36 +36,41 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded }) => {
               <p style={{ margin: 0 }}>{username ?? `Guest`}</p>
             ) : (
               <InputSearch
-                width="w-48 md:w-64"
+                width="w-44 md:w-50"
                 placeholder="Insert your new username"
                 onChange={(e) => setNewUsername(e)}
                 isLoading={false}
               />
             )}
-            {
+            {!editMode && (
               <button className="cursor-pointer">
-                {!editMode ? (
-                  <Edit
-                    onClick={() => setEditMode(!editMode)}
-                    style={{ height: "16px" }}
-                  />
-                ) : (
-                  <div className="flex gap-2">
-                    <Save
-                      onClick={() => {
-                        dispatch(setUserName(newUsername));
-                        setEditMode(!editMode);
-                      }}
-                      style={{ height: "16px" }}
-                    />
-                    <Cancel
-                      onClick={() => setEditMode(!editMode)}
-                      style={{ height: "16px" }}
-                    />
-                  </div>
-                )}
+                <Edit
+                  onClick={() => setEditMode(!editMode)}
+                  style={{ height: "16px" }}
+                />
               </button>
-            }
+            )}
+            {editMode && (
+              <div className="flex gap-2">
+                <button>
+                  <Save
+                    className="rounded-md"
+                    onClick={() => {
+                      dispatch(setUserName(newUsername));
+                      setEditMode(!editMode);
+                    }}
+                    style={{ height: "20px" }}
+                  />
+                </button>
+                <button>
+                  <Cancel
+                    className="rounded-md"
+                    onClick={() => setEditMode(!editMode)}
+                    style={{ height: "20px" }}
+                  />{" "}
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>

@@ -20,20 +20,13 @@ import Tag from "../../../../../components/Tag";
 const CryptoWidget: React.FC<IGenericWidget> = ({
   isEditMode,
   widgetId,
-  onHide,
   handleDrop,
   setDraggedWidgetId,
 }) => {
-  // Dispatched datas
   const dispatch = useDispatch();
-  const cryptoFilterData: ICryptoFilterData = useSelector(
-    (state: any) => state.crypto.filterData as ICryptoFilterData
-  );
-  const { cryptoDetailFilters, cryptoTrendingFilters, genericFilters } =
-    cryptoFilterData;
-  const selectCryptoWidget = useSelector(
-    (state: any) => state.crypto.selectedWidget
-  );
+  const cryptoFilterData: ICryptoFilterData = useSelector((state: any) => state.crypto.filterData as ICryptoFilterData);
+  const { cryptoDetailFilters, cryptoTrendingFilters, genericFilters } = cryptoFilterData;
+  const selectCryptoWidget = useSelector((state: any) => state.crypto.selectedWidget);
   const [dragging, setDragging] = useState<boolean>(false);
 
   const handleCryptoWidgetChange = (widget: WidgetTypes) => {

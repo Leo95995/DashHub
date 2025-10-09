@@ -1,29 +1,24 @@
 // Filters for weathers
-
 import type React from "react";
 import { useEffect, useState } from "react";
-import { fetchWeatherByCity } from "../../store/weatherSlice";
+// Redux
 import { useDispatch, useSelector } from "react-redux";
-import { setTemperatureType } from "../../store/weatherSlice";
+import { fetchWeatherByCity, setTemperatureType, setSearchText } from "../../store/weatherSlice";
+// Components
 import DashboardStorage from "../../services/storage/dashboard";
+
+
 interface WeatherFilters {
   expanded: boolean;
 }
 
 const WeatherFilters: React.FC<WeatherFilters> = ({ expanded }) => {
-  const getWeatherData =
-    DashboardStorage.widgets.weatherWidget.getWeatherData();
-  const defaultSearch = getWeatherData?.name;
-  const [weatherSearchText, setWeatherSearchText] = useState<string>(
-    defaultSearch ?? "empoli"
-  );
-  const temperatureType = useSelector(
-    (state: any) => state.weather.temperatureType
-  );
   const dispatch = useDispatch();
+  const { searchText } = useSelector((state: any)=> state.weather);
+  const temperatureType = useSelector((state: any) => state.weather.temperatureType);
 
   useEffect(() => {
-    dispatch(fetchWeatherByCity(weatherSearchText) as any);
+    dispatch(fetchWeatherByCity(searchText) as any);
   }, []);
 
   return (
@@ -47,11 +42,11 @@ const WeatherFilters: React.FC<WeatherFilters> = ({ expanded }) => {
             type="text"
             name="location"
             id="location"
-            onChange={(e) => setWeatherSearchText(e.currentTarget.value)}
+            onChange={(e) => dispatch(setSearchText(e.currentTarget.value) as any )}
             placeholder="Search weather by city"
             onKeyDown={(e) =>
               e.key === "Enter" &&
-              dispatch(fetchWeatherByCity(weatherSearchText) as any)
+              dispatch(fetchWeatherByCity(searchText) as any)
             }
             className="
         border border-gray-300 dark:border-gray-600
@@ -66,7 +61,7 @@ const WeatherFilters: React.FC<WeatherFilters> = ({ expanded }) => {
           />
           <button
             onClick={() =>
-              dispatch(fetchWeatherByCity(weatherSearchText) as any)
+              dispatch(fetchWeatherByCity(searchText) as any)
             }
             className="
         border border-gray-300 dark:border-gray-600 border-l-0

@@ -13,7 +13,6 @@ import { setSelectedGithubWidget } from "../../../../../store/githubSlice";
 const GithubWidget: React.FC<IGenericWidget> = ({
   isEditMode,
   widgetId,
-  onHide,
   handleDrop,
   setDraggedWidgetId,
 }) => {

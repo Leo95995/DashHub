@@ -1,3 +1,4 @@
+import { Close } from "@mui/icons-material";
 import { Modal } from "@mui/material";
 import type { ReactNode } from "react";
 
@@ -31,10 +32,10 @@ const GenericModal: React.FC<IGenericModal> = ({
         <div className="flex justify-between items-center p-2 border-b dark:border-gray-600 border-gray-200">
           {title && <h2 className="font-semibold">{title}</h2>}
          {closable && <button
-            className="p-1 cursor-pointer border border-gray-100 hover:bg-gray-100 transition-all duration-100 rounded-md"
+            className="cursor-pointer border border-red-500 hover:bg-red-100 transition-all duration-100 rounded-md"
             onClick={() => setOpen(false)}
           >
-            Close
+            <Close className="text-red-500" style={{height:'18px'}}/>
           </button>}
         </div>
         <div className="p-4">{children}</div>
