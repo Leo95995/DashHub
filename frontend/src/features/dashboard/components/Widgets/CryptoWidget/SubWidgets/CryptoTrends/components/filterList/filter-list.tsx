@@ -3,26 +3,39 @@ import { Close } from "@mui/icons-material";
 interface IFilterList {
   filters: string[];
   onClick: (val: string) => void;
-  applyFilters: ()=>void
+  applyFilters: () => void;
 }
 
-const FilterList: React.FC<IFilterList> = ({ filters, onClick , applyFilters}) => {
+const FilterList: React.FC<IFilterList> = ({ filters, onClick, applyFilters }) => {
   return (
-    <div className="py-2 absolute left-0 rounded-md flex-wrap text-nowrap flex gap-2 w-full  top-12">
+    <div className="absolute left-0 top-12 w-full flex flex-wrap gap-2 p-3 max-w-120  rounded-md">
+      <div className="flex overflow-x-scroll w-70 sm:w-80 md:w-100 py-2 flex-1">
       {filters?.map((id: string) => (
-        <span className="px-2 py-1 border hover:bg-gray-800 hover:text-white text-sm hover:filter flex items-center justify-center gap-1 rounded-2xl">
-          {id}{" "}
+        <span
+          key={id}
+          className="flex items-center gap-1 px-3 py-1 rounded-2xl border border-gray-700 bg-gray-800/80 hover:bg-gradient-to-r hover:from-gray-700 hover:to-gray-900 text-white text-sm shadow-sm transition-all duration-200"
+        >
+          {id}
           <button
-            className="cursor-pointer hover:scale-105"
+            className="flex items-center justify-center cursor-pointer transition-transform duration-200 hover:scale-110"
             onClick={() => onClick(id)}
           >
-            <Close className="hover:scale-120" style={{ fontSize: "12px" }} />
+            <Close
+              className="text-gray-400 hover:text-white transition-colors duration-200"
+              style={{ fontSize: "12px" }}
+            />
           </button>
         </span>
       ))}
-         <button onClick={applyFilters} className="border bg-gradient-to-r from-green-400 to-emerald-600 px-2 rounded-2xl hover:scale-105 cursor-pointer transition-all duration-100">
-              Apply filters
-            </button>
+      </div>
+      <div className="flex-0.2 items-center flex">
+      <button
+        onClick={applyFilters}
+        className="ml-1 px-4 py-1 rounded-2xl cursor-pointer bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all duration-200"
+      >
+        Apply
+      </button>
+      </div>
     </div>
   );
 };

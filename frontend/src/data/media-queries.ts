@@ -1,2 +1,2 @@
-export const MOBILE = 648;
+export const MOBILE = 768;
 export const TABLET = 1350;

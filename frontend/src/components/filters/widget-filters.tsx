@@ -25,6 +25,7 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
   const layout = useSelector(
     (state: any) => state.filters.widgetLayout.layoutMode
   );
+  const colsLayout = useSelector((state: any) => state.filters.widgetLayout);
 
   const changeVisibility = (
     widget: keyof IFilters["widgetVisibility"],
@@ -43,6 +44,8 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
       })
     );
   };
+
+
 
   const optionlist = filterUtils(filters);
 
@@ -100,7 +103,8 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
             >
               Desktop <CurrentLayout target={"desktop"} />
             </label>
-            <select
+          { colsLayout.grid_col.large != null &&   <select
+              value={colsLayout.grid_col.large}
               onChange={(e) => handleChange(e)}
               name="large"
               className="
@@ -114,17 +118,18 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
                 cursor-pointer
               "
             >
-              <option>2</option>
-              <option>3</option>
-              <option>1</option>
-            </select>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={1}>1</option>
+            </select>}
             <label
               htmlFor="medium"
               className="font-semibold text-gray-700 dark:text-gray-200"
             >
               Tablet <CurrentLayout target={"tablet"} />
             </label>
-            <select
+           {colsLayout.grid_col.medium != null && <select
+              value={colsLayout.grid_col.medium}
               onChange={(e) => handleChange(e)}
               name="medium"
               className="
@@ -138,17 +143,18 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
                 cursor-pointer
               "
             >
-              <option>2</option>
-              <option>1</option>
-            </select>
+              <option value={2}>2</option>
+              <option value={1}>1</option>
+            </select>}
             <label
               htmlFor="small"
               className="font-semibold text-gray-700 dark:text-gray-200"
             >
               Mobile <CurrentLayout target={"mobile"} />
             </label>
-            <select
+          {colsLayout.grid_col.small != null &&  <select
               onChange={(e) => handleChange(e)}
+              value={colsLayout.grid_col.small}
               name="small"
               className="
                 border border-gray-300 dark:border-gray-600
@@ -162,7 +168,7 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
               "
             >
               <option>1</option>
-            </select>
+            </select>}
           </div>
         </div>
       </div>

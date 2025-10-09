@@ -6,6 +6,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import GithubService from "../services/github-service";
 import { initialState } from "./data/githubData";
 import type { GithubRepo, IUserActivityData } from "../mappers/githubMapper";
+import DashboardStorage from "../services/storage/dashboard";
 
 const {
   get_user_activity,
@@ -39,7 +40,6 @@ export const fetchRepoTrend = createAsyncThunk(
         return rejectWithValue("Error while fetching rover data");
       }
       const { repoDetails } = repoTrend;
-      console.log(repoDetails);
       return { repoDetails };
     } catch (err) {
       return rejectWithValue("Error while fetching rover data");
@@ -52,7 +52,6 @@ export const fetchUserActivity = createAsyncThunk(
   async (username: string, { rejectWithValue }) => {
     try {
       const user_activity = await get_user_activity(username);
-      console.log(user_activity);
       if (user_activity.error || !user_activity.user_activity) {
         return rejectWithValue("Errore nel recupero");
       }
@@ -71,7 +70,6 @@ export const fetchRandomUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const user = await get_random_user();
-      console.log(user);
 
       if (!user.random_user || user.error) {
         return rejectWithValue("Errore nel recupero di un utente randomico");
@@ -96,9 +94,12 @@ export const githubSlice = createSlice({
       state.trending_repos_data.data = action.payload as GithubRepo[];
     },
     setSelectedUserRepo(state, action) {
-      // repo e stats
       state.repo_data.data = action.payload;
     },
+    setSelectedGithubWidget(state, action){
+      state.selectedWidget = action.payload
+      DashboardStorage.widgets.githubWidget.setSelectedWidget(action.payload)
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -156,13 +157,11 @@ export const githubSlice = createSlice({
       })
       .addCase(fetchRandomUser.rejected, (state, action) => {
         state.randomUserData.loading = false;
-        // Passing the error as payload
-        console.log(action.payload);
         state.randomUserData.error = action.payload as any;
         state.randomUserData.data = {}
       });
   },
 });
 
-export const { setUserActivityData, setSelectedUserRepo, setTrendingRepoList } =
+export const { setSelectedGithubWidget, setUserActivityData, setSelectedUserRepo, setTrendingRepoList } =
   githubSlice.actions;

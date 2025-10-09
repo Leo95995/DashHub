@@ -12,6 +12,7 @@ import {
 import ReactLoader from "../../../../../../components/loader";
 import type { IUserActivityData } from "../../../../../../mappers/githubMapper";
 import type { ItemStatus } from "../../../../../../store/interfaces/interfaces";
+import ErrorMessage from "../../../../../../components/Error/error";
 
 const UserActivityCard: React.FC<{ item: ItemStatus<IUserActivityData> }> = ({
   item,
@@ -25,11 +26,7 @@ const UserActivityCard: React.FC<{ item: ItemStatus<IUserActivityData> }> = ({
       return;
     }
 
-    return (
-      <div className="items-center min-h-40 justify-center flex text-red-500">
-        Errore nel recupero dei dati per l'utente
-      </div>
-    );
+    return <ErrorMessage message="Error while fetching user data" />;
   };
 
   const renderLoading = () => {
@@ -51,9 +48,8 @@ const UserActivityCard: React.FC<{ item: ItemStatus<IUserActivityData> }> = ({
   };
 
   const renderUserActivity = () => {
-
-    if(errorUser || loadUser){
-      return <></>
+    if (errorUser || loadUser) {
+      return <></>;
     }
 
     if (!Object.keys(userActivityData)?.length) {
@@ -208,8 +204,13 @@ const UserActivityCard: React.FC<{ item: ItemStatus<IUserActivityData> }> = ({
   return (
     <>
       <div className="flex items-center  gap-4 mb-6">
-        {renderError()}
-        {renderLoading()}
+        {loadUser ||
+          (errorUser !== null && (
+            <div className="flex w-full items-center justify-center">
+              {renderError()}
+              {renderLoading()}
+            </div>
+          ))}
         {renderUserActivity()}
       </div>
     </>

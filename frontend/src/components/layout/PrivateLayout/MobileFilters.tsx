@@ -9,7 +9,6 @@ const MobileFilters: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
 
   const handleFlagger = () => {
-    console.log("Grand Master of FE");
     setOpen(true)
   };
 

@@ -24,11 +24,15 @@ const useScreenWidthHook = (layout: WidgetLayout) => {
     });
     window.removeEventListener("resize", () => {
       setScreenWidth(window.innerWidth);
-      console.log("removing");
     });
   }, []);
 
   const getLayoutByMode = () => {
+
+    if(!layout?.grid_col){
+      return "grid-cols-2"
+    }
+
     switch (currentMode) {
       case "desktop":
         return layout.grid_col.large === 3

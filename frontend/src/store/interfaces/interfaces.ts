@@ -16,18 +16,6 @@ export interface IGlobalAlert {
   description: string;
 }
 export interface IFilters {
-  weatherFilters: {
-    expanded: boolean;
-  };
-  cryptoFilters: {
-    expanded: boolean;
-  };
-  nasaFilters: {
-    expanded: boolean;
-  };
-  githubFilters: {
-    expanded: boolean;
-  };
   widgetVisibility: {
     weather: boolean;
     github: boolean;

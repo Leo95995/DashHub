@@ -10,11 +10,9 @@ interface IGenericSelect<T> {
   placement?: 'start' | 'end' | 'center'
   padding?: string
   minHeigth?: string
+  listPlacement?: string
+  closePlacement?: string
 }
-
-/**
- * Whenever i pass a generic is necessary if its single to pass a ,
- */
 
 const GenericSelect: React.FC<IGenericSelect<any>> = ({
   itemList,
@@ -22,8 +20,10 @@ const GenericSelect: React.FC<IGenericSelect<any>> = ({
   onSelection,
   defaultText,
   placement = 'end',
-  padding = 'p-0', // if not specified set padding to 0
-  minHeigth
+  padding = 'p-0', 
+  minHeigth,
+  listPlacement,
+  closePlacement
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -33,14 +33,14 @@ const GenericSelect: React.FC<IGenericSelect<any>> = ({
       {isOpen && (
         <button
         onClick={() => setIsOpen(false)}
-        className="absolute top-0 right-10 cursor-pointer z-20 text-red-600 rounded-sm hover:bg-red-600 hover:text-white transition-colors"
+        className={`absolute top-0 ${closePlacement ?? `right-10`} cursor-pointer z-20 text-red-600 rounded-sm hover:bg-red-600 hover:text-white transition-colors`}
         aria-label="Chiudi dropdown"
         >
           <Close />
         </button>
       )}
       <ul
-        className={`absolute z-[9999] rounded-lg border border-gray-300 bg-white text-gray-700 shadow-md overflow-auto transition-max-h duration-300 ${
+        className={`absolute z-[9999] ${listPlacement && listPlacement} rounded-lg border border-gray-300 bg-white text-gray-700 shadow-md overflow-auto transition-max-h duration-300 ${
           isOpen
             ? "max-h-56 w-48"
             : "h-10 flex cursor-pointer hover:bg-blue-300  w-40"

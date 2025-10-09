@@ -1,9 +1,9 @@
 import GenericSelect from "../select";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { nasa_widgets } from "../../features/dashboard/components/widgetSwitcher/datas";
-import type { NasaWidgets } from "../../features/dashboard/components/widgetSwitcher/types";
-import { setSelectedWidget } from "../../store/nasaSlice";
+import type { GithubWidgets } from "../../features/dashboard/components/widgetSwitcher/types";
+import { github_widgets } from "../../features/dashboard/components/widgetSwitcher/datas";
+import { setSelectedGithubWidget } from "../../store/githubSlice";
 
 interface IGithubFilters {
   expanded: boolean;
@@ -11,12 +11,11 @@ interface IGithubFilters {
 
 const GithubFilters: React.FC<IGithubFilters> = ({ expanded }) => {
   const dispatch = useDispatch();
-  const currentFilters = useSelector((state: any) => state.nasa.widgetSelected);
+  const currentFilters = useSelector((state: any) => state.github.selectedWidget);
 
-
-  const setSelectedNasaWidget = (widget: NasaWidgets) => {
+  const setGithubWidget = (widget: GithubWidgets) => {
     if (widget) {
-      dispatch(setSelectedWidget(widget));
+      dispatch(setSelectedGithubWidget(widget)as any);
     }
   };
 
@@ -38,9 +37,9 @@ const GithubFilters: React.FC<IGithubFilters> = ({ expanded }) => {
             Select Github Widget
           </label>
           <GenericSelect
-            itemList={nasa_widgets}
+            itemList={github_widgets}
             selectedList={currentFilters}
-            onSelection={(e) => setSelectedNasaWidget(e)}
+            onSelection={(e) => setGithubWidget(e)}
             defaultText={currentFilters}
             minHeigth="min-h-14"
             placement="start"

@@ -1,6 +1,7 @@
 import { useState } from "react";
-
+// Components
 import GenericModal from "../../../../components/modal/modal";
+// Types & Interfaces
 import type { WidgetSwitcher } from "./types";
 import { CircleCheck } from "lucide-react";
 
@@ -17,17 +18,14 @@ const Switcher: React.FC<WidgetSwitcher> = ({
     setOpen((prev) => !prev);
   };
 
-  // Pass in input a list of widget that return the selection value
-
   const renderChildren = () => {
     return (
-      <ul className="px-4 ">
+      <ul className="px-4">
         {widgetList.map((e, index) => {
           return (
             <li key={e + index}>
               <button
                 onClick={() => {
-                  console.log(e);
                   changeSelectedWidget(e);
                   handleSelectWidget();
                 }}
@@ -37,10 +35,7 @@ const Switcher: React.FC<WidgetSwitcher> = ({
                 {widgetSelected === e && (
                   <>
                     <span
-                      className="
-        inline-flex items-center px-2 py-1 rounded-full absolute right-5 text-xs font-semibold
-        bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-sm gap-1
-      "
+                      className="inline-flex items-center px-2 py-1 rounded-full absolute right-5 text-xs font-semibold bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-sm gap-1"
                     >
                       <CircleCheck size={16} /> Selected
                     </span>

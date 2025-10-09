@@ -1,19 +1,23 @@
 import { useDispatch, useSelector } from "react-redux";
+// Chart
 import LineChart, { type ILineChartData } from "../../Charts/lineChart";
+// React Imports
 import { useEffect, useState } from "react";
 import { regularTimeStampToTime } from "../../../../../../../utils/weather-utils";
-import { setCryptoDetailFilters } from "../../../../../../../store/cryptoSlice";
-import { setGenericCryptoFilters } from "../../../../../../../store/cryptoSlice";
+import {
+  setCryptoDetailFilters,
+  setGenericCryptoFilters,
+} from "../../../../../../../store/cryptoSlice";
 import {
   days,
   filterCurrenciesList,
 } from "../../../../../../../store/data/cryptoData";
+// Components
 import GenericSelect from "../../../../../../../components/select";
 import ErrorMessage from "../../../../../../../components/Error/error";
 import ReactLoader from "../../../../../../../components/loader";
 
 const CryptoDetail: React.FC = () => {
-  // Data to drill down to the linear chart
   const [chartData, setChartData] = useState<ILineChartData>({
     data: {
       labels: [],
@@ -26,15 +30,23 @@ const CryptoDetail: React.FC = () => {
   const cryptoDetailData = useSelector(
     (state: any) => state.crypto.crypto_details_data
   );
+
   const {
     data: detailData,
     loading: detailLoading,
     error: detailError,
   } = cryptoDetailData;
 
+  useEffect(() => {
+    if (detailData) {
+      prepareLineChartData(detailData);
+    }
+  }, [detailData]);
+
   const cryptoCurrencyList = useSelector(
     (state: any) => state.crypto.currenciesList
   );
+
   const {
     data: currenciesList,
     loading: currenciesLoading,
@@ -76,15 +88,8 @@ const CryptoDetail: React.FC = () => {
       res.data.datasets[0].borderColor = "rgba(255, 99, 132, 0.5)";
     });
 
-    console.log(res);
     setChartData(res);
   };
-
-  useEffect(() => {
-    if (detailData) {
-      prepareLineChartData(detailData);
-    }
-  }, [detailData]);
 
   const handleFilterSet = () => {
     dispatch(setCryptoDetailFilters(detailFilters) as any);
@@ -117,12 +122,11 @@ const CryptoDetail: React.FC = () => {
 
   return (
     <>
-      <h2 className="text-xl font-medium pt-4">Crypto details</h2>
       <div className="flex justify-start ">
         <GenericSelect
           itemList={filterCurrenciesList}
           onSelection={(value) => handleSelection(value)}
-          defaultText={"Select currency"}
+          defaultText={genericFilters?.currency}
           selectedList={[genericFilters?.currency]}
           placement="start"
           minHeigth="min-h-8"
@@ -174,7 +178,7 @@ const CryptoDetail: React.FC = () => {
         <div className="flex">
           <button
             onClick={handleFilterSet}
-            className="dark:bg-gray-800 cursor-pointer bg-gray-200 border p-1 rounded-md"
+            className="bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200  border border-gray-300 dark:border-gray-700 rounded-md px-3 py-1.5 cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700 transition-all duration-200"
           >
             Apply
           </button>

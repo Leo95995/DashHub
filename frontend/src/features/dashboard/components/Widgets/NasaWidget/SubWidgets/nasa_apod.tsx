@@ -1,4 +1,4 @@
-import ReactLoader from "../../../../../../components/loader";
+import LoaderWithMessage from "../../../../../../components/loader/loaderAndText";
 
 export interface IApodWidget {
   data: ApoData;
@@ -21,11 +21,7 @@ const ApodWidget: React.FC<IApodWidget> = ({ data, error, loading }) => {
   }
 
   if (loading) {
-    return (
-      <div className="flex flex-col gap-1 items-center justify-center transition h-40 duration-300">
-        <ReactLoader /> Loading Nasa Picture of the day
-      </div>
-    );
+    return <LoaderWithMessage text=" Loading Nasa Picture of the day"/>
   }
 
   return (
@@ -34,18 +30,18 @@ const ApodWidget: React.FC<IApodWidget> = ({ data, error, loading }) => {
         <span>{date}</span>
       </div>
       <h3 className="text-lg font-bold text-center  dark:text-gray-200 mb-1 drop-shadow-md">
-        NASA APOD
+        Nasa Picture Of The Day
       </h3>
       <p className="text-center text-gray-700 dark:text-gray-300 mb-3 font-medium text-sm">
         {title}
       </p>
-      {/* It will show the image only if url is present */}
 
       <div className="relative rounded-2xl mb-3 w-full max-w-[12rem] aspect-square mx-auto overflow-hidden shadow-lg">
         {url ? (
           <img
             alt="Nasa Pic of the day"
             className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+            loading="lazy"
             src={url}
           />
         ) : (

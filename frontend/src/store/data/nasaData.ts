@@ -5,6 +5,7 @@ import type {
   PartialRover,
 } from "../interfaces/interfaces";
 import type { NasaWidgets } from "../../features/dashboard/components/widgetSwitcher/types";
+import nasaKey from "../../services/storage/nasa";
 
 const nasa_apod_data: PartialApod = {};
 const apodStatus: ItemStatus<PartialApod> = {
@@ -27,7 +28,8 @@ const roverStatus: ItemStatus<PartialRover> = {
   error: null,
 };
 
-const widgetSelected: NasaWidgets = "apod";
+
+const widgetSelected: NasaWidgets =  nasaKey.getSelectedWidget() ?? "apod";
 
 export const initialState = {
   apodStatus,

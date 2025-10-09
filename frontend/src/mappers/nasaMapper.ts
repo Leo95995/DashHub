@@ -4,7 +4,6 @@
 
 import type { INeoWsData, RoverDetails } from "../store/interfaces/interfaces";
 
-
 export interface NeoWsResponse {
   near_earth_objects: INearObject;
   element_count: number;
@@ -15,7 +14,6 @@ export interface INearObject {
 }
 
 type INear = keyof INearObject;
-
 
 export interface MarsRoverResponse {
   photos: RoverDetails[]

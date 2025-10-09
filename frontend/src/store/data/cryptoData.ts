@@ -4,6 +4,7 @@ import type {
   ICryptoDetails,
   ICryptoTopGainers,
 } from "../../mappers/cryptoMapper";
+import cryptoKey from "../../services/storage/crypto";
 import type { ItemStatus } from "../interfaces/interfaces";
 
 const currenciesList: ItemStatus<string> = {
@@ -30,7 +31,7 @@ const crypto_top_data: ItemStatus<ICryptoTopGainers> = {
   error: null,
 };
 
-const selectedWidget: CryptoWidgets = "Trending Cryptos";
+const selectedWidget: CryptoWidgets =  cryptoKey.getSelectedWidget() ?? "Trending Cryptos";
 
 export type currency = "eur" | "usd";
 

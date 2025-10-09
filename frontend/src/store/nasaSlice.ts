@@ -4,6 +4,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import NasaService from "../services/nasa-service";
 import type { RoverDetails } from "./interfaces/interfaces";
 import { initialState } from "./data/nasaData";
+import nasaKey from "../services/storage/nasa";
 
 const { get_apod_data, get_mars_rover_data, get_neoWs_data } = NasaService();
 
@@ -65,6 +66,7 @@ export const nasaSlice = createSlice({
   reducers: {
     setSelectedWidget(state, action) {
       state.widgetSelected = action.payload;
+      nasaKey.setSelectedWidget(action.payload)
     },
   },
   extraReducers: (builder) => {

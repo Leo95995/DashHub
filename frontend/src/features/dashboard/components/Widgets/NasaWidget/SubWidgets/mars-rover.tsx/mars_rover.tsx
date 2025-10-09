@@ -5,8 +5,7 @@ import type {
 import RoverElement from "./mars-rover-element";
 import { Infinity } from "lucide-react";
 import useRoverNavigation from "./hook/useRoverNavigation";
-import ReactLoader from "../../../../../../../components/loader";
-
+import LoaderWithMessage from "../../../../../../../components/loader/loaderAndText";
 const MarsRoverWidget: React.FC<ItemStatus<RoverDetails[]>> = ({
   data,
   loading,
@@ -20,11 +19,7 @@ const MarsRoverWidget: React.FC<ItemStatus<RoverDetails[]>> = ({
   }
 
   if (loading) {
-    return (
-      <div className="flex flex-col gap-1 items-center justify-center transition h-50 duration-300">
-        <ReactLoader /> Loading Mars Rover Data
-      </div>
-    );
+    return <LoaderWithMessage text="Loading Mars Rover data"/>;
   }
 
   if (error) {
@@ -33,11 +28,11 @@ const MarsRoverWidget: React.FC<ItemStatus<RoverDetails[]>> = ({
 
   return (
     <>
-      <div className="flex flex-col">
+      <div className="flex flex-col max-h-full overflow-scroll">
         <div className="flex justify-between py-2 items-center">
           <p>
             Oggetto selezionato <b>{(selectedRover?.index as number) + 1}</b> di{" "}
-            <b>{selectedChunk.length}</b>
+            <b>{selectedChunk?.length}</b>
           </p>
           <button
             className="px-3 py-1 cursor-pointer rounded-lg 
@@ -51,7 +46,7 @@ const MarsRoverWidget: React.FC<ItemStatus<RoverDetails[]>> = ({
           </button>
         </div>
         {selectedRover && <RoverElement data={selectedRover?.data} />}
-        <div className="flex justify-center gap-4 mt-4">
+        <div className="flex justify-center gap-4 ">
           <button
             onClick={() =>
               changeRover((selectedRover?.index + 1) as number, "prev")

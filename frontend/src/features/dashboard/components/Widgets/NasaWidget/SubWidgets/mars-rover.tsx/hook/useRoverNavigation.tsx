@@ -16,8 +16,9 @@ const useRoverNavigation = (data: RoverDetails[]) => {
 
 
   useEffect(()=> {
-    getRandomRover()
-  }, [])
+    if(data.length){
+    getRandomRover()}
+  }, [data])
 
 
   const getRandomRover = () => {

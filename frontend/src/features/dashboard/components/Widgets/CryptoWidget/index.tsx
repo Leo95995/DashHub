@@ -4,9 +4,9 @@ import Switcher from "../../widgetSwitcher/switcher";
 import type { CryptoWidgets, WidgetTypes } from "../../widgetSwitcher/types";
 import { useEffect, useState } from "react";
 import { crypto_widgets } from "../../widgetSwitcher/datas";
-//  CRYPTO DATA
+
 import { useDispatch, useSelector } from "react-redux";
-// Fetch datas and set them
+
 import {
   fetchCryptoTrendings,
   fetchCryptoDetails,
@@ -20,21 +20,13 @@ import Tag from "../../../../../components/Tag";
 const CryptoWidget: React.FC<IGenericWidget> = ({
   isEditMode,
   widgetId,
-  onHide,
-  setWidgetOrder,
   handleDrop,
   setDraggedWidgetId,
 }) => {
-  // Dispatched datas
   const dispatch = useDispatch();
-  const cryptoFilterData: ICryptoFilterData = useSelector(
-    (state: any) => state.crypto.filterData as ICryptoFilterData
-  );
-  const { cryptoDetailFilters, cryptoTrendingFilters, genericFilters } =
-    cryptoFilterData;
-  const selectCryptoWidget = useSelector(
-    (state: any) => state.crypto.selectedWidget
-  );
+  const cryptoFilterData: ICryptoFilterData = useSelector((state: any) => state.crypto.filterData as ICryptoFilterData);
+  const { cryptoDetailFilters, cryptoTrendingFilters, genericFilters } = cryptoFilterData;
+  const selectCryptoWidget = useSelector((state: any) => state.crypto.selectedWidget);
   const [dragging, setDragging] = useState<boolean>(false);
 
   const handleCryptoWidgetChange = (widget: WidgetTypes) => {
@@ -55,10 +47,7 @@ const CryptoWidget: React.FC<IGenericWidget> = ({
     await dispatch(fetchTopGainers(cryptoFilterData) as any);
   };
 
-  /**
-   * Must prepare data from backend next. now this work. add filters then abstract
-   * all the logic. or i prepare an apply filter button
-   */
+ 
   useEffect(() => {
     getTopGainers();
   }, [genericFilters]);
@@ -86,7 +75,7 @@ const CryptoWidget: React.FC<IGenericWidget> = ({
         }}
         onDragOver={(e) => e.preventDefault()}
         onDrop={() => handleDrop(widgetId)}
-        className={`col-span-1 hover:scale-105 transition-all rounded-lg p-6 border border-gray-200 dark:border-gray-700 shadow-lg ${
+        className={`col-span-1 h-120 hover:scale-105 transition-all rounded-lg p-6 border border-gray-200 dark:border-gray-700 shadow-lg ${
           isEditMode && "ring-2 ring-blue-400 hover:scale-105 cursor-grab"
         }  ${
           dragging
@@ -94,14 +83,14 @@ const CryptoWidget: React.FC<IGenericWidget> = ({
             : ""
         }`}
       >
-        <div className="flex flex-col py-4 gap-4">
+        <div className="flex flex-col gap-4">
           <div className="flex justify-between">
             <Switcher
               changeSelectedWidget={handleCryptoWidgetChange}
               widgetSelected={selectCryptoWidget}
               widgetList={crypto_widgets}
             />
-            {isEditMode ? <Tag text="Edit Mode" /> : <span>No edit mode</span>}
+            {isEditMode && <Tag text="Edit Mode" /> }
           </div>
           <CryptoWidgetContainer widget={selectCryptoWidget as CryptoWidgets} />
         </div>

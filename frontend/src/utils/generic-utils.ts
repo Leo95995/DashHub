@@ -43,9 +43,30 @@ export const generateDistinctColors = (count: number, alpha = 0.7): string[] => 
  */
 
 export const debounce = (func: any, delay: any) => {
-  let timeoutId: number | undefined;
+  let timeoutId: number | undefined| any;
   return (...args: any) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => func(...args), delay);
   };
 }
+
+/**
+ * Create short name
+ * @param username 
+ * @returns 
+ */
+
+export  const createShortName = (username: string) => { 
+    if(!username){
+      return "G";
+    }
+    const splittedName = username.split(' ');
+    let result  = "";
+
+    for(const name of splittedName){
+      result += name[0];
+    }
+    return result
+
+  }
+

@@ -1,24 +1,21 @@
 import type { ScreenMode } from "../interfaces/common/interfaces";
 import type { IFilters } from "./interfaces/interfaces";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import DashboardStorage from "../services/storage/dashboard";
+const { filters } = DashboardStorage;
 
+export type VisualMode = "large" | "small" | "medium";
 
-export type VisualMode = 'large' | 'small' | 'medium'
-
+export interface IWidgetLayout {
+  grid_col: {
+    large: 1 | 2 | 3;
+    medium: 1 | 2;
+    small: 1;
+  };
+  layoutMode: string;
+}
 
 const initialFilterOptions: IFilters = {
-  weatherFilters: {
-    expanded: false,
-  },
-  cryptoFilters: {
-    expanded: false,
-  },
-  nasaFilters: {
-    expanded: false,
-  },
-  githubFilters: {
-    expanded: false,
-  },
   widgetVisibility: {
     weather: true,
     github: true,
@@ -27,16 +24,33 @@ const initialFilterOptions: IFilters = {
   },
 };
 
+const getFilterOptions = (): IFilters => {
+  const visibility = filters.getWidgetVisibility()
+  const finalFiltersOptions: IFilters = {
+    widgetVisibility: visibility
+  };
+
+  return finalFiltersOptions;
+};
+
+const getWidgetLayout = () => {
+  const storageLayout = filters.getWidgetLayout()
+  return storageLayout;
+};
+
+const widgetLayout = getWidgetLayout();
+const filterOptions = getFilterOptions();
+
 const initialState = {
-  filters: initialFilterOptions,
-  widgetLayout: {
+  filters: filterOptions.widgetVisibility ?filterOptions : initialFilterOptions,
+  widgetLayout: widgetLayout ?? {
     grid_col: {
-        large: 2,
-        medium: 2,
-        small: 1
+      large: 2,
+      medium: 2,
+      small: 1,
     },
-    layoutMode:  ""
-  }
+    layoutMode: "",
+  },
 };
 
 // Application slice.
@@ -58,22 +72,30 @@ export const filterSlice = createSlice({
       const { payload } = action;
       const { widget, visibility } = payload;
       state.filters.widgetVisibility[widget] = visibility;
+      filters.saveWidgetVisibility(state.filters.widgetVisibility)
     },
-    setWidgetLayout: (state, action : {payload: { type: VisualMode, value: number}}) => {
-        const { payload } = action
-        const { type, value} = payload
-        if(type == 'large'){
-          state.widgetLayout.grid_col.large = value
-        }else if(type === 'medium'){
-          state.widgetLayout.grid_col.medium = value
-        }else {
-          state.widgetLayout.grid_col.small = value
-        }
+    setWidgetLayout: (
+      state,
+      action: { payload: { type: VisualMode; value: number } }
+    ) => {
+      const { payload } = action;
+      const { type, value } = payload;
+      if (type == "large") {
+        state.widgetLayout.grid_col.large = value;
+      } else if (type === "medium") {
+        state.widgetLayout.grid_col.medium = value;
+      } else {
+        state.widgetLayout.grid_col.small = value;
+      }
+
+      filters.saveWidgetLayout(state.widgetLayout)
+
     },
-    setLayoutMode(state, action: PayloadAction<ScreenMode>){
-      state.widgetLayout.layoutMode = action.payload
-    }
+    setLayoutMode(state, action: PayloadAction<ScreenMode>) {
+      state.widgetLayout.layoutMode = action.payload;
+    },
   },
 });
 
-export const { changeWidgetVisibility, setWidgetLayout, setLayoutMode } = filterSlice.actions;
+export const { changeWidgetVisibility, setWidgetLayout, setLayoutMode } =
+  filterSlice.actions;

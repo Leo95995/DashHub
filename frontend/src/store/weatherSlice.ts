@@ -1,10 +1,15 @@
+// Redux imports
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+// Services
 import WeatherService from "../services/weather-service";
+import DashboardStorage from "../services/storage/dashboard";
+// Interface
 import type {
   IWeatherData,
   LocationCoordinates,
 } from "../services/interfaces/interfaces";
+
 
 export const fetchWeatherByCity = createAsyncThunk(
   "weather/fetchByCity",
@@ -34,19 +39,17 @@ const coordinates: Partial<LocationCoordinates> = {};
 const weatherData: Partial<IWeatherData> = {};
 
 
-type Temperature = "celsius"| "kelvin" 
-const temperatureType: Temperature = "celsius";
+export type Temperature = "celsius"| "kelvin" 
+const temperatureType: Temperature =  "celsius";
 
 const initialState = {
-  coordinates: coordinates,
-  weather: weatherData,
-  temperatureType,
+  coordinates:  DashboardStorage.widgets.weatherWidget.getCoordinates() ?? coordinates,
+  weather:  DashboardStorage.widgets.weatherWidget.getWeatherData() ?? weatherData,
+  temperatureType: DashboardStorage.widgets.weatherWidget.getTemperatureType() ?? temperatureType,
+  searchText:   DashboardStorage.widgets.weatherWidget.getWeatherData()?.name ??  "empoli",
   loading: false,
   error: null as string | null,
 };
-/**
- * Weather slice
- */
 
 export const weatherSlice = createSlice({
   name: "weather",
@@ -59,7 +62,11 @@ export const weatherSlice = createSlice({
     setTemperatureType: (state, action) =>{
         const {payload} = action
         state.temperatureType = payload
-    }
+        DashboardStorage.widgets.weatherWidget.setTemperatureType(payload)
+    },
+    setSearchText: (state, action) => {
+      state.searchText= action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -70,6 +77,8 @@ export const weatherSlice = createSlice({
       .addCase(fetchWeatherByCity.fulfilled, (state, action) => {
         state.coordinates = action.payload.coordinates;
         state.weather = action.payload.weather;
+        DashboardStorage.widgets.weatherWidget.setCoordinates(state.coordinates)
+        DashboardStorage.widgets.weatherWidget.setWeatherData(state.weather)
         state.loading = false;
         state.error = null;
       })
@@ -80,4 +89,4 @@ export const weatherSlice = createSlice({
   },
 });
 
-export const { setWeatherData, setTemperatureType } = weatherSlice.actions;
+export const { setSearchText, setWeatherData, setTemperatureType } = weatherSlice.actions;
