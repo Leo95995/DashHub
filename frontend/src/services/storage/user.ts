@@ -5,7 +5,6 @@ const USER_KEY = "user";
 interface IUserPreferences {
   userInfo: { username: string };
 }
-
 /**
  * User Storage details
  */
@@ -20,8 +19,6 @@ const userInfo = {
     return storage.getItem(`${USER_KEY}_preferences`);
   },
   setUserPreferences: (userdata: IUserPreferences) => {
-    console.log(userdata);
-
     storage.setItem(`${USER_KEY}_preferences`, userdata);
   },
 };

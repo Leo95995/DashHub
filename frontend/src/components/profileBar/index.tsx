@@ -1,45 +1,22 @@
+//  Icons
 import { Edit, Save } from "lucide-react";
-import InputSearch from "../input/input";
-import { useState } from "react";
 import { Cancel } from "@mui/icons-material";
-import { useSelector } from "react-redux";
-
-interface IProfileBar {
-  expanded: boolean;
-}
+// React/Redux
+import { useState } from "react";
+import { createShortName } from "../../utils/generic-utils";
+import InputSearch from "../input/input";
+import { useDispatch, useSelector } from "react-redux";
+// Interfaces
+import type { IProfileBar } from "./interfaces";
+import { setUserName } from "../../store/appSlice";
 
 const ProfileBar: React.FC<IProfileBar> = ({ expanded }) => {
   const [editMode, setEditMode] = useState<boolean>(false);
-  const userdata = useSelector((state:any)=> state.app.userData)
+  const dispatch = useDispatch();
+  const userdata = useSelector((state: any) => state.app.userData);
 
-
-  const username  =userdata.userInfo.username;
- 
-  /**
-   * Create a small
-   * 
-   * @param username 
-   * @returns 
-   */
-
-  const createShortName = (username: string) => { 
-    if(!username){
-      return "G";
-    }
-    const splittedName = username.split(' ');
-    let result  = "";
-
-    for(const name of splittedName){
-      result += name[0];
-    }
-    console.log(result);
-    return result
-
-  }
-
-
-
-
+  const username = userdata.userInfo.username;
+  const [newUsername, setNewUsername] = useState<string>(username ?? "");
 
   return (
     <>
@@ -61,19 +38,30 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded }) => {
               <InputSearch
                 width="w-48 md:w-64"
                 placeholder="Insert your new username"
-                onChange={(e) => console.log(e)}
+                onChange={(e) => setNewUsername(e)}
                 isLoading={false}
               />
             )}
             {
-              <button className="cursor-pointer" >
+              <button className="cursor-pointer">
                 {!editMode ? (
-                  <Edit onClick={() => setEditMode(!editMode)} style={{ height: "16px" }} />
+                  <Edit
+                    onClick={() => setEditMode(!editMode)}
+                    style={{ height: "16px" }}
+                  />
                 ) : (
                   <div className="flex gap-2">
-                    <Save onClick={() => {
-                      setEditMode(!editMode)}} style={{ height: "16px" }} />{" "}
-                    <Cancel onClick={() => setEditMode(!editMode)} style={{ height: "16px" }} />
+                    <Save
+                      onClick={() => {
+                        dispatch(setUserName(newUsername));
+                        setEditMode(!editMode);
+                      }}
+                      style={{ height: "16px" }}
+                    />
+                    <Cancel
+                      onClick={() => setEditMode(!editMode)}
+                      style={{ height: "16px" }}
+                    />
                   </div>
                 )}
               </button>

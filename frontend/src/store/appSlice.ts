@@ -3,23 +3,22 @@ import { createSlice } from "@reduxjs/toolkit";
 import userInfo from "../services/storage/user";
 
 interface ISideBar {
-    expanded: boolean 
+  expanded: boolean;
 }
 
-const initialSideBar : ISideBar = {
-    expanded: true
-}
+const initialSideBar: ISideBar = {
+  expanded: true,
+};
 
-const firstVisit = userInfo.getFirstVisit()
+const firstVisit = userInfo.getFirstVisit();
 
-const userInfoValue = userInfo.getUserPreferences() ?? {}
-
+const userInfoValue = userInfo.getUserPreferences() ?? {};
 
 const initialState = {
   internalLoad: false,
   sideBar: initialSideBar,
   globalLoad: false,
-  userData:  { userInfo: userInfoValue , firstVisit: firstVisit ?? null },
+  userData: { userInfo: userInfoValue, firstVisit: firstVisit ?? null },
   isEditMode: false,
   globalAlert: {
     status: "" as IGlobalAlertStatus,
@@ -34,16 +33,22 @@ export const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    setEditMode: (state, action)=> {
+    setEditMode: (state, action) => {
       state.isEditMode = action.payload as boolean;
     },
-    setUserInfo: (state, action ) => {
-      state.userData.userInfo = action.payload
-      userInfo.setUserPreferences(action.payload)
-    }, 
-    setFirstVisit:(state,action)=>{
-      state.userData.firstVisit = action.payload
-      userInfo.setFirstVisit(action.payload)
+    setUserInfo: (state, action) => {
+      state.userData.userInfo = action.payload;
+      userInfo.setUserPreferences(action.payload);
+    },
+    setUserName: (state, action) => {
+      state.userData.userInfo.username = action.payload;
+      const currentPref = userInfo.getUserPreferences();
+      currentPref.username = action.payload;
+      userInfo.setUserPreferences(currentPref);
+    },
+    setFirstVisit: (state, action) => {
+      state.userData.firstVisit = action.payload;
+      userInfo.setFirstVisit(action.payload);
     },
     // This should be implemented for the notification system.
     setGlobalAlert: (state, action) => {
@@ -55,10 +60,18 @@ export const appSlice = createSlice({
       const { payload } = action;
       state.sideBar.expanded = payload;
     },
-    setGlobalLoad (state, action) {
-      state.globalLoad = action.payload
-    }
+    setGlobalLoad(state, action) {
+      state.globalLoad = action.payload;
+    },
   },
 });
 
-export const { setGlobalLoad, setEditMode, setUserInfo, setFirstVisit, setGlobalAlert, setSideBarStatus } = appSlice.actions;
+export const {
+  setGlobalLoad,
+  setEditMode,
+  setUserName,
+  setUserInfo,
+  setFirstVisit,
+  setGlobalAlert,
+  setSideBarStatus,
+} = appSlice.actions;

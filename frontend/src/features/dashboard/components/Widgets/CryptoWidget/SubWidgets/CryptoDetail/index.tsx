@@ -1,19 +1,23 @@
 import { useDispatch, useSelector } from "react-redux";
+// Chart
 import LineChart, { type ILineChartData } from "../../Charts/lineChart";
+// React Imports
 import { useEffect, useState } from "react";
 import { regularTimeStampToTime } from "../../../../../../../utils/weather-utils";
-import { setCryptoDetailFilters } from "../../../../../../../store/cryptoSlice";
-import { setGenericCryptoFilters } from "../../../../../../../store/cryptoSlice";
+import {
+  setCryptoDetailFilters,
+  setGenericCryptoFilters,
+} from "../../../../../../../store/cryptoSlice";
 import {
   days,
   filterCurrenciesList,
 } from "../../../../../../../store/data/cryptoData";
+// Components
 import GenericSelect from "../../../../../../../components/select";
 import ErrorMessage from "../../../../../../../components/Error/error";
 import ReactLoader from "../../../../../../../components/loader";
 
 const CryptoDetail: React.FC = () => {
-  // Data to drill down to the linear chart
   const [chartData, setChartData] = useState<ILineChartData>({
     data: {
       labels: [],
@@ -26,15 +30,23 @@ const CryptoDetail: React.FC = () => {
   const cryptoDetailData = useSelector(
     (state: any) => state.crypto.crypto_details_data
   );
+
   const {
     data: detailData,
     loading: detailLoading,
     error: detailError,
   } = cryptoDetailData;
 
+  useEffect(() => {
+    if (detailData) {
+      prepareLineChartData(detailData);
+    }
+  }, [detailData]);
+
   const cryptoCurrencyList = useSelector(
     (state: any) => state.crypto.currenciesList
   );
+
   const {
     data: currenciesList,
     loading: currenciesLoading,
@@ -78,12 +90,6 @@ const CryptoDetail: React.FC = () => {
 
     setChartData(res);
   };
-
-  useEffect(() => {
-    if (detailData) {
-      prepareLineChartData(detailData);
-    }
-  }, [detailData]);
 
   const handleFilterSet = () => {
     dispatch(setCryptoDetailFilters(detailFilters) as any);
@@ -178,9 +184,7 @@ const CryptoDetail: React.FC = () => {
           </button>
         </div>
       </div>
-      {chartData?.data && (
-          <LineChart data={chartData?.data} />
-      )}
+      {chartData?.data && <LineChart data={chartData?.data} />}
     </>
   );
 };

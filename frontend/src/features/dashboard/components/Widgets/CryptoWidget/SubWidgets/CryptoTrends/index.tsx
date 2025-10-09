@@ -37,7 +37,7 @@ const CryptoTrendings: React.FC = () => {
     if (loading) {
       return (
         <div className="flex flex-col gap-1 items-center justify-center transition h-40 duration-300">
-          <ReactLoader /> Loading trending repositories
+          <ReactLoader /> Loading trending Cryptos
         </div>
       );
     }
@@ -83,9 +83,8 @@ const CryptoTrendings: React.FC = () => {
     if (!data || Array.isArray(data)) return null;
 
     return (
-      <div className="flex flex-wrap gap-2 justify-center overflow-scroll  max-h-95">
+      <div className="flex flex-wrap gap-2 justify-center  max-h-100 overflow-scroll h-full">
         <h2 className="text-xl font-medium pt-4">Crypto Trendings</h2>
-        {/* Should be extracted. this is the logic for crypto trending section */}
         <div className="flex justify-end pb-6 w-full relative h-28 px-12">
           {isOpen && (
             <button

@@ -4,9 +4,9 @@ import Switcher from "../../widgetSwitcher/switcher";
 import type { CryptoWidgets, WidgetTypes } from "../../widgetSwitcher/types";
 import { useEffect, useState } from "react";
 import { crypto_widgets } from "../../widgetSwitcher/datas";
-//  CRYPTO DATA
+
 import { useDispatch, useSelector } from "react-redux";
-// Fetch datas and set them
+
 import {
   fetchCryptoTrendings,
   fetchCryptoDetails,

@@ -112,7 +112,7 @@ const DashBoard: React.FC = () => {
           onClick={toggleEditMode}
           widgetOrder={widgetOrder}
         />
-        <section className={`grid gap-6 px-6 py-2 ${getLayoutByMode()}`}>
+        <section className={`grid gap-6 px-6 py-2 flex-wrap ${getLayoutByMode()}`}>
           <>
             {renderWidgetByOrder().map((widget: any) => {
               return (
