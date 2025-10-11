@@ -15,9 +15,9 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded }) => {
   const dispatch = useDispatch();
   const userdata = useSelector((state: any) => state.app.userData);
 
-  const username = userdata.userInfo.username;
+  const { username , avatar_color} = userdata.userInfo
   const [newUsername, setNewUsername] = useState<string>(username ?? "");
-
+  console.log(avatar_color);
   return (
     <>
       <div
@@ -26,7 +26,10 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded }) => {
         }`}
       >
         <div>
-          <span className="rounded-full bg-amber-500 h-11 w-11 overflow-ellipsis p-1 justify-center flex items-center hover:scale-105 transition-all ">
+          <span 
+          style={{background: avatar_color ?? "#e5a50a"}}
+          
+          className="rounded-full h-11 w-11 overflow-ellipsis p-1 justify-center flex items-center hover:scale-105 transition-all ">
             {createShortName(username)}
           </span>
         </div>
@@ -52,7 +55,7 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded }) => {
             )}
             {editMode && (
               <div className="flex gap-2">
-                <button>
+                <button className="cursor-pointer rounded-md border-1 border-transparent hover:border-blue-400 active:scale-95">
                   <Save
                     className="rounded-md"
                     onClick={() => {
@@ -62,7 +65,7 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded }) => {
                     style={{ height: "20px" }}
                   />
                 </button>
-                <button>
+                <button  className="cursor-pointer border-1 rounded-md border-transparent hover:border-blue-400 active:scale-95" >
                   <Cancel
                     className="rounded-md"
                     onClick={() => setEditMode(!editMode)}

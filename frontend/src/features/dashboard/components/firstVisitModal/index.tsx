@@ -1,9 +1,12 @@
 import { useState } from "react";
+// Components
 import InputSearch from "../../../../components/input/input";
 import GenericModal from "../../../../components/modal/modal";
-import { useDispatch } from "react-redux";
 import ModeToggler from "../../../../components/toggler";
+// Redux 
+import { useDispatch } from "react-redux";
 import { setUserInfo } from "../../../../store/appSlice";
+
 interface IFirstVisitModal {
   firstVisit: boolean;
   setFirstVisit: (val: boolean) => void;
@@ -16,10 +19,10 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({
   const [isWriting, setIsWriting] = useState<boolean>(false);
   const dispatch = useDispatch();
 
-  const [userInfo, setUser] = useState({ username: "" });
+  const [userInfo, setUser] = useState({ username: "", avatar_color: "" });
 
   const handleGuestVisit = () => {
-    dispatch(setUserInfo({ username: "Guest" }));
+    dispatch(setUserInfo({ username: "Guest", avatar_color: "" }));
     dispatch(setFirstVisit(true) as any);
   };
 
@@ -43,27 +46,38 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({
     >
       <div className="rounded-lg p-6 w-full max-w-md mx-auto  flex flex-col gap-4">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-          Ciao!
+          Hi!
         </h2>
         <p className="text-gray-700 dark:text-gray-300">
-          Inserisci il tuo nome per personalizzare i widget, oppure continua
-          come Guest.
+          Enter your name to personalize the widgets, or continue as a Guest.
         </p>
-
+      </div>
+      <div className="flex flex-col gap-2">
+        <label
+          htmlFor="username"
+          className="font-medium text-gray-800 dark:text-gray-200"
+        >
+          Username
+        </label>
+        <InputSearch
+          placeholder="Scrivi qui il tuo nome..."
+          onChange={(e) => {
+            setUser({ ...userInfo, username: e });
+          }}
+          width="w-120 md:w-full"
+          isLoading={isWriting}
+        />
         <div className="flex flex-col gap-2">
           <label
             htmlFor="username"
             className="font-medium text-gray-800 dark:text-gray-200"
           >
-            Username
+            Avatar Color
           </label>
-          <InputSearch
-            placeholder="Scrivi qui il tuo nome..."
-            onChange={(e) => {
-              setUser({ ...userInfo, username: e });
-            }}
-            width="w-120 md:w-full"
-            isLoading={isWriting}
+          <input
+            type="color"
+            defaultValue={"#e5a50a"}
+            onChange={(e) =>   setUser({ ...userInfo, avatar_color: e.currentTarget.value })}
           />
         </div>
         <div className="flex flex-col gap-2">

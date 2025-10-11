@@ -1,9 +1,30 @@
 import { githubReposMapper, userActivityMapper } from "../mappers/githubMapper";
 
+const backendUrl = `${import.meta.env.VITE_BACKEND_URI}/github`
+
 const GithubService = () => {
   // Trending repo
-  const get_trending_repos = async () => {
-    const trendingurl = `https://api.github.com/search/repositories?q=stars:%3E1000&sort=stars&order=desc`;
+  // const get_trending_repos = async () => {
+  //   const trendingurl = `https://api.github.com/search/repositories?q=stars:%3E1000&sort=stars&order=desc`;
+  //   try {
+  //     const res = await fetch(trendingurl, { method: "GET" });
+  //     const data = await res.json();
+  //     const status = res.status;
+
+  //     // map datas to
+  //     const mappedRepos = await githubReposMapper(data.items);
+  //     if (data && status === 200) {
+  //       return { trendingRepos: mappedRepos, status: status, error: false };
+  //     } else {
+  //       return { status: status, error: true };
+  //     }
+  //   } catch (error) {
+  //     return { error: true };
+  //   }
+  // };
+
+    const get_trending_repos = async () => {
+    const trendingurl = `${backendUrl}/trending_repos`;
     try {
       const res = await fetch(trendingurl, { method: "GET" });
       const data = await res.json();
@@ -20,6 +41,16 @@ const GithubService = () => {
       return { error: true };
     }
   };
+
+
+
+
+
+
+
+
+
+
 
   const get_repo_trend = async (repoName: string) => {
     const [owner, repo] = repoName.split("/");

@@ -4,6 +4,15 @@ import { NasaMappers, type MarsRoverResponse, type NeoWsResponse } from "../mapp
 
 const key = import.meta.env.VITE_NASA_API;
 
+
+
+/**
+ * what we must do here is : 
+ * 
+ * REMOVE THE USE OF THE API KEY AND DIRECTLY CALL THE SERVER
+ */
+
+
 const NasaService = () => {
   /**
    * Widget Nasa - 1 contains Apod datas.
@@ -28,7 +37,9 @@ const NasaService = () => {
    * Widget Nasa - 2 contains mars rover data
    */
   const get_mars_rover_data = async () => {
-    const rover_url = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=${key}`;
+    // const rover_url = `https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos`
+    const rover_url = `https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos?sol=1000&api_key=${key}`;
+    
     try {
       const res = await fetch(rover_url, { method: "GET" });
       const data : MarsRoverResponse = await res.json();
