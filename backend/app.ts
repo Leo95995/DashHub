@@ -7,6 +7,7 @@ import { allowedHeaders } from "./config/allowedHeaders";
 import nasa_router from "./routes/nasa/nasa-routes";
 import github_router from "./routes/github/github-routes";
 import weather_router from "./routes/weather/weather-routes";
+import crypto_router from "./routes/crypto/crypto-routes";
 
 
 dotenv.config();
@@ -53,6 +54,8 @@ app.use((req, res, next) => {
 app.use('/nasa', nasa_router)
 app.use('/github', github_router)
 app.use('/weather', weather_router)
+app.use('/crypto', crypto_router)
+
 
 
 export default app;

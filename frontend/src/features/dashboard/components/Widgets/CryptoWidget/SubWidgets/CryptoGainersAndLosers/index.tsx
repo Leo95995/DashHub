@@ -73,14 +73,15 @@ const CryptoGainersAndLosers: React.FC = () => {
                   <span className="text-sm text-gray-500">
                    {genericFilters?.currency == 'eur' ? <>€ {coin.price.toLocaleString()} </> : <>  $ {coin.price.toLocaleString()}</>}
                   </span>
-                </div>
-                <div
-                  className={`ml-auto font-semibold ${
+                   <div
+                  className={`font-semibold text-xs ${
                     coin.change24h >= 0 ? "text-green-500" : "text-red-500"
                   }`}
                 >
                   {coin.change24h.toFixed(2)}%
                 </div>
+                </div>
+               
               </div>
             </>
           );

@@ -9,12 +9,11 @@ const CryptoService = () => {
     CryptoCurrenciesMapper,
   } = CryptoMappers;
 
-  /**
-   * get all currencies for the cryptos to be selected. so show them as values to select. we naap only the id.
-   */
+
+  const baseurl_crypto = `${import.meta.env.VITE_BACKEND_URI}/crypto`
 
   const getAllCryptoCurrencies = async () => {
-    const currenciesListUrl = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur`;
+    const currenciesListUrl = `${baseurl_crypto}/currencies`;
     try {
       const res = await fetch(currenciesListUrl, { method: "GET" });
       const data = await res.json();

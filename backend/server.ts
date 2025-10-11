@@ -10,13 +10,12 @@ const port = process.env.PORT || 3000;
 
 app.listen(port as any, "0.0.0.0", () => {
   console.log(`[SERVER]: Server is running at http://localhost:${port}`);
-  // mongoose
-  //   .connect(db, options)
-  //   .then((res) => {
-  //     console.log("Connection successful to db, working");
-  //     const db = mongoose.connection.useDb("nomeDelDb");
-  //   })
-  //   .catch((e) => console.log(`There is an error`, e.toString()));
+  mongoose
+    .connect(db, options)
+    .then((res) => {
+      console.log("Connection successful to db, working");
+    })
+    .catch((e) => console.log(`There is an error`, e.toString()));
 });
 
 

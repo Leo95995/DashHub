@@ -29,7 +29,7 @@ const roverStatus: ItemStatus<PartialRover> = {
 };
 
 
-const widgetSelected: NasaWidgets =  nasaKey.getSelectedWidget() ?? "apod";
+const widgetSelected: NasaWidgets =  nasaKey.getSelectedWidget() ?? "Mars Rover";
 
 export const initialState = {
   apodStatus,

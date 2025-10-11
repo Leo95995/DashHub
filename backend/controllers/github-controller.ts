@@ -59,8 +59,6 @@ const get_user_activity = async (
   const query = req.query;
   const { username } = query;
 
-  console.log(username);
-
   const url = `https://api.github.com/users/${username}/events/public`;
   try {
     const user_activity = await fetch(url, {
