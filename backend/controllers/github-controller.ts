@@ -42,7 +42,9 @@ const get_repo_trend = async (
       },
     });
 
-    res.status(200).json(repo_data);
+    const data = await repo_data.json()
+
+    res.status(200).json(data);
   } catch (e) {
     res.status(404).json("Error");
   }
@@ -84,9 +86,7 @@ const get_random_user = async (
   try {
     let userDetails: any = null;
     let attempts = 0;
-
-    while (!userDetails && attempts < 10) {
-      // evita loop infinito
+    while (!userDetails && attempts < 50) {
       attempts++;
       const randomId = Math.floor(Math.random() * 500000000);
       const response = await fetch(

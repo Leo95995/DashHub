@@ -1,7 +1,6 @@
 import { fetchRandomUser } from "../../../../../../../store/githubSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Ban, Infinity } from "lucide-react";
-import ReactLoader from "../../../../../../../components/loader";
 import LoaderWithMessage from "../../../../../../../components/loader/loaderAndText";
 import ErrorMessage from "../../../../../../../components/Error/error";
 const RandomUserWidget: React.FC = () => {

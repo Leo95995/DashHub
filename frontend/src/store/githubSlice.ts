@@ -71,7 +71,7 @@ export const fetchRandomUser = createAsyncThunk(
     try {
       const user = await get_random_user();
 
-      if (!user.random_user || user.error) {
+      if (!user || user.error) {
         return rejectWithValue("Errore nel recupero di un utente randomico");
       }
       const { random_user } = user;
