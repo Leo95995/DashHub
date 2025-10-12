@@ -11,7 +11,6 @@ interface IFilters {
   isMobile?: boolean;
 }
 
-// JUST FUCKING GRIND E SARA MERAVIGLIOSO
 const Filters: React.FC<IFilters> = ({ isMobile }) => {
   const sidebar = useSelector((state: any) => state.app.sideBar);
   const { expanded } = sidebar;
@@ -34,8 +33,8 @@ const Filters: React.FC<IFilters> = ({ isMobile }) => {
 
   return (
     <div
-      className={`h-full p-4 mb-12 transform transition-all duration-300 overflow-scroll ${
-        isMobile && "flex flex-col w-full  items-center"
+      className={` p-4 mb-12 transform transition-all duration-300 h-200 overflow-scroll ${
+        isMobile && "flex flex-col w-full h-150  items-center"
       }
         ${
           expanded || isMobile

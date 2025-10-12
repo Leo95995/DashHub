@@ -25,7 +25,7 @@ const GenericModal: React.FC<IGenericModal> = ({
       onClose={() => setOpen(false)}
     >
       <div
-        className={` bg-slate-100 border-gray-200 max-h-200 overflow-scroll dark:bg-slate-700 mt-10 text-black dark:text-white  transition-all ${
+        className={` bg-slate-100 border-gray-200 max-h-200  dark:bg-slate-700 mt-10 text-black dark:text-white  transition-all ${
           width ?? "w-96"
         }  rounded-lg shadow-lg`}
       >
