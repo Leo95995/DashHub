@@ -12,7 +12,7 @@ export interface IPieChart<T> {
 const PieChart: React.FC<IPieChart<number>> = ({ data }) => {
   const dataz = data.result;
 
-  return <Pie style={{ maxHeight: "400px" }} data={dataz} />;
+  return <Pie style={{ maxHeight: "250px", maxWidth: '300px' }} data={dataz} />;
 };
 
 export default PieChart;

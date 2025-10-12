@@ -1,15 +1,16 @@
+// Mappers
 import { githubReposMapper, userActivityMapper } from "../mappers/githubMapper";
 
+const backendUrl = `${import.meta.env.VITE_BACKEND_URI}/github`;
+
 const GithubService = () => {
-  // Trending repo
+
   const get_trending_repos = async () => {
-    const trendingurl = `https://api.github.com/search/repositories?q=stars:%3E1000&sort=stars&order=desc`;
+    const trendingurl = `${backendUrl}/trending_repos`;
     try {
       const res = await fetch(trendingurl, { method: "GET" });
       const data = await res.json();
       const status = res.status;
-
-      // map datas to
       const mappedRepos = await githubReposMapper(data.items);
       if (data && status === 200) {
         return { trendingRepos: mappedRepos, status: status, error: false };
@@ -24,16 +25,9 @@ const GithubService = () => {
   const get_repo_trend = async (repoName: string) => {
     const [owner, repo] = repoName.split("/");
 
-    const repo_detail_url = `https://api.github.com/repos/${encodeURIComponent(
-      owner
-    )}/${encodeURIComponent(repo)}/languages`;
+    const repo_detail_url = `${backendUrl}/repo_trend?owner=${owner}&repo=${repo}`;
     try {
-      const res = await fetch(repo_detail_url, {
-        method: "GET",
-        headers: {
-          Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
-        },
-      });
+      const res = await fetch(repo_detail_url, { method: "GET" });
       const data = await res.json();
       const status = res.status;
 
@@ -48,14 +42,9 @@ const GithubService = () => {
   };
 
   const get_user_activity = async (username: string) => {
-    const url = `https://api.github.com/users/${username}/events/public`;
+    const url = `${backendUrl}/user_activity?username=${username}`;
     try {
-      const res = await fetch(url, {
-        method: "GET",
-        headers: {
-          Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
-        },
-      });
+      const res = await fetch(url, { method: "GET" });
       const data = await res.json();
       const status = res.status;
       const user_activity = userActivityMapper(data);
@@ -72,23 +61,15 @@ const GithubService = () => {
 
   const get_random_user = async () => {
     try {
-      const randomId = Math.floor(Math.random() * 500000000);
-      const res = await fetch(
-        `https://api.github.com/users?since=${randomId}&per_page=1`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
-          },
-        }
-      );
+      const res = await fetch(`${backendUrl}/random-user`, { method: "GET" });
       const data = await res.json();
       const status = res.status;
+
       if (data && status === 200) {
-        if (!data.length) {
+        if (!data) {
           return { status: status, error: true };
         }
-        return { random_user: data[0], status: status, error: false };
+        return { random_user: data, status: status, error: false };
       } else {
         return { status: status, error: true };
       }

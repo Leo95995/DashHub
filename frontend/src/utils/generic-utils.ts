@@ -64,7 +64,7 @@ export  const createShortName = (username: string) => {
     let result  = "";
 
     for(const name of splittedName){
-      result += name[0];
+      result += name[0].toUpperCase();
     }
     return result
 

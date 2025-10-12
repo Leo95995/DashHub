@@ -27,13 +27,13 @@ const WidgetContainer: React.FC<IWidgetContainer> = ({
 
 
   // Render Logic 
-  const renderWidgetSelected = (chosen: NasaWidgets = "apod") => {
+  const renderWidgetSelected = (chosen: NasaWidgets = "Pic Of The Day") => {
     switch (chosen) {
-      case "apod":
+      case "Pic Of The Day":
         return renderApod();
-      case "neows":
+      case "Near Earth Object":
         return renderNeoWs();
-      case "rover":
+      case "Mars Rover":
         return renderMarsRover();
     }
   };

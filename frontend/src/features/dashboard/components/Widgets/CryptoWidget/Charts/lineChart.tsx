@@ -48,7 +48,7 @@ const LineChart: React.FC<ILineChartData> = ({ data }) => {
   };
 
   return (
-    <div className="w-full h-24 md:h-60">
+    <div className="w-full h-60 md:h-60">
       <Line options={defaultOptions} data={data} />
     </div>
   );

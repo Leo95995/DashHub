@@ -85,11 +85,11 @@ const CryptoTrendings: React.FC = () => {
     return (
       <div className="flex flex-wrap gap-2 justify-center  max-h-100 overflow-scroll h-full">
         <h2 className="text-xl font-medium pt-4">Crypto Trendings</h2>
-        <div className="flex justify-end pb-6 w-full relative h-28 px-12">
+        <div className={`flex justify-end pb-6 w-full relative h-28 ${isOpen && 'pr-5'}`}>
           {isOpen && (
             <button
               onClick={() => setIsOpen(false)}
-              className="absolute top-0 right-5 cursor-pointer z-20 text-red-600 rounded-sm hover:bg-red-600 hover:text-white transition-colors"
+              className="absolute top-0 right-0 cursor-pointer z-20 text-red-600 rounded-sm hover:bg-red-600 hover:text-white transition-colors"
               aria-label="Chiudi dropdown"
             >
               <Close />
@@ -140,7 +140,7 @@ const CryptoTrendings: React.FC = () => {
             ) : (
               <>
                 <span className="p-2" onClick={() => setIsOpen(true)}>
-                  Select Crypto
+                  Select crypto
                 </span>
               </>
             )}

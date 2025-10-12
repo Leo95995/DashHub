@@ -3,7 +3,7 @@ import { storage } from "./storage";
 const USER_KEY = "user";
 
 interface IUserPreferences {
-  userInfo: { username: string };
+  userInfo: { username: string; avart_color: string };
 }
 /**
  * User Storage details

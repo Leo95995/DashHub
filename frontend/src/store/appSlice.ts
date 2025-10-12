@@ -46,6 +46,12 @@ export const appSlice = createSlice({
       currentPref.username = action.payload;
       userInfo.setUserPreferences(currentPref);
     },
+     setUserAvatarColor: (state, action) => {
+      state.userData.userInfo.username = action.payload;
+      const currentPref = userInfo.getUserPreferences();
+      currentPref.avatar_color = action.payload;
+      userInfo.setUserPreferences(currentPref);
+    },
     setFirstVisit: (state, action) => {
       state.userData.firstVisit = action.payload;
       userInfo.setFirstVisit(action.payload);

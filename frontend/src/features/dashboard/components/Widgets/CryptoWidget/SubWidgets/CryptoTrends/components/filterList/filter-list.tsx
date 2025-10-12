@@ -8,12 +8,12 @@ interface IFilterList {
 
 const FilterList: React.FC<IFilterList> = ({ filters, onClick, applyFilters }) => {
   return (
-    <div className="absolute left-0 top-12 w-full flex flex-wrap gap-2 p-3 max-w-120  rounded-md">
-      <div className="flex overflow-x-scroll w-70 sm:w-80 md:w-100 py-2 flex-1">
+    <div className="absolute left-0 top-12 w-full flex flex-wrap gap-2 p-3 max-w-fit rounded-md">
+      <div className="flex overflow-x-scroll w-70 sm:w-80 md:w-100 py-2 gap-1 flex-1 max-w-fit">
       {filters?.map((id: string) => (
         <span
           key={id}
-          className="flex items-center gap-1 px-3 py-1 rounded-2xl border border-gray-700 bg-gray-800/80 hover:bg-gradient-to-r hover:from-gray-700 hover:to-gray-900 text-white text-sm shadow-sm transition-all duration-200"
+          className="flex items-center gap-1 text-xs px-3 py-1 rounded-2xl border text-nowrap border-gray-700 bg-gray-800/80 hover:bg-gradient-to-r hover:from-gray-700 hover:to-gray-900 text-white shadow-sm transition-all duration-200"
         >
           {id}
           <button

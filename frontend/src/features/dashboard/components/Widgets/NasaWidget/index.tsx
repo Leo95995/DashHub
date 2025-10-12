@@ -71,7 +71,8 @@ const NasaWidget: React.FC<IGenericWidget> = ({
               widgetList={nasa_widgets}
               widgetSelected={widgetSelected}
               changeSelectedWidget={changeSelectedWidget}
-              switcherButtonText="Change Nasa Widget"
+              switcherButtonText="Change Widget"
+              switcherTitle="Select the Nasa widget"
             />
             {isEditMode && <Tag text="Edit Mode" />}
           </div>

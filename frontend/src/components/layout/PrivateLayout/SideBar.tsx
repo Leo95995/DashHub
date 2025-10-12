@@ -33,7 +33,7 @@ const SideBar: React.FC<ISideBar> = ({ ...props }) => {
           }`}
           aria-label="expansion"
         >
-          <Tooltip title={expanded ? "Riduci" : "Espandi"} placement="right">
+          <Tooltip title={expanded ? "Reduce" : "Expand"} placement="right">
             <button
               onClick={handleSideExpansion}
               aria-label="expand button"
