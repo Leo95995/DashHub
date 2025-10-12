@@ -94,7 +94,7 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
       <div className="flex flex-col gap-4 w-60 p-4 my-2 bg-white dark:bg-gray-800 rounded-xl shadow-md">
         <div className="mb-2">
           <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-            Number Columns
+            Number Of Columns
           </p>
           <div className="flex flex-col gap-2 w-48 py-4">
             <label

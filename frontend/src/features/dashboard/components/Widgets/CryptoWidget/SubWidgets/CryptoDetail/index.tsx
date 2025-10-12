@@ -122,17 +122,7 @@ const CryptoDetail: React.FC = () => {
 
   return (
     <>
-      <div className="flex justify-start ">
-        <GenericSelect
-          itemList={filterCurrenciesList}
-          onSelection={(value) => handleSelection(value)}
-          defaultText={genericFilters?.currency}
-          selectedList={[genericFilters?.currency]}
-          placement="start"
-          minHeigth="min-h-8"
-        />
-      </div>
-      <div className="flex items-end py-2 justify-start gap-2">
+      <div className="flex items-end py-2 justify-start  flex-wrap gap-2">
         <div className="flex flex-col gap-2 w-24">
           <label htmlFor="timespan">Select days</label>
           <select
@@ -166,7 +156,7 @@ const CryptoDetail: React.FC = () => {
                 id: e.target.value,
               })
             }
-            className="px-3 py-2 w-50 rounded-lg border border-gray-300 bg-white text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-200"
+            className="px-3 py-2  w-40 sm:w-50 rounded-lg border border-gray-300 bg-white text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-200"
           >
             {currenciesList.map((option: string) => (
               <option key={option} value={option}>
@@ -178,7 +168,7 @@ const CryptoDetail: React.FC = () => {
         <div className="flex">
           <button
             onClick={handleFilterSet}
-            className="bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200  border border-gray-300 dark:border-gray-700 rounded-md px-3 py-1.5 cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700 transition-all duration-200"
+            className="ml-1 px-4 py-1 rounded-md cursor-pointer bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all duration-200"
           >
             Apply
           </button>

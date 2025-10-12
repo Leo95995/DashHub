@@ -8,8 +8,8 @@ interface IFilterList {
 
 const FilterList: React.FC<IFilterList> = ({ filters, onClick, applyFilters }) => {
   return (
-    <div className="absolute left-0 top-12 w-full flex flex-wrap gap-2 p-3 max-w-120  rounded-md">
-      <div className="flex overflow-x-scroll w-70 sm:w-80 md:w-100 py-2 gap-1 flex-1">
+    <div className="absolute left-0 top-12 w-full flex flex-wrap gap-2 p-3 max-w-fit rounded-md">
+      <div className="flex overflow-x-scroll w-70 sm:w-80 md:w-100 py-2 gap-1 flex-1 max-w-fit">
       {filters?.map((id: string) => (
         <span
           key={id}

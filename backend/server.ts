@@ -1,11 +1,16 @@
 import app from "./app";
 import mongoose from "mongoose";
-import dotenv from 'dotenv'
+import dotenv from "dotenv";
+import { CronJobs } from "./cronjobs/cron";
 
-dotenv.config()
+dotenv.config();
 
 const db = process.env.MONGO_URI || "";
 const options = {};
+// Crea il cronjob
+const cron = new CronJobs();
+// Avvio effettivamente la funzione
+cron.cron_currencies()
 const port = process.env.PORT || 3000;
 
 app.listen(port as any, "0.0.0.0", () => {
@@ -17,6 +22,3 @@ app.listen(port as any, "0.0.0.0", () => {
     })
     .catch((e) => console.log(`There is an error`, e.toString()));
 });
-
-
-
