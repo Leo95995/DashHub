@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useId } from "react";
 import DashBoardHeader from "./header/header";
 import CryptoWidget from "./Widgets/CryptoWidget";
 import GithubWidget from "./Widgets/GithubWidget";
@@ -10,7 +10,6 @@ import { useDispatch } from "react-redux";
 import { setLayoutMode } from "../../../store/filterSlice";
 import { setEditMode } from "../../../store/appSlice";
 import DashboardStorage from "../../../services/storage/dashboard";
-import { useId } from "react";
 
 const DashBoard: React.FC = () => {
   const filters = useSelector(
@@ -20,12 +19,12 @@ const DashBoard: React.FC = () => {
   const appData = useSelector((state: any) => state.app);
   const { isEditMode, userData } = appData;
 
-  const id = useId()
-
-  const storageWidgetOrder = DashboardStorage.widgets.getWidgetOrder()
+  const storageWidgetOrder = DashboardStorage.widgets.getWidgetOrder();
   const dispatch = useDispatch();
   // The original widget order.
-  const [widgetOrder, setWidgetOrder] = useState<number[]>(storageWidgetOrder ?? [3, 2, 1, 4]);
+  const [widgetOrder, setWidgetOrder] = useState<number[]>(
+    storageWidgetOrder ?? [3, 2, 1, 4]
+  );
   // If not dragged, the id should be simply null.
   const [draggedWidgetId, setDraggedWidgetId] = useState<number | null>(null);
 
@@ -79,9 +78,9 @@ const DashBoard: React.FC = () => {
 
   /**
    * Func used to track the dragging and the drop with the new order
-   * 
-   * @param widgetId 
-   * @returns 
+   *
+   * @param widgetId
+   * @returns
    */
   const handleDrop = (widgetId: number) => {
     if (draggedWidgetId === null) return;
@@ -100,7 +99,6 @@ const DashBoard: React.FC = () => {
 
     setWidgetOrder(newList);
     setDraggedWidgetId(null);
-
   };
 
   return (
@@ -112,14 +110,16 @@ const DashBoard: React.FC = () => {
           onClick={toggleEditMode}
           widgetOrder={widgetOrder}
         />
-        <section className={`grid gap-6 px-6 py-2 flex-wrap ${getLayoutByMode()}`}>
+        <section
+          className={`grid gap-6 px-6 pt-2 pb-6 flex-wrap h-195  overflow-y-scroll overflow-x-hidden ${getLayoutByMode()}`}
+        >
           <>
             {renderWidgetByOrder().map((widget: any) => {
+              const id = useId();
               return (
-                <>
+                <React.Fragment key={id}>
                   {widget.visibility && (
                     <widget.component
-                    key={id}
                       widgetId={widget.widgetId}
                       onHide={widget.onHide}
                       isEditMode={isEditMode}
@@ -127,7 +127,7 @@ const DashBoard: React.FC = () => {
                       setDraggedWidgetId={setDraggedWidgetId}
                     />
                   )}
-                </>
+                </React.Fragment>
               );
             })}
           </>

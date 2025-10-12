@@ -2,11 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 // Nasda service
 import NasaService from "../services/nasa-service";
-import type { RoverDetails } from "./interfaces/interfaces";
 import { initialState } from "./data/nasaData";
 import nasaKey from "../services/storage/nasa";
+import type { CMEData } from "./interfaces/interfaces";
 
-const { get_apod_data, get_mars_rover_data, get_neoWs_data } = NasaService();
+
+const { get_apod_data, get_cme_data, get_neoWs_data } = NasaService();
 
 export const fetch_apod_data = createAsyncThunk(
   "nasa/fetchApod",
@@ -24,16 +25,16 @@ export const fetch_apod_data = createAsyncThunk(
   }
 );
 
-export const fetch_mars_rover_data = createAsyncThunk(
-  "nasa/fetchRover",
+export const fetch_cme_data = createAsyncThunk(
+  "nasa/fetchCme",
   async (_, { rejectWithValue }) => {
     try {
-      const nasa_rover_data = await get_mars_rover_data();
-      if (!nasa_rover_data) {
+      const cme_data = await get_cme_data();
+      if (!cme_data) {
         return rejectWithValue("Error while fetching rover data");
       }
-      const { roverData } = nasa_rover_data;
-      return { roverData };
+      const { data } = cme_data
+      return data;
     } catch (err) {
       return rejectWithValue("Error while fetching rover data");
     }
@@ -99,19 +100,19 @@ export const nasaSlice = createSlice({
         state.neoWsStatus.loading = false;
         state.neoWsStatus.error = action.payload as string;
       })
-      // Nasa Mars Rover data Thunk
-      .addCase(fetch_mars_rover_data.pending, (state) => {
-        state.roverStatus.loading = true;
-        state.neoWsStatus.error = null;
+      // CMe data thunk
+      .addCase(fetch_cme_data.pending, (state) => {
+        state.cmeStatus.loading = true;
+        state.cmeStatus.error = null;
       })
-      .addCase(fetch_mars_rover_data.fulfilled, (state, action) => {
-        state.roverStatus.data = action.payload.roverData as RoverDetails[];
-        state.roverStatus.loading = false;
-        state.roverStatus.error = null;
+      .addCase(fetch_cme_data.fulfilled, (state, action) => {
+        state.cmeStatus.data = action.payload as CMEData[];
+        state.cmeStatus.loading = false;
+        state.cmeStatus.error = null;
       })
-      .addCase(fetch_mars_rover_data.rejected, (state, action) => {
-        state.roverStatus.loading = false;
-        state.roverStatus.error = action.payload as string;
+      .addCase(fetch_cme_data.rejected, (state, action) => {
+        state.cmeStatus.loading = false;
+        state.cmeStatus.error = action.payload as string;
       });
   },
 });

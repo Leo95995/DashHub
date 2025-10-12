@@ -51,45 +51,33 @@ export interface INeoWsData {
   close_approach_date: string;
 }
 
-// --------------3- NASA ROVER WIDGET -------------------
+// --------------3- CME WIDGET-------------------
 
-export interface RoverDetails {
-  id: number
-  camera: RoverCamera
-  img_src: string
-  earth_date: string
-  rover: Rover
+export interface CMEImpact {
+  earth: boolean;               // Colpirà la Terra
+  eta: string | null;           // Ora stimata di arrivo (ISO string)
+  kpIndex: number | null;       // Kp index stimato
 }
 
-export interface RoverCamera {
-  id: number
-  name: string
-  rover_id: number
-  full_name: string
+export interface CMEData {
+  id: string;                   // activityID dell’evento
+  startTime: string;            // Data/ora inizio CME
+  speed: number | null;         // Velocità in km/s
+  type: string | null;          // Tipo di CME (S, C, ecc.)
+  sourceLocation: string;       // Posizione sulla superficie solare
+  note: string;                 // Descrizione breve
+  link: string;                 // Link al dettaglio NASA
+  impact: CMEImpact;            // Dati impatto sulla Terra
 }
-
-export interface Rover {
-  id: number
-  name: string
-  landing_date: string
-  launch_date: string
-  status: string
-}
-//  PARTIALS  NASA
+//  PARTIALS  NASA CME DATAS
 
 export type PartialApod = Partial<INasaApodData>;
 export type PartialNeoWs = Partial<INeoWsData[]>;
-export type PartialRover = Partial<RoverDetails[]>
-// END NASA 
+export type PartialCME = Partial<CMEData[]>
 
+// END NASA PARTIALS CME DATAS
 
-
-
-/**
- * ----------------- GITHUB INTERFACES -------------------
- */
-
-
+// GITHUB WIDGET INTERFACES
 export interface GithubContainer {
   widget: GithubWidgets;
 }

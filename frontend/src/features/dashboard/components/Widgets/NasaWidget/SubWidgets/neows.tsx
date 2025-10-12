@@ -27,7 +27,7 @@ const NeoWsWidget: React.FC<ItemStatus<INeoWsData[]>> = ({
   }, [data]);
 
   if (loading) {
-    return <LoaderWithMessage text="Loading Neows Data"/>
+    return <LoaderWithMessage text="Loading Neows Data" />;
   }
   if (error) {
     return <>{error}</>;
@@ -107,7 +107,9 @@ const NeoWsWidget: React.FC<ItemStatus<INeoWsData[]>> = ({
 
         <div className="flex justify-center gap-4 mt-4">
           <button
-            onClick={() =>  changeWidget((selectedWidget?.info?.key as number) + 1, "prev")}
+            onClick={() =>
+              changeWidget((selectedWidget?.info?.key as number) + 1, "prev")
+            }
             className="px-4 py-2 rounded-lg cursor-pointer bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium shadow-md hover:from-blue-600 hover:to-indigo-700 active:scale-95 transition"
           >
             Precedente

@@ -1,18 +1,17 @@
 import type {
   ItemStatus,
-  RoverDetails,
 } from "../../../../../../../store/interfaces/interfaces";
 import RoverElement from "./mars-rover-element";
 import { Infinity } from "lucide-react";
 import useRoverNavigation from "./hook/useRoverNavigation";
 import LoaderWithMessage from "../../../../../../../components/loader/loaderAndText";
-const MarsRoverWidget: React.FC<ItemStatus<RoverDetails[]>> = ({
+const MarsRoverWidget: React.FC<ItemStatus<any>> = ({
   data,
   loading,
   error,
 }) => {
   const { selectedChunk, selectedRover, getRandomRover, changeRover } =
-    useRoverNavigation(data as RoverDetails[]);
+    useRoverNavigation(data);
 
   if (!selectedRover) {
     return;

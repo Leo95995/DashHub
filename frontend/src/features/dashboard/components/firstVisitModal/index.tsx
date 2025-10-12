@@ -22,7 +22,7 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({
   const [userInfo, setUser] = useState({ username: "", avatar_color: "" });
 
   const handleGuestVisit = () => {
-    dispatch(setUserInfo({ username: "Guest", avatar_color: "" }));
+    dispatch(setUserInfo({ username: "Guest", avatar_color: "red" }));
     dispatch(setFirstVisit(true) as any);
   };
 

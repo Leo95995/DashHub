@@ -1,6 +1,6 @@
 import type { CryptoWidgets, GithubWidgets, NasaWidgets } from "./types";
 
-export const nasa_widgets: NasaWidgets[] = ["Pic Of The Day", "Near Earth Object", "Mars Rover"];
+export const nasa_widgets: NasaWidgets[] = ["Pic Of The Day", "Near Earth Object", "CME"];
 
 export const github_widgets: GithubWidgets[] = ["Trending Repositories" , "User Activity" ,'Random User'];
 

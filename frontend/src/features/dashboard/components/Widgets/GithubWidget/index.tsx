@@ -1,5 +1,5 @@
 import type React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GithubWidgetContainer from "./SubWidgets/github-widgets-container";
 // import Switcher from "../NasaWidget/WidgetSwitcher/switcher";
 import type { GithubWidgets } from "../../widgetSwitcher/types";
@@ -17,9 +17,10 @@ const GithubWidget: React.FC<IGenericWidget> = ({
   setDraggedWidgetId,
 }) => {
   // const [githubWidget, setGithubWidget] = useState<GithubWidgets>("repos");
-  const githubWidget = useSelector((state: any)=> state.github.selectedWidget )
+  const githubWidget = useSelector((state: any) => state.github.selectedWidget);
   const [dragging, setDragging] = useState<boolean>(false);
   const dispatch = useDispatch();
+  
 
   return (
     <>
@@ -48,10 +49,12 @@ const GithubWidget: React.FC<IGenericWidget> = ({
             widgetSelected={githubWidget}
             switcherTitle="Select the Github widget"
             switcherButtonText="Change Widget"
-            changeSelectedWidget={(e) => dispatch(setSelectedGithubWidget(e as GithubWidgets))}
+            changeSelectedWidget={(e) =>
+              dispatch(setSelectedGithubWidget(e as GithubWidgets))
+            }
             widgetList={github_widgets}
           />
-          {isEditMode &&   <Tag text="Edit Mode"></Tag> }
+          {isEditMode && <Tag text="Edit Mode"></Tag>}
         </div>
         <GithubWidgetContainer widget={githubWidget} />
       </div>
