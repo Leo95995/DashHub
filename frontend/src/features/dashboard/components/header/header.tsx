@@ -38,7 +38,7 @@ const DashBoardHeader: React.FC<IDashBoardHeader> = ({
   ${
     isEditMode
       ? "bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white shadow-lg"
-      : "bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-md"
+      : "animate-pulse bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-md"
   }
 `}
           >

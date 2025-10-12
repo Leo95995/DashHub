@@ -15,9 +15,9 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded }) => {
   const dispatch = useDispatch();
   const userdata = useSelector((state: any) => state.app.userData);
 
-  const { username , avatar_color} = userdata.userInfo
+  const { username, avatar_color } = userdata.userInfo;
   const [newUsername, setNewUsername] = useState<string>(username ?? "");
-  console.log(avatar_color);
+
   return (
     <>
       <div
@@ -26,10 +26,10 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded }) => {
         }`}
       >
         <div>
-          <span 
-          style={{background: avatar_color ?? "#e5a50a"}}
-          
-          className="rounded-full h-11 w-11 overflow-ellipsis p-1 justify-center flex items-center hover:scale-105 transition-all ">
+          <span
+            style={{ background: avatar_color ?? "#e5a50a" }}
+            className="rounded-full h-11 w-11 overflow-ellipsis p-1 justify-center flex items-center hover:scale-105 transition-all "
+          >
             {createShortName(username)}
           </span>
         </div>
@@ -59,13 +59,18 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded }) => {
                   <Save
                     className="rounded-md"
                     onClick={() => {
-                      dispatch(setUserName(newUsername));
-                      setEditMode(!editMode);
+                      if (newUsername.length > 4) {
+                        console.log('passa');
+                        dispatch(setUserName(newUsername));
+                        setEditMode(!editMode);
+                      }else { 
+                        alert('The minimum username length is of 5 characters')
+                      }
                     }}
                     style={{ height: "20px" }}
                   />
                 </button>
-                <button  className="cursor-pointer border-1 rounded-md border-transparent hover:border-blue-400 active:scale-95" >
+                <button className="cursor-pointer border-1 rounded-md border-transparent hover:border-blue-400 active:scale-95">
                   <Cancel
                     className="rounded-md"
                     onClick={() => setEditMode(!editMode)}
