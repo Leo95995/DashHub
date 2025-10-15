@@ -12,6 +12,7 @@ const apodStatus: ItemStatus<PartialApod> = {
   data: nasa_apod_data,
   loading: false,
   error: null,
+  fullScreenImage: { url: null, isFullScreen: false } as {url: null| string , isFullScreen: boolean},
 };
 
 const neows_data: PartialNeoWs = [];

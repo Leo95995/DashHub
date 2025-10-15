@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { setLayoutMode } from "../../../store/filterSlice";
 import { setEditMode } from "../../../store/appSlice";
 import DashboardStorage from "../../../services/storage/dashboard";
+import { setFullScreenImage } from "../../../store/nasaSlice";
 
 const DashBoard: React.FC = () => {
   const filters = useSelector(
@@ -18,6 +19,11 @@ const DashBoard: React.FC = () => {
   const layout = useSelector((state: any) => state.filters.widgetLayout);
   const appData = useSelector((state: any) => state.app);
   const { isEditMode, userData } = appData;
+
+  const { url, isFullScreen } = useSelector(
+    (state: any) => state.nasa.apodStatus.fullScreenImage
+  );
+  // Apod
 
   const storageWidgetOrder = DashboardStorage.widgets.getWidgetOrder();
   const dispatch = useDispatch();
@@ -101,8 +107,26 @@ const DashBoard: React.FC = () => {
     setDraggedWidgetId(null);
   };
 
+  console.log(isFullScreen, "FULLSCREEN");
+  console.log(url, "URL");
+
   return (
     <>
+      {isFullScreen && url !== null && (
+        <div
+          onClick={() =>
+            dispatch(setFullScreenImage({ isFullScreen: false, url: null }))
+          }
+          className="fixed inset-0 z-[999999] bg-black/90 py-10 rounded-xs flex items-center  justify-center cursor-zoom-out"
+        >
+          <img
+            src={url}
+            alt="Fullscreen"
+            className="max-w-full max-h-full object-contain rounded-xl border border-transparent hover:border-white/30 transition-all duration-400"
+          />
+           <div className="absolute -inset-2 rounded-xl pointer-events-none border border-white/20 shadow-[0_0_40px_10px_rgba(255,255,255,0.1)]"></div>
+        </div>
+      )}
       <div className="w-full flex flex-col gap-5 ">
         <DashBoardHeader
           userData={userData}
@@ -111,7 +135,7 @@ const DashBoard: React.FC = () => {
           widgetOrder={widgetOrder}
         />
         <section
-          className={`grid gap-6 px-6 pt-2 pb-6 flex-wrap h-195  overflow-y-scroll overflow-x-hidden ${getLayoutByMode()}`}
+          className={`grid gap-6 px-8 py-8 flex-wrap h-195  border overflow-y-scroll overflow-x-hidden ${getLayoutByMode()}`}
         >
           <>
             {renderWidgetByOrder().map((widget: any) => {

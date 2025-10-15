@@ -1,7 +1,7 @@
+// Interfaces
 import type {
   INeoWsData,
-  ItemStatus,
-
+  ItemStatus
 } from "../../../../../../store/interfaces/interfaces";
 import type { IApodWidget } from "./nasa_apod";
 

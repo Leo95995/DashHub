@@ -2,10 +2,11 @@ import type { GithubWidgets } from "../../features/dashboard/components/widgetSw
 
 // Flexible so that can be used everywhere
 
-export interface ItemStatus<T>{
-  data: T | T [] 
-  loading: boolean
-  error: string | null
+export interface ItemStatus<T> {
+  data: T | T[];
+  loading: boolean;
+  error: string | null;
+  [key: string]: any;
 }
 
 export type IGlobalAlertStatus = "error" | "success" | "warn" | "";
@@ -30,13 +31,11 @@ export interface IFilters {
 // ---------------1- NASA APOD WIDGET ---------------------
 
 export interface INasaApodData {
-  date: Date;
-  explanation: string;
-  hdurl: string;
-  media_type: string;
-  service_version: string;
+  _id: string;
+  date: string;
+  img: string;
   title: string;
-  url: string;
+  description: string;
 }
 
 // --------------2- NASA NEOWS WIDGET -------------------
@@ -54,26 +53,26 @@ export interface INeoWsData {
 // --------------3- CME WIDGET-------------------
 
 export interface CMEImpact {
-  earth: boolean;               // Colpirà la Terra
-  eta: string | null;           // Ora stimata di arrivo (ISO string)
-  kpIndex: number | null;       // Kp index stimato
+  earth: boolean; // Colpirà la Terra
+  eta: string | null; // Ora stimata di arrivo (ISO string)
+  kpIndex: number | null; // Kp index stimato
 }
 
 export interface CMEData {
-  id: string;                   // activityID dell’evento
-  startTime: string;            // Data/ora inizio CME
-  speed: number | null;         // Velocità in km/s
-  type: string | null;          // Tipo di CME (S, C, ecc.)
-  sourceLocation: string;       // Posizione sulla superficie solare
-  note: string;                 // Descrizione breve
-  link: string;                 // Link al dettaglio NASA
-  impact: CMEImpact;            // Dati impatto sulla Terra
+  id: string; // activityID dell’evento
+  startTime: string; // Data/ora inizio CME
+  speed: number | null; // Velocità in km/s
+  type: string | null; // Tipo di CME (S, C, ecc.)
+  sourceLocation: string; // Posizione sulla superficie solare
+  note: string; // Descrizione breve
+  link: string; // Link al dettaglio NASA
+  impact: CMEImpact; // Dati impatto sulla Terra
 }
 //  PARTIALS  NASA CME DATAS
 
 export type PartialApod = Partial<INasaApodData>;
 export type PartialNeoWs = Partial<INeoWsData[]>;
-export type PartialCME = Partial<CMEData[]>
+export type PartialCME = Partial<CMEData[]>;
 
 // END NASA PARTIALS CME DATAS
 

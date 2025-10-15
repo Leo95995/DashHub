@@ -6,7 +6,6 @@ import { initialState } from "./data/nasaData";
 import nasaKey from "../services/storage/nasa";
 import type { CMEData } from "./interfaces/interfaces";
 
-
 const { get_apod_data, get_cme_data, get_neoWs_data } = NasaService();
 
 export const fetch_apod_data = createAsyncThunk(
@@ -33,7 +32,7 @@ export const fetch_cme_data = createAsyncThunk(
       if (!cme_data) {
         return rejectWithValue("Error while fetching rover data");
       }
-      const { data } = cme_data
+      const { data } = cme_data;
       return data;
     } catch (err) {
       return rejectWithValue("Error while fetching rover data");
@@ -67,7 +66,10 @@ export const nasaSlice = createSlice({
   reducers: {
     setSelectedWidget(state, action) {
       state.widgetSelected = action.payload;
-      nasaKey.setSelectedWidget(action.payload)
+      nasaKey.setSelectedWidget(action.payload);
+    },
+    setFullScreenImage(state, action) {
+      state.apodStatus.fullScreenImage = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -117,4 +119,4 @@ export const nasaSlice = createSlice({
   },
 });
 
-export const { setSelectedWidget } = nasaSlice.actions;
+export const { setSelectedWidget, setFullScreenImage } = nasaSlice.actions;
