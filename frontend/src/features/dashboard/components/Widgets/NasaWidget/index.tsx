@@ -1,18 +1,22 @@
 import type React from "react";
+// REACT
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import {
   fetch_apod_data,
-  fetch_mars_rover_data,
   fetch_neows_data,
+  fetch_cme_data,
   setSelectedWidget,
 } from "../../../../../store/nasaSlice";
-import type { WidgetTypes } from "../../widgetSwitcher/types";
-import { useEffect, useState } from "react";
-
+// Components
 import WidgetContainer from "./SubWidgets/widgets_container";
 import Switcher from "../../widgetSwitcher/switcher";
+// Nasa widget datas
 import { nasa_widgets } from "../../widgetSwitcher/datas";
+// Interfaces
+import type { WidgetTypes } from "../../widgetSwitcher/types";
 import type { IGenericWidget } from "../../../interfaces";
+// Tag components
 import Tag from "../../../../../components/Tag";
 
 const NasaWidget: React.FC<IGenericWidget> = ({
@@ -23,7 +27,7 @@ const NasaWidget: React.FC<IGenericWidget> = ({
 }) => {
   const nasa_info = useSelector((state: any) => state.nasa);
   // Apod
-  const { apodStatus, neoWsStatus, widgetSelected, roverStatus } = nasa_info;
+  const { apodStatus, neoWsStatus, widgetSelected, cmeStatus } = nasa_info;
   const [dragging, setDragging] = useState<boolean>(false);
   // Neows
 
@@ -33,7 +37,7 @@ const NasaWidget: React.FC<IGenericWidget> = ({
   useEffect(() => {
     dispatch(fetch_apod_data() as any);
     dispatch(fetch_neows_data() as any);
-    dispatch(fetch_mars_rover_data() as any);
+    dispatch(fetch_cme_data() as any)
   }, []);
 
   // Function that trigger and change the current used widget.
@@ -55,7 +59,7 @@ const NasaWidget: React.FC<IGenericWidget> = ({
         }}
         onDragOver={(e) => e.preventDefault()}
         onDrop={() => handleDrop(widgetId)}
-        className={`relative min-w-64 min-h-110 col-span-1 rounded-2xl bg-gradient-to-br from-gray-200 via-gray-100 to-blue-50
+        className={`relative min-w-64 h-120 col-span-1 rounded-2xl bg-gradient-to-br from-gray-200 via-gray-100 to-blue-50
        dark:from-gray-800 dark:via-gray-700 dark:to-gray-900 p-6 shadow-2xl border border-gray-300 hover:scale-105 transform 
        ${isEditMode && "ring-2 ring-blue-400 hover:scale-105 cursor-grab"}
        ${
@@ -79,7 +83,7 @@ const NasaWidget: React.FC<IGenericWidget> = ({
           <WidgetContainer
             apodStatus={apodStatus}
             neoWStatus={neoWsStatus}
-            roverStatus={roverStatus}
+            cmeStatus={cmeStatus}
             widgetSelected={widgetSelected}
           />
         </div>

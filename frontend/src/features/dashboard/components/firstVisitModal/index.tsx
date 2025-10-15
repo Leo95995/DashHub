@@ -3,7 +3,7 @@ import { useState } from "react";
 import InputSearch from "../../../../components/input/input";
 import GenericModal from "../../../../components/modal/modal";
 import ModeToggler from "../../../../components/toggler";
-// Redux 
+// Redux
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "../../../../store/appSlice";
 
@@ -22,7 +22,7 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({
   const [userInfo, setUser] = useState({ username: "", avatar_color: "" });
 
   const handleGuestVisit = () => {
-    dispatch(setUserInfo({ username: "Guest", avatar_color: "" }));
+    dispatch(setUserInfo({ username: "Guest", avatar_color: "red" }));
     dispatch(setFirstVisit(true) as any);
   };
 
@@ -44,7 +44,7 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({
       closable={false}
       width="600px"
     >
-      <div className="rounded-lg p-6 w-full max-w-md mx-auto  flex flex-col gap-4">
+      <div className="rounded-lg py-6 w-full max-w-md  flex flex-col gap-4">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
           Hi!
         </h2>
@@ -77,11 +77,13 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({
           <input
             type="color"
             defaultValue={"#e5a50a"}
-            onChange={(e) =>   setUser({ ...userInfo, avatar_color: e.currentTarget.value })}
+            onChange={(e) =>
+              setUser({ ...userInfo, avatar_color: e.currentTarget.value })
+            }
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label> Seleziona la modalità</label>
+          <label> Select mode</label>
           <div className="w-fit rounded-md border">
             <ModeToggler />
           </div>
@@ -89,12 +91,14 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({
 
         <div className="flex justify-end gap-3 mt-4">
           <button
+            disabled={isWriting}
             onClick={handleGuestVisit}
             className="px-4 py-2 rounded-lg cursor-pointer text-gray-700 dark:text-gray-200 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition"
           >
             Continue as Guest
           </button>
           <button
+            disabled={isWriting}
             onClick={() => {
               savePreferences();
             }}

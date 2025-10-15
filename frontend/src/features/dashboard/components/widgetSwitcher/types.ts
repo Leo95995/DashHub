@@ -7,7 +7,7 @@ export interface WidgetSwitcher {
 
 }
 
-export type NasaWidgets  =  "Pic Of The Day" | "Mars Rover"| "Near Earth Object"
+export type NasaWidgets  =  "Pic Of The Day" | "CME"| "Near Earth Object"
 
 export type GithubWidgets = 'Trending Repositories' | 'User Activity'| 'Random User'
  

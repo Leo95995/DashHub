@@ -32,36 +32,50 @@ const get_neo_data = async (
   const { start_date, end_date } = query;
   if (!start_date || !end_date) {
     res.status(400).json("Missing an important field");
-    return
+    return;
   }
-  const neo_url = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${start_date}&end_date=${end_date}&api_key=${NASA_API}`;
+  const neo_url = `${nasa_baseurl}/neo/rest/v1/feed?start_date=${start_date}&end_date=${end_date}&api_key=${NASA_API}`;
   try {
     const neo_data = await fetch(neo_url, { method: "GET" });
-    const result =await neo_data.json();
+    const result = await neo_data.json();
     const status = neo_data.status;
     if (status === 200) {
       res.status(200).json(result);
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json("Error while fetching neo data" + error as string);
+    res.status(500).json(("Error while fetching neo data" + error) as string);
   }
 };
 
-const get_mars_rover_data = async (
+const get_cme_data = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const rover_url = fetch(
-    `https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos?sol=1000&api_key=${NASA_API}`
-  );
+  const query = req.query;
+  if (!query || !query.start_date || !query.end_date) {
+    res.status(400).json(`Missing query params.BAD REQUEST!`);
+    return;
+  }
+  try {
+    const cme_url = `${nasa_baseurl}/DONKI/CME?startDate=${query.start_date}&endDate=${query.end_date}&api_key=${NASA_API}`;
 
-  res.status(200).json("OK ROVER");
+    const cme_res = await fetch(cme_url, { method: "GET" });
+    const cme_data = await cme_res.json();
+    const cme_status = await cme_res.status;
+    if (cme_status === 200) {
+      res.status(200).json(cme_data);
+    } else {
+      res.status(500).json(`Error`);
+    }
+  } catch (error) {
+    res.status(500).json("Server error while fetching cme data");
+  }
 };
 
 export const NasaController = {
   get_apod,
-  get_mars_rover_data,
+  get_cme_data,
   get_neo_data,
 };

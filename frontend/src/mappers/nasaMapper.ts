@@ -2,7 +2,7 @@
  * Neows data mapper
  */
 
-import type { INeoWsData, RoverDetails } from "../store/interfaces/interfaces";
+import type { CMEData, INeoWsData } from "../store/interfaces/interfaces";
 
 export interface NeoWsResponse {
   near_earth_objects: INearObject;
@@ -15,9 +15,7 @@ export interface INearObject {
 
 type INear = keyof INearObject;
 
-export interface MarsRoverResponse {
-  photos: RoverDetails[]
-}
+export type CmeResponse = any[];
 
 const neowsMapper = (neowsResponse: NeoWsResponse) => {
   const arr: Array<INeoWsData> = [];
@@ -48,37 +46,38 @@ const neowsMapper = (neowsResponse: NeoWsResponse) => {
 /**
  * Rover data mapper
  */
-const roverMapper = (data: MarsRoverResponse) : RoverDetails[]=> {
-  const { photos } = data
-  const toRet = []
-  for(const photo of photos){
 
-    let object: RoverDetails = {
-      id: photo.id,
-      camera: {
-        id: photo.camera.id,
-        name: photo.camera.name,
-        rover_id: photo.camera.rover_id,
-        full_name: photo.camera.full_name
+const CmeMapper = (data: CmeResponse): CMEData[] => {
+  const cme_result: CMEData[] = [];
+
+  for (const element of data) {
+    const analyses = element.cmeAnalyses.find(
+      (e: any) => e.isMostAccurate || {}
+    );
+    const enlil = analyses.enlilList?.[0] || {};
+
+    const mappedCme: CMEData = {
+      id: element.activityID,
+      startTime: element.startTime ?? "",
+      speed: analyses.speed || null,
+      type: analyses.type ?? null,
+      sourceLocation: element.sourceLocation ?? "",
+      note: element.note ?? "",
+      link: element.link,
+      impact: {
+        earth: enlil.isEarthGb || false,
+        eta: enlil.estimatedShockArrivalTime || null,
+        kpIndex: enlil.kp_90 || null,
       },
-      img_src: photo.img_src,
-      earth_date: photo.earth_date,
-      rover: {
-        id: photo.rover.id ?? null,
-        name: photo.rover.name ?? '',
-        landing_date: photo.rover.landing_date ?? '',
-        launch_date: photo.rover.launch_date ?? '',
-        status: photo.rover.status ?? ''
-      }
-    }
+    };
 
-    toRet.push(object);
+    cme_result.push(mappedCme);
   }
 
-  return toRet;
+  return cme_result as CMEData[];
 };
 
 export const NasaMappers = {
   neowsMapper,
-  roverMapper,
+  CmeMapper,
 };

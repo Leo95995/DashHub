@@ -1,27 +1,27 @@
 import type {
   INeoWsData,
   ItemStatus,
-  RoverDetails,
 
 } from "../../../../../../store/interfaces/interfaces";
 import type { IApodWidget } from "./nasa_apod";
 
 import ApodWidget from "./nasa_apod";
 import NeoWsWidget from "./neows";
-import MarsRoverWidget from "./mars-rover.tsx/mars_rover";
 import type { NasaWidgets } from "../../../widgetSwitcher/types";
+import type { CMEData } from "../../../../../../store/interfaces/interfaces";
+import Cme_Widget from "./nasa_cme";
 
 interface IWidgetContainer {
   apodStatus: IApodWidget;
   neoWStatus: ItemStatus<INeoWsData[]>;
-  roverStatus: ItemStatus<RoverDetails[]>
+  cmeStatus: ItemStatus<CMEData>
   widgetSelected: NasaWidgets;
 }
 
 const WidgetContainer: React.FC<IWidgetContainer> = ({
   apodStatus,
   neoWStatus,
-  roverStatus,
+  cmeStatus,
   widgetSelected,
 }) => {
 
@@ -33,8 +33,8 @@ const WidgetContainer: React.FC<IWidgetContainer> = ({
         return renderApod();
       case "Near Earth Object":
         return renderNeoWs();
-      case "Mars Rover":
-        return renderMarsRover();
+      case "CME":
+        return renderCmeWidget();
     }
   };
 
@@ -58,8 +58,11 @@ const WidgetContainer: React.FC<IWidgetContainer> = ({
     );
   };
 
-  const renderMarsRover = () => {
-    return <MarsRoverWidget data={roverStatus.data} loading={roverStatus.loading} error={roverStatus.error} />;
+
+  const renderCmeWidget = () => {
+
+
+    return <Cme_Widget cme_data={cmeStatus?.data as CMEData[]} loading={cmeStatus.loading} error={cmeStatus.error}/> ;
   };
 
   return <>{renderWidgetSelected(widgetSelected)}</>;

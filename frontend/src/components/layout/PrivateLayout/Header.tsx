@@ -1,4 +1,5 @@
 import dashHub from "../../../assets/icons/dashhub.png";
+import ProfileBar from "../../profileBar";
 import ModeToggler from "../../toggler";
 import MobileFilters from "./MobileFilters";
 
@@ -19,7 +20,9 @@ const Header: React.FC = () => {
         <p>DashHub</p>
         <ModeToggler/>
       <MobileFilters/>
-
+      <div className="flex flex-1 justify-end xl:hidden ">
+      <ProfileBar expanded={true}/>
+      </div>
       </header>
     </>
   );

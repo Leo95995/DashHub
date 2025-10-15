@@ -2,7 +2,7 @@ import type {
   PartialApod,
   ItemStatus,
   PartialNeoWs,
-  PartialRover,
+  CMEData,
 } from "../interfaces/interfaces";
 import type { NasaWidgets } from "../../features/dashboard/components/widgetSwitcher/types";
 import nasaKey from "../../services/storage/nasa";
@@ -21,19 +21,21 @@ const neoWsStatus: ItemStatus<PartialNeoWs> = {
   error: null,
 };
 
-const roverData: PartialRover = [];
-const roverStatus: ItemStatus<PartialRover> = {
-  data: roverData,
+const cmeData: CMEData[] = [];
+
+// Cme status
+const cmeStatus: ItemStatus<CMEData[]> = {
+  data: cmeData,
   loading: false,
   error: null,
 };
 
-
-const widgetSelected: NasaWidgets =  nasaKey.getSelectedWidget() ?? "Mars Rover";
+const widgetSelected: NasaWidgets =
+  nasaKey.getSelectedWidget() ?? "Near Earth Object";
 
 export const initialState = {
   apodStatus,
   neoWsStatus,
   widgetSelected,
-  roverStatus,
+  cmeStatus,
 };
