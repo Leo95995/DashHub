@@ -14,6 +14,8 @@ import { setWidgetLayout } from "../../store/filterSlice";
 import type { ScreenMode } from "../../interfaces/common/interfaces";
 import { CircleCheck } from "lucide-react";
 import FilterSection from "./filters-section";
+import { setGlobalAlert } from "../../store/appSlice";
+import { IGlobalAlertStatus } from "../alert/alert";
 
 interface IWidgetFilters {
   expanded: boolean;
@@ -33,9 +35,18 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
     widget: keyof IFilters["widgetVisibility"],
     visibility: boolean
   ) => {
+
+
     dispatch(
       changeWidgetVisibility({ widget: widget, visibility: visibility })
     );
+     dispatch(
+      setGlobalAlert({
+        status: IGlobalAlertStatus.SUCCESS,
+        message: "Success",
+        description:<p>The <b>{widget}</b> widget is now <b>{visibility ? 'visible' : 'hidden'}</b>.</p>,
+      }))
+
   };
   // Handle change functionality
 
@@ -44,6 +55,13 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
       setWidgetLayout({
         type: e.currentTarget.name as VisualMode,
         value: Number(e.currentTarget.value),
+      })
+    );
+    dispatch(
+      setGlobalAlert({
+        status: IGlobalAlertStatus.SUCCESS,
+        message: "Success",
+        description: `Layout widget modified with success`,
       })
     );
   };

@@ -34,7 +34,7 @@ const Filters: React.FC<IFilters> = ({ isMobile }) => {
 
   return (
     <div
-      className={`${isMobile ?   "flex flex-col h-150 overflow-scroll items-center":  "px-4 transform transition-all duration-300 h-200 overflow-scroll"}
+      className={`${isMobile ?   "flex flex-col h-150 overflow-y-scroll items-center":  "px-4 transform transition-all duration-300 h-200 overflow-y-scroll overflow-x-hidden"}
        
       }
         ${

@@ -1,4 +1,5 @@
-import type { IGlobalAlert, IGlobalAlertStatus } from "./interfaces/interfaces";
+import type { IGlobalAlert } from "./interfaces/interfaces";
+import { IGlobalAlertStatus } from "../components/alert/alert";
 import { createSlice } from "@reduxjs/toolkit";
 import userInfo from "../services/storage/user";
 
@@ -56,7 +57,6 @@ export const appSlice = createSlice({
       state.userData.firstVisit = action.payload;
       userInfo.setFirstVisit(action.payload);
     },
-    // This should be implemented for the notification system.
     setGlobalAlert: (state, action) => {
       const { payload } = action;
       const { status, message, description } = payload;

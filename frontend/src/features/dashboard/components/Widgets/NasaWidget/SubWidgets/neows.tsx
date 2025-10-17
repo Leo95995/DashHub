@@ -111,7 +111,7 @@ const NeoWsWidget: React.FC<ItemStatus<INeoWsData[]>> = ({
             }
             className="px-4 py-2 rounded-lg cursor-pointer bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium shadow-md hover:from-blue-600 hover:to-indigo-700 active:scale-95 transition"
           >
-            Precedente
+           Back
           </button>
           <button
             onClick={() =>
@@ -119,7 +119,7 @@ const NeoWsWidget: React.FC<ItemStatus<INeoWsData[]>> = ({
             }
             className="px-4 py-2 cursor-pointer rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium shadow-md hover:from-purple-600 hover:to-pink-600 active:scale-95 transition"
           >
-            Successivo
+            Next
           </button>
         </div>
       </div>

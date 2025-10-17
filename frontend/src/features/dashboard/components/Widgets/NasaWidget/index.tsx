@@ -18,6 +18,8 @@ import type { WidgetTypes } from "../../widgetSwitcher/types";
 import type { IGenericWidget } from "../../../interfaces";
 // Tag components
 import Tag from "../../../../../components/Tag";
+import { IGlobalAlertStatus } from "../../../../../components/alert/alert";
+import { setGlobalAlert } from "../../../../../store/appSlice";
 
 const NasaWidget: React.FC<IGenericWidget> = ({
   isEditMode,
@@ -37,12 +39,19 @@ const NasaWidget: React.FC<IGenericWidget> = ({
   useEffect(() => {
     dispatch(fetch_apod_data() as any);
     dispatch(fetch_neows_data() as any);
-    dispatch(fetch_cme_data() as any)
+    dispatch(fetch_cme_data() as any);
   }, []);
 
   // Function that trigger and change the current used widget.
 
   const changeSelectedWidget = (newWidget: WidgetTypes) => {
+    dispatch(
+      setGlobalAlert({
+        status: IGlobalAlertStatus.SUCCESS,
+        message: "Success",
+        description: `The widget selected for Nasa is ${newWidget}`
+      })
+    );
     dispatch(setSelectedWidget(newWidget));
   };
 

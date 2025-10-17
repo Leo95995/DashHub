@@ -8,9 +8,10 @@ import InputSearch from "../input/input";
 import { useDispatch, useSelector } from "react-redux";
 // Interfaces
 import type { IProfileBar } from "./interfaces";
-import { setUserName } from "../../store/appSlice";
+import { setGlobalAlert, setUserName } from "../../store/appSlice";
 import { isMobile } from "../../utils/media-query";
 import { setUserAvatarColor } from "../../store/appSlice";
+import { IGlobalAlertStatus } from "../alert/alert";
 const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -29,17 +30,13 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
 
   const save = () => {
     setIsSaving(true);
-    if (!newColor) {
-      return;
-      // Dispatcho errore
-    }
     setEditColor(false);
     dispatch(setUserAvatarColor(newColor) as any);
     setIsSaving(false);
   };
 
   const changeUsername = () => {
-    if (newUsername.length > 4) {
+    if (newUsername.length > 0) {
       dispatch(setUserName(newUsername));
       setEditMode(!editMode);
     } else {
@@ -94,7 +91,18 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
                       save();
                       changeUsername();
                       setEditColor(false);
-                      setEditMode(false)
+                      setEditMode(false);
+                      dispatch(
+                        setGlobalAlert({
+                          status: IGlobalAlertStatus.SUCCESS,
+                          message: "Success",
+                          description: (
+                            <p>
+                              Modified username and avatar with success
+                            </p>
+                          ),
+                        })
+                      );
                     }}
                     className="cursor-pointer border border-gray-200 rounded-2xl bg-gray-200 px-2 hover:bg-blue-200"
                   >

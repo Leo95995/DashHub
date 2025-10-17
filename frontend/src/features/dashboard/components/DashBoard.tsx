@@ -35,7 +35,8 @@ const DashBoard: React.FC = () => {
   // If not dragged, the id should be simply null.
   const [draggedWidgetId, setDraggedWidgetId] = useState<number | null>(null);
 
-  const { getLayoutByMode, currentMode, screenWidth } = useScreenWidthHook(layout);
+  const { getLayoutByMode, currentMode, screenWidth } =
+    useScreenWidthHook(layout);
 
   useEffect(() => {
     dispatch(setLayoutMode(currentMode));
@@ -120,6 +121,7 @@ const DashBoard: React.FC = () => {
           <img
             src={url}
             alt="Fullscreen"
+            fetchPriority="high"
             className="max-w-full max-h-full object-contain rounded-xl border border-transparent hover:border-white/30 transition-all duration-400  hover:scale-105"
           />
           <div className="absolute -inset-2 rounded-xl pointer-events-none border border-white/20 shadow-[0_0_40px_10px_rgba(255,255,255,0.1)]"></div>
@@ -134,7 +136,9 @@ const DashBoard: React.FC = () => {
           screenWidth={screenWidth}
         />
         <section
-          className={`grid gap-6 ${isMobile(screenWidth) ? "pt-y px-4":"px-8 py-8"} flex-wrap h-190  overflow-y-scroll overflow-x-hidden ${getLayoutByMode()}`}
+          className={`grid gap-6 ${
+            isMobile(screenWidth) ? "pt-y px-4" : "px-8 py-8"
+          } flex-wrap h-190  overflow-y-scroll overflow-x-hidden ${getLayoutByMode()}`}
         >
           <>
             {renderWidgetByOrder().map((widget: any) => {

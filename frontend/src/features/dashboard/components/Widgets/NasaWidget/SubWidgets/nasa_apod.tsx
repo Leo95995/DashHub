@@ -44,6 +44,7 @@ const ApodWidget: React.FC<IApodWidget> = ({ data, error, loading }) => {
 
       <div className="relative rounded-2xl mb-3 w-full max-w-[12rem] aspect-square mx-auto overflow-hidden shadow-lg">
         <img
+          fetchPriority="high"
           alt="Nasa Pic of the day"
           className="w-full h-full object-cover cursor-zoom-in transition-transform duration-500 hover:scale-110"
           loading="lazy"

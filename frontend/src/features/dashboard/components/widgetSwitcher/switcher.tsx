@@ -13,7 +13,6 @@ const Switcher: React.FC<WidgetSwitcher> = ({
   switcherButtonText,
 }) => {
   const [open, setOpen] = useState<boolean>(false);
-
   const handleSelectWidget = () => {
     setOpen((prev) => !prev);
   };
