@@ -1,7 +1,6 @@
 import type { GithubWidgets } from "../../features/dashboard/components/widgetSwitcher/types";
 import type { GithubRepo, IUserActivityData } from "../../mappers/githubMapper";
 import DashboardStorage from "../../services/storage/dashboard";
-import nasaKey from "../../services/storage/nasa";
 import type { ItemStatus } from "../interfaces/interfaces";
 
 /**
@@ -36,7 +35,7 @@ const randomUserData: ItemStatus<any> = {
   error: null,
 };
 
-const selectedWidget :GithubWidgets = DashboardStorage.widgets.githubWidget.getSelectedWidget() ?? "repos"
+const selectedWidget :GithubWidgets = DashboardStorage.widgets.githubWidget.getSelectedWidget() ?? "Trending Repositories"
 
 // Exported initial state
 export const initialState = {

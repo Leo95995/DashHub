@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
+@tailwind utilities;
+
 @custom-variant dark (&:where(.dark, .dark *));
 
- body{
-    @apply bg-slate-100 dark:bg-slate-700 transition-all
- }
+body {
+  @apply bg-slate-100 dark:bg-slate-700 transition-all;
+}

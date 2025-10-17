@@ -10,6 +10,8 @@ import { useDispatch } from "react-redux";
 import { setLayoutMode } from "../../../store/filterSlice";
 import { setEditMode } from "../../../store/appSlice";
 import DashboardStorage from "../../../services/storage/dashboard";
+import { setFullScreenImage } from "../../../store/nasaSlice";
+import { isMobile } from "../../../utils/media-query";
 
 const DashBoard: React.FC = () => {
   const filters = useSelector(
@@ -19,16 +21,21 @@ const DashBoard: React.FC = () => {
   const appData = useSelector((state: any) => state.app);
   const { isEditMode, userData } = appData;
 
+  const { url, isFullScreen } = useSelector(
+    (state: any) => state.nasa.apodStatus.fullScreenImage
+  );
+  // Apod
+
   const storageWidgetOrder = DashboardStorage.widgets.getWidgetOrder();
   const dispatch = useDispatch();
   // The original widget order.
   const [widgetOrder, setWidgetOrder] = useState<number[]>(
-    storageWidgetOrder ?? [3, 2, 1, 4]
+    storageWidgetOrder ?? [1, 4, 2, 3]
   );
   // If not dragged, the id should be simply null.
   const [draggedWidgetId, setDraggedWidgetId] = useState<number | null>(null);
 
-  const { getLayoutByMode, currentMode } = useScreenWidthHook(layout);
+  const { getLayoutByMode, currentMode, screenWidth } = useScreenWidthHook(layout);
 
   useEffect(() => {
     dispatch(setLayoutMode(currentMode));
@@ -103,15 +110,31 @@ const DashBoard: React.FC = () => {
 
   return (
     <>
+      {isFullScreen && url !== null && (
+        <div
+          onClick={() =>
+            dispatch(setFullScreenImage({ isFullScreen: false, url: null }))
+          }
+          className="fixed inset-0 z-[999999] bg-black/90 py-10 rounded-xs flex items-center  justify-center cursor-zoom-out"
+        >
+          <img
+            src={url}
+            alt="Fullscreen"
+            className="max-w-full max-h-full object-contain rounded-xl border border-transparent hover:border-white/30 transition-all duration-400  hover:scale-105"
+          />
+          <div className="absolute -inset-2 rounded-xl pointer-events-none border border-white/20 shadow-[0_0_40px_10px_rgba(255,255,255,0.1)]"></div>
+        </div>
+      )}
       <div className="w-full flex flex-col gap-5 ">
         <DashBoardHeader
           userData={userData}
           isEditMode={isEditMode}
           onClick={toggleEditMode}
           widgetOrder={widgetOrder}
+          screenWidth={screenWidth}
         />
         <section
-          className={`grid gap-6 px-6 pt-2 pb-6 flex-wrap h-195  overflow-y-scroll overflow-x-hidden ${getLayoutByMode()}`}
+          className={`grid gap-6 ${isMobile(screenWidth) ? "pt-y px-4":"px-8 py-8"} flex-wrap h-190  overflow-y-scroll overflow-x-hidden ${getLayoutByMode()}`}
         >
           <>
             {renderWidgetByOrder().map((widget: any) => {

@@ -46,8 +46,8 @@ export const appSlice = createSlice({
       currentPref.username = action.payload;
       userInfo.setUserPreferences(currentPref);
     },
-     setUserAvatarColor: (state, action) => {
-      state.userData.userInfo.username = action.payload;
+    setUserAvatarColor: (state, action) => {
+      state.userData.userInfo.avatar_color = action.payload;
       const currentPref = userInfo.getUserPreferences();
       currentPref.avatar_color = action.payload;
       userInfo.setUserPreferences(currentPref);
@@ -76,6 +76,7 @@ export const {
   setGlobalLoad,
   setEditMode,
   setUserName,
+  setUserAvatarColor,
   setUserInfo,
   setFirstVisit,
   setGlobalAlert,

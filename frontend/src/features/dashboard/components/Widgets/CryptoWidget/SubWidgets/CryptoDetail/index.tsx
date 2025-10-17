@@ -6,14 +6,11 @@ import { useEffect, useState } from "react";
 import { regularTimeStampToTime } from "../../../../../../../utils/weather-utils";
 import {
   setCryptoDetailFilters,
-  setGenericCryptoFilters,
 } from "../../../../../../../store/cryptoSlice";
 import {
   days,
-  filterCurrenciesList,
 } from "../../../../../../../store/data/cryptoData";
 // Components
-import GenericSelect from "../../../../../../../components/select";
 import ErrorMessage from "../../../../../../../components/Error/error";
 import ReactLoader from "../../../../../../../components/loader";
 
@@ -49,13 +46,7 @@ const CryptoDetail: React.FC = () => {
 
   const {
     data: currenciesList,
-    loading: currenciesLoading,
-    error: currenciesError,
   } = cryptoCurrencyList;
-
-  const { genericFilters } = useSelector(
-    (state: any) => state.crypto.filterData
-  );
 
   const filterData = useSelector(
     (state: any) => state.crypto.filterData.cryptoDetailFilters
@@ -113,12 +104,6 @@ const CryptoDetail: React.FC = () => {
     return <> no data to display</>;
   }
 
-  const handleSelection = (value: string) => {
-    if (genericFilters.currency === value) {
-      return;
-    }
-    dispatch(setGenericCryptoFilters({ currency: value }) as any);
-  };
 
   return (
     <>

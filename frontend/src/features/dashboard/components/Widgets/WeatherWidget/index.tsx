@@ -96,7 +96,7 @@ const WeatherWidget: React.FC<IGenericWidget> = ({ isEditMode,
                   hover:bg-blue-600 dark:hover:bg-blue-700
                   transition-colors duration-200
                   cursor-pointer">
-            Cerca
+            Search
           </button>
         </div>
         <div className="flex items-center justify-between">

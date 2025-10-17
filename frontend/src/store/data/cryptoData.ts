@@ -31,7 +31,7 @@ const crypto_top_data: ItemStatus<ICryptoTopGainers> = {
   error: null,
 };
 
-const selectedWidget: CryptoWidgets =  cryptoKey.getSelectedWidget() ?? "Trending Cryptos";
+const selectedWidget: CryptoWidgets =  cryptoKey.getSelectedWidget() ?? "Top Cryptos";
 
 export type currency = "eur" | "usd";
 

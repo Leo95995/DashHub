@@ -9,14 +9,49 @@ import { useDispatch, useSelector } from "react-redux";
 // Interfaces
 import type { IProfileBar } from "./interfaces";
 import { setUserName } from "../../store/appSlice";
-
-const ProfileBar: React.FC<IProfileBar> = ({ expanded }) => {
+import { isMobile } from "../../utils/media-query";
+import { setUserAvatarColor } from "../../store/appSlice";
+const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const dispatch = useDispatch();
   const userdata = useSelector((state: any) => state.app.userData);
 
   const { username, avatar_color } = userdata.userInfo;
   const [newUsername, setNewUsername] = useState<string>(username ?? "");
+  // Activate the color edit mode
+  const [editColor, setEditColor] = useState<boolean>(false);
+  const [newColor, setNewColor] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+
+  const changeAvatarColor = (e: any) => {
+    setNewColor(e.currentTarget.value);
+  };
+
+  const save = () => {
+    setIsSaving(true);
+    if (!newColor) {
+      return;
+      // Dispatcho errore
+    }
+    setEditColor(false);
+    dispatch(setUserAvatarColor(newColor) as any);
+    setIsSaving(false);
+  };
+
+  const changeUsername = () => {
+    if (newUsername.length > 4) {
+      dispatch(setUserName(newUsername));
+      setEditMode(!editMode);
+    } else {
+      alert("The minimum username length is of 5 characters");
+    }
+  };
+
+  const saveByInput = (char: string) => {
+    if (char === "Enter") {
+      changeUsername();
+    }
+  };
 
   return (
     <>
@@ -26,56 +61,97 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded }) => {
         }`}
       >
         <div>
+          {editColor && (
+            <div
+              className={`relative z-30  flex mx-4 ${
+                isMobile(screenWidth) ? "justify-end " : "justify-start"
+              }`}
+            >
+              <div className="shadow-2xl absolute items-start flex-col justify-end border bg-white dark:border-gray-700 border-gray-200 flex dark:bg-slate-800 dark:text-white p-2 mx-5 mt-4 rounded-md">
+                <div>
+                  <label className="block text-sm font-medium text-nowrap">
+                    Select Color
+                  </label>
+                  <input
+                    name="color"
+                    type="color"
+                    defaultValue={avatar_color}
+                    onChange={changeAvatarColor}
+                    className="block border-gray-300 rounded-md py-1 mt-1 cursor-pointer"
+                  />
+                </div>
+                <div className="flex gap-1 dark:text-slate-700 mb-2">
+                  <InputSearch
+                    width="w-45 p-2"
+                    placeholder="Insert your new username"
+                    onChange={(e) => setNewUsername(e)}
+                    isLoading={isSaving}
+                  />
+                </div>
+                <div className="flex gap-1 text-sm  text-black">
+                  <button
+                    onClick={() => {
+                      save();
+                      changeUsername();
+                      setEditColor(false);
+                      setEditMode(false)
+                    }}
+                    className="cursor-pointer border border-gray-200 rounded-2xl bg-gray-200 px-2 hover:bg-blue-200"
+                  >
+                    Save
+                  </button>
+                  <button
+                    onClick={() => setEditColor(false)}
+                    className="cursor-pointer rounded-2xl px-1 border-gray-200  bg-gray-200 hover:bg-blue-200"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
           <span
+            onClick={() => setEditColor((prev) => !prev)}
             style={{ background: avatar_color ?? "#e5a50a" }}
-            className="rounded-full h-11 w-11 overflow-ellipsis p-1 justify-center flex items-center hover:scale-105 transition-all "
+            className="rounded-full h-11 w-11 overflow-ellipsis p-1 cursor-pointer justify-center flex items-center hover:border-slate-200 hover:border hover:scale-105 transition-all "
           >
             {createShortName(username)}
           </span>
         </div>
-        {expanded && (
+        {expanded && !isMobile(screenWidth) && (
           <div className="flex items-center gap-2">
             {!editMode ? (
               <p style={{ margin: 0 }}>{username ?? `Guest`}</p>
             ) : (
               <InputSearch
-                width="w-44 md:w-50"
+                width="w-35 md:w-35"
                 placeholder="Insert your new username"
                 onChange={(e) => setNewUsername(e)}
-                isLoading={false}
+                isLoading={isSaving}
+                onKeyUp={saveByInput}
               />
             )}
             {!editMode && (
-              <button className="cursor-pointer">
-                <Edit
-                  onClick={() => setEditMode(!editMode)}
-                  style={{ height: "16px" }}
-                />
+              <button
+                onClick={() => setEditMode(!editMode)}
+                className="cursor-pointer hover:text-blue-400"
+              >
+                <Edit style={{ height: "16px" }} />
               </button>
             )}
             {editMode && (
-              <div className="flex gap-2">
-                <button className="cursor-pointer rounded-md border-1 border-transparent hover:border-blue-400 active:scale-95">
-                  <Save
-                    className="rounded-md"
-                    onClick={() => {
-                      if (newUsername.length > 4) {
-                        console.log('passa');
-                        dispatch(setUserName(newUsername));
-                        setEditMode(!editMode);
-                      }else { 
-                        alert('The minimum username length is of 5 characters')
-                      }
-                    }}
-                    style={{ height: "20px" }}
-                  />
+              <div className="flex gap-1 dark:text-slate-700">
+                <button
+                  onClick={changeUsername}
+                  className="cursor-pointer border border-gray-200  rounded-2xl bg-gray-200 px-2 hover:bg-blue-200 active:scale-95"
+                >
+                  <Save className="rounded-md" style={{ height: "20px" }} />
                 </button>
-                <button className="cursor-pointer border-1 rounded-md border-transparent hover:border-blue-400 active:scale-95">
-                  <Cancel
-                    className="rounded-md"
-                    onClick={() => setEditMode(!editMode)}
-                    style={{ height: "20px" }}
-                  />{" "}
+                <button
+                  onClick={() => setEditMode(!editMode)}
+                  className="cursor-pointer border border-gray-200 rounded-2xl bg-gray-200 px-2 hover:bg-blue-200 active:scale-95"
+                >
+                  <Cancel className="rounded-md" style={{ height: "20px" }} />{" "}
                 </button>
               </div>
             )}

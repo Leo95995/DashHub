@@ -4,15 +4,16 @@ import { Tooltip } from "@mui/material";
 import Filters from "../../filters";
 import { useSelector, useDispatch } from "react-redux";
 import { setSideBarStatus } from "../../../store/appSlice";
+import useScreenWidthHook from "../../../hooks/useScreenWidthHook";
 
 interface ISideBar {
   primary?: boolean;
 }
 
-const SideBar: React.FC<ISideBar> = ({ ...props }) => {
+const SideBar: React.FC<ISideBar> = () => {
   const sidebar = useSelector((state: any) => state.app.sideBar);
   const { expanded } = sidebar;
-
+  const { screenWidth } = useScreenWidthHook();
   const dispatch = useDispatch();
 
   const handleSideExpansion = () => {
@@ -26,26 +27,35 @@ const SideBar: React.FC<ISideBar> = ({ ...props }) => {
           expanded ? "w-80" : "w-20"
         } bg-slate-100 border-gray-200  dark:bg-slate-700 text-black dark:text-white  xl:block hidden border-t-0 transition-all  `}
       >
-        <ProfileBar expanded={expanded} />
+        <ProfileBar expanded={expanded} screenWidth={screenWidth} />
         <div
           className={`flex w-full   ${
             !expanded ? `justify-center` : "justify-end"
           }`}
           aria-label="expansion"
         >
-          <Tooltip title={expanded ? "Reduce" : "Expand"} placement="right">
-            <button
-              onClick={handleSideExpansion}
-              aria-label="expand button"
-              className="cursor-pointer  text-gray-500 py-2 px-2 dark:text-white dark:hover:bg-slate-800"
-            >
-              {expanded ? (
-                <ArrowForwardIos className="rotate-180" />
-              ) : (
-                <ArrowForwardIos />
-              )}
-            </button>
-          </Tooltip>
+          <div className={`flex items-center w-full justify-between ${expanded ? 'pl-4 pr-2' : 'justify-center'}`}>
+            {expanded && (
+              <>
+                <h2 className="text-2xl">
+                  <b>Filters</b>
+                </h2>
+              </>
+            )}
+            <Tooltip title={expanded ? "Reduce" : "Expand"} placement="right">
+              <button
+                onClick={handleSideExpansion}
+                aria-label="expand button"
+                className="cursor-pointer  text-gray-500 py-2 px-2 dark:text-white dark:hover:bg-slate-800"
+              >
+                {expanded ? (
+                  <ArrowForwardIos className="rotate-180" />
+                ) : (
+                  <ArrowForwardIos />
+                )}
+              </button>
+            </Tooltip>
+          </div>
         </div>
         <Filters />
       </aside>

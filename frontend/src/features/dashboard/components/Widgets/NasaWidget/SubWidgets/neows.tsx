@@ -4,7 +4,6 @@ import type {
   ItemStatus,
 } from "../../../../../../store/interfaces/interfaces";
 import type { ArrowKey } from "../../../../../../interfaces/common/interfaces";
-import ReactLoader from "../../../../../../components/loader";
 import LoaderWithMessage from "../../../../../../components/loader/loaderAndText";
 
 const NeoWsWidget: React.FC<ItemStatus<INeoWsData[]>> = ({

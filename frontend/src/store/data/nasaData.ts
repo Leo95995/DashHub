@@ -12,6 +12,10 @@ const apodStatus: ItemStatus<PartialApod> = {
   data: nasa_apod_data,
   loading: false,
   error: null,
+  fullScreenImage: { url: null, isFullScreen: false } as {
+    url: null | string;
+    isFullScreen: boolean;
+  },
 };
 
 const neows_data: PartialNeoWs = [];
@@ -31,7 +35,7 @@ const cmeStatus: ItemStatus<CMEData[]> = {
 };
 
 const widgetSelected: NasaWidgets =
-  nasaKey.getSelectedWidget() ?? "Near Earth Object";
+  nasaKey.getSelectedWidget() ?? "Pic Of The Day";
 
 export const initialState = {
   apodStatus,

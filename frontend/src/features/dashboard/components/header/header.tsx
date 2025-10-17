@@ -1,5 +1,7 @@
 // Dashboard data
+import MobileFilters from "../../../../components/layout/PrivateLayout/MobileFilters";
 import DashboardStorage from "../../../../services/storage/dashboard";
+import { isMobile } from "../../../../utils/media-query";
 interface IUserData {
   userInfo: any;
   preferences: any;
@@ -10,6 +12,8 @@ interface IDashBoardHeader {
   isEditMode: boolean;
   onClick: (val: boolean) => void;
   widgetOrder: number[];
+  screenWidth: number;
+
 }
 
 const DashBoardHeader: React.FC<IDashBoardHeader> = ({
@@ -17,10 +21,12 @@ const DashBoardHeader: React.FC<IDashBoardHeader> = ({
   isEditMode,
   onClick,
   widgetOrder,
+  screenWidth
 }) => {
+
   return (
     <>
-      <div className="flex  flex-col md:flex-row px-6 gap-5  ">
+      <div className={`flex  flex-col md:flex-row ${isMobile(screenWidth) ?"px-4": "px-6"} gap-5  `}>
         <div className="text-2xl m-0 duration-500">
           <b>
             Welcome
@@ -31,7 +37,7 @@ const DashBoardHeader: React.FC<IDashBoardHeader> = ({
             </span>
           </b>
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center flex-wrap">
           <button
             onClick={() => onClick(isEditMode)}
             className={`px-4 py-2 rounded-lg font-semibold transition duration-200 active:scale-95 cursor-pointer
@@ -54,7 +60,8 @@ const DashBoardHeader: React.FC<IDashBoardHeader> = ({
             >
              Finish Editing
             </button>
-          )}
+          )} 
+          <MobileFilters/>
         </div>
       </div>
     </>

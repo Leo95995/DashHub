@@ -16,7 +16,6 @@ import { setSelectedUserRepo } from "../../../../../../../store/githubSlice";
 import { ArrowBack } from "@mui/icons-material";
 
 import UserActivityCard from "../../components/user-activity-card";
-import ReactLoader from "../../../../../../../components/loader";
 import LoaderWithMessage from "../../../../../../../components/loader/loaderAndText";
 
 const PopularReposWidget: React.FC = () => {
@@ -33,7 +32,7 @@ const PopularReposWidget: React.FC = () => {
   } = trending_repositories;
   // Selected repo datas
   const selectedRepo = useSelector((state: any) => state.github.repo_data);
-  const { data: repoData, loading: loadRepo, error: errorRepo } = selectedRepo;
+  const { data: repoData } = selectedRepo;
   // User activities
 
   const userActivity = useSelector(
@@ -189,7 +188,7 @@ const PopularReposWidget: React.FC = () => {
   const step2 = () => {
     return (
       <>
-        <div className="flex flex-col justify-start items-start">
+        <div className="flex py-6 flex-col justify-start items-start">
           <button
             className="px-3 py-2 rounded-md text-white font-bold text-xs 
              bg-gradient-to-r from-indigo-500 to-indigo-700

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
 import { start } from "repl";
+import mongoose from "mongoose";
 dotenv.config();
 
 const NASA_API = process.env.NASA_API;
@@ -8,15 +9,16 @@ const nasa_baseurl = "https://api.nasa.gov";
 /**
  *  Function used to get data for NASA PICTURE OF THE DAY
  */
-const get_apod = async (req: Request, res: Response, next: NextFunction) => {
-  const apod_url = `${nasa_baseurl}/planetary/apod?api_key=${NASA_API}`;
-  try {
-    const apod_data = await fetch(apod_url, { method: "GET" });
-    if (apod_data.status === 200) {
-      const data = await apod_data.json();
 
-      res.status(200).json(data);
-    }
+const get_apod = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const db = mongoose.connection;
+    const apod_collection = await db.collection("apod_list");
+    const results = await apod_collection.find().toArray();
+
+    const random_number = Math.floor(Math.random() * results.length);
+
+    res.status(200).json(results[random_number]);
   } catch (error) {
     res.status(500).json("Error");
   }
