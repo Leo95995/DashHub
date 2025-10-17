@@ -46,7 +46,7 @@ const GithubFilters: React.FC<IGithubFilters> = ({ expanded }) => {
   return (
     <>
       <FilterSection
-        title={"Github Filters"}
+        title={"GITHUB"}
         defaultOpen={false}
         expanded={expanded}
       >

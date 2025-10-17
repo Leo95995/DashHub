@@ -21,23 +21,36 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
   // Activate the color edit mode
   const [editColor, setEditColor] = useState<boolean>(false);
   const [newColor, setNewColor] = useState<string | null>(null);
-  const [isSaving, setIsSaving] = useState<boolean>(false)
-
-
+  const [isSaving, setIsSaving] = useState<boolean>(false);
 
   const changeAvatarColor = (e: any) => {
     setNewColor(e.currentTarget.value);
   };
 
   const save = () => {
-    setIsSaving(true)
+    setIsSaving(true);
     if (!newColor) {
       return;
       // Dispatcho errore
     }
     setEditColor(false);
     dispatch(setUserAvatarColor(newColor) as any);
-    setIsSaving(false)
+    setIsSaving(false);
+  };
+
+  const changeUsername = () => {
+    if (newUsername.length > 4) {
+      dispatch(setUserName(newUsername));
+      setEditMode(!editMode);
+    } else {
+      alert("The minimum username length is of 5 characters");
+    }
+  };
+
+  const saveByInput = (char: string) => {
+    if (char === "Enter") {
+      changeUsername();
+    }
   };
 
   return (
@@ -49,24 +62,39 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
       >
         <div>
           {editColor && (
-            <div className={`relative z-30  flex mx-4 ${isMobile(screenWidth) ? 'justify-end ' : 'justify-start'}`}
-        >
+            <div
+              className={`relative z-30  flex mx-4 ${
+                isMobile(screenWidth) ? "justify-end " : "justify-start"
+              }`}
+            >
               <div className="shadow-2xl absolute items-start flex-col justify-end border bg-white dark:border-gray-700 border-gray-200 flex dark:bg-slate-800 dark:text-white p-2 mx-5 mt-4 rounded-md">
-                <label className="block text-sm font-medium text-nowrap">
-                  Select Color
-                </label>
-                <input
-                  name="color"
-                  type="color"
-                  defaultValue={avatar_color}
-                  onChange={changeAvatarColor}
-                  className="block border-gray-300 rounded-md py-1 my-1 cursor-pointer"
-                />
-                <div className="flex gap-1 text-sm text-black">
+                <div>
+                  <label className="block text-sm font-medium text-nowrap">
+                    Select Color
+                  </label>
+                  <input
+                    name="color"
+                    type="color"
+                    defaultValue={avatar_color}
+                    onChange={changeAvatarColor}
+                    className="block border-gray-300 rounded-md py-1 mt-1 cursor-pointer"
+                  />
+                </div>
+                <div className="flex gap-1 dark:text-slate-700 mb-2">
+                  <InputSearch
+                    width="w-45 p-2"
+                    placeholder="Insert your new username"
+                    onChange={(e) => setNewUsername(e)}
+                    isLoading={isSaving}
+                  />
+                </div>
+                <div className="flex gap-1 text-sm  text-black">
                   <button
                     onClick={() => {
                       save();
+                      changeUsername();
                       setEditColor(false);
+                      setEditMode(false)
                     }}
                     className="cursor-pointer border border-gray-200 rounded-2xl bg-gray-200 px-2 hover:bg-blue-200"
                   >
@@ -100,38 +128,30 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
                 placeholder="Insert your new username"
                 onChange={(e) => setNewUsername(e)}
                 isLoading={isSaving}
+                onKeyUp={saveByInput}
               />
             )}
             {!editMode && (
-              <button className="cursor-pointer">
-                <Edit
-                  onClick={() => setEditMode(!editMode)}
-                  style={{ height: "16px" }}
-                />
+              <button
+                onClick={() => setEditMode(!editMode)}
+                className="cursor-pointer hover:text-blue-400"
+              >
+                <Edit style={{ height: "16px" }} />
               </button>
             )}
             {editMode && (
-              <div className="flex gap-1">
-                <button className="cursor-pointer border border-gray-200 rounded-2xl bg-gray-200 px-2 hover:bg-blue-200 active:scale-95">
-                  <Save
-                    className="rounded-md"
-                    onClick={() => {
-                      if (newUsername.length > 4) {
-                        dispatch(setUserName(newUsername));
-                        setEditMode(!editMode);
-                      } else {
-                        alert("The minimum username length is of 5 characters");
-                      }
-                    }}
-                    style={{ height: "20px" }}
-                  />
+              <div className="flex gap-1 dark:text-slate-700">
+                <button
+                  onClick={changeUsername}
+                  className="cursor-pointer border border-gray-200  rounded-2xl bg-gray-200 px-2 hover:bg-blue-200 active:scale-95"
+                >
+                  <Save className="rounded-md" style={{ height: "20px" }} />
                 </button>
-                <button className="cursor-pointer border border-gray-200 rounded-2xl bg-gray-200 px-2 hover:bg-blue-200 active:scale-95">
-                  <Cancel
-                    className="rounded-md"
-                    onClick={() => setEditMode(!editMode)}
-                    style={{ height: "20px" }}
-                  />{" "}
+                <button
+                  onClick={() => setEditMode(!editMode)}
+                  className="cursor-pointer border border-gray-200 rounded-2xl bg-gray-200 px-2 hover:bg-blue-200 active:scale-95"
+                >
+                  <Cancel className="rounded-md" style={{ height: "20px" }} />{" "}
                 </button>
               </div>
             )}

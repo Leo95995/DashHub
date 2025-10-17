@@ -14,11 +14,13 @@ import LoaderWithMessage from "./components/loader/loaderAndText";
 
 // Public Routes
 const DashBoardPage = lazy(() => import("./pages/privates/DashboardPage"));
+// Settings page for lazy routes
 // const SettingsPage = lazy(() => import("./pages/privates/SettingsPage"));
 
 function App() {
   const userdata = useSelector((state: any) => state.app.userData);
-  const { userInfo, firstVisit } = userdata;
+  // Data relative to first visit
+  const { firstVisit } = userdata;
 
 const globalLoad = useSelector((state:any) => state.app.globalLoad);
 
@@ -35,7 +37,6 @@ const globalLoad = useSelector((state:any) => state.app.globalLoad);
           <FirstVisitModal
             firstVisit={!firstVisit}
             setFirstVisit={setFirstVisit}
-            userInfo={userInfo}
           />
         )}
         <Routes>

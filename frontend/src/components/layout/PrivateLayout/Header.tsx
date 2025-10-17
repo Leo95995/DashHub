@@ -1,7 +1,7 @@
 import dashHub from "../../../assets/icons/dashhub.png";
+import { isMobile } from "../../../utils/media-query";
 import ProfileBar from "../../profileBar";
 import ModeToggler from "../../toggler";
-import MobileFilters from "./MobileFilters";
 
 interface IHeader {
   screenWidth: number;
@@ -21,9 +21,8 @@ const Header: React.FC<IHeader> = ({ screenWidth }) => {
             className="rounded-4xl border"
           />
         </p>
-        <p>DashHub</p>
+        {!isMobile(screenWidth) && <p>DashHub</p>}
         <ModeToggler />
-        <MobileFilters />
         <div className="flex flex-1 justify-end xl:hidden ">
           <ProfileBar screenWidth={screenWidth} expanded={true} />
         </div>

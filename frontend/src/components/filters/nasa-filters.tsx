@@ -21,7 +21,7 @@ const NasaFilters: React.FC<INasaFilters> = ({ expanded }) => {
 
   const renderNasaContent = () => {
     return (
-      <div className="flex flex-col gap-2 w-full px-4 ">
+      <div className="flex flex-col gap-2 w-full ">
         <label
           htmlFor="temperature"
           className="font-semibold text-gray-700 dark:text-gray-200"
@@ -43,7 +43,7 @@ const NasaFilters: React.FC<INasaFilters> = ({ expanded }) => {
   return (
     <>
       <FilterSection
-        title={"Nasa Widget"}
+        title={"NASA"}
         defaultOpen={false}
         expanded={expanded}
       >

@@ -1,7 +1,6 @@
 import type { GithubWidgets } from "../../features/dashboard/components/widgetSwitcher/types";
 import type { GithubRepo, IUserActivityData } from "../../mappers/githubMapper";
 import DashboardStorage from "../../services/storage/dashboard";
-import nasaKey from "../../services/storage/nasa";
 import type { ItemStatus } from "../interfaces/interfaces";
 
 /**

@@ -1,5 +1,5 @@
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import GithubWidgetContainer from "./SubWidgets/github-widgets-container";
 // import Switcher from "../NasaWidget/WidgetSwitcher/switcher";
 import type { GithubWidgets } from "../../widgetSwitcher/types";

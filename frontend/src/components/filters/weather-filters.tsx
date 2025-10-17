@@ -1,6 +1,6 @@
 // Filters for weathers
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -8,7 +8,6 @@ import {
   setTemperatureType,
   setSearchText,
 } from "../../store/weatherSlice";
-import { ChevronUp, ChevronDown } from "lucide-react";
 import FilterSection from "./filters-section";
 
 interface IWeatherFilters {
@@ -21,7 +20,6 @@ const WeatherFilters: React.FC<IWeatherFilters> = ({ expanded }) => {
   const temperatureType = useSelector(
     (state: any) => state.weather.temperatureType
   );
-  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(fetchWeatherByCity(searchText) as any);
@@ -29,7 +27,7 @@ const WeatherFilters: React.FC<IWeatherFilters> = ({ expanded }) => {
 
   const renderTemperatureSelector = () => {
     return (
-      <div className="flex flex-col gap-2 w-48 py-4">
+      <div className="flex flex-col gap-2 w-48 py-2">
         <label
           htmlFor="temperature"
           className="font-semibold text-gray-700 dark:text-gray-200"
@@ -120,7 +118,7 @@ const WeatherFilters: React.FC<IWeatherFilters> = ({ expanded }) => {
   return (
     <>
       <FilterSection
-        title={"Weather Filters"}
+        title={"WEATHER"}
         defaultOpen={false}
         expanded={expanded}
       >

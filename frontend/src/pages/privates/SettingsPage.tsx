@@ -1,5 +1,13 @@
+// Page to handle the app settings
 const SettingsPage: React.FC = () => {
-  return <div>Settings Page</div>;
+  return <div>
+    Setting :
+
+    Theme customization
+
+
+
+  </div>;
 };
 
 export default SettingsPage;

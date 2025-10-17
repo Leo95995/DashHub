@@ -84,7 +84,7 @@ const GenericSelect: React.FC<IGenericSelect<any>> = ({
           ))
         ) : (
           <>
-            <span className="p-2" onClick={() => setIsOpen(true)}>
+            <span className="p-2 w-full" onClick={() => setIsOpen(true)}>
               {defaultText}
             </span>
           </>

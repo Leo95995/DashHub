@@ -1,5 +1,6 @@
 // Filters for weathers
 import type React from "react";
+// React redux info
 import { useDispatch } from "react-redux";
 import CheckboxGroup from "../checkbox/checkboxGroup";
 import {
@@ -11,8 +12,7 @@ import { filterUtils } from "../../utils/filter-utils";
 import { useSelector } from "react-redux";
 import { setWidgetLayout } from "../../store/filterSlice";
 import type { ScreenMode } from "../../interfaces/common/interfaces";
-import { ChevronDown, ChevronUp, CircleCheck } from "lucide-react";
-import { useState } from "react";
+import { CircleCheck } from "lucide-react";
 import FilterSection from "./filters-section";
 
 interface IWidgetFilters {
@@ -21,7 +21,6 @@ interface IWidgetFilters {
 
 const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
   const dispatch = useDispatch();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   const filters = useSelector(
     (state: any) => state.filters.filters.widgetVisibility
   );
@@ -38,6 +37,7 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
       changeWidgetVisibility({ widget: widget, visibility: visibility })
     );
   };
+  // Handle change functionality
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(
@@ -183,11 +183,7 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
   };
 
   return (
-    <FilterSection
-      expanded={expanded}
-      title="Widget Filters "
-      defaultOpen={true}
-    >
+    <FilterSection expanded={expanded} title="WIDGETS " defaultOpen={true}>
       {renderVisibleWidgets()}
       {renderLayoutWidget()}
     </FilterSection>

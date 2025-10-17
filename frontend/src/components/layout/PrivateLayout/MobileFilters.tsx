@@ -9,7 +9,7 @@ const MobileFilters: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
 
   const handleFlagger = () => {
-    setOpen(true)
+    setOpen(true);
   };
 
   return (
@@ -27,7 +27,20 @@ const MobileFilters: React.FC = () => {
         }}
         width="w-200"
         closable={true}
-        children={<Filters isMobile={true} />}
+        children={
+          <>
+            <div
+              className={`flex items-center w-full justify-center mb-6`}
+            >
+              <>
+                <h2 className="text-2xl">
+                  <b>Filters</b>
+                </h2>
+              </>
+            </div>
+            <Filters isMobile={true} />
+          </>
+        }
       />
     </div>
   );

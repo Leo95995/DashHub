@@ -1,11 +1,10 @@
-import React, { useState } from "react";
 import LoaderWithMessage from "../../../../../../components/loader/loaderAndText";
 import type { INasaApodData } from "../../../../../../store/interfaces/interfaces";
 import { useDispatch } from "react-redux";
 import { fetch_apod_data } from "../../../../../../store/nasaSlice";
 import { Calendar } from "lucide-react";
 import { setFullScreenImage } from "../../../../../../store/nasaSlice";
-
+import React from "react";
 export interface IApodWidget {
   data: INasaApodData;
   loading: boolean;

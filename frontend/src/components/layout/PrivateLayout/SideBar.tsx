@@ -10,7 +10,7 @@ interface ISideBar {
   primary?: boolean;
 }
 
-const SideBar: React.FC<ISideBar> = ({ ...props }) => {
+const SideBar: React.FC<ISideBar> = () => {
   const sidebar = useSelector((state: any) => state.app.sideBar);
   const { expanded } = sidebar;
   const { screenWidth } = useScreenWidthHook();

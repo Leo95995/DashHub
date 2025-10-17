@@ -34,7 +34,7 @@ const Filters: React.FC<IFilters> = ({ isMobile }) => {
 
   return (
     <div
-      className={`${isMobile ?   "flex flex-col w-full h-150 overflow-scroll items-center":  "p-4 mb-12 transform transition-all duration-300 h-200 overflow-scroll"}
+      className={`${isMobile ?   "flex flex-col h-150 overflow-scroll items-center":  "px-4 transform transition-all duration-300 h-200 overflow-scroll"}
        
       }
         ${
@@ -60,11 +60,11 @@ const Filters: React.FC<IFilters> = ({ isMobile }) => {
         </div>
       )}
       {filters?.crypto && (
-        <div className="py-4">
+        <div className="py-2 pb-3">
           <CryptoFilters expanded={expanded || isMobile} />
         </div>
       )}
-      {filters?.github && <div className="py-4"><GithubFilters expanded={expanded} /></div>}
+      {filters?.github && <div className="py-2 pb-3"><GithubFilters expanded={expanded} /></div>}
     </div>
   );
 };

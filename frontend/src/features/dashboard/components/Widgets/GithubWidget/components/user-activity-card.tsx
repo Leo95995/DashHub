@@ -6,7 +6,6 @@ import {
   FileText,
   Home,
   Clock,
-  Ban,
   UserRound,
 } from "lucide-react";
 import ReactLoader from "../../../../../../components/loader";
@@ -26,7 +25,7 @@ const UserActivityCard: React.FC<{ item: ItemStatus<IUserActivityData> }> = ({
       return;
     }
 
-    return <ErrorMessage message="Error while fetching user data" />;
+    return <ErrorMessage message="No public data found for the selected GitHub user. Please check the username or try another user." />;
   };
 
   const renderLoading = () => {
@@ -39,7 +38,6 @@ const UserActivityCard: React.FC<{ item: ItemStatus<IUserActivityData> }> = ({
         <div className="flex gap-2 flex-direction h-full flex-col items-center min-h-40 justify-center">
           <div> Caricamento utente</div>
           <div>
-            {" "}
             <ReactLoader />
           </div>
         </div>

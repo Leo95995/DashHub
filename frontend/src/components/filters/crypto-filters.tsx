@@ -3,8 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { crypto_widgets } from "../../features/dashboard/components/widgetSwitcher/datas";
 import type { CryptoWidgets } from "../../features/dashboard/components/widgetSwitcher/types";
 import { setSelectedCryptoWidget } from "../../store/cryptoSlice";
-import { useState } from "react";
-import { ChevronUp, ChevronDown } from "lucide-react";
 import FilterSection from "./filters-section";
 
 interface ICryptoFilters {
@@ -16,7 +14,6 @@ const CryptoFilters: React.FC<ICryptoFilters> = ({ expanded }) => {
   const selectCryptoWidget = useSelector(
     (state: any) => state.crypto.selectedWidget
   );
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleCryptoWidgetChange = (widget: CryptoWidgets) => {
     if (widget) {
       dispatch(setSelectedCryptoWidget(widget));
@@ -46,7 +43,7 @@ const CryptoFilters: React.FC<ICryptoFilters> = ({ expanded }) => {
   return (
     <>
       <FilterSection
-        title={"Crypto Filters"}
+        title={"CRYPTO"}
         defaultOpen={false}
         expanded={expanded}
       >

@@ -22,8 +22,6 @@ const CryptoTrendings: React.FC = () => {
 
   const {
     data: currenciesList,
-    error: currenciesError,
-    loading: currenciesLoading,
   } = useSelector((state: any) => state.crypto.currenciesList);
   // Data for crypto filters
   const filterData = useSelector((state: any) => state.crypto.filterData);

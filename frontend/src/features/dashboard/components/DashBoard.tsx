@@ -11,6 +11,7 @@ import { setLayoutMode } from "../../../store/filterSlice";
 import { setEditMode } from "../../../store/appSlice";
 import DashboardStorage from "../../../services/storage/dashboard";
 import { setFullScreenImage } from "../../../store/nasaSlice";
+import { isMobile } from "../../../utils/media-query";
 
 const DashBoard: React.FC = () => {
   const filters = useSelector(
@@ -130,9 +131,10 @@ const DashBoard: React.FC = () => {
           isEditMode={isEditMode}
           onClick={toggleEditMode}
           widgetOrder={widgetOrder}
+          screenWidth={screenWidth}
         />
         <section
-          className={`grid gap-6 px-8 py-8 flex-wrap h-195   overflow-y-scroll overflow-x-hidden ${getLayoutByMode()}`}
+          className={`grid gap-6 ${isMobile(screenWidth) ? "pt-y px-4":"px-8 py-8"} flex-wrap h-190  overflow-y-scroll overflow-x-hidden ${getLayoutByMode()}`}
         >
           <>
             {renderWidgetByOrder().map((widget: any) => {

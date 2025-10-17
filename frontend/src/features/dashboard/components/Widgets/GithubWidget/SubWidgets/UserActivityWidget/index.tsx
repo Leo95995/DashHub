@@ -6,12 +6,7 @@ import { debounce } from "../../../../../../../utils/generic-utils";
 import type { IUserActivityData } from "../../../../../../../mappers/githubMapper";
 import type { ItemStatus } from "../../../../../../../store/interfaces/interfaces";
 import UserActivityCard from "../../components/user-activity-card";
-import { Infinity } from "lucide-react";
-/**
- *
- * This widget allow users to research a github repo
- *
- */
+
 const UserActivityWidget: React.FC = () => {
   const dispatch = useDispatch();
   const userActivity = useSelector(
@@ -19,8 +14,6 @@ const UserActivityWidget: React.FC = () => {
       state.github.userActivityData as ItemStatus<IUserActivityData>
   );
 
-  // Use debounce to delay the search function
-  // Salvo la funzione e come parametri del debounce passo la func da tirare e
   const handleSearch = useCallback(
     debounce((searchTerm: string) => {
       if (searchTerm !== "") {

@@ -5,7 +5,7 @@ interface IMainContent {
 }
 
 const MainContent : React.FC<IMainContent> = ({children}) => {
-    return <main className="p-4 bg-white  rounded-b-md  dark:bg-slate-800 max-h-215 dark:text-white">{children}</main>
+    return <main className="p-4 m-0 bg-white  rounded-b-md  dark:bg-slate-800 max-h-235 dark:text-white">{children}</main>
 }
 
 export default MainContent

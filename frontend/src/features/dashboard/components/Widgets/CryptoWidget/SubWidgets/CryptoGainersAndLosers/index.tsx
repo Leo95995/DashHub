@@ -50,10 +50,11 @@ const CryptoGainersAndLosers: React.FC = () => {
   return (
     <>
       <div className="flex gap-2">
-        <h2 className="text-xl font-medium pt-4 flex w-full">
+        <h2 className="text-xl font-semibold justify-center flex w-full">
           Gainers & Losers
         </h2>
-        <GenericSelect
+      </div>
+         <GenericSelect
           itemList={filterCurrenciesList}
           onSelection={(value) => handleSelection(value)}
           defaultText={genericFilters?.currency}
@@ -61,12 +62,11 @@ const CryptoGainersAndLosers: React.FC = () => {
           listPlacement="right-7"
           closePlacement="right-0"
         />
-      </div>
-      <div className="rounded-lg py-4 grid grid-cols-1 lg:grid-cols-2 gap-4 h-70  overflow-y-scroll overflow-x-hidden">
+      <div className="rounded-lg py-4 grid grid-cols-1 lg:grid-cols-2 gap-2 h-70  overflow-y-scroll overflow-x-hidden">
         {data?.map((coin: ICryptoTopGainers) => {
           return (
             <React.Fragment key={coin.id}>
-              <div className="flex items-center cursor-pointer hover:rounded-md mx-4 hover:bg-gradient-to-r from-gray-50 to-gray-500 hover:scale-105 hover:text-black gap-3 p-2 border dark:border-gray-600 border-gray-200 rounded shadow-sm hover:shadow-md transition">
+              <div className="flex items-center cursor-pointer hover:rounded-md hover:bg-gradient-to-r from-gray-200 to-gray-500 hover:scale-105 hover:text-black gap-3 p-2 border dark:border-gray-600 border-gray-200 rounded transition">
                 <img
                   src={coin.image}
                   alt={`Logo of ${coin.name}`}
