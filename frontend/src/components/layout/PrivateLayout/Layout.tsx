@@ -3,9 +3,14 @@ import MainContent from "./MainContent";
 import Header from "./Header";
 import {  Outlet } from "react-router";
 import type { ILayout } from "../../../interfaces/common/interfaces";
-
+import useScreenWidthHook from "../../../hooks/useScreenWidthHook";
 
 const PrivateLayout: React.FC<ILayout> = () => {
+
+  const {screenWidth } = useScreenWidthHook();
+
+
+
   return (
     <>
     <div className="z-1">
@@ -13,7 +18,7 @@ const PrivateLayout: React.FC<ILayout> = () => {
         <SideBar
         />
         <div className="flex flex-col w-full  "> 
-          <Header />
+          <Header screenWidth={screenWidth} />
 
           <main>
             <MainContent>

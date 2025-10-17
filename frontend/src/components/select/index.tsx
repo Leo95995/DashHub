@@ -33,14 +33,14 @@ const GenericSelect: React.FC<IGenericSelect<any>> = ({
       {isOpen && (
         <button
         onClick={() => setIsOpen(false)}
-        className={`absolute top-0 ${closePlacement ?? `right-10`} cursor-pointer z-20 text-red-600 rounded-sm hover:bg-red-600 hover:text-white transition-colors`}
+        className={`absolute top-0 ${closePlacement ?? `right-10`}  cursor-pointer z-99 text-red-600 rounded-sm hover:bg-red-600 hover:text-white transition-colors`}
         aria-label="Chiudi dropdown"
         >
           <Close />
         </button>
       )}
       <ul
-        className={`absolute z-[9999] ${listPlacement && listPlacement} rounded-lg border border-gray-300 bg-white text-gray-700 shadow-md overflow-auto transition-max-h duration-300 ${
+        className={`${listPlacement && listPlacement} rounded-lg border border-gray-300 bg-white text-gray-700 shadow-md overflow-auto transition-max-h duration-300 ${
           isOpen
             ? "max-h-56 w-48"
             : "h-10 flex cursor-pointer hover:bg-blue-300  w-40"
@@ -84,7 +84,7 @@ const GenericSelect: React.FC<IGenericSelect<any>> = ({
           ))
         ) : (
           <>
-            <span className="p-2 w-full z-20" onClick={() => setIsOpen(true)}>
+            <span className="p-2" onClick={() => setIsOpen(true)}>
               {defaultText}
             </span>
           </>

@@ -18,6 +18,7 @@ const Filters: React.FC<IFilters> = ({ isMobile }) => {
   const filters = useSelector(
     (state: any) => state.filters.filters.widgetVisibility
   );
+
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -33,8 +34,8 @@ const Filters: React.FC<IFilters> = ({ isMobile }) => {
 
   return (
     <div
-      className={` p-4 mb-12 transform transition-all duration-300 h-200 overflow-scroll ${
-        isMobile && "flex flex-col w-full h-150  items-center"
+      className={`${isMobile ?   "flex flex-col w-full h-150 overflow-scroll items-center":  "p-4 mb-12 transform transition-all duration-300 h-200 overflow-scroll"}
+       
       }
         ${
           expanded || isMobile
@@ -43,9 +44,7 @@ const Filters: React.FC<IFilters> = ({ isMobile }) => {
         }
       `}
     >
-      <h2 className="text-2xl mb-4">
-        <b>Filters</b>
-      </h2>
+     
       <div className="py-2">
         <WidgetFilters expanded={expanded || isMobile} />
       </div>
@@ -65,7 +64,7 @@ const Filters: React.FC<IFilters> = ({ isMobile }) => {
           <CryptoFilters expanded={expanded || isMobile} />
         </div>
       )}
-      {filters?.github && <div className="py-12"><GithubFilters expanded={expanded} /></div>}
+      {filters?.github && <div className="py-4"><GithubFilters expanded={expanded} /></div>}
     </div>
   );
 };

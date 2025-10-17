@@ -189,7 +189,7 @@ const PopularReposWidget: React.FC = () => {
   const step2 = () => {
     return (
       <>
-        <div className="flex flex-col justify-start items-start">
+        <div className="flex py-6 flex-col justify-start items-start">
           <button
             className="px-3 py-2 rounded-md text-white font-bold text-xs 
              bg-gradient-to-r from-indigo-500 to-indigo-700

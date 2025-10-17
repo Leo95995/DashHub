@@ -10,9 +10,11 @@ interface WidgetLayout {
   };
 }
 
-const useScreenWidthHook = (layout: WidgetLayout) => {
-  const [screenWidth, setScreenWidth] = useState<number>();
+const useScreenWidthHook = (layout?: WidgetLayout) => {
+  const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth);
   const [currentMode, setCurrentMode] = useState<ScreenMode>("desktop");
+
+  // Get screen width
   useEffect(() => {
     const res = getCurrentMode(window.innerWidth);
     setCurrentMode(res);

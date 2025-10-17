@@ -29,12 +29,12 @@ const DashBoard: React.FC = () => {
   const dispatch = useDispatch();
   // The original widget order.
   const [widgetOrder, setWidgetOrder] = useState<number[]>(
-    storageWidgetOrder ?? [3, 2, 1, 4]
+    storageWidgetOrder ?? [1, 4, 2, 3]
   );
   // If not dragged, the id should be simply null.
   const [draggedWidgetId, setDraggedWidgetId] = useState<number | null>(null);
 
-  const { getLayoutByMode, currentMode } = useScreenWidthHook(layout);
+  const { getLayoutByMode, currentMode, screenWidth } = useScreenWidthHook(layout);
 
   useEffect(() => {
     dispatch(setLayoutMode(currentMode));
@@ -107,9 +107,6 @@ const DashBoard: React.FC = () => {
     setDraggedWidgetId(null);
   };
 
-  console.log(isFullScreen, "FULLSCREEN");
-  console.log(url, "URL");
-
   return (
     <>
       {isFullScreen && url !== null && (
@@ -122,9 +119,9 @@ const DashBoard: React.FC = () => {
           <img
             src={url}
             alt="Fullscreen"
-            className="max-w-full max-h-full object-contain rounded-xl border border-transparent hover:border-white/30 transition-all duration-400"
+            className="max-w-full max-h-full object-contain rounded-xl border border-transparent hover:border-white/30 transition-all duration-400  hover:scale-105"
           />
-           <div className="absolute -inset-2 rounded-xl pointer-events-none border border-white/20 shadow-[0_0_40px_10px_rgba(255,255,255,0.1)]"></div>
+          <div className="absolute -inset-2 rounded-xl pointer-events-none border border-white/20 shadow-[0_0_40px_10px_rgba(255,255,255,0.1)]"></div>
         </div>
       )}
       <div className="w-full flex flex-col gap-5 ">
@@ -135,7 +132,7 @@ const DashBoard: React.FC = () => {
           widgetOrder={widgetOrder}
         />
         <section
-          className={`grid gap-6 px-8 py-8 flex-wrap h-195  border overflow-y-scroll overflow-x-hidden ${getLayoutByMode()}`}
+          className={`grid gap-6 px-8 py-8 flex-wrap h-195   overflow-y-scroll overflow-x-hidden ${getLayoutByMode()}`}
         >
           <>
             {renderWidgetByOrder().map((widget: any) => {

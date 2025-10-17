@@ -37,6 +37,7 @@ focus:ring-0
 dark:text-amber-50
 dark:border-gray-600
 disabled:opacity-30
+text-sm
   `}
         />
         {isLoading && (
