@@ -28,6 +28,7 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
     setNewColor(e.currentTarget.value);
   };
 
+  // function to save
   const save = () => {
     setIsSaving(true);
     setEditColor(false);
@@ -35,6 +36,16 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
     setIsSaving(false);
   };
 
+  // Updated save input
+  const saveByInput = (char: string) => {
+    if (char === "Enter") {
+      changeUsername();
+    } else if (char === "Escape") {
+      setEditMode(false);
+    }
+  };
+
+  //  Modify usenarme
   const changeUsername = () => {
     if (newUsername.length > 0) {
       dispatch(setUserName(newUsername));
@@ -43,13 +54,6 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
       alert("The minimum username length is of 5 characters");
     }
   };
-
-  const saveByInput = (char: string) => {
-    if (char === "Enter") {
-      changeUsername();
-    }
-  };
-
   return (
     <>
       <div
@@ -97,9 +101,7 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
                           status: IGlobalAlertStatus.SUCCESS,
                           message: "Success",
                           description: (
-                            <p>
-                              Modified username and avatar with success
-                            </p>
+                            <p>Modified username and avatar with success</p>
                           ),
                         })
                       );

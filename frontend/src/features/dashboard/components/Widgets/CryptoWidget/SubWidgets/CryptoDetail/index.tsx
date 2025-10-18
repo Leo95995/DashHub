@@ -107,7 +107,7 @@ const CryptoDetail: React.FC = () => {
 
   return (
     <>
-      <div className="flex items-end py-2 justify-start  flex-wrap gap-2">
+      <div className="flex items-end py-2 justify-start  relative flex-wrap gap-2">
         <div className="flex flex-col gap-2 w-24">
           <label htmlFor="timespan">Select days</label>
           <select
@@ -159,7 +159,7 @@ const CryptoDetail: React.FC = () => {
           </button>
         </div>
       </div>
-      {chartData?.data && <LineChart data={chartData?.data} />}
+      {chartData?.data &&<div className="w-full  flex-1 relative flex flex-col max-h-full"> <LineChart data={chartData?.data} /></div>}
     </>
   );
 };

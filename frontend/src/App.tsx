@@ -33,6 +33,7 @@ function App() {
 
   return (
     <>
+    {/* This handle the global alert */}
       <Alert />
       <>
         {!firstVisit && (

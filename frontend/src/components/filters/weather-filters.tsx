@@ -38,10 +38,16 @@ const WeatherFilters: React.FC<IWeatherFilters> = ({ expanded }) => {
         </label>
         {temperatureType && (
           <select
-            onChange={(e) =>
-              dispatch(setTemperatureType(e.currentTarget.value.toLowerCase()))
-              
-            }
+            onChange={(e) => {
+              dispatch(setTemperatureType(e.currentTarget.value.toLowerCase()));
+              dispatch(
+                setGlobalAlert({
+                  status: IGlobalAlertStatus.SUCCESS,
+                  message: "Success",
+                  description: `Temperature type changed to ${e.currentTarget.value.toLowerCase()}.`,
+                })
+              );
+            }}
             value={temperatureType}
             name="temperature"
             id="temperature"
@@ -111,7 +117,7 @@ const WeatherFilters: React.FC<IWeatherFilters> = ({ expanded }) => {
                 setGlobalAlert({
                   status: IGlobalAlertStatus.SUCCESS,
                   message: "Successo",
-                    description: `Weather data for ${searchText} recovered with success`,
+                  description: `Weather data for ${searchText} recovered with success`,
                 })
               );
             }}

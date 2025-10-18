@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type React from "react";
 // Redux React.
 import { useDispatch, useSelector } from "react-redux";
@@ -37,6 +37,18 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
   const { coordinates, weather, temperatureType, loading, error, searchText } =
     weatherData;
 
+  useEffect(() => {
+    if (error) {
+      dispatch(
+        setGlobalAlert({
+          status: IGlobalAlertStatus.ERROR,
+          message: "Success",
+          description: `Error loading weather data for the city ${searchText}`,
+        })
+      );
+    }
+  }, [error]);
+
   const renderLoading = () => (
     <div
       className={`absolute inset-0 flex flex-col items-center justify-center gap-4 text-lg bg-white/60 dark:bg-black/40 transition-opacity duration-500 ${
@@ -49,7 +61,57 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
 
   const renderError = () => {
     if (error) {
-      return <ErrorMessage message={"Errore nel caricamento dei dati meteo"} />;
+      return (
+        <>
+          <ErrorMessage message={"Failed to load weather data"} />
+          <h2 className="py-2 font-black">Search another city</h2>
+          <div className="flex">
+            <input
+              type="text"
+              name="location"
+              id="location"
+              onChange={(e) => dispatch(setSearchText(e.currentTarget.value))}
+              placeholder="Search weather by city"
+              onKeyDown={(e) =>
+                e.key === "Enter" &&
+                dispatch(fetchWeatherByCity(searchText) as any) &&
+                !error &&
+                dispatch(
+                  setGlobalAlert({
+                    status: IGlobalAlertStatus.SUCCESS,
+                    message: "Success",
+                    description: `Weather data for ${searchText} recovered with success`,
+                  })
+                )
+              }
+              className="
+                border border-gray-300 dark:border-gray-600
+                rounded-l-md
+                w-full
+                px-3 py-2
+                bg-white dark:bg-gray-800
+                text-gray-900 dark:text-gray-100
+                focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-600
+                transition-colors duration-200
+              "
+            />
+            <button
+              onClick={() => dispatch(fetchWeatherByCity(searchText) as any)}
+              className="border border-gray-300 dark:border-gray-600 border-l-0
+                  rounded-r-md
+                  px-4 py-2
+                  bg-blue-500 dark:bg-blue-600
+                  text-white
+                  font-semibold
+                  hover:bg-blue-600 dark:hover:bg-blue-700
+                  transition-colors duration-200
+                  cursor-pointer"
+            >
+              Search
+            </button>
+          </div>
+        </>
+      );
     }
   };
 
@@ -85,7 +147,7 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
                 setGlobalAlert({
                   status: IGlobalAlertStatus.SUCCESS,
                   message: "Success",
-                  description:  `Weather data for ${searchText} recovered with success`,
+                  description: `Weather data for ${searchText} recovered with success`,
                 })
               )
             }

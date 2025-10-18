@@ -1,6 +1,9 @@
 // Dashboard data
+import { useDispatch } from "react-redux";
+import { IGlobalAlertStatus } from "../../../../components/alert/alert";
 import MobileFilters from "../../../../components/layout/PrivateLayout/MobileFilters";
 import DashboardStorage from "../../../../services/storage/dashboard";
+import { setGlobalAlert } from "../../../../store/appSlice";
 import { isMobile } from "../../../../utils/media-query";
 interface IUserData {
   userInfo: any;
@@ -13,7 +16,6 @@ interface IDashBoardHeader {
   onClick: (val: boolean) => void;
   widgetOrder: number[];
   screenWidth: number;
-
 }
 
 const DashBoardHeader: React.FC<IDashBoardHeader> = ({
@@ -21,12 +23,17 @@ const DashBoardHeader: React.FC<IDashBoardHeader> = ({
   isEditMode,
   onClick,
   widgetOrder,
-  screenWidth
+  screenWidth,
 }) => {
+  const dispatch = useDispatch()
 
   return (
     <>
-      <div className={`flex  flex-col md:flex-row ${isMobile(screenWidth) ?"px-4": "px-6"} gap-5  `}>
+      <div
+        className={`flex  flex-col md:flex-row ${
+          isMobile(screenWidth) ? "px-4" : "px-6"
+        } gap-5  `}
+      >
         <div className="text-2xl m-0 duration-500">
           <b>
             Welcome
@@ -53,15 +60,21 @@ const DashBoardHeader: React.FC<IDashBoardHeader> = ({
           {isEditMode && (
             <button
               onClick={() => {
-                DashboardStorage.widgets.saveWidgetOrder(widgetOrder);
                 onClick(isEditMode);
+                DashboardStorage.widgets.saveWidgetOrder(widgetOrder);
+                dispatch(
+                  setGlobalAlert({
+                    status: IGlobalAlertStatus.SUCCESS,
+                    message: "Success",
+                    description:'New widget order saved with success!!'
+              }));
               }}
               className="px-4 py-2 rounded-lg  cursor-pointer bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium shadow-md hover:from-blue-600 hover:to-indigo-700 active:scale-95 transition"
             >
-             Finish Editing
+              Finish Editing
             </button>
-          )} 
-          <MobileFilters/>
+          )}
+          <MobileFilters />
         </div>
       </div>
     </>

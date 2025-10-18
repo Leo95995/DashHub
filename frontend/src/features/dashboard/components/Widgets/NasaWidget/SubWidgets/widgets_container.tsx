@@ -26,9 +26,6 @@ const WidgetContainer: React.FC<IWidgetContainer> = ({
 }) => {
 
 
-
-
-
   // Render Logic
   const renderWidgetSelected = (chosen: NasaWidgets = "Pic Of The Day") => {
     console.log('he keeps rendering');

@@ -3,12 +3,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { Ban, Infinity } from "lucide-react";
 import LoaderWithMessage from "../../../../../../../components/loader/loaderAndText";
 import ErrorMessage from "../../../../../../../components/Error/error";
+import { useEffect, useState } from "react";
+
+type GithubFields = Record<
+  "repositories" | "followers" | "following" | "stars" | "gists",
+  string
+>;
+
 const RandomUserWidget: React.FC = () => {
   const randomUserData = useSelector(
     (state: any) => state.github.randomUserData
   );
   const { data, loading, error } = randomUserData;
   const dispatch = useDispatch();
+  const [gh_links, set_ghlinks] = useState<GithubFields>();
+
+  useEffect(() => {
+    generateUrls();
+  }, [randomUserData]);
 
   const fetchRandomUntilData = async () => {
     let tries = 0;
@@ -26,9 +38,47 @@ const RandomUserWidget: React.FC = () => {
 
   const renderLoading = () => {
     if (loading) {
-      return <LoaderWithMessage text="Loading datas"/>
+      return <LoaderWithMessage text="Loading datas" />;
     }
     return <></>;
+  };
+
+  const generateUrls = () => {
+    // Link github
+
+    // Object.keys(randomUserData.data).map((urls: any) => {
+    //   const key = urls;
+    //   const value = randomUserData.data[urls];
+    //   console.log(value.toString());
+    //   if (
+    //     value.toString().includes("https://api.github.com") &&
+    //     githubLinks.hasOwnProperty(key)
+    //   ) {
+    //     const newVal = value.replace(
+    //       "https://api.github.com/users",
+    //       "https://github.com"
+    //     );
+    //     githubLinks[key as keyof GithubFields] = newVal;
+    //   }
+    // });
+
+    const githubLinks: GithubFields = {
+      repositories: "",
+      followers: "",
+      following: "",
+      stars: "",
+      gists: "",
+    };
+    const username = randomUserData.data.login;
+    Object.keys(githubLinks).map((e) => {
+      const key = e;
+      const baseurl = `https://github.com/${username}?tab=${key}`;
+
+      githubLinks[e as keyof GithubFields] = baseurl;
+    });
+
+
+    set_ghlinks(githubLinks);
   };
 
   const renderError = () => {
@@ -55,7 +105,10 @@ const RandomUserWidget: React.FC = () => {
     if (!Object.keys(data).length) {
       return (
         <>
-        <ErrorMessage customTitle="No user selected " message={"click on the button to display a random github user!!"}/>
+          <ErrorMessage
+            customTitle="No user selected "
+            message={"click on the button to display a random github user!!"}
+          />
         </>
       );
     }
@@ -103,46 +156,39 @@ const RandomUserWidget: React.FC = () => {
           </div>
           <div className=" border-gray-200 dark:border-gray-700 ">
             <a
-              href={data?.repos_url}
+              href={gh_links?.repositories}
               className="text-blue-600 dark:text-blue-400 block hover:underline"
               target="_blank"
             >
               📂 Repos
             </a>
             <a
-              href={data?.followers_url}
+              href={gh_links?.followers}
               className="text-blue-600 dark:text-blue-400 block hover:underline"
               target="_blank"
             >
               👥 Followers
             </a>
             <a
-              href={data?.following_url?.replace("{/other_user}", "")}
+              href={gh_links?.following}
               className="text-blue-600 dark:text-blue-400 block hover:underline"
               target="_blank"
             >
               ➡️ Following
             </a>
             <a
-              href={data?.gists_url?.replace("{/gist_id}", "")}
+              href={gh_links?.gists}
               className="text-blue-600 dark:text-blue-400 block hover:underline"
               target="_blank"
             >
               📝 Gists
             </a>
             <a
-              href={data?.starred_url?.replace("{/owner}{/repo}", "")}
+              href={gh_links?.stars}
               className="text-blue-600 dark:text-blue-400 block hover:underline"
               target="_blank"
             >
               ⭐ Starred
-            </a>
-            <a
-              href={data?.events_url?.replace("{/privacy}", "")}
-              className="text-blue-600 dark:text-blue-400 block hover:underline"
-              target="_blank"
-            >
-              🎉 Events
             </a>
           </div>
         </div>

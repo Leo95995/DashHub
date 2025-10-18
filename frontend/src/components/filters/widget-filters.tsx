@@ -35,20 +35,42 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
     widget: keyof IFilters["widgetVisibility"],
     visibility: boolean
   ) => {
-
-
     dispatch(
       changeWidgetVisibility({ widget: widget, visibility: visibility })
     );
-     dispatch(
+    dispatch(
       setGlobalAlert({
         status: IGlobalAlertStatus.SUCCESS,
         message: "Success",
-        description:<p>The <b>{widget}</b> widget is now <b>{visibility ? 'visible' : 'hidden'}</b>.</p>,
-      }))
-
+        description: (
+          <p>
+            The <b>{widget}</b> widget is now{" "}
+            <b>{visibility ? "visible" : "hidden"}</b>.
+          </p>
+        ),
+      })
+    );
   };
   // Handle change functionality
+
+  const visualModeConverter = (visualMode: VisualMode) => {
+    let text = "";
+    switch (visualMode) {
+      case "large":
+        text = "Desktop";
+        break;
+      case "medium":
+        text = "Tablet";
+
+        break;
+      case "small":
+        text = "Mobile";
+
+        break;
+    }
+    console.log(text);
+    return text;
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(
@@ -61,7 +83,7 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
       setGlobalAlert({
         status: IGlobalAlertStatus.SUCCESS,
         message: "Success",
-        description: `Layout widget modified with success`,
+        description: `You changed the number of columns for ${visualModeConverter(e.currentTarget.name as VisualMode)} mode to ${e.currentTarget.value}.`,
       })
     );
   };

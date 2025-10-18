@@ -7,11 +7,12 @@ import WeatherWidget from "./Widgets/WeatherWidget";
 import { useSelector } from "react-redux";
 import useScreenWidthHook from "../../../hooks/useScreenWidthHook";
 import { useDispatch } from "react-redux";
-import { setLayoutMode } from "../../../store/filterSlice";
-import { setEditMode } from "../../../store/appSlice";
+import { setLayoutMode} from "../../../store/filterSlice";
+import { setEditMode, setGlobalAlert } from "../../../store/appSlice";
 import DashboardStorage from "../../../services/storage/dashboard";
 import { setFullScreenImage } from "../../../store/nasaSlice";
 import { isMobile } from "../../../utils/media-query";
+import { IGlobalAlertStatus } from "../../../components/alert/alert";
 
 const DashBoard: React.FC = () => {
   const filters = useSelector(
@@ -43,6 +44,13 @@ const DashBoard: React.FC = () => {
   }, [currentMode]);
 
   const toggleEditMode = (status: boolean) => {
+    dispatch(
+      setGlobalAlert({
+        status: IGlobalAlertStatus.SUCCESS,
+        message: "Success",
+        description: !status ? `Drag and Drop mode is now ON` : `Drag and Drop mode is now OFF`,
+      })
+    );
     dispatch(setEditMode(!status));
   };
 
