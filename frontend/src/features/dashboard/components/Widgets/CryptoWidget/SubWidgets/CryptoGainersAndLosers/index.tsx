@@ -50,9 +50,9 @@ const CryptoGainersAndLosers: React.FC = () => {
   return (
     <>
       <div className="flex gap-2">
-        <h2 className="text-xl font-semibold justify-center flex w-full">
-          Gainers & Losers
-        </h2>
+        <h3 className="text-xl flex font-semibold py-2 w-full justify-center">
+                   Gainers & Losers
+        </h3>
       </div>
          <GenericSelect
           itemList={filterCurrenciesList}

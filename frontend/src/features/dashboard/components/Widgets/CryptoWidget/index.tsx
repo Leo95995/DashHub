@@ -83,7 +83,7 @@ const CryptoWidget: React.FC<IGenericWidget> = ({
             : ""
         }`}
       >
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 h-full max-h-70">
           <div className="flex justify-between">
             <Switcher
               changeSelectedWidget={handleCryptoWidgetChange}

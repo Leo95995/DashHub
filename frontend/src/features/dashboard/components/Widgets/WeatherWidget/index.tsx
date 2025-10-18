@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type React from "react";
 // Redux React.
 import { useDispatch, useSelector } from "react-redux";
@@ -7,7 +7,11 @@ import {
   setSearchText,
 } from "../../../../../store/weatherSlice";
 // Weather utils
-import {  background_color, get_temperatures, getHoursAndMin} from "../../../../../utils/weather-utils";
+import {
+  background_color,
+  get_temperatures,
+  getHoursAndMin,
+} from "../../../../../utils/weather-utils";
 //  Loader
 import ReactLoader from "../../../../../components/loader";
 // Icons
@@ -17,8 +21,11 @@ import type { IGenericWidget } from "../../../interfaces";
 // Componnts
 import Tag from "../../../../../components/Tag";
 import ErrorMessage from "../../../../../components/Error/error";
+import { IGlobalAlertStatus } from "../../../../../components/alert/alert";
+import { setGlobalAlert } from "../../../../../store/appSlice";
 
-const WeatherWidget: React.FC<IGenericWidget> = ({ isEditMode,
+const WeatherWidget: React.FC<IGenericWidget> = ({
+  isEditMode,
   widgetId,
   handleDrop,
   setDraggedWidgetId,
@@ -27,7 +34,20 @@ const WeatherWidget: React.FC<IGenericWidget> = ({ isEditMode,
   const [dragging, setDragging] = useState<boolean>(false);
   const dispatch = useDispatch();
 
-  const { coordinates, weather, temperatureType, loading, error, searchText } = weatherData;
+  const { coordinates, weather, temperatureType, loading, error, searchText } =
+    weatherData;
+
+  useEffect(() => {
+    if (error) {
+      dispatch(
+        setGlobalAlert({
+          status: IGlobalAlertStatus.ERROR,
+          message: "Success",
+          description: `Error loading weather data for the city ${searchText}`,
+        })
+      );
+    }
+  }, [error]);
 
   const renderLoading = () => (
     <div
@@ -41,7 +61,57 @@ const WeatherWidget: React.FC<IGenericWidget> = ({ isEditMode,
 
   const renderError = () => {
     if (error) {
-      return  <ErrorMessage message={"Errore nel caricamento dei dati meteo"}/>
+      return (
+        <>
+          <ErrorMessage message={"Failed to load weather data"} />
+          <h2 className="py-2 font-black">Search another city</h2>
+          <div className="flex">
+            <input
+              type="text"
+              name="location"
+              id="location"
+              onChange={(e) => dispatch(setSearchText(e.currentTarget.value))}
+              placeholder="Search weather by city"
+              onKeyDown={(e) =>
+                e.key === "Enter" &&
+                dispatch(fetchWeatherByCity(searchText) as any) &&
+                !error &&
+                dispatch(
+                  setGlobalAlert({
+                    status: IGlobalAlertStatus.SUCCESS,
+                    message: "Success",
+                    description: `Weather data for ${searchText} recovered with success`,
+                  })
+                )
+              }
+              className="
+                border border-gray-300 dark:border-gray-600
+                rounded-l-md
+                w-full
+                px-3 py-2
+                bg-white dark:bg-gray-800
+                text-gray-900 dark:text-gray-100
+                focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-600
+                transition-colors duration-200
+              "
+            />
+            <button
+              onClick={() => dispatch(fetchWeatherByCity(searchText) as any)}
+              className="border border-gray-300 dark:border-gray-600 border-l-0
+                  rounded-r-md
+                  px-4 py-2
+                  bg-blue-500 dark:bg-blue-600
+                  text-white
+                  font-semibold
+                  hover:bg-blue-600 dark:hover:bg-blue-700
+                  transition-colors duration-200
+                  cursor-pointer"
+            >
+              Search
+            </button>
+          </div>
+        </>
+      );
     }
   };
 
@@ -72,7 +142,14 @@ const WeatherWidget: React.FC<IGenericWidget> = ({ isEditMode,
             placeholder="Search weather by city"
             onKeyDown={(e) =>
               e.key === "Enter" &&
-              dispatch(fetchWeatherByCity(searchText) as any)
+              dispatch(fetchWeatherByCity(searchText) as any) &&
+              dispatch(
+                setGlobalAlert({
+                  status: IGlobalAlertStatus.SUCCESS,
+                  message: "Success",
+                  description: `Weather data for ${searchText} recovered with success`,
+                })
+              )
             }
             className="
                 border border-gray-300 dark:border-gray-600
@@ -95,7 +172,8 @@ const WeatherWidget: React.FC<IGenericWidget> = ({ isEditMode,
                   font-semibold
                   hover:bg-blue-600 dark:hover:bg-blue-700
                   transition-colors duration-200
-                  cursor-pointer">
+                  cursor-pointer"
+          >
             Search
           </button>
         </div>
@@ -190,7 +268,9 @@ const WeatherWidget: React.FC<IGenericWidget> = ({ isEditMode,
           <div className="bg-yellow-200/30 dark:bg-yellow-700/30 rounded-lg px-2 py-1 flex items-center gap-1 text-gray-900 dark:text-white">
             🌅 {getHoursAndMin(weather.sys.sunrise)}
           </div>
-          <div className="flex gap-5">{isEditMode && <Tag text="Edit Mode" />}</div>
+          <div className="flex gap-5">
+            {isEditMode && <Tag text="Edit Mode" />}
+          </div>
           <div className="bg-orange-200/30 dark:bg-orange-700/30 rounded-lg px-2 py-1 flex items-center gap-1 text-gray-900 dark:text-white">
             🌇 {getHoursAndMin(weather.sys.sunset)}
           </div>
@@ -225,7 +305,6 @@ const WeatherWidget: React.FC<IGenericWidget> = ({ isEditMode,
       )} overflow-hidden`}
     >
       {" "}
-      
       {renderLoading()}
       {renderError()}
       {renderWeather()}

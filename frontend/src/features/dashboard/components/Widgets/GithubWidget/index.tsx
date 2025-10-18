@@ -9,6 +9,8 @@ import type { IGenericWidget } from "../../../interfaces";
 import Tag from "../../../../../components/Tag";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedGithubWidget } from "../../../../../store/githubSlice";
+import { IGlobalAlertStatus } from "../../../../../components/alert/alert";
+import { setGlobalAlert } from "../../../../../store/appSlice";
 
 const GithubWidget: React.FC<IGenericWidget> = ({
   isEditMode,
@@ -20,7 +22,6 @@ const GithubWidget: React.FC<IGenericWidget> = ({
   const githubWidget = useSelector((state: any) => state.github.selectedWidget);
   const [dragging, setDragging] = useState<boolean>(false);
   const dispatch = useDispatch();
-  
 
   return (
     <>
@@ -49,9 +50,16 @@ const GithubWidget: React.FC<IGenericWidget> = ({
             widgetSelected={githubWidget}
             switcherTitle="Select the Github widget"
             switcherButtonText="Change Widget"
-            changeSelectedWidget={(e) =>
-              dispatch(setSelectedGithubWidget(e as GithubWidgets))
-            }
+            changeSelectedWidget={(e) => {
+              dispatch(setSelectedGithubWidget(e as GithubWidgets));
+              dispatch(
+                setGlobalAlert({
+                  status: IGlobalAlertStatus.SUCCESS,
+                  message: "Success",
+                  description: `You have selected the "${e}" widget for GitHub.`,
+                })
+              );
+            }}
             widgetList={github_widgets}
           />
           {isEditMode && <Tag text="Edit Mode"></Tag>}

@@ -11,6 +11,7 @@ import { fetchCryptoCurrenciesList } from "./store/cryptoSlice";
 import FirstVisitModal from "./features/dashboard/components/firstVisitModal";
 import { setFirstVisit } from "./store/appSlice";
 import LoaderWithMessage from "./components/loader/loaderAndText";
+import Alert from "./components/alert/alert";
 
 // Public Routes
 const DashBoardPage = lazy(() => import("./pages/privates/DashboardPage"));
@@ -22,7 +23,7 @@ function App() {
   // Data relative to first visit
   const { firstVisit } = userdata;
 
-const globalLoad = useSelector((state:any) => state.app.globalLoad);
+  const globalLoad = useSelector((state: any) => state.app.globalLoad);
 
   const dispatch = useDispatch();
 
@@ -32,8 +33,10 @@ const globalLoad = useSelector((state:any) => state.app.globalLoad);
 
   return (
     <>
+    {/* This handle the global alert */}
+      <Alert />
       <>
-        {!firstVisit  && (
+        {!firstVisit && (
           <FirstVisitModal
             firstVisit={!firstVisit}
             setFirstVisit={setFirstVisit}
@@ -55,7 +58,11 @@ const globalLoad = useSelector((state:any) => state.app.globalLoad);
                       </>
                     }
                   >
-                    {!globalLoad ? <DashBoardPage /> : <LoaderWithMessage text="Loading page"/>}
+                    {!globalLoad ? (
+                      <DashBoardPage />
+                    ) : (
+                      <LoaderWithMessage text="Loading page" />
+                    )}
                   </Suspense>
                 </>
               }

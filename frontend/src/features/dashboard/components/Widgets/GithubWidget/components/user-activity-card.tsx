@@ -25,7 +25,9 @@ const UserActivityCard: React.FC<{ item: ItemStatus<IUserActivityData> }> = ({
       return;
     }
 
-    return <ErrorMessage message="No public data found for the selected GitHub user. Please check the username or try another user." />;
+    return (
+      <ErrorMessage message="No public data found for the selected GitHub user. Please check the username or try another user." />
+    );
   };
 
   const renderLoading = () => {
@@ -52,9 +54,9 @@ const UserActivityCard: React.FC<{ item: ItemStatus<IUserActivityData> }> = ({
 
     if (!Object.keys(userActivityData)?.length) {
       return (
-        <div className="flex flex-col w-full h-50 items-center justify-center dark:text-white text-gray-700 font-bold">
-          <UserRound />
-          No user selected
+        <div className="flex flex-col w-full h-[200px] items-center justify-center gap-4 text-center dark:text-white text-gray-700 font-bold">
+          <UserRound className="w-16 h-16 text-gray-400 dark:text-gray-500" />
+          <span>No user selected</span>
         </div>
       );
     }

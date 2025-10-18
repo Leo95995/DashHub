@@ -1,3 +1,4 @@
+import type { IGlobalAlertStatus } from "../../components/alert/alert";
 import type { GithubWidgets } from "../../features/dashboard/components/widgetSwitcher/types";
 
 // Flexible so that can be used everywhere
@@ -9,7 +10,6 @@ export interface ItemStatus<T> {
   [key: string]: any;
 }
 
-export type IGlobalAlertStatus = "error" | "success" | "warn" | "";
 
 export interface IGlobalAlert {
   status: IGlobalAlertStatus;

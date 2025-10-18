@@ -81,7 +81,7 @@ const CryptoTrendings: React.FC = () => {
     if (!data || Array.isArray(data)) return null;
 
     return (
-      <div className="flex flex-wrap gap-2 justify-center  max-h-100 overflow-scroll h-full">
+      <div className="flex flex-wrap gap-2 justify-center  max-h-100 overflow-y-scroll overflow-x-hidden h-full">
         <h2 className="text-xl font-medium pt-4">Crypto Trendings</h2>
         <div className={`flex justify-end pb-6 w-full relative h-28 ${isOpen && 'pr-5'}`}>
           {isOpen && (

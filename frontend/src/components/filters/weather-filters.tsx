@@ -9,6 +9,8 @@ import {
   setSearchText,
 } from "../../store/weatherSlice";
 import FilterSection from "./filters-section";
+import { setGlobalAlert } from "../../store/appSlice";
+import { IGlobalAlertStatus } from "../alert/alert";
 
 interface IWeatherFilters {
   expanded: boolean;
@@ -36,9 +38,16 @@ const WeatherFilters: React.FC<IWeatherFilters> = ({ expanded }) => {
         </label>
         {temperatureType && (
           <select
-            onChange={(e) =>
-              dispatch(setTemperatureType(e.currentTarget.value.toLowerCase()))
-            }
+            onChange={(e) => {
+              dispatch(setTemperatureType(e.currentTarget.value.toLowerCase()));
+              dispatch(
+                setGlobalAlert({
+                  status: IGlobalAlertStatus.SUCCESS,
+                  message: "Success",
+                  description: `Temperature type changed to ${e.currentTarget.value.toLowerCase()}.`,
+                })
+              );
+            }}
             value={temperatureType}
             name="temperature"
             id="temperature"
@@ -79,10 +88,17 @@ const WeatherFilters: React.FC<IWeatherFilters> = ({ expanded }) => {
               dispatch(setSearchText(e.currentTarget.value) as any)
             }
             placeholder="Search weather by city"
-            onKeyDown={(e) =>
+            onKeyDown={(e) => {
               e.key === "Enter" &&
-              dispatch(fetchWeatherByCity(searchText) as any)
-            }
+                dispatch(fetchWeatherByCity(searchText) as any) &&
+                dispatch(
+                  setGlobalAlert({
+                    status: IGlobalAlertStatus.SUCCESS,
+                    message: "Successo",
+                    description: `Weather data for ${searchText} recovered with success`,
+                  })
+                );
+            }}
             className="
         border border-gray-300 dark:border-gray-600
         rounded-l-md
@@ -95,7 +111,16 @@ const WeatherFilters: React.FC<IWeatherFilters> = ({ expanded }) => {
       "
           />
           <button
-            onClick={() => dispatch(fetchWeatherByCity(searchText) as any)}
+            onClick={() => {
+              dispatch(fetchWeatherByCity(searchText) as any);
+              dispatch(
+                setGlobalAlert({
+                  status: IGlobalAlertStatus.SUCCESS,
+                  message: "Successo",
+                  description: `Weather data for ${searchText} recovered with success`,
+                })
+              );
+            }}
             className="
         border border-gray-300 dark:border-gray-600 border-l-0
         rounded-r-md
@@ -117,11 +142,7 @@ const WeatherFilters: React.FC<IWeatherFilters> = ({ expanded }) => {
 
   return (
     <>
-      <FilterSection
-        title={"WEATHER"}
-        defaultOpen={false}
-        expanded={expanded}
-      >
+      <FilterSection title={"WEATHER"} defaultOpen={false} expanded={expanded}>
         {renderCitySearch()}
         {renderTemperatureSelector()}
       </FilterSection>

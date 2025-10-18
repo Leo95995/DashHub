@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import LoaderWithMessage from "../../../../../../components/loader/loaderAndText";
 import type { CMEData } from "../../../../../../store/interfaces/interfaces";
 import type { ArrowKey } from "../../../../../../interfaces/common/interfaces";
+import ErrorMessage from "../../../../../../components/Error/error";
 
 export interface ICmeWidget {
   cme_data: CMEData[];
@@ -27,11 +28,11 @@ const Cme_Widget: React.FC<ICmeWidget> = ({
   }, [cme_data]);
 
   if (error) {
-    return <>Errore nel caricamento</>;
+    return <><ErrorMessage message={"Error while loading CME datas"} /></>;
   }
 
   if (loading) {
-    return <LoaderWithMessage text=" Loading Cme..." />;
+    return <LoaderWithMessage text=" Loading Cme Data" />;
   }
 
   const changeWidget = (currentIndex: number, direction: ArrowKey) => {
@@ -128,7 +129,7 @@ const Cme_Widget: React.FC<ICmeWidget> = ({
         </div>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-center gap-4 mt-5">
+        <div className="flex justify-center gap-4 mt-5 text-sm">
           <button
             onClick={() =>
               changeWidget((selectedCme?.index as number) + 1, "prev")
@@ -139,7 +140,7 @@ const Cme_Widget: React.FC<ICmeWidget> = ({
           </button>
           <button
             onClick={() => changeWidget(selectedCme?.index + 1, "next")}
-            className="px-5 py-2 rounded-md bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold shadow-lg hover:from-purple-600 hover:to-pink-600 hover:scale-105 active:scale-95 transition-all duration-300 transform"
+            className="px-5 py-2 cursor-pointer rounded-md bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold shadow-lg hover:from-purple-600 hover:to-pink-600 hover:scale-105 active:scale-95 transition-all duration-300 transform"
           >
             Next
           </button>

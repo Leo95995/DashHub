@@ -14,6 +14,8 @@ import { setWidgetLayout } from "../../store/filterSlice";
 import type { ScreenMode } from "../../interfaces/common/interfaces";
 import { CircleCheck } from "lucide-react";
 import FilterSection from "./filters-section";
+import { setGlobalAlert } from "../../store/appSlice";
+import { IGlobalAlertStatus } from "../alert/alert";
 
 interface IWidgetFilters {
   expanded: boolean;
@@ -36,14 +38,52 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
     dispatch(
       changeWidgetVisibility({ widget: widget, visibility: visibility })
     );
+    dispatch(
+      setGlobalAlert({
+        status: IGlobalAlertStatus.SUCCESS,
+        message: "Success",
+        description: (
+          <p>
+            The <b>{widget}</b> widget is now{" "}
+            <b>{visibility ? "visible" : "hidden"}</b>.
+          </p>
+        ),
+      })
+    );
   };
   // Handle change functionality
+
+  const visualModeConverter = (visualMode: VisualMode) => {
+    let text = "";
+    switch (visualMode) {
+      case "large":
+        text = "Desktop";
+        break;
+      case "medium":
+        text = "Tablet";
+
+        break;
+      case "small":
+        text = "Mobile";
+
+        break;
+    }
+    console.log(text);
+    return text;
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(
       setWidgetLayout({
         type: e.currentTarget.name as VisualMode,
         value: Number(e.currentTarget.value),
+      })
+    );
+    dispatch(
+      setGlobalAlert({
+        status: IGlobalAlertStatus.SUCCESS,
+        message: "Success",
+        description: `You changed the number of columns for ${visualModeConverter(e.currentTarget.name as VisualMode)} mode to ${e.currentTarget.value}.`,
       })
     );
   };

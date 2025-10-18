@@ -1,7 +1,7 @@
 // Interfaces
 import type {
   INeoWsData,
-  ItemStatus
+  ItemStatus,
 } from "../../../../../../store/interfaces/interfaces";
 import type { IApodWidget } from "./nasa_apod";
 
@@ -14,7 +14,7 @@ import Cme_Widget from "./nasa_cme";
 interface IWidgetContainer {
   apodStatus: IApodWidget;
   neoWStatus: ItemStatus<INeoWsData[]>;
-  cmeStatus: ItemStatus<CMEData>
+  cmeStatus: ItemStatus<CMEData>;
   widgetSelected: NasaWidgets;
 }
 
@@ -26,8 +26,10 @@ const WidgetContainer: React.FC<IWidgetContainer> = ({
 }) => {
 
 
-  // Render Logic 
+  // Render Logic
   const renderWidgetSelected = (chosen: NasaWidgets = "Pic Of The Day") => {
+    console.log('he keeps rendering');
+    
     switch (chosen) {
       case "Pic Of The Day":
         return renderApod();
@@ -58,11 +60,14 @@ const WidgetContainer: React.FC<IWidgetContainer> = ({
     );
   };
 
-
   const renderCmeWidget = () => {
-
-
-    return <Cme_Widget cme_data={cmeStatus?.data as CMEData[]} loading={cmeStatus.loading} error={cmeStatus.error}/> ;
+    return (
+      <Cme_Widget
+        cme_data={cmeStatus?.data as CMEData[]}
+        loading={cmeStatus.loading}
+        error={cmeStatus.error}
+      />
+    );
   };
 
   return <>{renderWidgetSelected(widgetSelected)}</>;
