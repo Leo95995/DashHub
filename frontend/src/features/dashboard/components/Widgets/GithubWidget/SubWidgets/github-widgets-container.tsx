@@ -1,5 +1,5 @@
 // Interfaces
-import type { GithubContainer } from "../../../../../../store/interfaces/interfaces";
+import type { GithubContainer } from "../../../../../../types/store/github";
 //  Widgets
 import PopularReposWidget from "./PopularReposWidget";
 import UserActivityWidget from "./UserActivityWidget";

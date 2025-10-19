@@ -1,25 +1,8 @@
-export interface CryptoItem {
-  usd: number;
-  usd_24h_change: number;
-  eur: number;
-  eur_24h_change: number;
-}
-
-export interface ICryptoTrendings {
-  [key: string]: CryptoItem;
-}
-
-export type ICryptoDetails = Array<Array<Number>>;
-
-export interface ICryptoTopGainers {
-  id: string;
-  name: string;
-  symbol: string;
-  image: string;
-  price: number;
-  change24h: number;
-  marketCap: number;
-}
+import type {
+  ICryptoTrendings,
+  ICryptoDetails,
+  ICryptoTopGainers,
+} from "../types/store/crypto";
 
 /**
  * Function who return a list of ids representing all the crypto currencies
@@ -72,5 +55,5 @@ export const CryptoMappers = {
   CryptoCurrenciesMapper,
   cryptoTrendingMapper,
   cryptoDetailsMapper,
-  cryptoTopGainersMapper
+  cryptoTopGainersMapper,
 };

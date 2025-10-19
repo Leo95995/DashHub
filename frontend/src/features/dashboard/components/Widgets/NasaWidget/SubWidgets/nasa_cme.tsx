@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import LoaderWithMessage from "../../../../../../components/loader/loaderAndText";
-import type { CMEData } from "../../../../../../store/interfaces/interfaces";
-import type { ArrowKey } from "../../../../../../interfaces/common/interfaces";
-import ErrorMessage from "../../../../../../components/Error/error";
+import LoaderWithMessage from "../../../../../../components/Loaders/LoaderWithMessage";
+import type { CMEData } from "../../../../../../types/store/nasa";
+import type { ArrowKey } from "../../../../../../types/common/generic";
+import ErrorMessage from "../../../../../../components/Error/Error";
 
 export interface ICmeWidget {
   cme_data: CMEData[];

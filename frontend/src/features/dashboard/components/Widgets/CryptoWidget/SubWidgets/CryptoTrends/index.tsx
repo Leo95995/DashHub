@@ -1,15 +1,14 @@
-import { useSelector } from "react-redux";
-import type { ItemStatus } from "../../../../../../../store/interfaces/interfaces";
-import type { ICryptoTrendings } from "../../../../../../../mappers/cryptoMapper";
-import { setCryptoTrendingFilters } from "../../../../../../../store/cryptoSlice";
+import { Close } from "@mui/icons-material";
 import { CircleCheck } from "lucide-react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Close } from "@mui/icons-material";
-import CryptoList from "./components/crypto-list";
-import FilterList from "./components/filterList/filter-list";
-import ErrorMessage from "../../../../../../../components/Error/error";
-import ReactLoader from "../../../../../../../components/loader";
+import { useSelector, useDispatch } from "react-redux";
+import ErrorMessage from "../../../../../../../components/Error/Error";
+import ReactLoader from "../../../../../../../components/Loaders/ReactLoaders";
+import { setCryptoTrendingFilters } from "../../../../../../../store/cryptoSlice";
+import type { ItemStatus } from "../../../../../../../types/common/status";
+import type { ICryptoTrendings } from "../../../../../../../types/store/crypto";
+import CryptoList from "./crypto-list";
+import FilterList from "./filter-list";
 
 const CryptoTrendings: React.FC = () => {
   const crypto_data = useSelector(
@@ -20,9 +19,9 @@ const CryptoTrendings: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
 
-  const {
-    data: currenciesList,
-  } = useSelector((state: any) => state.crypto.currenciesList);
+  const { data: currenciesList } = useSelector(
+    (state: any) => state.crypto.currenciesList
+  );
   // Data for crypto filters
   const filterData = useSelector((state: any) => state.crypto.filterData);
   const { ids } = filterData?.cryptoTrendingFilters;
@@ -83,7 +82,11 @@ const CryptoTrendings: React.FC = () => {
     return (
       <div className="flex flex-wrap gap-2 justify-center  max-h-100 overflow-y-scroll overflow-x-hidden h-full">
         <h2 className="text-xl font-medium pt-4">Crypto Trendings</h2>
-        <div className={`flex justify-end pb-6 w-full relative h-28 ${isOpen && 'pr-5'}`}>
+        <div
+          className={`flex justify-end pb-6 w-full relative h-28 ${
+            isOpen && "pr-5"
+          }`}
+        >
           {isOpen && (
             <button
               onClick={() => setIsOpen(false)}

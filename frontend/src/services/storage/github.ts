@@ -1,4 +1,4 @@
-import type { GithubWidgets} from "../../features/dashboard/components/widgetSwitcher/types"
+import type { GithubWidgets } from "../../features/dashboard/types"
 import { storage } from "./storage"
 
 const GITHUB_KEY = "github" 

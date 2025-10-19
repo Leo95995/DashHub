@@ -10,16 +10,15 @@ import {
 } from "../../../../../store/nasaSlice";
 // Components
 import WidgetContainer from "./SubWidgets/widgets_container";
-import Switcher from "../../widgetSwitcher/switcher";
+import Switcher from "../../Switcher/switcher";
 // Nasa widget datas
-import { nasa_widgets } from "../../widgetSwitcher/datas";
+import { nasa_widgets } from "../../Switcher/datas";
 // Interfaces
-import type { WidgetTypes } from "../../widgetSwitcher/types";
-import type { IGenericWidget } from "../../../interfaces";
+import type { IGenericWidget, WidgetTypes } from "../../../types";
 // Tag components
-import Tag from "../../../../../components/Tag";
-import { IGlobalAlertStatus } from "../../../../../components/alert/alert";
+import Tag from "../../../../../components/Tag/Tag";
 import { setGlobalAlert } from "../../../../../store/appSlice";
+import { IGlobalAlertStatus } from "../../../../../types/store/app";
 
 const NasaWidget: React.FC<IGenericWidget> = ({
   isEditMode,

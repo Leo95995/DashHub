@@ -1,7 +1,5 @@
+import type { GithubData, IChartData } from "../features/dashboard/components/Widgets/GithubWidget/types";
 import { generateDistinctColors } from "./generic-utils";
-
-import type { IChartData } from "../features/dashboard/components/Widgets/GithubWidget/interfaces/interface";
-import type { GithubData } from "../features/dashboard/components/Widgets/GithubWidget/interfaces/interface";
 
 // Function used to generate stats showable to piechart
 export const populateGithubPiechart = (

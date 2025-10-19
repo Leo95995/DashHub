@@ -1,7 +1,7 @@
-import type { CryptoWidgets } from "../../../widgetSwitcher/types"
 import CryptoDetail from "./CryptoDetail"
 import CryptoTrendings from "./CryptoTrends"
 import CryptoGainersAndLosers from "./CryptoGainersAndLosers"
+import type { CryptoWidgets } from "../../../../types"
 
 interface CryptoContainer {
     widget : CryptoWidgets

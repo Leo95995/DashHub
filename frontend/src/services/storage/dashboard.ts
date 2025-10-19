@@ -1,5 +1,5 @@
 import { type Temperature } from "../../store/weatherSlice";
-import type { IWeatherData, LocationCoordinates } from "../interfaces/interfaces";
+import type { IWeatherData, LocationCoordinates } from "../../types/services/weather";
 import cryptoKey from "./crypto";
 import githubKey from "./github";
 import nasaKey from "./nasa";

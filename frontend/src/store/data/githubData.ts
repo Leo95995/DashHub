@@ -1,7 +1,8 @@
-import type { GithubWidgets } from "../../features/dashboard/components/widgetSwitcher/types";
-import type { GithubRepo, IUserActivityData } from "../../mappers/githubMapper";
+import type { GithubWidgets } from "../../features/dashboard/types";
 import DashboardStorage from "../../services/storage/dashboard";
-import type { ItemStatus } from "../interfaces/interfaces";
+import type { ItemStatus } from "../../types/common/status";
+import type { GithubRepo, IUserActivityData } from "../../types/services/github";
+
 
 /**
  * DATA FOR GITHUB SERVICES

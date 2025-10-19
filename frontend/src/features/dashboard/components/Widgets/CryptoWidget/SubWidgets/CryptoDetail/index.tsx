@@ -1,18 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 // Chart
-import LineChart, { type ILineChartData } from "../../Charts/lineChart";
 // React Imports
 import { useEffect, useState } from "react";
 import { regularTimeStampToTime } from "../../../../../../../utils/weather-utils";
-import {
-  setCryptoDetailFilters,
-} from "../../../../../../../store/cryptoSlice";
-import {
-  days,
-} from "../../../../../../../store/data/cryptoData";
+import { setCryptoDetailFilters } from "../../../../../../../store/cryptoSlice";
+import { days } from "../../../../../../../store/data/cryptoData";
 // Components
-import ErrorMessage from "../../../../../../../components/Error/error";
-import ReactLoader from "../../../../../../../components/loader";
+import ErrorMessage from "../../../../../../../components/Error/Error";
+import ReactLoader from "../../../../../../../components/Loaders/ReactLoaders";
+import LineChart from "../../Charts/lineChart";
+import type { ILineChartData } from "../../types";
 
 const CryptoDetail: React.FC = () => {
   const [chartData, setChartData] = useState<ILineChartData>({
@@ -44,9 +41,7 @@ const CryptoDetail: React.FC = () => {
     (state: any) => state.crypto.currenciesList
   );
 
-  const {
-    data: currenciesList,
-  } = cryptoCurrencyList;
+  const { data: currenciesList } = cryptoCurrencyList;
 
   const filterData = useSelector(
     (state: any) => state.crypto.filterData.cryptoDetailFilters
@@ -104,7 +99,6 @@ const CryptoDetail: React.FC = () => {
     return <> no data to display</>;
   }
 
-
   return (
     <>
       <div className="flex items-end py-2 justify-start  relative flex-wrap gap-2">
@@ -159,7 +153,12 @@ const CryptoDetail: React.FC = () => {
           </button>
         </div>
       </div>
-      {chartData?.data &&<div className="w-full  flex-1 relative flex flex-col max-h-full"> <LineChart data={chartData?.data} /></div>}
+      {chartData?.data && (
+        <div className="w-full  flex-1 relative flex flex-col max-h-full">
+          {" "}
+          <LineChart data={chartData?.data} />
+        </div>
+      )}
     </>
   );
 };

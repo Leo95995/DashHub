@@ -1,15 +1,10 @@
-import LoaderWithMessage from "../../../../../../components/loader/loaderAndText";
-import type { INasaApodData } from "../../../../../../store/interfaces/interfaces";
+import LoaderWithMessage from "../../../../../../components/Loaders/LoaderWithMessage";
 import { useDispatch } from "react-redux";
 import { fetch_apod_data } from "../../../../../../store/nasaSlice";
 import { Calendar } from "lucide-react";
 import { setFullScreenImage } from "../../../../../../store/nasaSlice";
 import React, { useState } from "react";
-export interface IApodWidget {
-  data: INasaApodData;
-  loading: boolean;
-  error: string | null;
-}
+import type { IApodWidget } from "../types";
 
 const ApodWidget: React.FC<IApodWidget> = ({ data, error, loading }) => {
   const { date, _id, img, description, title } = data;
@@ -28,11 +23,9 @@ const ApodWidget: React.FC<IApodWidget> = ({ data, error, loading }) => {
     <React.Fragment key={_id}>
       <div
         onMouseEnter={() => {
-          console.log(`showing enlargement`);
           setShowEnlarge(true);
         }}
         onMouseLeave={() => {
-          console.log(`Removing enlargement`);
           setShowEnlarge(false);
         }}
       >

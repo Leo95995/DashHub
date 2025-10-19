@@ -4,8 +4,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 // Github Service
 import { initialState, type ICryptoFilterData } from "./data/cryptoData";
-import CryptoService from "../services/crypto-service";
+
 import DashboardStorage from "../services/storage/dashboard";
+import CryptoService from "../services/crypto";
 const {
   getAllCryptoCurrencies,
   getAllCryptosTrend,

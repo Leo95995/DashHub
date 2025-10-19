@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import type { ICryptoTopGainers } from "../../../../../../../mappers/cryptoMapper";
-import GenericSelect from "../../../../../../../components/select";
+import GenericSelect from "../../../../../../../components/Select/Select";
 import { setGenericCryptoFilters } from "../../../../../../../store/cryptoSlice";
 import { filterCurrenciesList } from "../../../../../../../store/data/cryptoData";
-import ErrorMessage from "../../../../../../../components/Error/error";
+import ErrorMessage from "../../../../../../../components/Error/Error";
 import React from "react";
-import LoaderWithMessage from "../../../../../../../components/loader/loaderAndText";
+import LoaderWithMessage from "../../../../../../../components/Loaders/LoaderWithMessage";
+import type { ICryptoTopGainers } from "../../../../../../../types/store/crypto";
 
 const CryptoGainersAndLosers: React.FC = () => {
   const topGainerData = useSelector(

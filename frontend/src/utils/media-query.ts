@@ -1,5 +1,5 @@
 import { MOBILE, TABLET } from "../data/media-queries";
-import type { ScreenMode } from "../interfaces/common/interfaces";
+import type { ScreenMode } from "../types/common/generic";
 
 export const isMobile = (screenWidth: number) => {
     return screenWidth <= MOBILE

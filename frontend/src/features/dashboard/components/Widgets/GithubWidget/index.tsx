@@ -1,16 +1,14 @@
 import type React from "react";
 import { useState } from "react";
 import GithubWidgetContainer from "./SubWidgets/github-widgets-container";
-// import Switcher from "../NasaWidget/WidgetSwitcher/switcher";
-import type { GithubWidgets } from "../../widgetSwitcher/types";
-import { github_widgets } from "../../widgetSwitcher/datas";
-import Switcher from "../../widgetSwitcher/switcher";
-import type { IGenericWidget } from "../../../interfaces";
-import Tag from "../../../../../components/Tag";
+import { github_widgets } from "../../Switcher/datas";
+import Switcher from "../../Switcher/switcher";
+import type { GithubWidgets, IGenericWidget } from "../../../types";
+import Tag from "../../../../../components/Tag/Tag";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedGithubWidget } from "../../../../../store/githubSlice";
-import { IGlobalAlertStatus } from "../../../../../components/alert/alert";
 import { setGlobalAlert } from "../../../../../store/appSlice";
+import { IGlobalAlertStatus } from "../../../../../types/store/app";
 
 const GithubWidget: React.FC<IGenericWidget> = ({
   isEditMode,
@@ -18,7 +16,6 @@ const GithubWidget: React.FC<IGenericWidget> = ({
   handleDrop,
   setDraggedWidgetId,
 }) => {
-  // const [githubWidget, setGithubWidget] = useState<GithubWidgets>("repos");
   const githubWidget = useSelector((state: any) => state.github.selectedWidget);
   const [dragging, setDragging] = useState<boolean>(false);
   const dispatch = useDispatch();

@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
-import type {
-  GithubRepo,
-  IUserActivityData,
-} from "../../../../../../../mappers/githubMapper";
 import { BadgeAlert, Ban, GitFork, Star } from "lucide-react";
-import type { githubSteps } from "../../interfaces/interface";
 import GithubElement from "./github-element";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,9 +9,13 @@ import {
 } from "../../../../../../../store/githubSlice";
 import { setSelectedUserRepo } from "../../../../../../../store/githubSlice";
 import { ArrowBack } from "@mui/icons-material";
-
-import UserActivityCard from "../../components/user-activity-card";
-import LoaderWithMessage from "../../../../../../../components/loader/loaderAndText";
+import UserActivityCard from "../../user-activity-card";
+import LoaderWithMessage from "../../../../../../../components/Loaders/LoaderWithMessage";
+import type {
+  GithubRepo,
+  IUserActivityData,
+} from "../../../../../../../types/services/github";
+import type { githubSteps } from "../../types";
 
 const PopularReposWidget: React.FC = () => {
   const dispatch = useDispatch();

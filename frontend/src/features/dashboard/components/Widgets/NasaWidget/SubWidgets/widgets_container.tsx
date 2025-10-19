@@ -1,22 +1,12 @@
-// Interfaces
-import type {
-  INeoWsData,
-  ItemStatus,
-} from "../../../../../../store/interfaces/interfaces";
-import type { IApodWidget } from "./nasa_apod";
-
+// Types
+import type { CMEData } from "../../../../../../types/store/nasa";
+import type { NasaWidgets } from "../../../../types";
+import type { IWidgetContainer } from "../types";
+// Components
 import ApodWidget from "./nasa_apod";
-import NeoWsWidget from "./neows";
-import type { NasaWidgets } from "../../../widgetSwitcher/types";
-import type { CMEData } from "../../../../../../store/interfaces/interfaces";
 import Cme_Widget from "./nasa_cme";
+import NeoWsWidget from "./neows";
 
-interface IWidgetContainer {
-  apodStatus: IApodWidget;
-  neoWStatus: ItemStatus<INeoWsData[]>;
-  cmeStatus: ItemStatus<CMEData>;
-  widgetSelected: NasaWidgets;
-}
 
 const WidgetContainer: React.FC<IWidgetContainer> = ({
   apodStatus,
@@ -25,11 +15,8 @@ const WidgetContainer: React.FC<IWidgetContainer> = ({
   widgetSelected,
 }) => {
 
-
-  // Render Logic
+  
   const renderWidgetSelected = (chosen: NasaWidgets = "Pic Of The Day") => {
-    console.log('he keeps rendering');
-    
     switch (chosen) {
       case "Pic Of The Day":
         return renderApod();
