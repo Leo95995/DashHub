@@ -3,10 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 // Thunk
 import { createAsyncThunk } from "@reduxjs/toolkit";
 // Github Service
-import GithubService from "../services/github-service";
 import { initialState } from "./data/githubData";
-import type { GithubRepo, IUserActivityData } from "../mappers/githubMapper";
 import DashboardStorage from "../services/storage/dashboard";
+import GithubService from "../services/github";
+import type { GithubRepo, IUserActivityData } from "../types/services/github";
+
 
 const {
   get_user_activity,

@@ -1,4 +1,4 @@
-import type { CryptoWidgets } from "../../features/dashboard/components/widgetSwitcher/types"
+import type { CryptoWidgets } from "../../features/dashboard/types"
 import { storage } from "./storage"
 
 const CRYPTO_KEY = "crypto" 

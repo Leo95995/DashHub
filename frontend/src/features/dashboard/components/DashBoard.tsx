@@ -12,7 +12,8 @@ import { setEditMode, setGlobalAlert } from "../../../store/appSlice";
 import DashboardStorage from "../../../services/storage/dashboard";
 import { setFullScreenImage } from "../../../store/nasaSlice";
 import { isMobile } from "../../../utils/media-query";
-import { IGlobalAlertStatus } from "../../../components/alert/alert";
+import { IGlobalAlertStatus } from "../../../types/store/app";
+
 
 const DashBoard: React.FC = () => {
   const filters = useSelector(
@@ -59,25 +60,21 @@ const DashBoard: React.FC = () => {
     {
       component: WeatherWidget,
       widgetId: 1,
-      onHide: () => console.log(`Hide`),
       visibility: filters.weather,
     },
     {
       component: GithubWidget,
       widgetId: 2,
-      onHide: () => console.log(`Hide`),
       visibility: filters.github,
     },
     {
       component: CryptoWidget,
       widgetId: 3,
-      onHide: () => console.log(`Hide`),
       visibility: filters.crypto,
     },
     {
       component: NasaWidget,
       widgetId: 4,
-      onHide: () => console.log(`Hide`),
       visibility: filters.nasa,
     },
   ];

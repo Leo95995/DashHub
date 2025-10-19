@@ -1,11 +1,7 @@
-import type {
-  PartialApod,
-  ItemStatus,
-  PartialNeoWs,
-  CMEData,
-} from "../interfaces/interfaces";
-import type { NasaWidgets } from "../../features/dashboard/components/widgetSwitcher/types";
+import type { NasaWidgets } from "../../features/dashboard/types";
 import nasaKey from "../../services/storage/nasa";
+import type { ItemStatus } from "../../types/common/status";
+import type { PartialApod, PartialNeoWs, CMEData } from "../../types/store/nasa";
 
 const nasa_apod_data: PartialApod = {};
 const apodStatus: ItemStatus<PartialApod> = {

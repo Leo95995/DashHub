@@ -1,32 +1,8 @@
-import type { IGlobalAlert } from "./interfaces/interfaces";
-import { IGlobalAlertStatus } from "../components/alert/alert";
+
 import { createSlice } from "@reduxjs/toolkit";
 import userInfo from "../services/storage/user";
+import { initialState } from "./data/appData";
 
-interface ISideBar {
-  expanded: boolean;
-}
-
-const initialSideBar: ISideBar = {
-  expanded: true,
-};
-
-const firstVisit = userInfo.getFirstVisit();
-
-const userInfoValue = userInfo.getUserPreferences() ?? {};
-
-const initialState = {
-  internalLoad: false,
-  sideBar: initialSideBar,
-  globalLoad: false,
-  userData: { userInfo: userInfoValue, firstVisit: firstVisit ?? null },
-  isEditMode: false,
-  globalAlert: {
-    status: "" as IGlobalAlertStatus,
-    message: "",
-    description: "",
-  } as IGlobalAlert,
-};
 
 // Application slice.
 

@@ -1,21 +1,5 @@
-/**
- * Neows data mapper
- */
-
-import type { CMEData, INeoWsData } from "../store/interfaces/interfaces";
-
-export interface NeoWsResponse {
-  near_earth_objects: INearObject;
-  element_count: number;
-}
-
-export interface INearObject {
-  [key: string]: any;
-}
-
-type INear = keyof INearObject;
-
-export type CmeResponse = any[];
+import type { NeoWsResponse, INear, CmeResponse } from "../types/services/nasa";
+import type { INeoWsData, CMEData } from "../types/store/nasa";
 
 const neowsMapper = (neowsResponse: NeoWsResponse) => {
   const arr: Array<INeoWsData> = [];
@@ -43,10 +27,6 @@ const neowsMapper = (neowsResponse: NeoWsResponse) => {
   return { element_count, neows_data: arr };
 };
 
-/**
- * Rover data mapper
- */
-
 const CmeMapper = (data: CmeResponse): CMEData[] => {
   const cme_result: CMEData[] = [];
 
@@ -70,10 +50,8 @@ const CmeMapper = (data: CmeResponse): CMEData[] => {
         kpIndex: enlil.kp_90 || null,
       },
     };
-
     cme_result.push(mappedCme);
   }
-
   return cme_result as CMEData[];
 };
 

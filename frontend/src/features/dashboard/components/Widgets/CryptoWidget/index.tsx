@@ -1,12 +1,9 @@
 import type React from "react";
 import CryptoWidgetContainer from "./SubWidgets/CryptoWidgetContainers";
-import Switcher from "../../widgetSwitcher/switcher";
-import type { CryptoWidgets, WidgetTypes } from "../../widgetSwitcher/types";
+import Switcher from "../../Switcher/switcher";
 import { useEffect, useState } from "react";
-import { crypto_widgets } from "../../widgetSwitcher/datas";
-
+import { crypto_widgets } from "../../Switcher/datas";
 import { useDispatch, useSelector } from "react-redux";
-
 import {
   fetchCryptoTrendings,
   fetchCryptoDetails,
@@ -14,8 +11,8 @@ import {
   setSelectedCryptoWidget,
 } from "../../../../../store/cryptoSlice";
 import type { ICryptoFilterData } from "../../../../../store/data/cryptoData";
-import type { IGenericWidget } from "../../../interfaces";
-import Tag from "../../../../../components/Tag";
+import type { CryptoWidgets, IGenericWidget, WidgetTypes } from "../../../types";
+import Tag from "../../../../../components/Tag/Tag";
 
 const CryptoWidget: React.FC<IGenericWidget> = ({
   isEditMode,
@@ -83,7 +80,7 @@ const CryptoWidget: React.FC<IGenericWidget> = ({
             : ""
         }`}
       >
-        <div className="flex flex-col gap-4 h-full max-h-70">
+        <div className="flex flex-col gap-4 h-full ">
           <div className="flex justify-between">
             <Switcher
               changeSelectedWidget={handleCryptoWidgetChange}

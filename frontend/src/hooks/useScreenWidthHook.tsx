@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react";
 import { getCurrentMode } from "../utils/media-query";
-import type { ScreenMode } from "../interfaces/common/interfaces";
+import type { ScreenMode } from "../types/common/generic";
+import type { WidgetLayout } from "./types";
 
-interface WidgetLayout {
-  grid_col: {
-    large: number;
-    medium: number;
-    small: number;
-  };
-}
+
 
 const useScreenWidthHook = (layout?: WidgetLayout) => {
   const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth);

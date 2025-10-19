@@ -1,22 +1,11 @@
 // Dashboard data
 import { useDispatch } from "react-redux";
-import { IGlobalAlertStatus } from "../../../../components/alert/alert";
-import MobileFilters from "../../../../components/layout/PrivateLayout/MobileFilters";
+import MobileFilters from "../../../../components/Layout/PrivateLayout/MobileFilters";
 import DashboardStorage from "../../../../services/storage/dashboard";
 import { setGlobalAlert } from "../../../../store/appSlice";
 import { isMobile } from "../../../../utils/media-query";
-interface IUserData {
-  userInfo: any;
-  preferences: any;
-}
-
-interface IDashBoardHeader {
-  userData: IUserData;
-  isEditMode: boolean;
-  onClick: (val: boolean) => void;
-  widgetOrder: number[];
-  screenWidth: number;
-}
+import type { IDashBoardHeader } from "./types";
+import { IGlobalAlertStatus } from "../../../../types/store/app";
 
 const DashBoardHeader: React.FC<IDashBoardHeader> = ({
   userData,

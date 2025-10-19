@@ -1,13 +1,8 @@
 import { storage } from "./storage";
+import type { IUserPreferences } from "./types";
 
 const USER_KEY = "user";
 
-interface IUserPreferences {
-  userInfo: { username: string; avart_color: string };
-}
-/**
- * User Storage details
- */
 const userInfo = {
   getFirstVisit: () => {
     return storage.getItem(`${USER_KEY}_firstVisit`);

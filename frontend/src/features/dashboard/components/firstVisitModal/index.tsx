@@ -1,16 +1,12 @@
 import { useState } from "react";
 // Components
-import InputSearch from "../../../../components/input/input";
-import GenericModal from "../../../../components/modal/modal";
-import ModeToggler from "../../../../components/toggler";
+import InputSearch from "../../../../components/Input/Input";
+import GenericModal from "../../../../components/Modal/Modal";
+import ModeToggler from "../../../../components/Toggler/Toggler";
 // Redux
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "../../../../store/appSlice";
-
-interface IFirstVisitModal {
-  firstVisit: boolean;
-  setFirstVisit: (val: boolean) => void;
-}
+import type { IFirstVisitModal } from "./types";
 
 const FirstVisitModal: React.FC<IFirstVisitModal> = ({
   firstVisit,

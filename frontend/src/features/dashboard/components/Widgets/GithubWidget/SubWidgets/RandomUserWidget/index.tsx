@@ -1,14 +1,11 @@
 import { fetchRandomUser } from "../../../../../../../store/githubSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Ban, Infinity } from "lucide-react";
-import LoaderWithMessage from "../../../../../../../components/loader/loaderAndText";
-import ErrorMessage from "../../../../../../../components/Error/error";
+import LoaderWithMessage from "../../../../../../../components/Loaders/LoaderWithMessage";
+import ErrorMessage from "../../../../../../../components/Error/Error";
 import { useEffect, useState } from "react";
+import type { GithubFields } from "../../types";
 
-type GithubFields = Record<
-  "repositories" | "followers" | "following" | "stars" | "gists",
-  string
->;
 
 const RandomUserWidget: React.FC = () => {
   const randomUserData = useSelector(
@@ -44,24 +41,6 @@ const RandomUserWidget: React.FC = () => {
   };
 
   const generateUrls = () => {
-    // Link github
-
-    // Object.keys(randomUserData.data).map((urls: any) => {
-    //   const key = urls;
-    //   const value = randomUserData.data[urls];
-    //   console.log(value.toString());
-    //   if (
-    //     value.toString().includes("https://api.github.com") &&
-    //     githubLinks.hasOwnProperty(key)
-    //   ) {
-    //     const newVal = value.replace(
-    //       "https://api.github.com/users",
-    //       "https://github.com"
-    //     );
-    //     githubLinks[key as keyof GithubFields] = newVal;
-    //   }
-    // });
-
     const githubLinks: GithubFields = {
       repositories: "",
       followers: "",
@@ -76,8 +55,6 @@ const RandomUserWidget: React.FC = () => {
 
       githubLinks[e as keyof GithubFields] = baseurl;
     });
-
-
     set_ghlinks(githubLinks);
   };
 

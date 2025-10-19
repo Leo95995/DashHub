@@ -1,6 +1,6 @@
-import PieChart from "./components/PieChart";
 import { populateGithubPiechart } from "../../../../../../../utils/github-utils";
-import type { GithubData } from "../../interfaces/interface";
+import type { GithubData } from "../../types";
+import PieChart from "./PieChart";
 
 const GithubElement: React.FC<GithubData> = ({ object }) => {
   if (!object) {
@@ -13,7 +13,7 @@ const GithubElement: React.FC<GithubData> = ({ object }) => {
     <>
       {data.result.labels.length < 0 ? (
         <>
-          <div>NO data</div>
+          <div>No data available</div>
         </>
       ) : (
         <PieChart data={data} />

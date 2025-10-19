@@ -1,11 +1,11 @@
 import { useCallback } from "react";
-import InputSearch from "../../../../../../../components/input/input";
+import InputSearch from "../../../../../../../components/Input/Input";
 import { fetchUserActivity } from "../../../../../../../store/githubSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { debounce } from "../../../../../../../utils/generic-utils";
-import type { IUserActivityData } from "../../../../../../../mappers/githubMapper";
-import type { ItemStatus } from "../../../../../../../store/interfaces/interfaces";
-import UserActivityCard from "../../components/user-activity-card";
+import type { IUserActivityData } from "../../../../../../../types/services/github";
+import type { ItemStatus } from "../../../../../../../types/common/status";
+import UserActivityCard from "../../user-activity-card";
 
 const UserActivityWidget: React.FC = () => {
   const dispatch = useDispatch();

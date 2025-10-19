@@ -1,11 +1,7 @@
-import type { CryptoWidgets } from "../../features/dashboard/components/widgetSwitcher/types";
-import type {
-  ICryptoTrendings,
-  ICryptoDetails,
-  ICryptoTopGainers,
-} from "../../mappers/cryptoMapper";
+import type { CryptoWidgets } from "../../features/dashboard/types";
 import cryptoKey from "../../services/storage/crypto";
-import type { ItemStatus } from "../interfaces/interfaces";
+import type { ItemStatus } from "../../types/common/status";
+import type { ICryptoTrendings, ICryptoDetails, ICryptoTopGainers } from "../../types/store/crypto";
 
 const currenciesList: ItemStatus<string> = {
   data: [] as string[],

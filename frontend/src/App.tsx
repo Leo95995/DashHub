@@ -4,14 +4,14 @@ import { routes } from "./routes";
 // React router info
 import { Routes, Route } from "react-router";
 //  Components
-import PrivateLayout from "./components/layout/PrivateLayout/Layout";
-import ReactLoader from "./components/loader";
+import PrivateLayout from "./components/Layout/PrivateLayout/Layout";
+import ReactLoader from "./components/Loaders/ReactLoaders";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCryptoCurrenciesList } from "./store/cryptoSlice";
 import FirstVisitModal from "./features/dashboard/components/firstVisitModal";
 import { setFirstVisit } from "./store/appSlice";
-import LoaderWithMessage from "./components/loader/loaderAndText";
-import Alert from "./components/alert/alert";
+import LoaderWithMessage from "./components/Loaders/LoaderWithMessage";
+import Alert from "./components/Alert/Alert";
 
 // Public Routes
 const DashBoardPage = lazy(() => import("./pages/privates/DashboardPage"));

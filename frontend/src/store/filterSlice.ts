@@ -1,7 +1,7 @@
-import type { ScreenMode } from "../interfaces/common/interfaces";
-import type { IFilters } from "./interfaces/interfaces";
+import type { ScreenMode } from "../types/common/generic";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import DashboardStorage from "../services/storage/dashboard";
+import type { IFilters } from "../types/common/filters";
 const { filters } = DashboardStorage;
 
 export type VisualMode = "large" | "small" | "medium";

@@ -9,6 +9,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import type { ILineChartData } from "../types";
 
 ChartJS.register(
   CategoryScale,
@@ -20,17 +21,7 @@ ChartJS.register(
   Legend
 );
 
-export interface ILineChartData {
-  data: {
-    labels: string[];
-    datasets: {
-      label: string;
-      data: number[];
-      backgroundColor: string;
-      borderColor: string;
-    }[];
-  };
-}
+
 
 const LineChart: React.FC<ILineChartData> = ({ data }) => {
   const defaultOptions = {

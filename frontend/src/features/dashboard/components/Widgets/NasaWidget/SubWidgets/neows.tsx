@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import type {
-  INeoWsData,
-  ItemStatus,
-} from "../../../../../../store/interfaces/interfaces";
-import type { ArrowKey } from "../../../../../../interfaces/common/interfaces";
-import LoaderWithMessage from "../../../../../../components/loader/loaderAndText";
+import type { ArrowKey } from "../../../../../../types/common/generic";
+import LoaderWithMessage from "../../../../../../components/Loaders/LoaderWithMessage";
+import type { ItemStatus } from "../../../../../../types/common/status";
+import type { INeoWsData } from "../../../../../../types/store/nasa";
 
 const NeoWsWidget: React.FC<ItemStatus<INeoWsData[]>> = ({
   data,

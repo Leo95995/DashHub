@@ -1,4 +1,4 @@
-import type { NasaWidgets } from "../../features/dashboard/components/widgetSwitcher/types";
+import type { NasaWidgets } from "../../features/dashboard/types";
 import { storage } from "./storage";
 
 const NASA_KEY = "nasa";

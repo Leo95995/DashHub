@@ -13,16 +13,16 @@ import {
   getHoursAndMin,
 } from "../../../../../utils/weather-utils";
 //  Loader
-import ReactLoader from "../../../../../components/loader";
+import ReactLoader from "../../../../../components/Loaders/ReactLoaders";
 // Icons
 import { Wind, Droplet, Gauge } from "lucide-react";
 // Interfaces
-import type { IGenericWidget } from "../../../interfaces";
+import type { IGenericWidget } from "../../../types";
 // Componnts
-import Tag from "../../../../../components/Tag";
-import ErrorMessage from "../../../../../components/Error/error";
-import { IGlobalAlertStatus } from "../../../../../components/alert/alert";
+import Tag from "../../../../../components/Tag/Tag";
+import ErrorMessage from "../../../../../components/Error/Error";
 import { setGlobalAlert } from "../../../../../store/appSlice";
+import { IGlobalAlertStatus } from "../../../../../types/store/app";
 
 const WeatherWidget: React.FC<IGenericWidget> = ({
   isEditMode,

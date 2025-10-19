@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 // Nasda service
-import NasaService from "../services/nasa-service";
 import { initialState } from "./data/nasaData";
 import nasaKey from "../services/storage/nasa";
-import type { CMEData } from "./interfaces/interfaces";
+import NasaService from "../services/nasa";
+import type { CMEData } from "../types/store/nasa";
 
 const { get_apod_data, get_cme_data, get_neoWs_data } = NasaService();
 
