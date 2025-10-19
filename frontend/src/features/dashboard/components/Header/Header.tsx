@@ -14,7 +14,19 @@ const DashBoardHeader: React.FC<IDashBoardHeader> = ({
   widgetOrder,
   screenWidth,
 }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
+  const saveWidgetOrder = () => {
+    onClick(isEditMode);
+    DashboardStorage.widgets.saveWidgetOrder(widgetOrder);
+    dispatch(
+      setGlobalAlert({
+        status: IGlobalAlertStatus.SUCCESS,
+        message: "Success",
+        description: "New widget order saved with success!!",
+      })
+    );
+  };
 
   return (
     <>
@@ -48,16 +60,7 @@ const DashBoardHeader: React.FC<IDashBoardHeader> = ({
           </button>
           {isEditMode && (
             <button
-              onClick={() => {
-                onClick(isEditMode);
-                DashboardStorage.widgets.saveWidgetOrder(widgetOrder);
-                dispatch(
-                  setGlobalAlert({
-                    status: IGlobalAlertStatus.SUCCESS,
-                    message: "Success",
-                    description:'New widget order saved with success!!'
-              }));
-              }}
+              onClick={saveWidgetOrder}
               className="px-4 py-2 rounded-lg  cursor-pointer bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium shadow-md hover:from-blue-600 hover:to-indigo-700 active:scale-95 transition"
             >
               Finish Editing

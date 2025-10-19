@@ -4,6 +4,7 @@ import GenericModal from "../../../../components/Modal/Modal";
 // Types & Interfaces
 import type { WidgetSwitcher } from "./types";
 import { CircleCheck } from "lucide-react";
+import { useSwitcherHook } from "./useSwitcherHook";
 
 const Switcher: React.FC<WidgetSwitcher> = ({
   changeSelectedWidget,
@@ -12,10 +13,10 @@ const Switcher: React.FC<WidgetSwitcher> = ({
   switcherTitle,
   switcherButtonText,
 }) => {
-  const [open, setOpen] = useState<boolean>(false);
-  const handleSelectWidget = () => {
-    setOpen((prev) => !prev);
-  };
+
+
+
+  const {open, setOpen, handleSelectWidget} = useSwitcherHook()
 
   const renderChildren = () => {
     return (

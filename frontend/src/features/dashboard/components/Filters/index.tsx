@@ -1,7 +1,3 @@
-// Redux
-import { useSelector } from "react-redux";
-// React
-import { useState, useEffect } from "react";
 // Components
 import WidgetFilters from "./widget-filters";
 import WeatherFilters from "./weather-filters";
@@ -10,25 +6,11 @@ import CryptoFilters from "./crypto-filters";
 import GithubFilters from "./github-filters";
 // Interfaces
 import type { IFilters } from "./types";
+import { useFiltersLogic } from "./hooks/useFiltersLogic";
 
 const Filters: React.FC<IFilters> = ({ isMobile }) => {
-  const sidebar = useSelector((state: any) => state.app.sideBar);
 
-  const filters = useSelector(
-    (state: any) => state.filters.filters.widgetVisibility
-  );
-  const { expanded } = sidebar;
-
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    if (expanded) {
-      setShow(true);
-    } else {
-      const timeout = setTimeout(() => setShow(false), 300);
-      return () => clearTimeout(timeout);
-    }
-  }, [expanded]);
+  const { show, filters, expanded } = useFiltersLogic();
 
   if (!expanded && !show && !isMobile) return null;
 

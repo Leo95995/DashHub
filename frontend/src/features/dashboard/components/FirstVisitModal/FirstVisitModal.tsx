@@ -9,6 +9,7 @@ import { useFirstVisitLogic } from "./useFirstVisitLogic";
 const FirstVisitModal: React.FC<IFirstVisitModal> = ({
   firstVisit,
 }) => {
+  // Custom hook
   const {
     userInfo,
     setUser,

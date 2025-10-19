@@ -19,6 +19,7 @@ import type { IGenericWidget, WidgetTypes } from "../../../types";
 import Tag from "../../../../../components/Tag/Tag";
 import { setGlobalAlert } from "../../../../../store/appSlice";
 import { IGlobalAlertStatus } from "../../../../../types/store/app";
+import { useDragDrop } from "../../../../../hooks/useDragAndDrop";
 
 const NasaWidget: React.FC<IGenericWidget> = ({
   isEditMode,
@@ -29,7 +30,15 @@ const NasaWidget: React.FC<IGenericWidget> = ({
   const nasa_info = useSelector((state: any) => state.nasa);
   // Apod
   const { apodStatus, neoWsStatus, widgetSelected, cmeStatus } = nasa_info;
-  const [dragging, setDragging] = useState<boolean>(false);
+
+    const {
+      dragging,
+      dragStartHandler,
+      dragEndHandler,
+      dragOverHandler,
+      dropHandler,
+    } = useDragDrop({ widgetId, handleDrop, setDraggedWidgetId });
+  
   // Neows
 
   //  Mars Rover
@@ -58,15 +67,10 @@ const NasaWidget: React.FC<IGenericWidget> = ({
     <>
       <div
         draggable={isEditMode}
-        onDragStart={() => {
-          setDragging(true);
-          setDraggedWidgetId(widgetId);
-        }}
-        onDragEnd={() => {
-          setDragging(false);
-        }}
-        onDragOver={(e) => e.preventDefault()}
-        onDrop={() => handleDrop(widgetId)}
+        onDragStart={dragStartHandler}
+        onDragEnd={dragEndHandler}
+        onDragOver={dragOverHandler}
+        onDrop={dropHandler}
         className={`relative min-w-64 h-120 col-span-1 rounded-2xl bg-gradient-to-br from-gray-200 via-gray-100 to-blue-50
        dark:from-gray-800 dark:via-gray-700 dark:to-gray-900 p-6 shadow-2xl border border-gray-300 hover:scale-105 transform 
        ${isEditMode && "ring-2 ring-blue-400 hover:scale-105 cursor-grab"}

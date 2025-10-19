@@ -11,8 +11,14 @@ import {
   setSelectedCryptoWidget,
 } from "../../../../../store/cryptoSlice";
 import type { ICryptoFilterData } from "../../../../../store/data/cryptoData";
-import type { CryptoWidgets, IGenericWidget, WidgetTypes } from "../../../types";
+import type {
+  CryptoWidgets,
+  IGenericWidget,
+  WidgetTypes,
+} from "../../../types";
 import Tag from "../../../../../components/Tag/Tag";
+
+import { useDragDrop } from "../../../../../hooks/useDragAndDrop";
 
 const CryptoWidget: React.FC<IGenericWidget> = ({
   isEditMode,
@@ -21,10 +27,22 @@ const CryptoWidget: React.FC<IGenericWidget> = ({
   setDraggedWidgetId,
 }) => {
   const dispatch = useDispatch();
-  const cryptoFilterData: ICryptoFilterData = useSelector((state: any) => state.crypto.filterData as ICryptoFilterData);
-  const { cryptoDetailFilters, cryptoTrendingFilters, genericFilters } = cryptoFilterData;
-  const selectCryptoWidget = useSelector((state: any) => state.crypto.selectedWidget);
-  const [dragging, setDragging] = useState<boolean>(false);
+  const cryptoFilterData: ICryptoFilterData = useSelector(
+    (state: any) => state.crypto.filterData as ICryptoFilterData
+  );
+  const { cryptoDetailFilters, cryptoTrendingFilters, genericFilters } =
+    cryptoFilterData;
+  const selectCryptoWidget = useSelector(
+    (state: any) => state.crypto.selectedWidget
+  );
+
+  const {
+    dragging,
+    dragStartHandler,
+    dragEndHandler,
+    dragOverHandler,
+    dropHandler,
+  } = useDragDrop({ widgetId, handleDrop, setDraggedWidgetId });
 
   const handleCryptoWidgetChange = (widget: WidgetTypes) => {
     if (widget) {
@@ -44,7 +62,6 @@ const CryptoWidget: React.FC<IGenericWidget> = ({
     await dispatch(fetchTopGainers(cryptoFilterData) as any);
   };
 
- 
   useEffect(() => {
     getTopGainers();
   }, [genericFilters]);
@@ -63,15 +80,10 @@ const CryptoWidget: React.FC<IGenericWidget> = ({
     <>
       <div
         draggable={isEditMode}
-        onDragStart={() => {
-          setDragging(true);
-          setDraggedWidgetId(widgetId);
-        }}
-        onDragEnd={() => {
-          setDragging(false);
-        }}
-        onDragOver={(e) => e.preventDefault()}
-        onDrop={() => handleDrop(widgetId)}
+        onDragStart={dragStartHandler}
+        onDragEnd={dragEndHandler}
+        onDragOver={dragOverHandler}
+        onDrop={dropHandler}
         className={`col-span-1 h-120 hover:scale-105 transition-all rounded-lg p-6 border border-gray-200 dark:border-gray-700 shadow-lg ${
           isEditMode && "ring-2 ring-blue-400 hover:scale-105 cursor-grab"
         }  ${
@@ -87,7 +99,7 @@ const CryptoWidget: React.FC<IGenericWidget> = ({
               widgetSelected={selectCryptoWidget}
               widgetList={crypto_widgets}
             />
-            {isEditMode && <Tag text="Edit Mode" /> }
+            {isEditMode && <Tag text="Edit Mode" />}
           </div>
           <CryptoWidgetContainer widget={selectCryptoWidget as CryptoWidgets} />
         </div>
