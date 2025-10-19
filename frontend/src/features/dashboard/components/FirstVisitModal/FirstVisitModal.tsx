@@ -1,35 +1,21 @@
-import { useState } from "react";
 // Components
 import InputSearch from "../../../../components/Input/Input";
 import GenericModal from "../../../../components/Modal/Modal";
 import ModeToggler from "../../../../components/Toggler/Toggler";
 // Redux
-import { useDispatch } from "react-redux";
-import { setUserInfo } from "../../../../store/appSlice";
 import type { IFirstVisitModal } from "./types";
+import { useFirstVisitLogic } from "./useFirstVisitLogic";
 
 const FirstVisitModal: React.FC<IFirstVisitModal> = ({
   firstVisit,
-  setFirstVisit,
 }) => {
-  const [isWriting, setIsWriting] = useState<boolean>(false);
-  const dispatch = useDispatch();
-
-  const [userInfo, setUser] = useState({ username: "", avatar_color: "" });
-
-  const handleGuestVisit = () => {
-    dispatch(setUserInfo({ username: "Guest", avatar_color: "red" }));
-    dispatch(setFirstVisit(true) as any);
-  };
-
-  const savePreferences = () => {
-    setIsWriting(true);
-    dispatch(setUserInfo(userInfo));
-    setTimeout(() => {
-      setIsWriting(false);
-      dispatch(setFirstVisit(true) as any);
-    }, 1000);
-  };
+  const {
+    userInfo,
+    setUser,
+    handleGuestVisit,
+    savePreferences,
+    isWriting,
+  } = useFirstVisitLogic();
 
   return (
     <GenericModal

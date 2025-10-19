@@ -1,8 +1,6 @@
-
 import { createSlice } from "@reduxjs/toolkit";
 import userInfo from "../services/storage/user";
 import { initialState } from "./data/appData";
-
 
 // Application slice.
 

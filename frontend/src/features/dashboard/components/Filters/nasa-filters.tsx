@@ -1,22 +1,19 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import GenericSelect from "../../../../components/Select/Select";
 import { setSelectedWidget } from "../../../../store/nasaSlice";
-import type { NasaWidgets } from "../../types";
+
 import { nasa_widgets } from "../Switcher/datas";
 import FilterSection from "./filters-section";
 import type { IFilters } from "./types";
+import { useWidgetSelector } from "./hooks/UseWidgetSelector";
 
 
 
 const NasaFilters: React.FC<IFilters> = ({ expanded }) => {
-  const dispatch = useDispatch();
-  const currentFilters = useSelector((state: any) => state.nasa.widgetSelected);
+  const nasa_widget = useSelector((state: any) => state.nasa.widgetSelected);
 
-  const setSelectedNasaWidget = (widget: NasaWidgets) => {
-    if (widget) {
-      dispatch(setSelectedWidget(widget));
-    }
-  };
+  const { currentSelection, setWidgetSelection } = useWidgetSelector({selector: ()=>nasa_widget, actionCreator: setSelectedWidget})
+  
 
   const renderNasaContent = () => {
     return (
@@ -29,9 +26,9 @@ const NasaFilters: React.FC<IFilters> = ({ expanded }) => {
         </label>
         <GenericSelect
           itemList={nasa_widgets}
-          selectedList={currentFilters}
-          onSelection={(e) => setSelectedNasaWidget(e)}
-          defaultText={currentFilters}
+          selectedList={currentSelection}
+          onSelection={(e) => setWidgetSelection(e)}
+          defaultText={currentSelection}
           minHeigth="min-h-14"
           placement="start"
         />

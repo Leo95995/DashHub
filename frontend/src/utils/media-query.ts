@@ -13,7 +13,6 @@ export const isDesktop = (screenWidth :number) :boolean => {
 }
 
 export const getCurrentMode = (screenWidth: number) : ScreenMode => {
-
     if(screenWidth >=  TABLET){
         return 'desktop'
     }else if(screenWidth < TABLET && screenWidth > MOBILE){

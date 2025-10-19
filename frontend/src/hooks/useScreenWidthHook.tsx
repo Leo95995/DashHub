@@ -1,31 +1,33 @@
+// src/hooks/useScreenWidthHook.tsx
+
 import { useEffect, useState } from "react";
 import { getCurrentMode } from "../utils/media-query";
 import type { ScreenMode } from "../types/common/generic";
 import type { WidgetLayout } from "./types";
 
-
-
 const useScreenWidthHook = (layout?: WidgetLayout) => {
   const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth);
-  const [currentMode, setCurrentMode] = useState<ScreenMode>("desktop");
+  const [currentMode, setCurrentMode] = useState<ScreenMode>(
+    getCurrentMode(window.innerWidth)
+  ); 
 
-  // Get screen width
+//  Definisco la logica esternamente per poterla riutilizzare
+  const handleResize = () => {
+    const newWidth = window.innerWidth;
+    setScreenWidth(newWidth);
+    setCurrentMode(getCurrentMode(newWidth));
+  };
+
   useEffect(() => {
-    const res = getCurrentMode(window.innerWidth);
-    setCurrentMode(res);
+    window.addEventListener("resize", handleResize);
 
-    window.addEventListener("resize", () => {
-      setScreenWidth(window.innerWidth);
-      const res = getCurrentMode(window.innerWidth);
-      setCurrentMode(res);
-    });
-    window.removeEventListener("resize", () => {
-      setScreenWidth(window.innerWidth);
-    });
-  }, []);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []); 
+
 
   const getLayoutByMode = () => {
-
     if(!layout?.grid_col){
       return "grid-cols-2"
     }

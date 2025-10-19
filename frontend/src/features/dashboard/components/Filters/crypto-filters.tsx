@@ -1,22 +1,18 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import GenericSelect from "../../../../components/Select/Select";
 import { setSelectedCryptoWidget } from "../../../../store/cryptoSlice";
-import type { CryptoWidgets } from "../../types";
 import { crypto_widgets } from "../Switcher/datas";
 import FilterSection from "./filters-section";
 import type { IFilters } from "./types";
+import { useWidgetSelector } from "./hooks/UseWidgetSelector";
 
 
 const CryptoFilters: React.FC<IFilters> = ({ expanded = true }) => {
-  const dispatch = useDispatch();
-  const selectCryptoWidget = useSelector(
-    (state: any) => state.crypto.selectedWidget
-  );
-  const handleCryptoWidgetChange = (widget: CryptoWidgets) => {
-    if (widget) {
-      dispatch(setSelectedCryptoWidget(widget));
-    }
-  };
+
+
+  const selectCryptoWidget = useSelector((state: any) => state.crypto.selectedWidget);
+
+  const  {currentSelection, setWidgetSelection } = useWidgetSelector({selector: ()=>selectCryptoWidget, actionCreator: setSelectedCryptoWidget})
 
   const renderCryptoContent = () => {
     return (
@@ -29,8 +25,8 @@ const CryptoFilters: React.FC<IFilters> = ({ expanded = true }) => {
         </label>
         <GenericSelect
           itemList={crypto_widgets}
-          selectedList={selectCryptoWidget}
-          onSelection={(e) => handleCryptoWidgetChange(e)}
+          selectedList={currentSelection}
+          onSelection={(e) => setWidgetSelection(e)}
           defaultText={selectCryptoWidget}
           placement="start"
         />

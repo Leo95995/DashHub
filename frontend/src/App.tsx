@@ -8,19 +8,16 @@ import PrivateLayout from "./components/Layout/PrivateLayout/Layout";
 import ReactLoader from "./components/Loaders/ReactLoaders";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCryptoCurrenciesList } from "./store/cryptoSlice";
-import FirstVisitModal from "./features/dashboard/components/firstVisitModal";
-import { setFirstVisit } from "./store/appSlice";
+import FirstVisitModal from "./features/dashboard/components/FirstVisitModal/FirstVisitModal";
 import LoaderWithMessage from "./components/Loaders/LoaderWithMessage";
 import Alert from "./components/Alert/Alert";
 
-// Public Routes
 const DashBoardPage = lazy(() => import("./pages/privates/DashboardPage"));
-// Settings page for lazy routes
-// const SettingsPage = lazy(() => import("./pages/privates/SettingsPage"));
+
 
 function App() {
   const userdata = useSelector((state: any) => state.app.userData);
-  // Data relative to first visit
+
   const { firstVisit } = userdata;
 
   const globalLoad = useSelector((state: any) => state.app.globalLoad);
@@ -39,7 +36,6 @@ function App() {
         {!firstVisit && (
           <FirstVisitModal
             firstVisit={!firstVisit}
-            setFirstVisit={setFirstVisit}
           />
         )}
         <Routes>
