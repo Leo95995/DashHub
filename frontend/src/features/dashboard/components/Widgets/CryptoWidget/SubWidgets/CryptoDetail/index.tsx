@@ -3,7 +3,7 @@ import { days } from "../../../../../../../store/data/cryptoData";
 // Components
 import ErrorMessage from "../../../../../../../components/Error/Error";
 import ReactLoader from "../../../../../../../components/Loaders/ReactLoaders";
-import LineChart from "../../Charts/LineChart";
+import LineChart from "../../LineChart/LineChart";
 // Hooks
 import { useChartData } from "./hooks/useChartData";
 import { useCryptoFilters } from "./hooks/useCryptoFilters";
