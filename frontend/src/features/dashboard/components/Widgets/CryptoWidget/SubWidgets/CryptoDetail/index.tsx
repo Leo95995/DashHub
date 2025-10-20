@@ -1,85 +1,18 @@
-import { useDispatch, useSelector } from "react-redux";
-// Chart
 // React Imports
-import { useEffect, useState } from "react";
-import { regularTimeStampToTime } from "../../../../../../../utils/weather-utils";
-import { setCryptoDetailFilters } from "../../../../../../../store/cryptoSlice";
 import { days } from "../../../../../../../store/data/cryptoData";
 // Components
 import ErrorMessage from "../../../../../../../components/Error/Error";
 import ReactLoader from "../../../../../../../components/Loaders/ReactLoaders";
-import LineChart from "../../Charts/lineChart";
-import type { ILineChartData } from "../../types";
+import LineChart from "../../Charts/LineChart";
+// Hooks
+import { useChartData } from "./hooks/useChartData";
+import { useCryptoFilters } from "./hooks/useCryptoFilters";
 
 const CryptoDetail: React.FC = () => {
-  const [chartData, setChartData] = useState<ILineChartData>({
-    data: {
-      labels: [],
-      datasets: [{ label: "", data: [], backgroundColor: "", borderColor: "" }],
-    },
-  });
+  const { chartData, detailData, detailLoading, detailError } = useChartData();
 
-  const dispatch = useDispatch();
-
-  const cryptoDetailData = useSelector(
-    (state: any) => state.crypto.crypto_details_data
-  );
-
-  const {
-    data: detailData,
-    loading: detailLoading,
-    error: detailError,
-  } = cryptoDetailData;
-
-  useEffect(() => {
-    if (detailData) {
-      prepareLineChartData(detailData);
-    }
-  }, [detailData]);
-
-  const cryptoCurrencyList = useSelector(
-    (state: any) => state.crypto.currenciesList
-  );
-
-  const { data: currenciesList } = cryptoCurrencyList;
-
-  const filterData = useSelector(
-    (state: any) => state.crypto.filterData.cryptoDetailFilters
-  );
-
-  const [detailFilters, setDetailFilters] = useState<{
-    days: string;
-    id: string;
-  }>(filterData);
-
-  const prepareLineChartData = (datas: any[]) => {
-    if (!Array.isArray(datas) || !datas.length) {
-      return;
-    }
-
-    const res: ILineChartData = {
-      data: {
-        labels: [],
-        datasets: [
-          { label: "", data: [], backgroundColor: "", borderColor: "" },
-        ],
-      },
-    };
-
-    datas?.map((detail: any) => {
-      res.data.labels.push(regularTimeStampToTime(detail[0], 0));
-      res.data.datasets[0].label = "Prices Trend EUR";
-      res.data.datasets[0].data.push(detail[1]);
-      res.data.datasets[0].backgroundColor = "rgb(255, 99, 132)";
-      res.data.datasets[0].borderColor = "rgba(255, 99, 132, 0.5)";
-    });
-
-    setChartData(res);
-  };
-
-  const handleFilterSet = () => {
-    dispatch(setCryptoDetailFilters(detailFilters) as any);
-  };
+  const { currenciesList, detailFilters, setDetailFilters, applyCryptoFilter } =
+    useCryptoFilters();
 
   if (detailLoading) {
     return (
@@ -96,7 +29,7 @@ const CryptoDetail: React.FC = () => {
   }
 
   if (!detailData) {
-    return <> no data to display</>;
+    return <> No data to display for the chart</>;
   }
 
   return (
@@ -146,7 +79,7 @@ const CryptoDetail: React.FC = () => {
         </div>
         <div className="flex">
           <button
-            onClick={handleFilterSet}
+            onClick={applyCryptoFilter}
             className="ml-1 px-4 py-1 rounded-md cursor-pointer bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all duration-200"
           >
             Apply
@@ -155,7 +88,6 @@ const CryptoDetail: React.FC = () => {
       </div>
       {chartData?.data && (
         <div className="w-full  flex-1 relative flex flex-col max-h-full">
-          {" "}
           <LineChart data={chartData?.data} />
         </div>
       )}
