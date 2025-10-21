@@ -50,7 +50,7 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
       dispatch(
         setGlobalAlert({
           status: IGlobalAlertStatus.ERROR,
-          message: "Success",
+          message: "Error",
           description: `Error loading weather data for the city ${searchText}`,
         })
       );

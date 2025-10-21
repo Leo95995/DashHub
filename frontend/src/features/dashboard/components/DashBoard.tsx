@@ -1,16 +1,23 @@
+//  REACT
+
 import React, { useState, useId } from "react";
+
+// ----- COMPONENTS -----
+
+//  LAYOUT
 import DashBoardHeader from "./Header/Header";
-import CryptoWidget from "./Widgets/CryptoWidget";
-import GithubWidget from "./Widgets/GithubWidget";
-import NasaWidget from "./Widgets/NasaWidget";
-import WeatherWidget from "./Widgets/WeatherWidget";
+
+//  STORAGE
 import DashboardStorage from "../../../services/storage/dashboard";
+//  MEDIA QUERIES
 import { isMobile } from "../../../utils/media-query";
+//  HOOKS
 import { useFullScreenApod } from "../hooks/useFullScreenApod";
 import { useDashboardLogic } from "../hooks/useDashBoardLogic";
+import { getWidgetList } from "../data/widget-list";
+import type { DraggableWidget } from "../types";
 
 const DashBoard: React.FC = () => {
-
   const {
     filters,
     isEditMode,
@@ -26,37 +33,19 @@ const DashBoard: React.FC = () => {
   );
   const [draggedWidgetId, setDraggedWidgetId] = useState<number | null>(null);
 
-
-
-  const widgetList = [
-    {
-      component: WeatherWidget,
-      widgetId: 1,
-      visibility: filters.weather,
-    },
-    {
-      component: GithubWidget,
-      widgetId: 2,
-      visibility: filters.github,
-    },
-    {
-      component: CryptoWidget,
-      widgetId: 3,
-      visibility: filters.crypto,
-    },
-    {
-      component: NasaWidget,
-      widgetId: 4,
-      visibility: filters.nasa,
-    },
-  ];
+  // We get the widget list
+  const widgetList = getWidgetList(filters);
 
   const renderWidgetByOrder = () => {
-    const orderedList: any = [];
+    const orderedList: DraggableWidget[] = [];
 
     widgetOrder.map((number) => {
-      const res = widgetList.find((widget) => widget.widgetId === number);
-      orderedList.push(res);
+      const res = widgetList.find(
+        (widget: DraggableWidget) => widget.widgetId === number
+      );
+      if (res) {
+        orderedList.push(res);
+      }
     });
     return orderedList;
   };
@@ -73,6 +62,7 @@ const DashBoard: React.FC = () => {
     const indexOfDragged = widgetOrder.indexOf(draggedWidgetId);
     const indexOfDroppedOn = widgetOrder.indexOf(widgetId);
 
+    // if not existent i exit
     if (indexOfDragged === -1 || indexOfDroppedOn === -1) return;
 
     const newList = [...widgetOrder];

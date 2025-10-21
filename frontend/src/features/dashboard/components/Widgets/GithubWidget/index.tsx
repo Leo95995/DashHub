@@ -2,13 +2,15 @@ import type React from "react";
 import GithubWidgetContainer from "./SubWidgets/github-widgets-container";
 import { github_widgets } from "../../Switcher/datas";
 import Switcher from "../../Switcher/switcher";
-import type { GithubWidgets, IGenericWidget } from "../../../types";
+import type { IGenericWidget } from "../../../types";
 import Tag from "../../../../../components/Tag/Tag";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedGithubWidget } from "../../../../../store/githubSlice";
 import { setGlobalAlert } from "../../../../../store/appSlice";
 import { IGlobalAlertStatus } from "../../../../../types/store/app";
+// Custmom hooks
 import { useDragDrop } from "../../../../../hooks/useDragAndDrop";
+import { useWidgetSelector } from "../../../hooks/UseWidgetSelector";
 
 const GithubWidget: React.FC<IGenericWidget> = ({
   isEditMode,
@@ -16,16 +18,22 @@ const GithubWidget: React.FC<IGenericWidget> = ({
   handleDrop,
   setDraggedWidgetId,
 }) => {
-  const githubWidget = useSelector((state: any) => state.github.selectedWidget);
   const dispatch = useDispatch();
+  const githubWidget = useSelector((state: any) => state.github.selectedWidget);
 
-    const {
-      dragging,
-      dragStartHandler,
-      dragEndHandler,
-      dragOverHandler,
-      dropHandler,
-    } = useDragDrop({ widgetId, handleDrop, setDraggedWidgetId });
+  // Widget selection
+  const { currentSelection, setWidgetSelection } = useWidgetSelector({
+    selector: () => githubWidget,
+    actionCreator:setSelectedGithubWidget ,
+  });
+
+  const {
+    dragging,
+    dragStartHandler,
+    dragEndHandler,
+    dragOverHandler,
+    dropHandler,
+  } = useDragDrop({ widgetId, handleDrop, setDraggedWidgetId });
 
   return (
     <>
@@ -46,11 +54,11 @@ const GithubWidget: React.FC<IGenericWidget> = ({
       >
         <div className="flex items-center justify-between w-full">
           <Switcher
-            widgetSelected={githubWidget}
+            widgetSelected={currentSelection}
             switcherTitle="Select the Github widget"
             switcherButtonText="Change Widget"
             changeSelectedWidget={(e) => {
-              dispatch(setSelectedGithubWidget(e as GithubWidgets));
+              setWidgetSelection(e)
               dispatch(
                 setGlobalAlert({
                   status: IGlobalAlertStatus.SUCCESS,
@@ -63,7 +71,7 @@ const GithubWidget: React.FC<IGenericWidget> = ({
           />
           {isEditMode && <Tag text="Edit Mode"></Tag>}
         </div>
-        <GithubWidgetContainer widget={githubWidget} />
+        <GithubWidgetContainer widget={currentSelection} />
       </div>
     </>
   );

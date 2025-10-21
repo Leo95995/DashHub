@@ -1,11 +1,7 @@
 import type React from "react";
 // REACT
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 import {
-  fetch_apod_data,
-  fetch_neows_data,
-  fetch_cme_data,
   setSelectedWidget,
 } from "../../../../../store/nasaSlice";
 // Components
@@ -20,6 +16,8 @@ import Tag from "../../../../../components/Tag/Tag";
 import { setGlobalAlert } from "../../../../../store/appSlice";
 import { IGlobalAlertStatus } from "../../../../../types/store/app";
 import { useDragDrop } from "../../../../../hooks/useDragAndDrop";
+import { useWidgetSelector } from "../../../hooks/UseWidgetSelector";
+import { useNasaFetcher } from "./hooks/useNasaFetch";
 
 const NasaWidget: React.FC<IGenericWidget> = ({
   isEditMode,
@@ -28,7 +26,8 @@ const NasaWidget: React.FC<IGenericWidget> = ({
   setDraggedWidgetId,
 }) => {
   const nasa_info = useSelector((state: any) => state.nasa);
-  // Apod
+  const dispatch = useDispatch();
+
   const { apodStatus, neoWsStatus, widgetSelected, cmeStatus } = nasa_info;
 
     const {
@@ -38,17 +37,13 @@ const NasaWidget: React.FC<IGenericWidget> = ({
       dragOverHandler,
       dropHandler,
     } = useDragDrop({ widgetId, handleDrop, setDraggedWidgetId });
-  
-  // Neows
 
-  //  Mars Rover
-  const dispatch = useDispatch();
+    useNasaFetcher(dispatch)
 
-  useEffect(() => {
-    dispatch(fetch_apod_data() as any);
-    dispatch(fetch_neows_data() as any);
-    dispatch(fetch_cme_data() as any);
-  }, []);
+   // Widget selection
+    const { currentSelection, setWidgetSelection } = useWidgetSelector({selector: () => widgetSelected, actionCreator:setSelectedWidget ,});
+
+
 
   // Function that trigger and change the current used widget.
 
@@ -60,7 +55,7 @@ const NasaWidget: React.FC<IGenericWidget> = ({
         description: `The widget selected for Nasa is ${newWidget}`
       })
     );
-    dispatch(setSelectedWidget(newWidget));
+    setWidgetSelection(newWidget)
   };
 
   return (
@@ -85,7 +80,7 @@ const NasaWidget: React.FC<IGenericWidget> = ({
           <div className="flex gap-5 justify-between items-center">
             <Switcher
               widgetList={nasa_widgets}
-              widgetSelected={widgetSelected}
+              widgetSelected={currentSelection}
               changeSelectedWidget={changeSelectedWidget}
               switcherButtonText="Change Widget"
               switcherTitle="Select the Nasa widget"
@@ -96,7 +91,7 @@ const NasaWidget: React.FC<IGenericWidget> = ({
             apodStatus={apodStatus}
             neoWStatus={neoWsStatus}
             cmeStatus={cmeStatus}
-            widgetSelected={widgetSelected}
+            widgetSelected={currentSelection}
           />
         </div>
       </div>

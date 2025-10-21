@@ -42,7 +42,20 @@ const get_neo_data = async (
     const result = await neo_data.json();
     const status = neo_data.status;
     if (status === 200) {
-      res.status(200).json(result);
+      //  Removed the api key that nasa send back in response
+      const cleared_near_earth_object = result.near_earth_objects[
+        start_date as string
+      ].map((e: any) => {
+        delete e["links"];
+        delete e["sentry_data"];
+        return e;
+      });
+
+      const toRet = {
+        element_count: result.element_count,
+        near_earth_objects: cleared_near_earth_object,
+      };
+      res.status(200).json(toRet);
     }
   } catch (error) {
     console.log(error);

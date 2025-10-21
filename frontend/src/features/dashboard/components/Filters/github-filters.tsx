@@ -9,7 +9,7 @@ import GenericSelect from "../../../../components/Select/Select";
 import FilterSection from "./filters-section";
 // Data
 import { github_widgets } from "../Switcher/datas";
-import { useWidgetSelector } from "./hooks/UseWidgetSelector";
+import { useWidgetSelector } from "../../hooks/UseWidgetSelector";
 
 const GithubFilters: React.FC<IFilters> = ({ expanded }) => {
   const github_widget = useSelector(

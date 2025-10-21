@@ -1,24 +1,18 @@
 import type React from "react";
 import CryptoWidgetContainer from "./SubWidgets/CryptoWidgetContainers";
 import Switcher from "../../Switcher/switcher";
-import { useEffect, useState } from "react";
 import { crypto_widgets } from "../../Switcher/datas";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchCryptoTrendings,
-  fetchCryptoDetails,
-  fetchTopGainers,
-  setSelectedCryptoWidget,
-} from "../../../../../store/cryptoSlice";
+import { setSelectedCryptoWidget } from "../../../../../store/cryptoSlice";
 import type { ICryptoFilterData } from "../../../../../store/data/cryptoData";
-import type {
-  CryptoWidgets,
-  IGenericWidget,
-  WidgetTypes,
-} from "../../../types";
+import type { CryptoWidgets, IGenericWidget } from "../../../types";
 import Tag from "../../../../../components/Tag/Tag";
-
+// Hooks
 import { useDragDrop } from "../../../../../hooks/useDragAndDrop";
+import { useDetailedCryptoFilters } from "./hooks/useDetailedCryptoFilters";
+import { useCryptoTrends } from "./hooks/useCryptoTrends";
+import { useWidgetSelector } from "../../../hooks/UseWidgetSelector";
+import { useCryptoTopGainers } from "./hooks/useCryptoTopGainers";
 
 const CryptoWidget: React.FC<IGenericWidget> = ({
   isEditMode,
@@ -30,11 +24,24 @@ const CryptoWidget: React.FC<IGenericWidget> = ({
   const cryptoFilterData: ICryptoFilterData = useSelector(
     (state: any) => state.crypto.filterData as ICryptoFilterData
   );
-  const { cryptoDetailFilters, cryptoTrendingFilters, genericFilters } =
-    cryptoFilterData;
+
   const selectCryptoWidget = useSelector(
     (state: any) => state.crypto.selectedWidget
   );
+
+  const cryptoFiltersHooks = [
+    useDetailedCryptoFilters,
+    useCryptoTrends,
+    useCryptoTopGainers,
+  ];
+
+  // Execute all the crypto filters hooks
+  cryptoFiltersHooks.forEach((hook) => hook({ cryptoFilterData, dispatch }));
+
+  const { currentSelection, setWidgetSelection } = useWidgetSelector({
+    selector: () => selectCryptoWidget,
+    actionCreator: setSelectedCryptoWidget,
+  });
 
   const {
     dragging,
@@ -43,38 +50,6 @@ const CryptoWidget: React.FC<IGenericWidget> = ({
     dragOverHandler,
     dropHandler,
   } = useDragDrop({ widgetId, handleDrop, setDraggedWidgetId });
-
-  const handleCryptoWidgetChange = (widget: WidgetTypes) => {
-    if (widget) {
-      dispatch(setSelectedCryptoWidget(widget));
-    }
-  };
-
-  const getDetailedFilters = async () => {
-    await dispatch(fetchCryptoDetails(cryptoFilterData) as any);
-  };
-
-  const getCryptoTrends = async () => {
-    await dispatch(fetchCryptoTrendings(cryptoFilterData) as any);
-  };
-
-  const getTopGainers = async () => {
-    await dispatch(fetchTopGainers(cryptoFilterData) as any);
-  };
-
-  useEffect(() => {
-    getTopGainers();
-  }, [genericFilters]);
-
-  useEffect(() => {
-    getCryptoTrends();
-  }, [cryptoTrendingFilters]);
-
-  useEffect(() => {
-    if (cryptoDetailFilters) {
-      getDetailedFilters();
-    }
-  }, [cryptoDetailFilters]);
 
   return (
     <>
@@ -95,13 +70,13 @@ const CryptoWidget: React.FC<IGenericWidget> = ({
         <div className="flex flex-col gap-4 h-full ">
           <div className="flex justify-between">
             <Switcher
-              changeSelectedWidget={handleCryptoWidgetChange}
-              widgetSelected={selectCryptoWidget}
+              changeSelectedWidget={setWidgetSelection}
+              widgetSelected={currentSelection}
               widgetList={crypto_widgets}
             />
             {isEditMode && <Tag text="Edit Mode" />}
           </div>
-          <CryptoWidgetContainer widget={selectCryptoWidget as CryptoWidgets} />
+          <CryptoWidgetContainer widget={currentSelection as CryptoWidgets} />
         </div>
       </div>
     </>

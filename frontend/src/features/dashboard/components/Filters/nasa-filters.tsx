@@ -5,7 +5,7 @@ import { setSelectedWidget } from "../../../../store/nasaSlice";
 import { nasa_widgets } from "../Switcher/datas";
 import FilterSection from "./filters-section";
 import type { IFilters } from "./types";
-import { useWidgetSelector } from "./hooks/UseWidgetSelector";
+import { useWidgetSelector } from "../../hooks/UseWidgetSelector";
 
 
 

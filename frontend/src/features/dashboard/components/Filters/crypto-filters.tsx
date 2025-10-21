@@ -4,7 +4,7 @@ import { setSelectedCryptoWidget } from "../../../../store/cryptoSlice";
 import { crypto_widgets } from "../Switcher/datas";
 import FilterSection from "./filters-section";
 import type { IFilters } from "./types";
-import { useWidgetSelector } from "./hooks/UseWidgetSelector";
+import { useWidgetSelector } from "../../hooks/UseWidgetSelector";
 
 
 const CryptoFilters: React.FC<IFilters> = ({ expanded = true }) => {
