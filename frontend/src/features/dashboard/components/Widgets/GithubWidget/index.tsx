@@ -1,10 +1,14 @@
 import type React from "react";
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+//  Components
 import GithubWidgetContainer from "./SubWidgets/github-widgets-container";
 import { github_widgets } from "../../Switcher/datas";
 import Switcher from "../../Switcher/switcher";
-import type { IGenericWidget } from "../../../types";
 import Tag from "../../../../../components/Tag/Tag";
-import { useDispatch, useSelector } from "react-redux";
+//  Types
+import type { IGenericWidget } from "../../../types";
+//  Hooks and Slices
 import { setSelectedGithubWidget } from "../../../../../store/githubSlice";
 import { setGlobalAlert } from "../../../../../store/appSlice";
 import { IGlobalAlertStatus } from "../../../../../types/store/app";

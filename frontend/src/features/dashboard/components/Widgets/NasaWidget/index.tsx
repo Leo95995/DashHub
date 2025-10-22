@@ -1,9 +1,7 @@
 import type React from "react";
 // REACT
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setSelectedWidget,
-} from "../../../../../store/nasaSlice";
+import {  setSelectedWidget } from "../../../../../store/nasaSlice";
 // Components
 import WidgetContainer from "./SubWidgets/widgets_container";
 import Switcher from "../../Switcher/switcher";
@@ -11,7 +9,7 @@ import Switcher from "../../Switcher/switcher";
 import { nasa_widgets } from "../../Switcher/datas";
 // Interfaces
 import type { IGenericWidget, WidgetTypes } from "../../../types";
-// Tag components
+// components
 import Tag from "../../../../../components/Tag/Tag";
 import { setGlobalAlert } from "../../../../../store/appSlice";
 import { IGlobalAlertStatus } from "../../../../../types/store/app";

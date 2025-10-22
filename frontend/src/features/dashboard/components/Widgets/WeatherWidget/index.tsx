@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+// React
+import { useEffect } from "react";
 import type React from "react";
-// Redux React.
+// Redux
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchWeatherByCity,
@@ -32,6 +33,7 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
   setDraggedWidgetId,
 }) => {
   const weatherData = useSelector((state: any) => state.weather);
+  // Drag and drop hook.
   const {
     dragging,
     dragStartHandler,
@@ -42,8 +44,7 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
 
   const dispatch = useDispatch();
 
-  const { coordinates, weather, temperatureType, loading, error, searchText } =
-    weatherData;
+  const { coordinates, weather, temperatureType, loading, error, searchText } =    weatherData;
 
   useEffect(() => {
     if (error) {

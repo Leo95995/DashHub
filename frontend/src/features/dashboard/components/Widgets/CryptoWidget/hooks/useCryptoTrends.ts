@@ -13,6 +13,6 @@ export const useCryptoTrends = ({  cryptoFilterData,  dispatch }: ICryptoHook): 
   }, [cryptoTrendingFilters]);
 
   const getCryptoTrends = async () => {
-    await dispatch(fetchCryptoTrendings(cryptoFilterData) as any);
+    dispatch(fetchCryptoTrendings(cryptoFilterData) as any);
   };
 };
