@@ -56,15 +56,15 @@ const NeoWsWidget: React.FC<ItemStatus<INeoWsData[]>> = ({
         <h2 className="font-bold text-2xl"> Near Earth Objects</h2>
         <div className="flex justify-between items-center gap-2">
           <b className="my-4 flex gap-2 items-center">
-            Oggetti totali{" "}
+            Total Objects
             <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-1 rounded-md">
               {data.length}
             </span>
           </b>
           <p>
-            Oggetto selezionato{" "}
+            Selected Object{' '}
             <b>{selectedWidget?.info?.key ? selectedWidget.info.key + 1 : 1}</b>{" "}
-            di <b>{data.length}</b>
+            of <b>{data.length}</b>
           </p>
         </div>
         <div className="flex justify-between">

@@ -3,10 +3,18 @@ import type React from "react";
 import FilterSection from "./filters-section";
 import type { IFilters } from "./types";
 import { useWeatherFilterLogic } from "./hooks/useWeatherFilterLogic";
+import ReactLoader from "../../../../components/Loaders/ReactLoaders";
+import { Loader, Loader2 } from "lucide-react";
+import WeatherSearchBar from "../Widgets/WeatherWidget/WeatherSearch/WeatherSearchBar";
+
 
 const WeatherFilters: React.FC<IFilters> = ({ expanded }) => {
 
-  const {changeTemperature, searchByCity,setCityName, temperatureType} = useWeatherFilterLogic()
+  //  Weather hook custom
+  const {loading, searchText, changeTemperature, searchByCity,setCityName, temperatureType} = useWeatherFilterLogic()
+
+
+  console.log(searchText);
 
   const renderTemperatureSelector = () => {
     return (
@@ -52,6 +60,7 @@ const WeatherFilters: React.FC<IFilters> = ({ expanded }) => {
           City
         </label>
         <div className="flex">
+          <div className="relative">
           <input
             type="text"
             name="location"
@@ -59,6 +68,7 @@ const WeatherFilters: React.FC<IFilters> = ({ expanded }) => {
             onChange={(e) =>setCityName(e)
              
             }
+            defaultValue={searchText ?? ''}
             placeholder="Search weather by city"
             onKeyDown={(e) =>e.key === "Enter" && searchByCity()}
             className="
@@ -72,6 +82,8 @@ const WeatherFilters: React.FC<IFilters> = ({ expanded }) => {
         transition-colors duration-200
       "
           />
+          {loading && <div className="absolute right-0 top-2 "><Loader2 className="animate-spin" /> </div>}
+          </div>
           <button
             onClick={() => searchByCity()}
             className="
@@ -96,7 +108,7 @@ const WeatherFilters: React.FC<IFilters> = ({ expanded }) => {
   return (
     <>
       <FilterSection title={"WEATHER"} defaultOpen={false} expanded={expanded as boolean}>
-        {renderCitySearch()}
+        <WeatherSearchBar setCityName={setCityName } searchText={searchText ?? ''} searchByCity={searchByCity} loading={loading}/>
         {renderTemperatureSelector()}
       </FilterSection>
     </>

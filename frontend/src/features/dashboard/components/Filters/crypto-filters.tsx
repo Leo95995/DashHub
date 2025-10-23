@@ -16,7 +16,7 @@ const CryptoFilters: React.FC<IFilters> = ({ expanded = true }) => {
 
   const renderCryptoContent = () => {
     return (
-      <div className="flex flex-col gap-2 w-full">
+      <div className="flex flex-col pb-4 gap-2 w-full">
         <label
           htmlFor="temperature"
           className="font-semibold text-gray-700 dark:text-gray-200"

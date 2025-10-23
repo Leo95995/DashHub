@@ -43,7 +43,7 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({
           Username
         </label>
         <InputSearch
-          placeholder="Scrivi qui il tuo nome..."
+          placeholder="Insert here your username..."
           onChange={(e) => {
             setUser({ ...userInfo, username: e });
           }}
@@ -59,11 +59,13 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({
           </label>
           <input
             type="color"
-            defaultValue={"#e5a50a"}
             onChange={(e) =>
               setUser({ ...userInfo, avatar_color: e.currentTarget.value })
             }
           />
+          {!userInfo.avatar_color.length && <p className="text-sm text-red-400">No color selected</p>}
+          {userInfo.avatar_color.length && <p className="text-sm text-green-300">Color selected</p>}
+          
         </div>
         <div className="flex flex-col gap-2">
           <label> Select mode</label>

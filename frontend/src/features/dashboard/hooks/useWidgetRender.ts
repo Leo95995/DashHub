@@ -3,15 +3,26 @@ import DashboardStorage from "../../../services/storage/dashboard";
 import { getWidgetList } from "../data/widget-list";
 import type { DraggableWidget } from "../types";
 
+
 export const useWidgetRender = (filters: any) => {
+
   const storageWidgetOrder = DashboardStorage.widgets.getWidgetOrder();
   const [widgetOrder, setWidgetOrder] = useState<number[]>(
     storageWidgetOrder ?? [1, 4, 2, 3]
   );
+
   const [draggedWidgetId, setDraggedWidgetId] = useState<number | null>(null);
 
   // We get the widget list
   const widgetList = getWidgetList(filters);
+
+
+  const getVisibleWidgetsNumber = useCallback(() => {
+    const result = widgetList.filter((widget)=> widget.visibility === true).length
+    return result;
+  },[filters])
+
+
 
   const renderWidgetByOrder = useCallback(() => {
     const orderedList: DraggableWidget[] = [];
@@ -25,7 +36,7 @@ export const useWidgetRender = (filters: any) => {
       }
     });
     return orderedList;
-  }, [widgetOrder]);
+  }, [widgetOrder, filters]);
 
   /**
    * Func used to track the dragging and the drop with the new order
@@ -56,5 +67,5 @@ export const useWidgetRender = (filters: any) => {
     [draggedWidgetId, widgetOrder]
   );
 
-  return { handleDrop, renderWidgetByOrder, widgetOrder, setDraggedWidgetId };
+  return { getVisibleWidgetsNumber, handleDrop, renderWidgetByOrder, widgetOrder, setDraggedWidgetId };
 };

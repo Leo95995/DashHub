@@ -11,7 +11,7 @@ import { IGlobalAlertStatus } from "../../../../../types/store/app";
 import { useEffect } from "react";
 
 export const useWeatherFilterLogic = () => {
-  const { searchText, temperatureType } = useSelector(
+  const { searchText, temperatureType , loading} = useSelector(
     (state: any) => state.weather
   );
   const dispatch = useDispatch();
@@ -53,5 +53,7 @@ export const useWeatherFilterLogic = () => {
     searchByCity,
     setCityName,
     temperatureType,
+    loading,
+    searchText
   };
 };

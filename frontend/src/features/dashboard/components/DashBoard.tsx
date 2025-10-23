@@ -21,7 +21,7 @@ const DashBoard: React.FC = () => {
     toggleEditMode,
   } = useDashboardLogic();
 
-  const {handleDrop, renderWidgetByOrder, widgetOrder, setDraggedWidgetId}  = useWidgetRender(filters)
+  const {getVisibleWidgetsNumber, handleDrop, renderWidgetByOrder, widgetOrder, setDraggedWidgetId}  = useWidgetRender(filters)
 
   return (
     <>
@@ -33,6 +33,7 @@ const DashBoard: React.FC = () => {
           onClick={toggleEditMode}
           widgetOrder={widgetOrder}
           screenWidth={screenWidth}
+          visibleWidgets={getVisibleWidgetsNumber()}
         />
         <section
           className={`grid gap-6 ${

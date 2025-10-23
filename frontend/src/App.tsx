@@ -12,8 +12,12 @@ import FirstVisitModal from "./features/dashboard/components/FirstVisitModal/Fir
 import LoaderWithMessage from "./components/Loaders/LoaderWithMessage";
 import Alert from "./components/Alert/Alert";
 
-const DashBoardPage = lazy(() => import("./pages/privates/DashboardPage"));
-
+const DashBoardPage = lazy(
+  () => import("./features/dashboard/pages/DashBoardPage")
+);
+const SettingsPage = lazy(
+  () => import("./features/dashboard/pages/SettingsPage")
+);
 
 function App() {
   const userdata = useSelector((state: any) => state.app.userData);
@@ -30,14 +34,10 @@ function App() {
 
   return (
     <>
-    {/* This handle the global alert */}
+      {/* This handle the global alert */}
       <Alert />
       <>
-        {!firstVisit && (
-          <FirstVisitModal
-            firstVisit={!firstVisit}
-          />
-        )}
+        {!firstVisit && <FirstVisitModal firstVisit={!firstVisit} />}
         <Routes>
           <Route element={<PrivateLayout />}>
             <Route
@@ -48,7 +48,7 @@ function App() {
                     fallback={
                       <>
                         <div className="flex flex-col gap-5 w-full h-96 items-center justify-center">
-                          <p> Caricamento Dashboard..</p>
+                          <p> Loading Dashboard..</p>
                           <ReactLoader />
                         </div>
                       </>
@@ -57,7 +57,30 @@ function App() {
                     {!globalLoad ? (
                       <DashBoardPage />
                     ) : (
-                      <LoaderWithMessage text="Loading page" />
+                      <LoaderWithMessage text="Loading DashBoard.." />
+                    )}
+                  </Suspense>
+                </>
+              }
+            />
+            <Route
+              path={routes.protectedRoutes.settings}
+              element={
+                <>
+                  <Suspense
+                    fallback={
+                      <>
+                        <div className="flex flex-col gap-5 w-full h-96 items-center justify-center">
+                          <p> Loading Settings..</p>
+                          <ReactLoader />
+                        </div>
+                      </>
+                    }
+                  >
+                    {!globalLoad ? (
+                      <SettingsPage />
+                    ) : (
+                      <LoaderWithMessage text="Loading Settings" />
                     )}
                   </Suspense>
                 </>
