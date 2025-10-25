@@ -6,7 +6,6 @@ import ErrorMessage from "../../../../../../../components/Error/Error";
 import { useEffect, useState } from "react";
 import type { GithubFields } from "../../types";
 
-
 const RandomUserWidget: React.FC = () => {
   const randomUserData = useSelector(
     (state: any) => state.github.randomUserData
@@ -19,18 +18,8 @@ const RandomUserWidget: React.FC = () => {
     generateUrls();
   }, [randomUserData]);
 
-  const fetchRandomUntilData = async () => {
-    let tries = 0;
-    const maxTries = 10;
-
-    while (tries < maxTries) {
-      const result = await dispatch(fetchRandomUser() as any);
-      if (!result.error) {
-        break;
-      }
-      tries++;
-      await new Promise((r) => setTimeout(r, 500));
-    }
+  const fetchRandomData = async () => {
+    await dispatch(fetchRandomUser() as any);
   };
 
   const renderLoading = () => {
@@ -179,7 +168,7 @@ const RandomUserWidget: React.FC = () => {
         <div className="items-center flex justify-center gap-4 flex-col">
           <h2 className="font-bold text-2xl"> Random user widget</h2>
           <button
-            onClick={fetchRandomUntilData}
+            onClick={fetchRandomData}
             className="flex cursor-pointer items-center justify-between hover:scale-110 active:scale-95 w-40 px-4 py-2 rounded-2xl bg-gradient-to-r from-gray-800 to-red-900 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
             <span>Random User</span>
