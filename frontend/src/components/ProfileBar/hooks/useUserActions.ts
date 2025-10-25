@@ -22,8 +22,6 @@ export const useUserActions = () => {
   };
 
   const updateUserName = (username: string) => {
-    console.log(username);
-
     if (validateUsername(username, 4)) {
       handleAlert(
         IGlobalAlertStatus.SUCCESS,

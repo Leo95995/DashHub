@@ -5,7 +5,6 @@ import { useUserActions } from "./useUserActions";
 // Hook responsible of using User Info
 export const useUserInfo = ({ username }: { username: string }) => {
   const [editMode, setEditMode] = useState<boolean>(false);
-  console.log(username);
   const [newUsername, setNewUsername] = useState<string>(username ?? "");
   const [editColor, setEditColor] = useState<boolean>(false);
   const [newColor, setNewColor] = useState<string | null>(null);
@@ -54,5 +53,16 @@ export const useUserInfo = ({ username }: { username: string }) => {
     }
   };
 
-  return {setNewUsername, changeUsername, isSaving, editColor,editMode, setEditMode, setEditColor,changeAvatarColor, saveByInput, internalSave };
+  return {
+    setNewUsername,
+    changeUsername,
+    isSaving,
+    editColor,
+    editMode,
+    setEditMode,
+    setEditColor,
+    changeAvatarColor,
+    saveByInput,
+    internalSave,
+  };
 };

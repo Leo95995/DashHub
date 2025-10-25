@@ -27,7 +27,6 @@ const useFullScreenApod = (): React.ReactElement | null => {
       onClick={() =>
         dispatch(setFullScreenImage({ isFullScreen: false, url: null }))
       }
-      onKeyUp={(e) => console.log(e.key)}
       tabIndex={-1}
       className="fixed inset-0 z-[999999] bg-black/90 py-10 rounded-xs flex items-center justify-center cursor-zoom-out"
     >
