@@ -17,8 +17,6 @@ const DashBoardHeader: React.FC<IDashBoardHeader> = ({
   // Hooks responsible for saving the new widgets layout
   const { saveWidgetOrder } = useSaveWidget({ onClick, isEditMode, widgetOrder });
 
-
-
   return (
     <>
       <div
