@@ -1,50 +1,22 @@
-import { fetchRandomUser } from "../../../../../../../store/githubSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { Ban, Infinity } from "lucide-react";
+import {useSelector } from "react-redux";
+import { Ban, Infinity, Loader2 } from "lucide-react";
 import LoaderWithMessage from "../../../../../../../components/Loaders/LoaderWithMessage";
 import ErrorMessage from "../../../../../../../components/Error/Error";
-import { useEffect, useState } from "react";
-import type { GithubFields } from "../../types";
+import { useRandomUser } from "./useRandomUser";
+import ReactLoader from "../../../../../../../components/Loaders/ReactLoaders";
+
 
 const RandomUserWidget: React.FC = () => {
   const randomUserData = useSelector(
     (state: any) => state.github.randomUserData
   );
   const { data, loading, error } = randomUserData;
-  const dispatch = useDispatch();
-  const [gh_links, set_ghlinks] = useState<GithubFields>();
-
-  useEffect(() => {
-    generateUrls();
-  }, [randomUserData]);
-
-  const fetchRandomData = async () => {
-    await dispatch(fetchRandomUser() as any);
-  };
+  const {ghLinks, fetchRandomData} = useRandomUser({randomUserData})
 
   const renderLoading = () => {
     if (loading) {
       return <LoaderWithMessage text="Loading datas" />;
     }
-    return <></>;
-  };
-
-  const generateUrls = () => {
-    const githubLinks: GithubFields = {
-      repositories: "",
-      followers: "",
-      following: "",
-      stars: "",
-      gists: "",
-    };
-    const username = randomUserData.data.login;
-    Object.keys(githubLinks).map((e) => {
-      const key = e;
-      const baseurl = `https://github.com/${username}?tab=${key}`;
-
-      githubLinks[e as keyof GithubFields] = baseurl;
-    });
-    set_ghlinks(githubLinks);
   };
 
   const renderError = () => {
@@ -69,6 +41,7 @@ const RandomUserWidget: React.FC = () => {
     }
 
     if (!Object.keys(data).length) {
+      
       return (
         <>
           <ErrorMessage
@@ -122,35 +95,35 @@ const RandomUserWidget: React.FC = () => {
           </div>
           <div className=" border-gray-200 dark:border-gray-700 ">
             <a
-              href={gh_links?.repositories}
+              href={ghLinks?.repositories}
               className="text-blue-600 dark:text-blue-400 block hover:underline"
               target="_blank"
             >
               📂 Repos
             </a>
             <a
-              href={gh_links?.followers}
+              href={ghLinks?.followers}
               className="text-blue-600 dark:text-blue-400 block hover:underline"
               target="_blank"
             >
               👥 Followers
             </a>
             <a
-              href={gh_links?.following}
+              href={ghLinks?.following}
               className="text-blue-600 dark:text-blue-400 block hover:underline"
               target="_blank"
             >
               ➡️ Following
             </a>
             <a
-              href={gh_links?.gists}
+              href={ghLinks?.gists}
               className="text-blue-600 dark:text-blue-400 block hover:underline"
               target="_blank"
             >
               📝 Gists
             </a>
             <a
-              href={gh_links?.stars}
+              href={ghLinks?.stars}
               className="text-blue-600 dark:text-blue-400 block hover:underline"
               target="_blank"
             >
@@ -169,10 +142,10 @@ const RandomUserWidget: React.FC = () => {
           <h2 className="font-bold text-2xl"> Random user widget</h2>
           <button
             onClick={fetchRandomData}
-            className="flex cursor-pointer items-center justify-between hover:scale-110 active:scale-95 w-40 px-4 py-2 rounded-2xl bg-gradient-to-r from-gray-800 to-red-900 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="flex cursor-pointer items-center justify-between hover:scale-110 active:scale-95 w-40 px-4 py-2 rounded-2xl bg-gradient-to-r from-blue-300 to-blue-500 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
-            <span>Random User</span>
-            <Infinity className="w-5 h-5 text-white" />
+           {loading ? <div className="flex flex-1 justify-center">  <Loader2 className="animate-spin"/> </div>: <> <span>Random User</span>
+            <Infinity className="w-5 h-5 text-white" /></>}
           </button>
         </div>
         <div className="flex flex-col gap-2 min-h-40 items-center">
