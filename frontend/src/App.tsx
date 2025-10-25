@@ -8,19 +8,20 @@ import PrivateLayout from "./components/Layout/PrivateLayout/Layout";
 import ReactLoader from "./components/Loaders/ReactLoaders";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCryptoCurrenciesList } from "./store/cryptoSlice";
-import FirstVisitModal from "./features/dashboard/components/firstVisitModal";
-import { setFirstVisit } from "./store/appSlice";
+import FirstVisitModal from "./features/dashboard/components/FirstVisitModal/FirstVisitModal";
 import LoaderWithMessage from "./components/Loaders/LoaderWithMessage";
 import Alert from "./components/Alert/Alert";
 
-// Public Routes
-const DashBoardPage = lazy(() => import("./pages/privates/DashboardPage"));
-// Settings page for lazy routes
-// const SettingsPage = lazy(() => import("./pages/privates/SettingsPage"));
+const DashBoardPage = lazy(
+  () => import("./features/dashboard/pages/DashBoardPage")
+);
+const SettingsPage = lazy(
+  () => import("./features/dashboard/pages/SettingsPage")
+);
 
 function App() {
   const userdata = useSelector((state: any) => state.app.userData);
-  // Data relative to first visit
+
   const { firstVisit } = userdata;
 
   const globalLoad = useSelector((state: any) => state.app.globalLoad);
@@ -33,15 +34,10 @@ function App() {
 
   return (
     <>
-    {/* This handle the global alert */}
+      {/* This handle the global alert */}
       <Alert />
       <>
-        {!firstVisit && (
-          <FirstVisitModal
-            firstVisit={!firstVisit}
-            setFirstVisit={setFirstVisit}
-          />
-        )}
+        {!firstVisit && <FirstVisitModal firstVisit={!firstVisit} />}
         <Routes>
           <Route element={<PrivateLayout />}>
             <Route
@@ -52,7 +48,7 @@ function App() {
                     fallback={
                       <>
                         <div className="flex flex-col gap-5 w-full h-96 items-center justify-center">
-                          <p> Caricamento Dashboard..</p>
+                          <p> Loading Dashboard..</p>
                           <ReactLoader />
                         </div>
                       </>
@@ -61,7 +57,30 @@ function App() {
                     {!globalLoad ? (
                       <DashBoardPage />
                     ) : (
-                      <LoaderWithMessage text="Loading page" />
+                      <LoaderWithMessage text="Loading DashBoard.." />
+                    )}
+                  </Suspense>
+                </>
+              }
+            />
+            <Route
+              path={routes.protectedRoutes.settings}
+              element={
+                <>
+                  <Suspense
+                    fallback={
+                      <>
+                        <div className="flex flex-col gap-5 w-full h-96 items-center justify-center">
+                          <p> Loading Settings..</p>
+                          <ReactLoader />
+                        </div>
+                      </>
+                    }
+                  >
+                    {!globalLoad ? (
+                      <SettingsPage />
+                    ) : (
+                      <LoaderWithMessage text="Loading Settings" />
                     )}
                   </Suspense>
                 </>

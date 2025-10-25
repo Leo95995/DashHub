@@ -9,4 +9,5 @@ export interface IDashBoardHeader {
   onClick: (val: boolean) => void;
   widgetOrder: number[];
   screenWidth: number;
+  visibleWidgets: number;
 }

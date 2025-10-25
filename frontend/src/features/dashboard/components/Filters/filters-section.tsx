@@ -1,7 +1,9 @@
-// Filters for weathers
+// React icons
 import type React from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
+// Icons
+import { ChevronDown, ChevronUp } from "lucide-react";
+// Types
 import type { IFilterSection } from "./types";
 
 
@@ -12,6 +14,7 @@ const FilterSection: React.FC<IFilterSection> = ({
   expanded,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(defaultOpen);
+
 
   return (
     <div

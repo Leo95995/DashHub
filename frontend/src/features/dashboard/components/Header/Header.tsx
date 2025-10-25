@@ -1,11 +1,10 @@
 // Dashboard data
-import { useDispatch } from "react-redux";
 import MobileFilters from "../../../../components/Layout/PrivateLayout/MobileFilters";
-import DashboardStorage from "../../../../services/storage/dashboard";
-import { setGlobalAlert } from "../../../../store/appSlice";
+
 import { isMobile } from "../../../../utils/media-query";
 import type { IDashBoardHeader } from "./types";
-import { IGlobalAlertStatus } from "../../../../types/store/app";
+
+import { useSaveWidget } from "./hooks/useSaveWidget";
 
 const DashBoardHeader: React.FC<IDashBoardHeader> = ({
   userData,
@@ -13,8 +12,10 @@ const DashBoardHeader: React.FC<IDashBoardHeader> = ({
   onClick,
   widgetOrder,
   screenWidth,
+  visibleWidgets
 }) => {
-  const dispatch = useDispatch()
+  // Hooks responsible for saving the new widgets layout
+  const { saveWidgetOrder } = useSaveWidget({ onClick, isEditMode, widgetOrder });
 
   return (
     <>
@@ -34,9 +35,9 @@ const DashBoardHeader: React.FC<IDashBoardHeader> = ({
           </b>
         </div>
         <div className="flex gap-2 items-center flex-wrap">
-          <button
+         {visibleWidgets >= 2 ? <button
             onClick={() => onClick(isEditMode)}
-            className={`px-4 py-2 rounded-lg font-semibold transition duration-200 active:scale-95 cursor-pointer
+            className={`px-4 py-2 rounded-lg font-semibold disabled:bg-gray-200 transition duration-200 active:scale-95 cursor-pointer
   ${
     isEditMode
       ? "bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-600 hover:to-rose-700 text-white shadow-lg"
@@ -45,19 +46,10 @@ const DashBoardHeader: React.FC<IDashBoardHeader> = ({
 `}
           >
             {isEditMode ? `Cancel` : "Edit Layout (Drag & Drop)"}
-          </button>
+          </button> : <></>}
           {isEditMode && (
             <button
-              onClick={() => {
-                onClick(isEditMode);
-                DashboardStorage.widgets.saveWidgetOrder(widgetOrder);
-                dispatch(
-                  setGlobalAlert({
-                    status: IGlobalAlertStatus.SUCCESS,
-                    message: "Success",
-                    description:'New widget order saved with success!!'
-              }));
-              }}
+              onClick={saveWidgetOrder}
               className="px-4 py-2 rounded-lg  cursor-pointer bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium shadow-md hover:from-blue-600 hover:to-indigo-700 active:scale-95 transition"
             >
               Finish Editing

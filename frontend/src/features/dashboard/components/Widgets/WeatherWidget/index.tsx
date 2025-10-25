@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+// React
+import { useEffect } from "react";
 import type React from "react";
-// Redux React.
+// Redux
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchWeatherByCity,
@@ -23,6 +24,7 @@ import Tag from "../../../../../components/Tag/Tag";
 import ErrorMessage from "../../../../../components/Error/Error";
 import { setGlobalAlert } from "../../../../../store/appSlice";
 import { IGlobalAlertStatus } from "../../../../../types/store/app";
+import { useDragDrop } from "../../../../../hooks/useDragAndDrop";
 
 const WeatherWidget: React.FC<IGenericWidget> = ({
   isEditMode,
@@ -31,18 +33,25 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
   setDraggedWidgetId,
 }) => {
   const weatherData = useSelector((state: any) => state.weather);
-  const [dragging, setDragging] = useState<boolean>(false);
+  // Drag and drop hook.
+  const {
+    dragging,
+    dragStartHandler,
+    dragEndHandler,
+    dragOverHandler,
+    dropHandler,
+  } = useDragDrop({ widgetId, handleDrop, setDraggedWidgetId });
+
   const dispatch = useDispatch();
 
-  const { coordinates, weather, temperatureType, loading, error, searchText } =
-    weatherData;
+  const { coordinates, weather, temperatureType, loading, error, searchText } =    weatherData;
 
   useEffect(() => {
     if (error) {
       dispatch(
         setGlobalAlert({
           status: IGlobalAlertStatus.ERROR,
-          message: "Success",
+          message: "Error",
           description: `Error loading weather data for the city ${searchText}`,
         })
       );
@@ -284,15 +293,10 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
   return (
     <div
       draggable={isEditMode}
-      onDragStart={() => {
-        setDragging(true);
-        setDraggedWidgetId(widgetId);
-      }}
-      onDragEnd={() => {
-        setDragging(false);
-      }}
-      onDragOver={(e) => e.preventDefault()}
-      onDrop={() => handleDrop(widgetId)}
+      onDragStart={dragStartHandler}
+      onDragEnd={dragEndHandler}
+      onDragOver={dragOverHandler}
+      onDrop={dropHandler}
       className={` ${
         isEditMode && "ring-2 ring-blue-400 hover:scale-105 cursor-grab"
       }

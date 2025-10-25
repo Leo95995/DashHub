@@ -1,13 +1,7 @@
 import type React from "react";
 // REACT
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import {
-  fetch_apod_data,
-  fetch_neows_data,
-  fetch_cme_data,
-  setSelectedWidget,
-} from "../../../../../store/nasaSlice";
+import {  setSelectedWidget } from "../../../../../store/nasaSlice";
 // Components
 import WidgetContainer from "./SubWidgets/widgets_container";
 import Switcher from "../../Switcher/switcher";
@@ -15,10 +9,13 @@ import Switcher from "../../Switcher/switcher";
 import { nasa_widgets } from "../../Switcher/datas";
 // Interfaces
 import type { IGenericWidget, WidgetTypes } from "../../../types";
-// Tag components
+// components
 import Tag from "../../../../../components/Tag/Tag";
 import { setGlobalAlert } from "../../../../../store/appSlice";
 import { IGlobalAlertStatus } from "../../../../../types/store/app";
+import { useDragDrop } from "../../../../../hooks/useDragAndDrop";
+import { useWidgetSelector } from "../../../hooks/UseWidgetSelector";
+import { useNasaFetcher } from "./hooks/useNasaFetch";
 
 const NasaWidget: React.FC<IGenericWidget> = ({
   isEditMode,
@@ -27,19 +24,24 @@ const NasaWidget: React.FC<IGenericWidget> = ({
   setDraggedWidgetId,
 }) => {
   const nasa_info = useSelector((state: any) => state.nasa);
-  // Apod
-  const { apodStatus, neoWsStatus, widgetSelected, cmeStatus } = nasa_info;
-  const [dragging, setDragging] = useState<boolean>(false);
-  // Neows
-
-  //  Mars Rover
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetch_apod_data() as any);
-    dispatch(fetch_neows_data() as any);
-    dispatch(fetch_cme_data() as any);
-  }, []);
+  const { apodStatus, neoWsStatus, widgetSelected, cmeStatus } = nasa_info;
+
+    const {
+      dragging,
+      dragStartHandler,
+      dragEndHandler,
+      dragOverHandler,
+      dropHandler,
+    } = useDragDrop({ widgetId, handleDrop, setDraggedWidgetId });
+
+    useNasaFetcher(dispatch)
+
+   // Widget selection
+    const { currentSelection, setWidgetSelection } = useWidgetSelector({selector: () => widgetSelected, actionCreator:setSelectedWidget ,});
+
+
 
   // Function that trigger and change the current used widget.
 
@@ -51,22 +53,17 @@ const NasaWidget: React.FC<IGenericWidget> = ({
         description: `The widget selected for Nasa is ${newWidget}`
       })
     );
-    dispatch(setSelectedWidget(newWidget));
+    setWidgetSelection(newWidget)
   };
 
   return (
     <>
       <div
         draggable={isEditMode}
-        onDragStart={() => {
-          setDragging(true);
-          setDraggedWidgetId(widgetId);
-        }}
-        onDragEnd={() => {
-          setDragging(false);
-        }}
-        onDragOver={(e) => e.preventDefault()}
-        onDrop={() => handleDrop(widgetId)}
+        onDragStart={dragStartHandler}
+        onDragEnd={dragEndHandler}
+        onDragOver={dragOverHandler}
+        onDrop={dropHandler}
         className={`relative min-w-64 h-120 col-span-1 rounded-2xl bg-gradient-to-br from-gray-200 via-gray-100 to-blue-50
        dark:from-gray-800 dark:via-gray-700 dark:to-gray-900 p-6 shadow-2xl border border-gray-300 hover:scale-105 transform 
        ${isEditMode && "ring-2 ring-blue-400 hover:scale-105 cursor-grab"}
@@ -81,7 +78,7 @@ const NasaWidget: React.FC<IGenericWidget> = ({
           <div className="flex gap-5 justify-between items-center">
             <Switcher
               widgetList={nasa_widgets}
-              widgetSelected={widgetSelected}
+              widgetSelected={currentSelection}
               changeSelectedWidget={changeSelectedWidget}
               switcherButtonText="Change Widget"
               switcherTitle="Select the Nasa widget"
@@ -92,7 +89,7 @@ const NasaWidget: React.FC<IGenericWidget> = ({
             apodStatus={apodStatus}
             neoWStatus={neoWsStatus}
             cmeStatus={cmeStatus}
-            widgetSelected={widgetSelected}
+            widgetSelected={currentSelection}
           />
         </div>
       </div>

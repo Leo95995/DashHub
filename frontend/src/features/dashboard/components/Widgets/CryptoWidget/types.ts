@@ -1,3 +1,6 @@
+import type { UnknownAction } from "@reduxjs/toolkit";
+import type { Dispatch } from "react";
+import type { ICryptoFilterData } from "../../../../../store/data/cryptoData";
 import type { ICryptoTrendings } from "../../../../../types/store/crypto";
 
 export interface ILineChartData {
@@ -20,4 +23,9 @@ export interface IFilterList {
 
 export interface ICryptoList {
   items: ICryptoTrendings;
+}
+
+export interface ICryptoHook {
+  cryptoFilterData: ICryptoFilterData;
+  dispatch: Dispatch<UnknownAction>;
 }

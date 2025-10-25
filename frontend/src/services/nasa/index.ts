@@ -3,15 +3,11 @@ import type { INasaApodData, CMEData } from "../../types/store/nasa";
 import { nasaUtils } from "../../utils/nasa-utils";
 import { NasaMappers } from "../../mappers/nasaMapper";
 
-
-
-
 const backendUrl = import.meta.env.VITE_BACKEND_URI;
 
 const nasa_baseurl = `${backendUrl}/nasa`;
 
 const NasaService = () => {
-
   const get_apod_data = async () => {
     const apod_url = `${nasa_baseurl}/apod`;
     try {
@@ -42,11 +38,11 @@ const NasaService = () => {
       const res = await fetch(cmeUrl, { method: "GET" });
       const data: CmeResponse = await res.json();
       const cme_data: CMEData[] = NasaMappers.CmeMapper(data);
-      
+
       const status = res.status;
-      
+
       if (data && status === 200) {
-        return { data:cme_data, status: status, error: false };
+        return { data: cme_data, status: status, error: false };
       } else {
         return { status: status, error: true };
       }
@@ -62,11 +58,9 @@ const NasaService = () => {
     const today = nasaUtils.getTodayFormattedDate();
     const url = `${nasa_baseurl}/neows?start_date=${today}&end_date=${today}`;
     try {
-      //  Refining your craft.
       const res = await fetch(url, { method: "GET" });
       const data: NeoWsResponse = await res.json();
       const status = res.status;
-
       if (data && status === 200) {
         const mappedData = NasaMappers.neowsMapper(data);
         return { neoData: mappedData, status: status, error: false };

@@ -13,6 +13,7 @@ export const fetch_apod_data = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const nasa_apod_data = await get_apod_data();
+
       if (nasa_apod_data.error || !nasa_apod_data.nasaData) {
         return rejectWithValue("Errore nel recupero");
       }
@@ -45,6 +46,7 @@ export const fetch_neows_data = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const nasa_neows_data = await get_neoWs_data();
+
       if (nasa_neows_data.error || !nasa_neows_data.neoData) {
         return rejectWithValue("Errore nel recupero");
       }

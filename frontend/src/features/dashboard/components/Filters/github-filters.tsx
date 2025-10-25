@@ -1,24 +1,25 @@
-import { useDispatch, useSelector } from "react-redux";
-import GenericSelect from "../../../../components/Select/Select";
+// Redux and slice
+import {  useSelector } from "react-redux";
 import { setSelectedGithubWidget } from "../../../../store/githubSlice";
-import type { GithubWidgets } from "../../types";
-import { github_widgets } from "../Switcher/datas";
-import FilterSection from "./filters-section";
+// Types 
+
 import type { IFilters } from "./types";
-
-
+// Components
+import GenericSelect from "../../../../components/Select/Select";
+import FilterSection from "./filters-section";
+// Data
+import { github_widgets } from "../Switcher/datas";
+import { useWidgetSelector } from "../../hooks/UseWidgetSelector";
 
 const GithubFilters: React.FC<IFilters> = ({ expanded }) => {
-  const dispatch = useDispatch();
-  const currentFilters = useSelector(
+  const github_widget = useSelector(
     (state: any) => state.github.selectedWidget
   );
-
-  const setGithubWidget = (widget: GithubWidgets) => {
-    if (widget) {
-      dispatch(setSelectedGithubWidget(widget) as any);
-    }
-  };
+  
+  const { currentSelection, setWidgetSelection } = useWidgetSelector({
+    selector: () => github_widget,
+    actionCreator: setSelectedGithubWidget,
+  });
 
   const renderGithubSelector = () => {
     return (
@@ -31,9 +32,9 @@ const GithubFilters: React.FC<IFilters> = ({ expanded }) => {
         </label>
         <GenericSelect
           itemList={github_widgets}
-          selectedList={currentFilters}
-          onSelection={(e) => setGithubWidget(e)}
-          defaultText={currentFilters}
+          selectedList={currentSelection}
+          onSelection={(e) => setWidgetSelection(e)}
+          defaultText={currentSelection}
           minHeigth="min-h-14"
           placement="start"
         />

@@ -1,16 +1,28 @@
-export interface IGenericWidget  {
-    widgetId: number
-    isEditMode: boolean
-    handleDrop: (widgetId: number) => void
-    setDraggedWidgetId: (widgetId: number|null) => void
+//  Widget Layouts
+export interface IGenericWidget {
+  widgetId: number;
+  isEditMode: boolean;
+  handleDrop: (widgetId: number) => void;
+  setDraggedWidgetId: (widgetId: number | null) => void;
 }
+export type DraggableWidget = {
+  component: React.FC<IGenericWidget>;
+  widgetId: number;
+  visibility: boolean;
+};
 
+//  Widgets Types
 
-export type NasaWidgets  =  "Pic Of The Day" | "CME"| "Near Earth Object"
+export type NasaWidgets = "Pic Of The Day" | "CME" | "Near Earth Object";
 
-export type GithubWidgets = 'Trending Repositories' | 'User Activity'| 'Random User'
- 
-export type CryptoWidgets = 'Trending Cryptos' | 'Crypto Details' | 'Top Cryptos'
+export type GithubWidgets =
+  | "Trending Repositories"
+  | "User Activity"
+  | "Random User";
 
-export type WidgetTypes  = NasaWidgets | GithubWidgets | CryptoWidgets
+export type CryptoWidgets =
+  | "Trending Cryptos"
+  | "Crypto Details"
+  | "Top Cryptos";
 
+export type WidgetTypes = NasaWidgets | GithubWidgets | CryptoWidgets;

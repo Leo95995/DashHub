@@ -1,35 +1,22 @@
-import { useState } from "react";
 // Components
 import InputSearch from "../../../../components/Input/Input";
 import GenericModal from "../../../../components/Modal/Modal";
 import ModeToggler from "../../../../components/Toggler/Toggler";
 // Redux
-import { useDispatch } from "react-redux";
-import { setUserInfo } from "../../../../store/appSlice";
 import type { IFirstVisitModal } from "./types";
+import { useFirstVisitLogic } from "./useFirstVisitLogic";
 
 const FirstVisitModal: React.FC<IFirstVisitModal> = ({
   firstVisit,
-  setFirstVisit,
 }) => {
-  const [isWriting, setIsWriting] = useState<boolean>(false);
-  const dispatch = useDispatch();
-
-  const [userInfo, setUser] = useState({ username: "", avatar_color: "" });
-
-  const handleGuestVisit = () => {
-    dispatch(setUserInfo({ username: "Guest", avatar_color: "red" }));
-    dispatch(setFirstVisit(true) as any);
-  };
-
-  const savePreferences = () => {
-    setIsWriting(true);
-    dispatch(setUserInfo(userInfo));
-    setTimeout(() => {
-      setIsWriting(false);
-      dispatch(setFirstVisit(true) as any);
-    }, 1000);
-  };
+  // Custom hook
+  const {
+    userInfo,
+    setUser,
+    handleGuestVisit,
+    savePreferences,
+    isWriting,
+  } = useFirstVisitLogic();
 
   return (
     <GenericModal
@@ -56,7 +43,7 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({
           Username
         </label>
         <InputSearch
-          placeholder="Scrivi qui il tuo nome..."
+          placeholder="Insert here your username..."
           onChange={(e) => {
             setUser({ ...userInfo, username: e });
           }}
@@ -72,11 +59,13 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({
           </label>
           <input
             type="color"
-            defaultValue={"#e5a50a"}
             onChange={(e) =>
               setUser({ ...userInfo, avatar_color: e.currentTarget.value })
             }
           />
+          {!userInfo.avatar_color.length && <p className="text-sm text-red-400">No color selected</p>}
+          {userInfo.avatar_color.length && <p className="text-sm text-green-300">Color selected</p>}
+          
         </div>
         <div className="flex flex-col gap-2">
           <label> Select mode</label>

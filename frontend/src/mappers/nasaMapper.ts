@@ -1,15 +1,12 @@
-import type { NeoWsResponse, INear, CmeResponse } from "../types/services/nasa";
+import type { NeoWsResponse, INear, CmeResponse, INearObject } from "../types/services/nasa";
 import type { INeoWsData, CMEData } from "../types/store/nasa";
 
 const neowsMapper = (neowsResponse: NeoWsResponse) => {
   const arr: Array<INeoWsData> = [];
   const { element_count, near_earth_objects } = neowsResponse;
 
-  for (const key in near_earth_objects) {
-    const keyz = key as keyof INear;
-    const near: any[] = near_earth_objects[keyz] as any;
-
-    near.forEach((obj, index) => {
+    
+    near_earth_objects.forEach((obj : INearObject, index: number) => {
       let mappedObj: INeoWsData = {
         key: index,
         name: obj.name,
@@ -23,7 +20,8 @@ const neowsMapper = (neowsResponse: NeoWsResponse) => {
       };
       arr.push(mappedObj);
     });
-  }
+
+
   return { element_count, neows_data: arr };
 };
 

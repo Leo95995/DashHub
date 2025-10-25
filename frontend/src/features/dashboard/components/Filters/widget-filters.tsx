@@ -1,89 +1,22 @@
 import { CircleCheck } from "lucide-react";
-import { useDispatch, useSelector } from "react-redux";
-import CheckboxGroup from "../../../../components/Checkbox/CheckboxGroup";
-import { setGlobalAlert } from "../../../../store/appSlice";
-import {
-  changeWidgetVisibility,
-  type VisualMode,
-  setWidgetLayout,
-} from "../../../../store/filterSlice";
-import type { IFilters } from "../../../../types/common/filters";
 import type { ScreenMode } from "../../../../types/common/generic";
-import { IGlobalAlertStatus } from "../../../../types/store/app";
 import { filterUtils } from "../../../../utils/filter-utils";
 import FilterSection from "./filters-section";
+import { useWidgetFilters } from "./hooks/useWidgetFilters";
+import CheckboxGroup from "../../../../components/Checkbox/CheckboxGroup";
 
 interface IWidgetFilters {
   expanded: boolean;
 }
 
 const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
-  const dispatch = useDispatch();
-  const filters = useSelector(
-    (state: any) => state.filters.filters.widgetVisibility
-  );
-  const layout = useSelector(
-    (state: any) => state.filters.widgetLayout.layoutMode
-  );
-  const colsLayout = useSelector((state: any) => state.filters.widgetLayout);
-
-  const changeVisibility = (
-    widget: keyof IFilters["widgetVisibility"],
-    visibility: boolean
-  ) => {
-    dispatch(
-      changeWidgetVisibility({ widget: widget, visibility: visibility })
-    );
-    dispatch(
-      setGlobalAlert({
-        status: IGlobalAlertStatus.SUCCESS,
-        message: "Success",
-        description: (
-          <p>
-            The <b>{widget}</b> widget is now{" "}
-            <b>{visibility ? "visible" : "hidden"}</b>.
-          </p>
-        ),
-      })
-    );
-  };
-  // Handle change functionality
-
-  const visualModeConverter = (visualMode: VisualMode) => {
-    let text = "";
-    switch (visualMode) {
-      case "large":
-        text = "Desktop";
-        break;
-      case "medium":
-        text = "Tablet";
-
-        break;
-      case "small":
-        text = "Mobile";
-
-        break;
-    }
-    return text;
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(
-      setWidgetLayout({
-        type: e.currentTarget.name as VisualMode,
-        value: Number(e.currentTarget.value),
-      })
-    );
-    dispatch(
-      setGlobalAlert({
-        status: IGlobalAlertStatus.SUCCESS,
-        message: "Success",
-        description: `You changed the number of columns for ${visualModeConverter(
-          e.currentTarget.name as VisualMode
-        )} mode to ${e.currentTarget.value}.`,
-      })
-    );
-  };
+  const {
+    filters,
+    colsLayout,
+    layout,
+    handleChangeLayout,
+    handleChangeVisibility,
+  } = useWidgetFilters();
 
   const optionlist = filterUtils(filters);
 
@@ -115,7 +48,7 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
           <CheckboxGroup
             selectedList={filters}
             options={optionlist}
-            onChange={changeVisibility}
+            onChange={handleChangeVisibility}
           />
         </div>
       </div>
@@ -143,7 +76,7 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
               {colsLayout.grid_col.large != null && (
                 <select
                   value={colsLayout.grid_col.large}
-                  onChange={(e) => handleChange(e)}
+                  onChange={(e) => handleChangeLayout(e)}
                   name="large"
                   className="
                 border border-gray-300 dark:border-gray-600
@@ -170,7 +103,7 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
               {colsLayout.grid_col.medium != null && (
                 <select
                   value={colsLayout.grid_col.medium}
-                  onChange={(e) => handleChange(e)}
+                  onChange={(e) => handleChangeLayout(e)}
                   name="medium"
                   className="
                 border border-gray-300 dark:border-gray-600
@@ -195,7 +128,7 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
               </label>
               {colsLayout.grid_col.small != null && (
                 <select
-                  onChange={(e) => handleChange(e)}
+                  onChange={(e) => handleChangeLayout(e)}
                   value={colsLayout.grid_col.small}
                   name="small"
                   className="

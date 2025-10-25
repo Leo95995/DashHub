@@ -13,8 +13,6 @@ import { isMobile } from "../../utils/media-query";
 import { setUserAvatarColor } from "../../store/appSlice";
 import { IGlobalAlertStatus } from "../../types/store/app";
 
-
-
 const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -39,6 +37,32 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
     setIsSaving(false);
   };
 
+  const internalSave = () => {
+    const changedUsername = changeUsername();
+
+    if (!changedUsername) {
+      dispatch(
+        setGlobalAlert({
+          status: IGlobalAlertStatus.ERROR,
+          message: "Error",
+          description: `Username must be long at least 2 characters`,
+        })
+      );
+      return;
+    } else {
+      save();
+      setEditColor(false);
+      setEditMode(false);
+      dispatch(
+        setGlobalAlert({
+          status: IGlobalAlertStatus.SUCCESS,
+          message: "Success",
+          description: `Modified username and avatar with success`,
+        })
+      );
+    }
+  };
+
   // Updated save input
   const saveByInput = (char: string) => {
     if (char === "Enter") {
@@ -50,11 +74,26 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
 
   //  Modify usenarme
   const changeUsername = () => {
-    if (newUsername.length > 0) {
+    if (newUsername.length > 2) {
+      dispatch(
+        setGlobalAlert({
+          status: IGlobalAlertStatus.SUCCESS,
+          message: "Success",
+          description: `Modified username and avatar with success`,
+        })
+      );
       dispatch(setUserName(newUsername));
       setEditMode(!editMode);
+      return true;
     } else {
-      alert("The minimum username length is of 5 characters");
+      dispatch(
+        setGlobalAlert({
+          status: IGlobalAlertStatus.ERROR,
+          message: "Error",
+         description: `Username must be long at least 2 characters`,
+        })
+      );
+      return false;
     }
   };
   return (
@@ -87,6 +126,14 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
                 <div className="flex gap-1 dark:text-slate-700 mb-2">
                   <InputSearch
                     width="w-45 p-2"
+                    defaultValue={username}
+                    onKeyUp={(e) => {
+                      if (e === "Enter") {
+                        internalSave();
+                      } else if (e === "Escape") {
+                        setEditColor(false);
+                      }
+                    }}
                     placeholder="Insert your new username"
                     onChange={(e) => setNewUsername(e)}
                     isLoading={isSaving}
@@ -94,21 +141,7 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
                 </div>
                 <div className="flex gap-1 text-sm  text-black">
                   <button
-                    onClick={() => {
-                      save();
-                      changeUsername();
-                      setEditColor(false);
-                      setEditMode(false);
-                      dispatch(
-                        setGlobalAlert({
-                          status: IGlobalAlertStatus.SUCCESS,
-                          message: "Success",
-                          description: (
-                            <p>Modified username and avatar with success</p>
-                          ),
-                        })
-                      );
-                    }}
+                    onClick={internalSave}
                     className="cursor-pointer border border-gray-200 rounded-2xl bg-gray-200 px-2 hover:bg-blue-200"
                   >
                     Save
@@ -125,7 +158,7 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
           )}
           <span
             onClick={() => setEditColor((prev) => !prev)}
-            style={{ background: avatar_color ?? "#e5a50a" }}
+            style={{ background: avatar_color }}
             className="rounded-full h-11 w-11 overflow-ellipsis p-1 cursor-pointer justify-center flex items-center hover:border-slate-200 hover:border hover:scale-105 transition-all "
           >
             {createShortName(username)}
@@ -134,11 +167,14 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
         {expanded && !isMobile(screenWidth) && (
           <div className="flex items-center gap-2">
             {!editMode ? (
-              <p style={{ margin: 0 }}>{username ?? `Guest`}</p>
+              <p className="line-clamp-1" style={{ margin: 0 }}>
+                {username ?? `Guest`}
+              </p>
             ) : (
               <InputSearch
                 width="w-35 md:w-35"
                 placeholder="Insert your new username"
+                defaultValue={username}
                 onChange={(e) => setNewUsername(e)}
                 isLoading={isSaving}
                 onKeyUp={saveByInput}

@@ -1,28 +1,20 @@
 // Filters for weathers
 import type React from "react";
-import { useEffect } from "react";
-// Redux
-import { useDispatch, useSelector } from "react-redux";
-import { setGlobalAlert } from "../../../../store/appSlice";
-import {
-  fetchWeatherByCity,
-  setTemperatureType,
-  setSearchText,
-} from "../../../../store/weatherSlice";
-import { IGlobalAlertStatus } from "../../../../types/store/app";
 import FilterSection from "./filters-section";
 import type { IFilters } from "./types";
+import { useWeatherFilterLogic } from "./hooks/useWeatherFilterLogic";
+import ReactLoader from "../../../../components/Loaders/ReactLoaders";
+import { Loader, Loader2 } from "lucide-react";
+import WeatherSearchBar from "../Widgets/WeatherWidget/WeatherSearch/WeatherSearchBar";
+
 
 const WeatherFilters: React.FC<IFilters> = ({ expanded }) => {
-  const dispatch = useDispatch();
-  const { searchText } = useSelector((state: any) => state.weather);
-  const temperatureType = useSelector(
-    (state: any) => state.weather.temperatureType
-  );
 
-  useEffect(() => {
-    dispatch(fetchWeatherByCity(searchText) as any);
-  }, []);
+  //  Weather hook custom
+  const {loading, searchText, changeTemperature, searchByCity,setCityName, temperatureType} = useWeatherFilterLogic()
+
+
+  console.log(searchText);
 
   const renderTemperatureSelector = () => {
     return (
@@ -35,16 +27,7 @@ const WeatherFilters: React.FC<IFilters> = ({ expanded }) => {
         </label>
         {temperatureType && (
           <select
-            onChange={(e) => {
-              dispatch(setTemperatureType(e.currentTarget.value.toLowerCase()));
-              dispatch(
-                setGlobalAlert({
-                  status: IGlobalAlertStatus.SUCCESS,
-                  message: "Success",
-                  description: `Temperature type changed to ${e.currentTarget.value.toLowerCase()}.`,
-                })
-              );
-            }}
+            onChange={(e) =>changeTemperature(e)}
             value={temperatureType}
             name="temperature"
             id="temperature"
@@ -77,25 +60,17 @@ const WeatherFilters: React.FC<IFilters> = ({ expanded }) => {
           City
         </label>
         <div className="flex">
+          <div className="relative">
           <input
             type="text"
             name="location"
             id="location"
-            onChange={(e) =>
-              dispatch(setSearchText(e.currentTarget.value) as any)
+            onChange={(e) =>setCityName(e)
+             
             }
+            defaultValue={searchText ?? ''}
             placeholder="Search weather by city"
-            onKeyDown={(e) => {
-              e.key === "Enter" &&
-                dispatch(fetchWeatherByCity(searchText) as any) &&
-                dispatch(
-                  setGlobalAlert({
-                    status: IGlobalAlertStatus.SUCCESS,
-                    message: "Successo",
-                    description: `Weather data for ${searchText} recovered with success`,
-                  })
-                );
-            }}
+            onKeyDown={(e) =>e.key === "Enter" && searchByCity()}
             className="
         border border-gray-300 dark:border-gray-600
         rounded-l-md
@@ -107,17 +82,10 @@ const WeatherFilters: React.FC<IFilters> = ({ expanded }) => {
         transition-colors duration-200
       "
           />
+          {loading && <div className="absolute right-0 top-2 "><Loader2 className="animate-spin" /> </div>}
+          </div>
           <button
-            onClick={() => {
-              dispatch(fetchWeatherByCity(searchText) as any);
-              dispatch(
-                setGlobalAlert({
-                  status: IGlobalAlertStatus.SUCCESS,
-                  message: "Successo",
-                  description: `Weather data for ${searchText} recovered with success`,
-                })
-              );
-            }}
+            onClick={() => searchByCity()}
             className="
         border border-gray-300 dark:border-gray-600 border-l-0
         rounded-r-md
@@ -140,7 +108,7 @@ const WeatherFilters: React.FC<IFilters> = ({ expanded }) => {
   return (
     <>
       <FilterSection title={"WEATHER"} defaultOpen={false} expanded={expanded as boolean}>
-        {renderCitySearch()}
+        <WeatherSearchBar setCityName={setCityName } searchText={searchText ?? ''} searchByCity={searchByCity} loading={loading}/>
         {renderTemperatureSelector()}
       </FilterSection>
     </>

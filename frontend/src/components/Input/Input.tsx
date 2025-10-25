@@ -7,6 +7,7 @@ interface InputSearchProps {
   onChange: (value: any) => void;
   isLoading: boolean;
   width?: string;
+  defaultValue?: string | any;
   onKeyUp?: (value: any) => void;
 }
 
@@ -16,6 +17,7 @@ const InputSearch: React.FC<InputSearchProps> = ({
   onChange,
   isLoading,
   width,
+  defaultValue,
   onKeyUp,
 }) => {
   return (
@@ -24,6 +26,7 @@ const InputSearch: React.FC<InputSearchProps> = ({
         <input
           placeholder={placeholder ?? "Placeholder"}
           disabled={disabled || isLoading}
+          defaultValue={defaultValue ?? ''}
           aria-label=""
           onKeyUp={(e) => onKeyUp && onKeyUp(e.key)}
           onChange={(e) => onChange(e.currentTarget.value)}

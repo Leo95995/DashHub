@@ -4,9 +4,6 @@ const SettingsPage: React.FC = () => {
     Setting :
 
     Theme customization
-
-
-
   </div>;
 };
 

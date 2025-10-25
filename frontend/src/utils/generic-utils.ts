@@ -51,7 +51,7 @@ export const debounce = (func: any, delay: any) => {
 }
 
 /**
- * Create short name
+ * Create short name, we return only the first 3 main char
  * @param username 
  * @returns 
  */
@@ -64,9 +64,9 @@ export  const createShortName = (username: string) => {
     let result  = "";
 
     for(const name of splittedName){
-      result += name[0].toUpperCase();
+      result += name[0]?.toUpperCase();
     }
-    return result
+    return result.substring(0,3)
 
   }
 
