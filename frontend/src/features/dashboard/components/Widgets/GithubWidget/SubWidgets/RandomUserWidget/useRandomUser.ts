@@ -1,10 +1,16 @@
+// React
 import { useState, useEffect } from "react";
+// Redux
 import { useDispatch } from "react-redux";
+// Slice
 import { fetchRandomUser } from "../../../../../../../store/githubSlice";
+// Types
 import type { GithubFields } from "../../types";
-import type { ItemStatus } from "../../../../../../../types/common/status";
-import { useGlobalAlert } from "../../../../../../../hooks/useAlert";
 import { IGlobalAlertStatus } from "../../../../../../../types/store/app";
+// Status
+import type { ItemStatus } from "../../../../../../../types/common/status";
+// Hooks
+import { useGlobalAlert } from "../../../../../../../hooks/useAlert";
 
 export const useRandomUser = ({
   randomUserData,
