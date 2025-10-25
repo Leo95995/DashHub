@@ -1,49 +1,42 @@
+// React import
+import React from "react";
+// Icons
 import { Loader2 } from "lucide-react";
-import type React from "react";
+import type { IWeatherSearchBar } from "./types";
 
 
-
-
-interface IWeatherSearchBar {
-    setCityName: (e:  React.ChangeEvent<HTMLInputElement>) => void
-    searchText: string
-    searchByCity: () => void
-    loading: boolean
-
-}
-
-
-
-
-const WeatherSearchBar: React.FC<IWeatherSearchBar>= ({setCityName, searchText, searchByCity, loading}) => {
+const WeatherSearchBar: React.FC<IWeatherSearchBar> = ({
+  setCityName,
+  searchText,
+  searchByCity,
+  loading,
+  label
+}) => {
   return (
-    <div className="flex flex-col gap-2">
-      <label
-        htmlFor="location"
-        className="text-md font-semibold text-gray-700 dark:text-gray-200 py-1"
-      >
-        City
-      </label>
-      <div className="flex">
-        <div className="relative">
+    <div className="flex w-full flex-col gap-2">
+          {label && <label className="font-semibold" htmlFor="location"> City </label>}
+      <div className="flex w-full">
+        <div className="relative w-full">
           <input
             type="text"
             name="location"
             id="location"
+            aria-label={`${!label && 'City Name'}`}
             onChange={(e) => setCityName(e)}
             defaultValue={searchText ?? ""}
             placeholder="Search weather by city"
             onKeyDown={(e) => e.key === "Enter" && searchByCity()}
-            className="
+            className={`
         border border-gray-300 dark:border-gray-600
+        flex-1
         rounded-l-md
-        w-45
         px-3 py-2
+        w-full
         bg-white dark:bg-gray-800
         text-gray-900 dark:text-gray-100
         focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-600
         transition-colors duration-200
-      "
+     `}
           />
           {loading && (
             <div className="absolute right-0 top-2 ">

@@ -25,6 +25,8 @@ import ErrorMessage from "../../../../../components/Error/Error";
 import { setGlobalAlert } from "../../../../../store/appSlice";
 import { IGlobalAlertStatus } from "../../../../../types/store/app";
 import { useDragDrop } from "../../../../../hooks/useDragAndDrop";
+import { useWeatherFilterLogic } from "../../Filters/hooks/useWeatherFilterLogic";
+import WeatherSearchBar from "./WeatherSearch/WeatherSearchBar";
 
 const WeatherWidget: React.FC<IGenericWidget> = ({
   isEditMode,
@@ -43,8 +45,16 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
   } = useDragDrop({ widgetId, handleDrop, setDraggedWidgetId });
 
   const dispatch = useDispatch();
+  const {
+    changeTemperature,
+    searchByCity,
+    setCityName,
+    temperatureType,
+    loading,
+    searchText,
+  } = useWeatherFilterLogic();
 
-  const { coordinates, weather, temperatureType, loading, error, searchText } =    weatherData;
+  const { coordinates, weather, error } = weatherData;
 
   useEffect(() => {
     if (error) {
@@ -75,49 +85,13 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
           <ErrorMessage message={"Failed to load weather data"} />
           <h2 className="py-2 font-black">Search another city</h2>
           <div className="flex">
-            <input
-              type="text"
-              name="location"
-              id="location"
-              onChange={(e) => dispatch(setSearchText(e.currentTarget.value))}
-              placeholder="Search weather by city"
-              onKeyDown={(e) =>
-                e.key === "Enter" &&
-                dispatch(fetchWeatherByCity(searchText) as any) &&
-                !error &&
-                dispatch(
-                  setGlobalAlert({
-                    status: IGlobalAlertStatus.SUCCESS,
-                    message: "Success",
-                    description: `Weather data for ${searchText} recovered with success`,
-                  })
-                )
-              }
-              className="
-                border border-gray-300 dark:border-gray-600
-                rounded-l-md
-                w-full
-                px-3 py-2
-                bg-white dark:bg-gray-800
-                text-gray-900 dark:text-gray-100
-                focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-600
-                transition-colors duration-200
-              "
+            <WeatherSearchBar
+              width="w-full"
+              setCityName={setCityName}
+              searchText={searchText ?? ""}
+              searchByCity={searchByCity}
+              loading={loading}
             />
-            <button
-              onClick={() => dispatch(fetchWeatherByCity(searchText) as any)}
-              className="border border-gray-300 dark:border-gray-600 border-l-0
-                  rounded-r-md
-                  px-4 py-2
-                  bg-blue-500 dark:bg-blue-600
-                  text-white
-                  font-semibold
-                  hover:bg-blue-600 dark:hover:bg-blue-700
-                  transition-colors duration-200
-                  cursor-pointer"
-            >
-              Search
-            </button>
           </div>
         </>
       );
@@ -142,50 +116,15 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
 
     return (
       <div className="transition-opacity duration-500 min-w-20">
-        <div className="flex">
-          <input
-            type="text"
-            name="location"
-            id="location"
-            onChange={(e) => dispatch(setSearchText(e.currentTarget.value))}
-            placeholder="Search weather by city"
-            onKeyDown={(e) =>
-              e.key === "Enter" &&
-              dispatch(fetchWeatherByCity(searchText) as any) &&
-              dispatch(
-                setGlobalAlert({
-                  status: IGlobalAlertStatus.SUCCESS,
-                  message: "Success",
-                  description: `Weather data for ${searchText} recovered with success`,
-                })
-              )
-            }
-            className="
-                border border-gray-300 dark:border-gray-600
-                rounded-l-md
-                w-full
-                px-3 py-2
-                bg-white dark:bg-gray-800
-                text-gray-900 dark:text-gray-100
-                focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-600
-                transition-colors duration-200
-              "
+        <div className="flex w-full">
+          <WeatherSearchBar
+            setCityName={setCityName}
+            searchText={searchText ?? ""}
+            searchByCity={searchByCity}
+            loading={loading}
           />
-          <button
-            onClick={() => dispatch(fetchWeatherByCity(searchText) as any)}
-            className="border border-gray-300 dark:border-gray-600 border-l-0
-                  rounded-r-md
-                  px-4 py-2
-                  bg-blue-500 dark:bg-blue-600
-                  text-white
-                  font-semibold
-                  hover:bg-blue-600 dark:hover:bg-blue-700
-                  transition-colors duration-200
-                  cursor-pointer"
-          >
-            Search
-          </button>
         </div>
+
         <div className="flex items-center justify-between">
           <h3 className="text-2xl font-bold flex gap-2 items-center">
             {name}, {state}

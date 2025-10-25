@@ -5,14 +5,18 @@ import { crypto_widgets } from "../Switcher/datas";
 import FilterSection from "./filters-section";
 import type { IFilters } from "./types";
 import { useWidgetSelector } from "../../hooks/UseWidgetSelector";
-
+import { WidgetOrigin } from "../../hooks/types";
 
 const CryptoFilters: React.FC<IFilters> = ({ expanded = true }) => {
+  const selectCryptoWidget = useSelector(
+    (state: any) => state.crypto.selectedWidget
+  );
 
-
-  const selectCryptoWidget = useSelector((state: any) => state.crypto.selectedWidget);
-
-  const  {currentSelection, setWidgetSelection } = useWidgetSelector({selector: ()=>selectCryptoWidget, actionCreator: setSelectedCryptoWidget})
+  const { currentSelection, setWidgetSelection } = useWidgetSelector({
+    selector: () => selectCryptoWidget,
+    actionCreator: setSelectedCryptoWidget,
+    origin: WidgetOrigin.CRYPTO
+  });
 
   const renderCryptoContent = () => {
     return (
@@ -41,7 +45,7 @@ const CryptoFilters: React.FC<IFilters> = ({ expanded = true }) => {
         defaultOpen={false}
         expanded={expanded as boolean}
       >
-       {renderCryptoContent()}
+        {renderCryptoContent()}
       </FilterSection>
     </>
   );

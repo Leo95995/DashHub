@@ -26,7 +26,7 @@ const FilterList: React.FC<IFilterList> = ({ filters, onClick, applyFilters }) =
       <div className="flex-0.2 items-center flex">
       <button
         onClick={applyFilters}
-        className="ml-1 px-4 py-1 rounded-2xl cursor-pointer bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all duration-200"
+        className="ml-1 px-4 py-1 rounded-md cursor-pointer bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all duration-200"
       >
         Apply
       </button>

@@ -1,10 +1,17 @@
-import LoaderWithMessage from "../../../../../../components/Loaders/LoaderWithMessage";
+// Redux
 import { useDispatch } from "react-redux";
-import { fetch_apod_data } from "../../../../../../store/nasaSlice";
-import { Calendar } from "lucide-react";
-import { setFullScreenImage } from "../../../../../../store/nasaSlice";
+//  React
 import React, { useState } from "react";
+//  Types
 import type { IApodWidget } from "../types";
+//  Slice
+import { setFullScreenImage } from "../../../../../../store/nasaSlice";
+import { fetch_apod_data } from "../../../../../../store/nasaSlice";
+//  Icon
+import { Calendar } from "lucide-react";
+// Components
+import LoaderWithMessage from "../../../../../../components/Loaders/LoaderWithMessage";
+
 
 const ApodWidget: React.FC<IApodWidget> = ({ data, error, loading }) => {
   const { date, _id, img, description, title } = data;

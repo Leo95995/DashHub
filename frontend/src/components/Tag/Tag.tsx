@@ -1,10 +1,8 @@
+//  React
 import type React from "react";
+// Types
+import type { ITag } from "./types";
 
-interface ITag {
-  text: string;
-  bgColor?: string;
-  bgHover?: string;
-}
 
 const Tag: React.FC<ITag> = ({ text, bgColor, bgHover }) => {
   return (

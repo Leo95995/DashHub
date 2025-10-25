@@ -1,3 +1,4 @@
+//  Icons
 import {
   Github,
   Building2,
@@ -8,8 +9,10 @@ import {
   Clock,
   UserRound,
 } from "lucide-react";
+// Components
 import ReactLoader from "../../../../../components/Loaders/ReactLoaders";
 import ErrorMessage from "../../../../../components/Error/Error";
+// Types
 import type { ItemStatus } from "../../../../../types/common/status";
 import type { IUserActivityData } from "../../../../../types/services/github";
 

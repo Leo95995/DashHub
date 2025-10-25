@@ -1,31 +1,13 @@
-import { useCallback } from "react";
+//  Components
 import InputSearch from "../../../../../../../components/Input/Input";
-import { fetchUserActivity } from "../../../../../../../store/githubSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { debounce } from "../../../../../../../utils/generic-utils";
-import type { IUserActivityData } from "../../../../../../../types/services/github";
-import type { ItemStatus } from "../../../../../../../types/common/status";
 import UserActivityCard from "../../user-activity-card";
+//  Hooks
+import { useUserActivity } from "./useUserActivity";
 
 const UserActivityWidget: React.FC = () => {
-  const dispatch = useDispatch();
-  const userActivity = useSelector(
-    (state: any) =>
-      state.github.userActivityData as ItemStatus<IUserActivityData>
-  );
 
-  const handleSearch = useCallback(
-    debounce((searchTerm: string) => {
-      if (searchTerm !== "") {
-        dispatch(fetchUserActivity(searchTerm) as any);
-      }
-    }, 1000),
-    []
-  );
 
-  const onSearchChange = (e: string) => {
-    handleSearch(e);
-  };
+  const { userActivity, onSearchChange } = useUserActivity()
 
   return (
     <>

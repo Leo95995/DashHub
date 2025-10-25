@@ -4,12 +4,10 @@ import { filterUtils } from "../../../../utils/filter-utils";
 import FilterSection from "./filters-section";
 import { useWidgetFilters } from "./hooks/useWidgetFilters";
 import CheckboxGroup from "../../../../components/Checkbox/CheckboxGroup";
+import type { IFilters } from "./types";
 
-interface IWidgetFilters {
-  expanded: boolean;
-}
 
-const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
+const WidgetFilters: React.FC<IFilters> = ({ expanded }) => {
   const {
     filters,
     colsLayout,
@@ -153,7 +151,7 @@ const WidgetFilters: React.FC<IWidgetFilters> = ({ expanded }) => {
   };
 
   return (
-    <FilterSection expanded={expanded} title="WIDGETS " defaultOpen={true}>
+    <FilterSection expanded={expanded as boolean} title="WIDGETS " defaultOpen={true}>
       {renderVisibleWidgets()}
       {renderLayoutWidget()}
     </FilterSection>

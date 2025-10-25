@@ -1,9 +1,4 @@
-/**
- * I should give a tipization to the filters.
- * @param filters
- * @returns
- */
-//  WIDGETS
+//  WIDGETS COMPONENTS
 import CryptoWidget from "../components/Widgets/CryptoWidget";
 import GithubWidget from "../components/Widgets/GithubWidget";
 import NasaWidget from "../components/Widgets/NasaWidget";

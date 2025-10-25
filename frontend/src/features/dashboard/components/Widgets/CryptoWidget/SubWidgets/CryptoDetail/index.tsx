@@ -80,7 +80,7 @@ const CryptoDetail: React.FC = () => {
         <div className="flex">
           <button
             onClick={applyCryptoFilter}
-            className="ml-1 px-4 py-1 rounded-md cursor-pointer bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all duration-200"
+            className="ml-1 px-4 py-1 rounded-xd cursor-pointer bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all duration-200"
           >
             Apply
           </button>

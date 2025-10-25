@@ -1,6 +1,9 @@
+// Redux
 import { useDispatch } from "react-redux";
+// Storage
 import DashboardStorage from "../../../../../services/storage/dashboard";
 import { setGlobalAlert } from "../../../../../store/appSlice";
+// Types
 import { IGlobalAlertStatus } from "../../../../../types/store/app";
 
 interface IUseSaveWidget {

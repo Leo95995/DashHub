@@ -50,7 +50,7 @@ const Cme_Widget: React.FC<ICmeWidget> = ({
   };
 
   if (!selectedCme.data) {
-    return <>no data still</>;
+    return <>No Cme Data available</>;
   }
 
   const { data } = selectedCme;

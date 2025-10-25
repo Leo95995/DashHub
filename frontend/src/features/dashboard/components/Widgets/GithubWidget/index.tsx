@@ -15,6 +15,7 @@ import { IGlobalAlertStatus } from "../../../../../types/store/app";
 // Custmom hooks
 import { useDragDrop } from "../../../../../hooks/useDragAndDrop";
 import { useWidgetSelector } from "../../../hooks/UseWidgetSelector";
+import { WidgetOrigin } from "../../../hooks/types";
 
 const GithubWidget: React.FC<IGenericWidget> = ({
   isEditMode,
@@ -29,6 +30,7 @@ const GithubWidget: React.FC<IGenericWidget> = ({
   const { currentSelection, setWidgetSelection } = useWidgetSelector({
     selector: () => githubWidget,
     actionCreator:setSelectedGithubWidget ,
+    origin: WidgetOrigin.GITHUB
   });
 
   const {

@@ -78,10 +78,6 @@ const CryptoService = () => {
   const getCryptoDetails = async (
     filters: Pick<ICryptoFilterData, "cryptoDetailFilters" | "genericFilters">
   ) => {
-    /**
-     * Passing dinamically
-     * coint type, currency type and days types.
-     */
 
     const { id, days } = filters?.cryptoDetailFilters;
     const { currency } = filters?.genericFilters;
