@@ -102,7 +102,6 @@ const get_complete_currencies_details = async (
   const query = req.query;
   const { currency } = query;
 
-  let result;
   let collection;
   if (!query || !currency) {
     res.status(400).json("Bad request. Missing query params needed.");
