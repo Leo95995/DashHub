@@ -10,6 +10,7 @@ import FilterSection from "./filters-section";
 // Data
 import { github_widgets } from "../Switcher/datas";
 import { useWidgetSelector } from "../../hooks/UseWidgetSelector";
+import { WidgetOrigin } from "../../hooks/types";
 
 const GithubFilters: React.FC<IFilters> = ({ expanded }) => {
   const github_widget = useSelector(
@@ -19,6 +20,7 @@ const GithubFilters: React.FC<IFilters> = ({ expanded }) => {
   const { currentSelection, setWidgetSelection } = useWidgetSelector({
     selector: () => github_widget,
     actionCreator: setSelectedGithubWidget,
+    origin: WidgetOrigin.GITHUB
   });
 
   const renderGithubSelector = () => {

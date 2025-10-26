@@ -1,14 +1,23 @@
+// React
+import { useState } from "react";
+// Icons
 import { Close } from "@mui/icons-material";
 import { CircleCheck } from "lucide-react";
-import { useState } from "react";
+// Redux
 import { useSelector, useDispatch } from "react-redux";
+// Components
 import ErrorMessage from "../../../../../../../components/Error/Error";
 import ReactLoader from "../../../../../../../components/Loaders/ReactLoaders";
-import { setCryptoTrendingFilters } from "../../../../../../../store/cryptoSlice";
-import type { ItemStatus } from "../../../../../../../types/common/status";
-import type { ICryptoTrendings } from "../../../../../../../types/store/crypto";
 import CryptoList from "./crypto-list";
 import FilterList from "./filter-list";
+// Store
+import { setCryptoTrendingFilters } from "../../../../../../../store/cryptoSlice";
+// Types
+import type { ICryptoTrendings } from "../../../../../../../types/store/crypto";
+import type { ItemStatus } from "../../../../../../../types/common/status";
+import { IGlobalAlertStatus } from "../../../../../../../types/store/app";
+// Hooks
+import { useGlobalAlert } from "../../../../../../../hooks/useAlert";
 
 const CryptoTrendings: React.FC = () => {
   const crypto_data = useSelector(
@@ -25,6 +34,7 @@ const CryptoTrendings: React.FC = () => {
   // Data for crypto filters
   const filterData = useSelector((state: any) => state.crypto.filterData);
   const { ids } = filterData?.cryptoTrendingFilters;
+  const { handleAlert } = useGlobalAlert();
 
   const [cryptoLocalFilters, setCryptoLocalFilters] = useState<{
     ids: string[];
@@ -72,7 +82,11 @@ const CryptoTrendings: React.FC = () => {
     if (newIds.length <= 4 && newIds.length >= 1) {
       setCryptoLocalFilters({ ids: newIds });
     } else {
-      alert("You can't select more than 4 and lesser than 1 cryptoz");
+      handleAlert(
+        IGlobalAlertStatus.ERROR,
+        "Error",
+        "You can't select more than 4 and lesser than 1 crypto"
+      );
     }
   };
 

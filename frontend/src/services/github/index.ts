@@ -1,13 +1,14 @@
 // Mappers
-
-import { githubReposMapper, userActivityMapper } from "../../mappers/githubMapper";
-
-const backendUrl = `${import.meta.env.VITE_BACKEND_URI}/github`;
+import {
+  githubReposMapper,
+  userActivityMapper,
+} from "../../mappers/githubMapper";
+// Basepath
+import { services_url } from "../../utils/environment";
 
 const GithubService = () => {
-
   const get_trending_repos = async () => {
-    const trendingurl = `${backendUrl}/trending_repos`;
+    const trendingurl = `${services_url.github}/trending_repos`;
     try {
       const res = await fetch(trendingurl, { method: "GET" });
       const data = await res.json();
@@ -26,7 +27,7 @@ const GithubService = () => {
   const get_repo_trend = async (repoName: string) => {
     const [owner, repo] = repoName.split("/");
 
-    const repo_detail_url = `${backendUrl}/repo_trend?owner=${owner}&repo=${repo}`;
+    const repo_detail_url = `${services_url.github}/repo_trend?owner=${owner}&repo=${repo}`;
     try {
       const res = await fetch(repo_detail_url, { method: "GET" });
       const data = await res.json();
@@ -43,7 +44,7 @@ const GithubService = () => {
   };
 
   const get_user_activity = async (username: string) => {
-    const url = `${backendUrl}/user_activity?username=${username}`;
+    const url = `${services_url.github}/user_activity?username=${username}`;
     try {
       const res = await fetch(url, { method: "GET" });
       const data = await res.json();
@@ -62,7 +63,9 @@ const GithubService = () => {
 
   const get_random_user = async () => {
     try {
-      const res = await fetch(`${backendUrl}/random-user`, { method: "GET" });
+      const res = await fetch(`${services_url.github}/random-user`, {
+        method: "GET",
+      });
       const data = await res.json();
       const status = res.status;
 

@@ -20,3 +20,18 @@ export interface ICryptoTopGainers {
   change24h: number;
   marketCap: number;
 }
+
+export type currency = "eur" | "usd";
+export interface ICryptoFilterData {
+  genericFilters: {
+    currency: currency;
+  };
+  cryptoTrendingFilters: {
+    ids: string[];
+  };
+  cryptoDetailFilters: {
+    days: string;
+    id: string; // The crypto currency name to take details
+  };
+}
+

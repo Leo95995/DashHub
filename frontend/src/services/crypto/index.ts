@@ -1,6 +1,8 @@
+// Mappers
 import { CryptoMappers } from "../../mappers/cryptoMapper";
-import type { ICryptoFilterData } from "../../store/data/cryptoData";
-
+// Types
+import type { ICryptoFilterData } from "../../types/store/crypto";
+import { services_url } from "../../utils/environment";
 
 const CryptoService = () => {
   const {
@@ -10,14 +12,12 @@ const CryptoService = () => {
     CryptoCurrenciesMapper,
   } = CryptoMappers;
 
-  const baseurl_crypto = `${import.meta.env.VITE_BACKEND_URI}/crypto`;
-
   /**
    * Get the list of all currencies
    * @returns
    */
   const getAllCryptoCurrencies = async () => {
-    const currenciesListUrl = `${baseurl_crypto}/currencies`;
+    const currenciesListUrl = `${services_url.crypto}/currencies`;
     try {
       const res = await fetch(currenciesListUrl, { method: "GET" });
       const data = await res.json();
@@ -51,7 +51,7 @@ const CryptoService = () => {
         : (filterList += filter as string)
     );
 
-    const cryptos_url = `${baseurl_crypto}/trending?coinIds=${filterList}`;
+    const cryptos_url = `${services_url.crypto}/trending?coinIds=${filterList}`;
     try {
       const res = await fetch(cryptos_url, { method: "GET" });
       const data = await res.json();
@@ -78,10 +78,6 @@ const CryptoService = () => {
   const getCryptoDetails = async (
     filters: Pick<ICryptoFilterData, "cryptoDetailFilters" | "genericFilters">
   ) => {
-    /**
-     * Passing dinamically
-     * coint type, currency type and days types.
-     */
 
     const { id, days } = filters?.cryptoDetailFilters;
     const { currency } = filters?.genericFilters;

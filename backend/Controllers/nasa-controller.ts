@@ -1,14 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import dotenv from "dotenv";
-import { start } from "repl";
 import mongoose from "mongoose";
-dotenv.config();
+import { baseUrls } from "../config/baseUrls";
+import { environment } from "../config/environment";
 
-const NASA_API = process.env.NASA_API;
-const nasa_baseurl = "https://api.nasa.gov";
-/**
- *  Function used to get data for NASA PICTURE OF THE DAY
- */
+const { NASA_API } = environment;
 
 const get_apod = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -36,7 +31,7 @@ const get_neo_data = async (
     res.status(400).json("Missing an important field");
     return;
   }
-  const neo_url = `${nasa_baseurl}/neo/rest/v1/feed?start_date=${start_date}&end_date=${end_date}&api_key=${NASA_API}`;
+  const neo_url = `${baseUrls.nasa}/neo/rest/v1/feed?start_date=${start_date}&end_date=${end_date}&api_key=${NASA_API}`;
   try {
     const neo_data = await fetch(neo_url, { method: "GET" });
     const result = await neo_data.json();
@@ -74,7 +69,7 @@ const get_cme_data = async (
     return;
   }
   try {
-    const cme_url = `${nasa_baseurl}/DONKI/CME?startDate=${query.start_date}&endDate=${query.end_date}&api_key=${NASA_API}`;
+    const cme_url = `${baseUrls.nasa}/DONKI/CME?startDate=${query.start_date}&endDate=${query.end_date}&api_key=${NASA_API}`;
 
     const cme_res = await fetch(cme_url, { method: "GET" });
     const cme_data = await cme_res.json();

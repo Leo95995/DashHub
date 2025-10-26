@@ -1,15 +1,30 @@
-import LoaderWithMessage from "../../../../../../components/Loaders/LoaderWithMessage";
+// Redux
 import { useDispatch } from "react-redux";
-import { fetch_apod_data } from "../../../../../../store/nasaSlice";
-import { Calendar } from "lucide-react";
-import { setFullScreenImage } from "../../../../../../store/nasaSlice";
-import React, { useState } from "react";
+//  React
+import React, { useEffect, useState } from "react";
+//  Types
 import type { IApodWidget } from "../types";
+//  Slice
+import { setFullScreenImage } from "../../../../../../store/nasaSlice";
+import { fetch_apod_data } from "../../../../../../store/nasaSlice";
+//  Icon
+import { Calendar } from "lucide-react";
+// Components
+import LoaderWithMessage from "../../../../../../components/Loaders/LoaderWithMessage";
+import { useGlobalAlert } from "../../../../../../hooks/useAlert";
+import { IGlobalAlertStatus } from "../../../../../../types/store/app";
 
 const ApodWidget: React.FC<IApodWidget> = ({ data, error, loading }) => {
   const { date, _id, img, description, title } = data;
   const dispatch = useDispatch();
   const [showEnlarge, setShowEnlarge] = useState<boolean>(false);
+
+  const { handleAlert } = useGlobalAlert();
+
+  useEffect(() => {
+    if (Object.keys(data)?.length) {
+    }
+  }, [data]);
 
   if (error) {
     return <>Errore nel caricamento</>;
@@ -69,7 +84,14 @@ const ApodWidget: React.FC<IApodWidget> = ({ data, error, loading }) => {
         <div className="flex py-2 justify-center">
           <button
             className="p-2 rounded-md bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-md cursor-pointer"
-            onClick={() => dispatch(fetch_apod_data() as any)}
+            onClick={async () => {
+              await dispatch(fetch_apod_data() as any);
+              handleAlert(
+                IGlobalAlertStatus.SUCCESS,
+                "Success",
+                `Recovered data for apod ${data.title} of date ${data.date}`
+              );
+            }}
           >
             Explore the cosmos
           </button>

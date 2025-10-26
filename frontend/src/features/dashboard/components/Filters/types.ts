@@ -6,8 +6,9 @@ export interface IFilterSection {
   expanded: boolean;
 }
 
-
 export interface IFilters {
   expanded?: boolean;
   isMobile?:boolean
 }
+
+

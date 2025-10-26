@@ -19,7 +19,6 @@ const CryptoCurrenciesMapper = (data: any[]): string[] => {
   return currencyList as string[];
 };
 
-// Nothing goes mapped here.
 const cryptoTrendingMapper = (
   data: ICryptoTrendings
 ): ICryptoTrendings | any => {

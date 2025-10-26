@@ -1,9 +1,9 @@
 import type { IWeatherData, LocationCoordinates } from "../../types/services/weather";
+import { services_url } from "../../utils/environment";
 
-const base_weather_url = `${import.meta.env.VITE_BACKEND_URI}/weather`;
 const WeatherService = () => {
   const get_weather_data = async (lat: string, lon: string) => {
-    const weatherUrl = `${base_weather_url}/weather?lat=${lat}&lon=${lon}`;
+    const weatherUrl = `${services_url.weather}/weather?lat=${lat}&lon=${lon}`;
     try {
       const res = await fetch(weatherUrl, {
         method: "GET",
@@ -22,7 +22,7 @@ const WeatherService = () => {
     if (!location) {
       return { error: "Missing location" };
     }
-    const locationUrl = `${base_weather_url}/coordinates?location=${location}`;
+    const locationUrl = `${services_url.weather}/coordinates?location=${location}`;
     try {
       const res = await fetch(locationUrl, { method: "GET" });
       const data: LocationCoordinates[] = await res.json();

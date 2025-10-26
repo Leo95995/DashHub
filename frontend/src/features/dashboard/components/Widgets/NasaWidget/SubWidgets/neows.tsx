@@ -1,8 +1,11 @@
+// React
 import { useEffect, useState } from "react";
+// Types
 import type { ArrowKey } from "../../../../../../types/common/generic";
-import LoaderWithMessage from "../../../../../../components/Loaders/LoaderWithMessage";
 import type { ItemStatus } from "../../../../../../types/common/status";
 import type { INeoWsData } from "../../../../../../types/store/nasa";
+// Components
+import LoaderWithMessage from "../../../../../../components/Loaders/LoaderWithMessage";
 
 const NeoWsWidget: React.FC<ItemStatus<INeoWsData[]>> = ({
   data,
@@ -31,8 +34,6 @@ const NeoWsWidget: React.FC<ItemStatus<INeoWsData[]>> = ({
   }
 
   /**
-   * It can of course be improved. and it should be.
-   *
    * @param currentIndex
    * @param direction
    */

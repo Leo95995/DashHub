@@ -2,21 +2,15 @@
 import InputSearch from "../../../../components/Input/Input";
 import GenericModal from "../../../../components/Modal/Modal";
 import ModeToggler from "../../../../components/Toggler/Toggler";
+import { validateUsername } from "../../../../utils/validators";
 // Redux
 import type { IFirstVisitModal } from "./types";
 import { useFirstVisitLogic } from "./useFirstVisitLogic";
 
-const FirstVisitModal: React.FC<IFirstVisitModal> = ({
-  firstVisit,
-}) => {
+const FirstVisitModal: React.FC<IFirstVisitModal> = ({ firstVisit }) => {
   // Custom hook
-  const {
-    userInfo,
-    setUser,
-    handleGuestVisit,
-    savePreferences,
-    isWriting,
-  } = useFirstVisitLogic();
+  const { userInfo, setUser, handleGuestVisit, savePreferences, isWriting } =
+    useFirstVisitLogic();
 
   return (
     <GenericModal
@@ -32,7 +26,8 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({
           Hi!
         </h2>
         <p className="text-gray-700 dark:text-gray-300">
-          Enter your name to personalize the widgets, or continue as a Guest.
+          Add your name and avatar color to personalize the experience or skip
+          and use the widgets right away.
         </p>
       </div>
       <div className="flex flex-col gap-2">
@@ -50,6 +45,12 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({
           width="w-120 md:w-full"
           isLoading={isWriting}
         />
+        {!validateUsername(userInfo?.username) && (
+          <p className="text-sm text-red-400">Username too short</p>
+        )}
+        {validateUsername(userInfo.username) && (
+          <p className="text-sm text-green-300">Username valid</p>
+        )}
         <div className="flex flex-col gap-2">
           <label
             htmlFor="username"
@@ -63,9 +64,12 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({
               setUser({ ...userInfo, avatar_color: e.currentTarget.value })
             }
           />
-          {!userInfo.avatar_color.length && <p className="text-sm text-red-400">No color selected</p>}
-          {userInfo.avatar_color.length && <p className="text-sm text-green-300">Color selected</p>}
-          
+          {!userInfo?.avatar_color?.length && (
+            <p className="text-sm text-red-400">No color selected</p>
+          )}
+          {!!userInfo?.avatar_color?.length && (
+            <p className="text-sm text-green-300">Color selected</p>
+          )}
         </div>
         <div className="flex flex-col gap-2">
           <label> Select mode</label>
@@ -78,7 +82,7 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({
           <button
             disabled={isWriting}
             onClick={handleGuestVisit}
-            className="px-4 py-2 rounded-lg cursor-pointer text-gray-700 dark:text-gray-200 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+            className="px-4 py-2 rounded-lg cursor-pointer text-gray-700  bg-gray-200 hover:bg-gray-300 dark:hover:bg-gray-300 transition"
           >
             Continue as Guest
           </button>

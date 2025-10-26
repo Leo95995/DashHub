@@ -1,7 +1,13 @@
 import type { CryptoWidgets } from "../../features/dashboard/types";
 import cryptoKey from "../../services/storage/crypto";
 import type { ItemStatus } from "../../types/common/status";
-import type { ICryptoTrendings, ICryptoDetails, ICryptoTopGainers } from "../../types/store/crypto";
+import type {
+  ICryptoTrendings,
+  ICryptoDetails,
+  ICryptoTopGainers,
+  currency,
+  ICryptoFilterData,
+} from "../../types/store/crypto";
 
 const currenciesList: ItemStatus<string> = {
   data: [] as string[],
@@ -27,32 +33,17 @@ const crypto_top_data: ItemStatus<ICryptoTopGainers> = {
   error: null,
 };
 
-const selectedWidget: CryptoWidgets =  cryptoKey.getSelectedWidget() ?? "Top Cryptos";
+const selectedWidget: CryptoWidgets =
+  cryptoKey.getSelectedWidget() ?? "Top Cryptos";
 
-export type currency = "eur" | "usd";
-
-export const filterCurrenciesList : currency[]= ['eur', 'usd']
-
-export interface ICryptoFilterData {
-  genericFilters: {
-    currency: currency;
-  };
-  cryptoTrendingFilters: {
-    ids: string[];
-  };
-  cryptoDetailFilters: {
-    days: string;
-    id: string; // The crypto currency name to take details
-  };
-}
-
+export const filterCurrenciesList: currency[] = ["eur", "usd"];
 
 /**
  * This datas then should be drilled down
  */
 const filterData: ICryptoFilterData = {
   genericFilters: {
-    currency: "eur"
+    currency: "eur",
   },
   cryptoTrendingFilters: {
     ids: ["bitcoin", "ethereum", "cardano"],
@@ -63,11 +54,9 @@ const filterData: ICryptoFilterData = {
   },
 };
 
+// Default crypto data
 
-  // Default crypto data 
-
-  export const days = ["1", "7", "30", "90", "180", "365"];
-
+export const days = ["1", "7", "30", "90", "180", "365"];
 
 // Exported initial state
 export const initialState = {

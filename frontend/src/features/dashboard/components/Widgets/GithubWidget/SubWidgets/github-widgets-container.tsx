@@ -1,18 +1,14 @@
 // Interfaces
 import type { GithubContainer } from "../../../../../../types/store/github";
-//  Widgets
-import PopularReposWidget from "./PopularReposWidget";
-import UserActivityWidget from "./UserActivityWidget";
-import RandomUserWidget from "./RandomUserWidget";
+
+
+import { useRenderSubwidget } from "./userRenderSubwidget";
 
 const GithubWidgetContainer: React.FC<GithubContainer> = ({ widget }) => {
+ 
+  const {currentWidget} = useRenderSubwidget({widget})
 
-  const renderSelectedWidget = () => {
-    return widget == "Trending Repositories" ? <PopularReposWidget />  :  widget === 'Random User' ? <><RandomUserWidget/></>  :<UserActivityWidget />;
-  };
-
-  return <>
-  {renderSelectedWidget()}</>;
+  return <>{currentWidget}</>;
 };
 
 export default GithubWidgetContainer;

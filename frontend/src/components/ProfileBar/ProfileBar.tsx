@@ -1,101 +1,89 @@
+// React/Redux
+import { useSelector } from "react-redux";
 //  Icons
 import { Edit, Save } from "lucide-react";
 import { Cancel } from "@mui/icons-material";
-// React/Redux
-import { useState } from "react";
+// Utils
 import { createShortName } from "../../utils/generic-utils";
-import InputSearch from "../Input/Input";
-import { useDispatch, useSelector } from "react-redux";
-// Interfaces
-import type { IProfileBar } from "./types";
-import { setGlobalAlert, setUserName } from "../../store/appSlice";
 import { isMobile } from "../../utils/media-query";
-import { setUserAvatarColor } from "../../store/appSlice";
-import { IGlobalAlertStatus } from "../../types/store/app";
+// Components
+import InputSearch from "../Input/Input";
+// Types
+import type { IProfileBar } from "./types";
+import { useUserInfo } from "./hooks/useUserInfo";
 
 const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
-  const [editMode, setEditMode] = useState<boolean>(false);
-  const dispatch = useDispatch();
   const userdata = useSelector((state: any) => state.app.userData);
-
   const { username, avatar_color } = userdata.userInfo;
-  const [newUsername, setNewUsername] = useState<string>(username ?? "");
-  // Activate the color edit mode
-  const [editColor, setEditColor] = useState<boolean>(false);
-  const [newColor, setNewColor] = useState<string | null>(null);
-  const [isSaving, setIsSaving] = useState<boolean>(false);
+  // Use user info hook
+  const {
+    changeUsername,
+    setNewUsername,
+    isSaving,
+    editColor,
+    editMode,
+    setEditMode,
+    setEditColor,
+    changeAvatarColor,
+    saveByInput,
+    internalSave,
+  } = useUserInfo({ username , color: avatar_color});
 
-  const changeAvatarColor = (e: any) => {
-    setNewColor(e.currentTarget.value);
-  };
-
-  // function to save
-  const save = () => {
-    setIsSaving(true);
-    setEditColor(false);
-    dispatch(setUserAvatarColor(newColor) as any);
-    setIsSaving(false);
-  };
-
-  const internalSave = () => {
-    const changedUsername = changeUsername();
-
-    if (!changedUsername) {
-      dispatch(
-        setGlobalAlert({
-          status: IGlobalAlertStatus.ERROR,
-          message: "Error",
-          description: `Username must be long at least 2 characters`,
-        })
-      );
+  // Render ui
+  const renderDesktopDetails = () => {
+    if (!(expanded && !isMobile(screenWidth))) {
       return;
-    } else {
-      save();
-      setEditColor(false);
-      setEditMode(false);
-      dispatch(
-        setGlobalAlert({
-          status: IGlobalAlertStatus.SUCCESS,
-          message: "Success",
-          description: `Modified username and avatar with success`,
-        })
-      );
     }
+    return (
+      <>
+        <div className="flex items-center gap-2">
+          {!editMode ? (
+            <p
+              className="truncate max-w-[200px] sm:max-w-[1600px] md:max-w-[200px] overflow-hidden text-ellipsis"
+              style={{ margin: 0 }}
+              title={username ?? "Guest"}
+            >
+              {username ?? "Guest"}
+            </p>
+          ) : (
+            <InputSearch
+              width="w-35 md:w-35"
+              placeholder="Insert your new username"
+              defaultValue={username}
+              onChange={(e) => setNewUsername(e)}
+              isLoading={isSaving}
+              onKeyUp={saveByInput}
+            />
+          )}
+          {!editMode && (
+            <button
+              onClick={() => setEditMode(!editMode)}
+              className="cursor-pointer hover:text-blue-400"
+            >
+              <Edit style={{ height: "16px" }} />
+            </button>
+          )}
+          {editMode && (
+            <div className="flex gap-1 dark:text-slate-700">
+              <button
+                onClick={changeUsername}
+                className="cursor-pointer border border-gray-200  rounded-2xl bg-gray-200 px-2 hover:bg-blue-200 active:scale-95"
+              >
+                <Save className="rounded-md" style={{ height: "20px" }} />
+              </button>
+              <button
+                onClick={() => setEditMode(!editMode)}
+                className="cursor-pointer border border-gray-200 rounded-2xl bg-gray-200 px-2 hover:bg-blue-200 active:scale-95"
+              >
+                <Cancel className="rounded-md" style={{ height: "20px" }} />{" "}
+              </button>
+            </div>
+          )}
+        </div>
+      </>
+    );
   };
 
-  // Updated save input
-  const saveByInput = (char: string) => {
-    if (char === "Enter") {
-      changeUsername();
-    } else if (char === "Escape") {
-      setEditMode(false);
-    }
-  };
-
-  //  Modify usenarme
-  const changeUsername = () => {
-    if (newUsername.length > 2) {
-      dispatch(
-        setGlobalAlert({
-          status: IGlobalAlertStatus.SUCCESS,
-          message: "Success",
-          description: `Modified username and avatar with success`,
-        })
-      );
-      dispatch(setUserName(newUsername));
-      setEditMode(!editMode);
-      return true;
-    } else {
-      dispatch(
-        setGlobalAlert({
-          status: IGlobalAlertStatus.ERROR,
-          message: "Error",
-         description: `Username must be long at least 2 characters`,
-        })
-      );
-      return false;
-    }
-  };
   return (
     <>
       <div
@@ -164,48 +152,7 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
             {createShortName(username)}
           </span>
         </div>
-        {expanded && !isMobile(screenWidth) && (
-          <div className="flex items-center gap-2">
-            {!editMode ? (
-              <p className="line-clamp-1" style={{ margin: 0 }}>
-                {username ?? `Guest`}
-              </p>
-            ) : (
-              <InputSearch
-                width="w-35 md:w-35"
-                placeholder="Insert your new username"
-                defaultValue={username}
-                onChange={(e) => setNewUsername(e)}
-                isLoading={isSaving}
-                onKeyUp={saveByInput}
-              />
-            )}
-            {!editMode && (
-              <button
-                onClick={() => setEditMode(!editMode)}
-                className="cursor-pointer hover:text-blue-400"
-              >
-                <Edit style={{ height: "16px" }} />
-              </button>
-            )}
-            {editMode && (
-              <div className="flex gap-1 dark:text-slate-700">
-                <button
-                  onClick={changeUsername}
-                  className="cursor-pointer border border-gray-200  rounded-2xl bg-gray-200 px-2 hover:bg-blue-200 active:scale-95"
-                >
-                  <Save className="rounded-md" style={{ height: "20px" }} />
-                </button>
-                <button
-                  onClick={() => setEditMode(!editMode)}
-                  className="cursor-pointer border border-gray-200 rounded-2xl bg-gray-200 px-2 hover:bg-blue-200 active:scale-95"
-                >
-                  <Cancel className="rounded-md" style={{ height: "20px" }} />{" "}
-                </button>
-              </div>
-            )}
-          </div>
-        )}
+        {renderDesktopDetails()}
       </div>
     </>
   );

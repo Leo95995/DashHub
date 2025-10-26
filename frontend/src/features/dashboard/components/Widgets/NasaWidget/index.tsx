@@ -1,7 +1,7 @@
 import type React from "react";
 // REACT
 import { useDispatch, useSelector } from "react-redux";
-import {  setSelectedWidget } from "../../../../../store/nasaSlice";
+import { setSelectedWidget } from "../../../../../store/nasaSlice";
 // Components
 import WidgetContainer from "./SubWidgets/widgets_container";
 import Switcher from "../../Switcher/switcher";
@@ -16,6 +16,7 @@ import { IGlobalAlertStatus } from "../../../../../types/store/app";
 import { useDragDrop } from "../../../../../hooks/useDragAndDrop";
 import { useWidgetSelector } from "../../../hooks/UseWidgetSelector";
 import { useNasaFetcher } from "./hooks/useNasaFetch";
+import { WidgetOrigin } from "../../../hooks/types";
 
 const NasaWidget: React.FC<IGenericWidget> = ({
   isEditMode,
@@ -28,32 +29,32 @@ const NasaWidget: React.FC<IGenericWidget> = ({
 
   const { apodStatus, neoWsStatus, widgetSelected, cmeStatus } = nasa_info;
 
-    const {
-      dragging,
-      dragStartHandler,
-      dragEndHandler,
-      dragOverHandler,
-      dropHandler,
-    } = useDragDrop({ widgetId, handleDrop, setDraggedWidgetId });
+  const {
+    dragging,
+    dragStartHandler,
+    dragEndHandler,
+    dragOverHandler,
+    dropHandler,
+  } = useDragDrop({ widgetId, handleDrop, setDraggedWidgetId });
 
-    useNasaFetcher(dispatch)
+  useNasaFetcher(dispatch);
 
-   // Widget selection
-    const { currentSelection, setWidgetSelection } = useWidgetSelector({selector: () => widgetSelected, actionCreator:setSelectedWidget ,});
-
-
-
-  // Function that trigger and change the current used widget.
+  // Widget selection
+  const { currentSelection, setWidgetSelection } = useWidgetSelector({
+    selector: () => widgetSelected,
+    actionCreator: setSelectedWidget,
+    origin: WidgetOrigin.NASA
+  });
 
   const changeSelectedWidget = (newWidget: WidgetTypes) => {
     dispatch(
       setGlobalAlert({
         status: IGlobalAlertStatus.SUCCESS,
         message: "Success",
-        description: `The widget selected for Nasa is ${newWidget}`
+        description: `The widget selected for Nasa is ${newWidget}`,
       })
     );
-    setWidgetSelection(newWidget)
+    setWidgetSelection(newWidget);
   };
 
   return (

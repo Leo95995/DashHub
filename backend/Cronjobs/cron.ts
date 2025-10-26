@@ -3,7 +3,7 @@ import { CurrencyService } from "../services/currency.services";
 
 export class CronJobs {
   /**
-   * Ogni giorno a mezzanotte tira il cron
+   * Every day a 0.00 the cron fetches updated currencies
    */
   cron_currencies() {
     cron.schedule("0 0 * * *", () => {

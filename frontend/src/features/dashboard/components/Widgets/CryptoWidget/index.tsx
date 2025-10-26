@@ -13,6 +13,7 @@ import { useDetailedCryptoFilters } from "./hooks/useDetailedCryptoFilters";
 import { useCryptoTrends } from "./hooks/useCryptoTrends";
 import { useWidgetSelector } from "../../../hooks/UseWidgetSelector";
 import { useCryptoTopGainers } from "./hooks/useCryptoTopGainers";
+import { WidgetOrigin } from "../../../hooks/types";
 
 const CryptoWidget: React.FC<IGenericWidget> = ({
   isEditMode,
@@ -41,6 +42,7 @@ const CryptoWidget: React.FC<IGenericWidget> = ({
   const { currentSelection, setWidgetSelection } = useWidgetSelector({
     selector: () => selectCryptoWidget,
     actionCreator: setSelectedCryptoWidget,
+    origin: WidgetOrigin.CRYPTO
   });
 
   const {

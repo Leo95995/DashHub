@@ -1,20 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import dotenv from "dotenv";
-dotenv.config();
+import { baseUrls } from "../config/baseUrls";
+import { environment } from "../config/environment";
 
-/**
- * Service that gets data from the weather service API
- * Gives back 2 functions when called:
- * - get_weather_data -> get city weather from lon -lat
- * - get_coordinates -> to get long lat
- */
-const WEATHER_API = process.env.WEATHER_API;
-
-/**
- *  Gets the data about the weather
- *
- *   const weatherUrl = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${
- *  */
+const { WEATHER_API } = environment;
 
 const get_weather_data = async (
   req: Request,
@@ -28,7 +16,7 @@ const get_weather_data = async (
       res.status(400).json("Missing fundamentals query params");
     }
 
-    const weatherUrl = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_API}`;
+    const weatherUrl = `${baseUrls.weather}/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_API}`;
     const weatherData = await fetch(weatherUrl, { method: "GET" });
     if (weatherData.status === 200) {
       const data = await weatherData.json();
@@ -52,7 +40,7 @@ const get_coordinates = async (
     return;
   }
   const { location } = query;
-  const locationUrl = ` https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&units=metric&appid=${WEATHER_API}`;
+  const locationUrl = ` ${baseUrls.weather}/geo/1.0/direct?q=${location}&limit=1&units=metric&appid=${WEATHER_API}`;
   try {
     const coordinates = await fetch(locationUrl, { method: "GET" });
 

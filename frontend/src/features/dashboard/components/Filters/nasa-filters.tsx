@@ -6,14 +6,16 @@ import { nasa_widgets } from "../Switcher/datas";
 import FilterSection from "./filters-section";
 import type { IFilters } from "./types";
 import { useWidgetSelector } from "../../hooks/UseWidgetSelector";
-
-
+import { WidgetOrigin } from "../../hooks/types";
 
 const NasaFilters: React.FC<IFilters> = ({ expanded }) => {
   const nasa_widget = useSelector((state: any) => state.nasa.widgetSelected);
 
-  const { currentSelection, setWidgetSelection } = useWidgetSelector({selector: ()=>nasa_widget, actionCreator: setSelectedWidget})
-  
+  const { currentSelection, setWidgetSelection } = useWidgetSelector({
+    selector: () => nasa_widget,
+    actionCreator: setSelectedWidget,
+    origin: WidgetOrigin.NASA
+  });
 
   const renderNasaContent = () => {
     return (

@@ -1,6 +1,10 @@
+// React
 import { useState, useCallback } from "react";
+// Storage
 import DashboardStorage from "../../../services/storage/dashboard";
+// Datas
 import { getWidgetList } from "../data/widget-list";
+// Types
 import type { DraggableWidget } from "../types";
 
 
@@ -13,7 +17,6 @@ export const useWidgetRender = (filters: any) => {
 
   const [draggedWidgetId, setDraggedWidgetId] = useState<number | null>(null);
 
-  // We get the widget list
   const widgetList = getWidgetList(filters);
 
 

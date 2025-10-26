@@ -8,6 +8,7 @@ import type { CMEData } from "../types/store/nasa";
 
 const { get_apod_data, get_cme_data, get_neoWs_data } = NasaService();
 
+
 export const fetch_apod_data = createAsyncThunk(
   "nasa/fetchApod",
   async (_, { rejectWithValue }) => {

@@ -1,4 +1,5 @@
-import type { NeoWsResponse, INear, CmeResponse, INearObject } from "../types/services/nasa";
+// Types
+import type { NeoWsResponse, CmeResponse, INearObject } from "../types/services/nasa";
 import type { INeoWsData, CMEData } from "../types/store/nasa";
 
 const neowsMapper = (neowsResponse: NeoWsResponse) => {

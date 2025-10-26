@@ -1,5 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-const GITHUB_API = process.env.GITHUB_TOKEN;
+import { baseUrls } from "../config/baseUrls";
+import { environment } from "../config/environment";
+
+const { GITHUB_API } = environment;
 
 // Trending repos
 const get_trending_repos = async (
@@ -7,7 +10,7 @@ const get_trending_repos = async (
   res: Response,
   next: NextFunction
 ) => {
-  const trendingurl = `https://api.github.com/search/repositories?q=stars:%3E1000&sort=stars&order=desc`;
+  const trendingurl = `${baseUrls.github}/search/repositories?q=stars:%3E1000&sort=stars&order=desc`;
   try {
     const trending_data = await fetch(trendingurl, {
       method: "GET",
@@ -31,7 +34,7 @@ const get_repo_trend = async (
   const query = req.query;
   const { owner, repo } = query;
 
-  const repo_detail_url = `https://api.github.com/repos/${encodeURIComponent(
+  const repo_detail_url = `${baseUrls.github}/repos/${encodeURIComponent(
     owner as string
   )}/${encodeURIComponent(repo as string)}/languages`;
   try {
@@ -42,7 +45,7 @@ const get_repo_trend = async (
       },
     });
 
-    const data = await repo_data.json()
+    const data = await repo_data.json();
 
     res.status(200).json(data);
   } catch (e) {
@@ -59,7 +62,7 @@ const get_user_activity = async (
   const query = req.query;
   const { username } = query;
 
-  const url = `https://api.github.com/users/${username}/events/public`;
+  const url = `${baseUrls.github}/users/${username}/events/public`;
   try {
     const user_activity = await fetch(url, {
       method: "GET",
@@ -88,7 +91,7 @@ const get_random_user = async (
       attempts++;
       const randomId = Math.floor(Math.random() * 500000000);
       const response = await fetch(
-        `https://api.github.com/users?since=${randomId}&per_page=1`,
+        `${baseUrls.github}/users?since=${randomId}&per_page=1`,
         {
           method: "GET",
           headers: {
@@ -100,7 +103,7 @@ const get_random_user = async (
       if (response.status === 200) {
         const data = await response.json();
         if (data && data.length > 0) {
-          userDetails = data[0]; 
+          userDetails = data[0];
         }
       }
     }

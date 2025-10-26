@@ -1,5 +1,5 @@
 import * as express from "express";
-import { CryptoController } from "../../controllers/crypto-controller";
+import { CryptoController } from "../../Controllers/crypto-controller";
 const crypto_router = express.Router();
 
 crypto_router.get("/currencies", CryptoController.get_currency_list);

@@ -1,8 +1,8 @@
+// Icons 
 import { Close } from "@mui/icons-material";
 import { Modal } from "@mui/material";
+//  Gener
 import type { IGenericModal } from "./types";
-
-
 
 const GenericModal: React.FC<IGenericModal> = ({
   status,
