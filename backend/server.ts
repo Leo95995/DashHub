@@ -1,9 +1,7 @@
 import app from "./app";
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-import { CronJobs } from "./cronjobs/cron";
+import { CronJobs } from "./Cronjobs/cron";
 
-dotenv.config();
 
 const db = process.env.MONGO_URI || "";
 const options = {};
