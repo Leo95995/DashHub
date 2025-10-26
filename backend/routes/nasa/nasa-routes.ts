@@ -1,5 +1,5 @@
 import * as express from "express";
-import { NasaController } from "../../controllers/nasa-controller";
+import { NasaController } from "../../Controllers/nasa-controller";
 
 
 const nasa_router = express.Router();

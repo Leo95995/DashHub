@@ -1,6 +1,6 @@
 import * as express from "express";
 
-import { GithubController } from "../../controllers/github-controller";
+import { GithubController } from "../../Controllers/github-controller";
 
 const github_router = express.Router();
 

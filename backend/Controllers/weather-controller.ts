@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import dotenv from "dotenv";
 import { baseUrls } from "../config/baseUrls";
-dotenv.config();
+import { environment } from "../config/environment";
 
-const WEATHER_API = process.env.WEATHER_API;
+const { WEATHER_API } = environment;
 
 const get_weather_data = async (
   req: Request,

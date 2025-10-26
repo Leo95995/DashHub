@@ -1,15 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { baseUrls } from "../config/baseUrls";
+import { environment } from "../config/environment";
 
-
-dotenv.config();
-
-const NASA_API = process.env.NASA_API;
-/**
- *  Function used to get data for NASA PICTURE OF THE DAY
- */
+const { NASA_API } = environment;
 
 const get_apod = async (req: Request, res: Response, next: NextFunction) => {
   try {

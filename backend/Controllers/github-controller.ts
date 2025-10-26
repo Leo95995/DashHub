@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { baseUrls } from "../config/baseUrls";
-const GITHUB_API = process.env.GITHUB_TOKEN;
+import { environment } from "../config/environment";
+
+const { GITHUB_API } = environment;
 
 // Trending repos
 const get_trending_repos = async (
