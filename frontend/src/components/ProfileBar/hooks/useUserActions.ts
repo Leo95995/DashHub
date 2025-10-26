@@ -18,7 +18,16 @@ export const useUserActions = () => {
   const { handleAlert } = useGlobalAlert();
 
   const updateUserAvatar = (color: string) => {
+    if(!color.length){
+  handleAlert(
+        IGlobalAlertStatus.ERROR,
+        "Error",
+        `No color selected`
+      );
+      return false
+    }
     dispatch(setUserAvatarColor(color));
+    return true
   };
 
   const updateUserName = (username: string) => {

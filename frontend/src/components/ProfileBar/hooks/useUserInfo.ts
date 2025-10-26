@@ -1,15 +1,25 @@
 import { useState } from "react";
 // Slice
 import { useUserActions } from "./useUserActions";
+import { validateUsername } from "../../../utils/validators";
+import { useGlobalAlert } from "../../../hooks/useAlert";
+import { IGlobalAlertStatus } from "../../../types/store/app";
 
 // Hook responsible of using User Info
-export const useUserInfo = ({ username }: { username: string }) => {
+export const useUserInfo = ({
+  username,
+  color,
+}: {
+  username: string;
+  color: string;
+}) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [newUsername, setNewUsername] = useState<string>(username ?? "");
   const [editColor, setEditColor] = useState<boolean>(false);
-  const [newColor, setNewColor] = useState<string | null>(null);
+  const [newColor, setNewColor] = useState<string | null>(color);
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
+  const { handleAlert } = useGlobalAlert();
   const { updateUserName, updateUserAvatar } = useUserActions();
 
   const changeAvatarColor = (e: any) => {
@@ -20,12 +30,21 @@ export const useUserInfo = ({ username }: { username: string }) => {
   const save = () => {
     setIsSaving(true);
     setEditColor(false);
-    updateUserAvatar(newColor as string);
+    updateUserAvatar(newColor ?? (color as string));
+    updateUserName(newUsername ?? (username as string));
     setIsSaving(false);
   };
 
   const internalSave = () => {
-    if (!changeUsername()) {
+    if (!newColor) {
+      handleAlert(IGlobalAlertStatus.ERROR, "Error", `No color selected`);
+      return;
+    } else if (!validateUsername(newUsername, 4)) {
+      handleAlert(
+        IGlobalAlertStatus.ERROR,
+        "Error",
+        `Username too short. it must be longer than 4 characters`
+      );
       return;
     } else {
       save();
@@ -46,7 +65,6 @@ export const useUserInfo = ({ username }: { username: string }) => {
   //  Modify usenarme
   const changeUsername = () => {
     if (updateUserName(newUsername)) {
-      setEditMode(!editMode);
       return true;
     } else {
       return false;

@@ -27,7 +27,7 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
     changeAvatarColor,
     saveByInput,
     internalSave,
-  } = useUserInfo({ username });
+  } = useUserInfo({ username , color: avatar_color});
 
   // Render ui
   const renderDesktopDetails = () => {
