@@ -1,1 +1,0 @@
-export const allowedHeaders = ["Content-Type", "Authorization", "activityId"]
