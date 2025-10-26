@@ -44,7 +44,7 @@ const useFirstVisitLogic = () => {
         setGlobalAlert({
           status: IGlobalAlertStatus.SUCCESS,
           message: "Success",
-          description: `Data saved with success`,
+          description: `User preferences saved`,
         })
       );
     }, 1000);

@@ -3,8 +3,7 @@ import { useState, useCallback } from "react";
 // Types
 import type { IGenericWidget } from "../features/dashboard/types";
 
-// Hook responible of handling Drag andDrop functionality
-
+// Hook responible of handling Drag & Drop functionality
 export const useDragDrop = ({
   widgetId,
   handleDrop,

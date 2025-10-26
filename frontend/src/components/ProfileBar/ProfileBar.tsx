@@ -29,54 +29,57 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
     internalSave,
   } = useUserInfo({ username });
 
-  // Render ui 
+  // Render ui
   const renderDesktopDetails = () => {
-    if(!(expanded && !isMobile(screenWidth))){
-      return
+    if (!(expanded && !isMobile(screenWidth))) {
+      return;
     }
     return (
       <>
-        
-          <div className="flex items-center gap-2">
-            {!editMode ? (
-              <p className="line-clamp-1" style={{ margin: 0 }}>
-                {username ?? `Guest`}
-              </p>
-            ) : (
-              <InputSearch
-                width="w-35 md:w-35"
-                placeholder="Insert your new username"
-                defaultValue={username}
-                onChange={(e) => setNewUsername(e)}
-                isLoading={isSaving}
-                onKeyUp={saveByInput}
-              />
-            )}
-            {!editMode && (
+        <div className="flex items-center gap-2">
+          {!editMode ? (
+            <p
+              className="truncate max-w-[200px] sm:max-w-[1600px] md:max-w-[200px] overflow-hidden text-ellipsis"
+              style={{ margin: 0 }}
+              title={username ?? "Guest"}
+            >
+              {username ?? "Guest"}
+            </p>
+          ) : (
+            <InputSearch
+              width="w-35 md:w-35"
+              placeholder="Insert your new username"
+              defaultValue={username}
+              onChange={(e) => setNewUsername(e)}
+              isLoading={isSaving}
+              onKeyUp={saveByInput}
+            />
+          )}
+          {!editMode && (
+            <button
+              onClick={() => setEditMode(!editMode)}
+              className="cursor-pointer hover:text-blue-400"
+            >
+              <Edit style={{ height: "16px" }} />
+            </button>
+          )}
+          {editMode && (
+            <div className="flex gap-1 dark:text-slate-700">
+              <button
+                onClick={changeUsername}
+                className="cursor-pointer border border-gray-200  rounded-2xl bg-gray-200 px-2 hover:bg-blue-200 active:scale-95"
+              >
+                <Save className="rounded-md" style={{ height: "20px" }} />
+              </button>
               <button
                 onClick={() => setEditMode(!editMode)}
-                className="cursor-pointer hover:text-blue-400"
+                className="cursor-pointer border border-gray-200 rounded-2xl bg-gray-200 px-2 hover:bg-blue-200 active:scale-95"
               >
-                <Edit style={{ height: "16px" }} />
+                <Cancel className="rounded-md" style={{ height: "20px" }} />{" "}
               </button>
-            )}
-            {editMode && (
-              <div className="flex gap-1 dark:text-slate-700">
-                <button
-                  onClick={changeUsername}
-                  className="cursor-pointer border border-gray-200  rounded-2xl bg-gray-200 px-2 hover:bg-blue-200 active:scale-95"
-                >
-                  <Save className="rounded-md" style={{ height: "20px" }} />
-                </button>
-                <button
-                  onClick={() => setEditMode(!editMode)}
-                  className="cursor-pointer border border-gray-200 rounded-2xl bg-gray-200 px-2 hover:bg-blue-200 active:scale-95"
-                >
-                  <Cancel className="rounded-md" style={{ height: "20px" }} />{" "}
-                </button>
-              </div>
-            )}
-          </div>
+            </div>
+          )}
+        </div>
       </>
     );
   };

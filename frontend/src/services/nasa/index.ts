@@ -1,15 +1,18 @@
+// Types
 import type { CmeResponse, NeoWsResponse } from "../../types/services/nasa";
 import type { INasaApodData, CMEData } from "../../types/store/nasa";
+// Utils
 import { nasaUtils } from "../../utils/nasa-utils";
+// Mappers
 import { NasaMappers } from "../../mappers/nasaMapper";
+// Env basepaths
+import { services_url } from "../../utils/environment";
 
-const backendUrl = import.meta.env.VITE_BACKEND_URI;
 
-const nasa_baseurl = `${backendUrl}/nasa`;
 
 const NasaService = () => {
   const get_apod_data = async () => {
-    const apod_url = `${nasa_baseurl}/apod`;
+    const apod_url = `${services_url.nasa}/apod`;
     try {
       const res = await fetch(apod_url, { method: "GET" });
       const data: INasaApodData = await res.json();
@@ -32,7 +35,7 @@ const NasaService = () => {
     const today = nasaUtils.getTodayFormattedDate();
     const yesterday = nasaUtils.getTodayFormattedDate(-1);
 
-    const cmeUrl = `${nasa_baseurl}/cme?start_date=${yesterday}&end_date=${today}`;
+    const cmeUrl = `${services_url.nasa}/cme?start_date=${yesterday}&end_date=${today}`;
 
     try {
       const res = await fetch(cmeUrl, { method: "GET" });
@@ -56,7 +59,7 @@ const NasaService = () => {
    */
   const get_neoWs_data = async () => {
     const today = nasaUtils.getTodayFormattedDate();
-    const url = `${nasa_baseurl}/neows?start_date=${today}&end_date=${today}`;
+    const url = `${services_url.nasa}/neows?start_date=${today}&end_date=${today}`;
     try {
       const res = await fetch(url, { method: "GET" });
       const data: NeoWsResponse = await res.json();

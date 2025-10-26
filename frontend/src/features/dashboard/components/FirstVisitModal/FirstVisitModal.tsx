@@ -63,8 +63,8 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({
               setUser({ ...userInfo, avatar_color: e.currentTarget.value })
             }
           />
-          {!userInfo.avatar_color.length && <p className="text-sm text-red-400">No color selected</p>}
-          {userInfo.avatar_color.length && <p className="text-sm text-green-300">Color selected</p>}
+          {!userInfo?.avatar_color?.length && <p className="text-sm text-red-400">No color selected</p>}
+          {!!userInfo?.avatar_color?.length && <p className="text-sm text-green-300">Color selected</p>}
           
         </div>
         <div className="flex flex-col gap-2">
