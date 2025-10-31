@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 // Thunk
 import { createAsyncThunk } from "@reduxjs/toolkit";
 // Github Service
-import { initialState, type ICryptoFilterData } from "./data/cryptoData";
-
+import { initialState } from "./data/cryptoData";
+import type { ICryptoFilterData } from "../types/store/crypto";
 import DashboardStorage from "../services/storage/dashboard";
 import CryptoService from "../services/crypto";
 const {
@@ -74,6 +74,8 @@ export const fetchTopGainers = createAsyncThunk(
   async (genericFilters: Pick<ICryptoFilterData, 'genericFilters'>, { rejectWithValue }) => {
     try {
       const topGainersData = await getTopGainersAndLosers(genericFilters);
+
+      console.log(topGainersData);
       if (topGainersData.error || !topGainersData.topGainers) {
         return rejectWithValue("Error while fetching crytpto datas");
       }
