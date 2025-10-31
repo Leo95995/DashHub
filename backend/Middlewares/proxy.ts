@@ -25,6 +25,9 @@ export const ProxyMiddleWare = async (
   res: Response,
   next: NextFunction
 ) => {
+
+
+  
   const externalUrlString = req.query.sourceUrl;
 
   if (!externalUrlString || typeof externalUrlString !== "string") {

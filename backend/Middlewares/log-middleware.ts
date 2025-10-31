@@ -13,18 +13,12 @@ export const loggingMiddleware = async (
 ) => {
   // Startdates
   const start = Date.now();
-  // Ip
+  // skip log middlewar for proxy images
+  if (req.path.startsWith("/proxy-image")) {
+    return next();
+  }
+  // ip
   const ip = req.headers["x-real-ip"] || req.ip;
-
-  setFolder("./logs");
-
-  // Base log
-  const baseLog = `[${new Date().toISOString()}] [IN] ${req.method} ${
-    req.path
-  } from ${ip}\n , params: ${JSON.stringify(req.params) ?? ""},  query: ${
-    JSON.stringify(req?.query) ?? ""
-  }`;
-
   const startLog = {
     type: "IN",
     method: req.method,

@@ -1,5 +1,5 @@
 //  REACT
-import React, { lazy, Suspense, useId, useMemo, useDeferredValue } from "react";
+import React, { lazy, Suspense, useId, useMemo } from "react";
 //  LAYOUT
 const DashBoardHeader = lazy(() => import("./Header/Header"));
 //  MEDIA QUERIES
@@ -21,14 +21,13 @@ const DashBoard: React.FC = () => {
   } = useDashboardLogic();
 
   const widgetList = useMemo(() => getWidgetList(filters), [filters]);
-  const deferredWidgetList = useDeferredValue(widgetList);
   const {
     getVisibleWidgetsNumber,
     handleDrop,
     renderWidgetByOrder,
     widgetOrder,
     setDraggedWidgetId,
-  } = useWidgetRender(filters, deferredWidgetList);
+  } = useWidgetRender(filters, widgetList);
 
   return (
     <>
