@@ -7,6 +7,5 @@ export const createProxyUrl = (originalUrl: string): string => {
 
   const proxyUrl = `${environment.backend_url}${services_url.PROXY_ENDPOINT}?sourceUrl=${encodedUrl}`
 
-  console.log(proxyUrl, 'PROXY URL');
   return proxyUrl;
 };

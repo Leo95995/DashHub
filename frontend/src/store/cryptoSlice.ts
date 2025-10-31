@@ -75,7 +75,6 @@ export const fetchTopGainers = createAsyncThunk(
     try {
       const topGainersData = await getTopGainersAndLosers(genericFilters);
 
-      console.log(topGainersData);
       if (topGainersData.error || !topGainersData.topGainers) {
         return rejectWithValue("Error while fetching crytpto datas");
       }
