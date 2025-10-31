@@ -17,7 +17,7 @@ export default defineConfig({
     // togliere anche queste ma in env di production sono utili per debug
     pure:
       process.env.NODE_ENV === "production"
-        ? ["console.log",  "debugger"]
+        ? ["console.log"]
         : [],
   },
   build: {
