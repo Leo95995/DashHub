@@ -21,14 +21,13 @@ const DashBoard: React.FC = () => {
   } = useDashboardLogic();
 
   const widgetList = useMemo(() => getWidgetList(filters), [filters]);
-  const deferredWidgetList = useDeferredValue(widgetList);
   const {
     getVisibleWidgetsNumber,
     handleDrop,
     renderWidgetByOrder,
     widgetOrder,
     setDraggedWidgetId,
-  } = useWidgetRender(filters, deferredWidgetList);
+  } = useWidgetRender(filters, widgetList);
 
   return (
     <>
