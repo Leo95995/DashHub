@@ -1,6 +1,8 @@
+// React - Redux
 import type { UnknownAction } from "@reduxjs/toolkit";
 import type { Dispatch } from "react";
-import type { ICryptoFilterData } from "../../../../../store/data/cryptoData";
+// Types
+import type { ICryptoFilterData } from "../../../../../types/store/crypto";
 import type { ICryptoTrendings } from "../../../../../types/store/crypto";
 
 export interface ILineChartData {

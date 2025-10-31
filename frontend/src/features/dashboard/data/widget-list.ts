@@ -1,8 +1,10 @@
 //  WIDGETS COMPONENTS
-import CryptoWidget from "../components/Widgets/CryptoWidget";
-import GithubWidget from "../components/Widgets/GithubWidget";
-import NasaWidget from "../components/Widgets/NasaWidget";
-import WeatherWidget from "../components/Widgets/WeatherWidget";
+import { lazy } from "react";
+
+const CryptoWidget = lazy(() => import("../components/Widgets/CryptoWidget"));
+const NasaWidget = lazy(() => import("../components/Widgets/NasaWidget"));
+const GithubWidget = lazy(() => import("../components/Widgets/GithubWidget"));
+const WeatherWidget = lazy(() => import("../components/Widgets/WeatherWidget"));
 
 export const getWidgetList = (filters: any) => {
   return [

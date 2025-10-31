@@ -17,8 +17,6 @@ const CryptoGainersAndLosers: React.FC = () => {
     (state: any) => state.crypto.filterData
   );
 
-  console.log(topGainerData);
-
   const dispatch = useDispatch();
 
   if (loading) {
