@@ -4,11 +4,6 @@ import type React from "react";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchWeatherByCity,
-  setSearchText,
-} from "../../../../../store/weatherSlice";
-// Weather utils
-import {
   background_color,
   get_temperatures,
   getHoursAndMin,
@@ -27,6 +22,7 @@ import { IGlobalAlertStatus } from "../../../../../types/store/app";
 import { useDragDrop } from "../../../../../hooks/useDragAndDrop";
 import { useWeatherFilterLogic } from "../../Filters/hooks/useWeatherFilterLogic";
 import WeatherSearchBar from "./WeatherSearch/WeatherSearchBar";
+import { createProxyUrl } from "../../../../../utils/url-utils";
 
 const WeatherWidget: React.FC<IGenericWidget> = ({
   isEditMode,
@@ -46,7 +42,6 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
 
   const dispatch = useDispatch();
   const {
-    changeTemperature,
     searchByCity,
     setCityName,
     temperatureType,
@@ -132,12 +127,12 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
               width={50}
               decoding="async"
               loading="lazy"
-              src={`https://catamphetamine.github.io/country-flag-icons/3x2/${country}.svg`}
-              alt="coountry flag"
+              src={createProxyUrl(`https://catamphetamine.github.io/country-flag-icons/3x2/${country}.svg`)}
+              alt="country flag"
             />
           </h3>
           <img
-            src={`https://openweathermap.org/img/wn/${weatherInfo?.icon}@2x.png`}
+            src={createProxyUrl(`https://openweathermap.org/img/wn/${weatherInfo?.icon}@2x.png`)}
             alt="weather"
             width={100}
             decoding="async"
