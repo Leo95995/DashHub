@@ -1,3 +1,5 @@
-export const allowedHeaders = ["Content-Type", "Authorization"]
+import { environment } from "./environment";
 
-export const allowedOrigins = ["http://localhost:5173"];
+export const allowedHeaders = ["Content-Type", "Authorization"];
+
+export const allowedOrigins = ["http://localhost:5173", environment.FE_ORIGIN];
