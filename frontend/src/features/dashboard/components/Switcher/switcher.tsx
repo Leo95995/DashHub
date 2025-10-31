@@ -36,7 +36,7 @@ const Switcher: React.FC<WidgetSwitcher> = ({
                     <span
                       className="inline-flex items-center px-2 py-1 rounded-full absolute right-5 text-xs font-semibold bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-sm gap-1"
                     >
-                      <CircleCheck size={16} /> 
+                      <CircleCheck size={16} />  <span className="hidden md:block">Selected</span>
                     </span>
                   </>
                 )}

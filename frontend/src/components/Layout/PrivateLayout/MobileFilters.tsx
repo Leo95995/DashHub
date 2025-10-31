@@ -22,7 +22,6 @@ const MobileFilters: React.FC = () => {
           open: open,
           setOpen: setOpen,
         }}
-        width="w-200"
         closable={true}
         children={
           <>

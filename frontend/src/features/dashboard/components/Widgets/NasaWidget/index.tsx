@@ -9,7 +9,7 @@ import Switcher from "../../Switcher/switcher";
 import { nasa_widgets } from "../../Switcher/datas";
 // Interfaces
 import type { IGenericWidget, WidgetTypes } from "../../../types";
-// components
+// Components
 import Tag from "../../../../../components/Tag/Tag";
 import { setGlobalAlert } from "../../../../../store/appSlice";
 import { IGlobalAlertStatus } from "../../../../../types/store/app";
@@ -37,6 +37,7 @@ const NasaWidget: React.FC<IGenericWidget> = ({
     dropHandler,
   } = useDragDrop({ widgetId, handleDrop, setDraggedWidgetId });
 
+  // Hook responsible to get all nasa datas.
   useNasaFetcher(dispatch);
 
   // Widget selection
