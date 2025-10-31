@@ -19,7 +19,6 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({ firstVisit }) => {
         setOpen: () => {},
       }}
       closable={false}
-      width="600px"
     >
       <div className="rounded-lg py-6 w-full max-w-md  flex flex-col gap-4">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">

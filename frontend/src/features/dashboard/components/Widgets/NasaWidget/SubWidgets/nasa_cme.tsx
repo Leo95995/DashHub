@@ -1,14 +1,14 @@
+// React Import
 import { useEffect, useState } from "react";
+// Component
 import LoaderWithMessage from "../../../../../../components/Loaders/LoaderWithMessage";
+// Types
 import type { CMEData } from "../../../../../../types/store/nasa";
 import type { ArrowKey } from "../../../../../../types/common/generic";
+// Components
 import ErrorMessage from "../../../../../../components/Error/Error";
+import type { ICmeWidget } from "../types";
 
-export interface ICmeWidget {
-  cme_data: CMEData[];
-  loading: boolean;
-  error: string | null;
-}
 
 const Cme_Widget: React.FC<ICmeWidget> = ({
   cme_data = [],
@@ -23,6 +23,7 @@ const Cme_Widget: React.FC<ICmeWidget> = ({
     index: 0,
   });
 
+  
   useEffect(() => {
     setSelectedCme({ data: cme_data[0], index: 0 });
   }, [cme_data]);

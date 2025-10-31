@@ -71,7 +71,7 @@ const ApodWidget: React.FC<IApodWidget> = ({ data, error, loading }) => {
               onClick={() =>
                 dispatch(setFullScreenImage({ isFullScreen: true, url: img }))
               }
-              src={img ? createProxyUrl(img):''}
+              src={img ? createProxyUrl(img) : undefined}
             />
           )}
           {showEnlarge && (
