@@ -39,6 +39,7 @@ const CryptoDetail: React.FC = () => {
           <label htmlFor="timespan">Select days</label>
           <select
             name="timespan"
+            id="timespan"
             value={detailFilters.days}
             onChange={(e) =>
               setDetailFilters({
@@ -61,6 +62,7 @@ const CryptoDetail: React.FC = () => {
           <label htmlFor="crypto-selector">Select currency </label>
           <select
             value={detailFilters.id}
+             aria-label="Currency selector"
             name="crypto-selector"
             onChange={(e) =>
               setDetailFilters({

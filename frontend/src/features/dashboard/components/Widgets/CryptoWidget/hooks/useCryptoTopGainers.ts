@@ -14,8 +14,8 @@ export const useCryptoTopGainers = ({
     getTopGainers();
   }, [genericFilters]);
 
-  const getTopGainers = async () => {
-    await dispatch(fetchTopGainers(cryptoFilterData) as any);
+  const getTopGainers = () => {
+     dispatch(fetchTopGainers(cryptoFilterData) as any);
   };
 
 };

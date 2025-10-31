@@ -147,16 +147,16 @@ const CryptoTrendings: React.FC = () => {
                     bg-green-500 text-white shadow-sm gap-1
                   "
                     >
-                      <CircleCheck size={14} /> Selected
+                      <CircleCheck size={14} /> 
                     </span>
                   )}
                 </li>
               ))
             ) : (
               <>
-                <span className="p-2" onClick={() => setIsOpen(true)}>
+                <li onClick={() => setIsOpen(true)} className="p-2 w-full">
                   Select crypto
-                </span>
+                </li>
               </>
             )}
           </ul>

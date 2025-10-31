@@ -4,7 +4,6 @@ import Switcher from "../../Switcher/switcher";
 import { crypto_widgets } from "../../Switcher/datas";
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedCryptoWidget } from "../../../../../store/cryptoSlice";
-import type { ICryptoFilterData } from "../../../../../store/data/cryptoData";
 import type { CryptoWidgets, IGenericWidget } from "../../../types";
 import Tag from "../../../../../components/Tag/Tag";
 // Hooks
@@ -14,6 +13,8 @@ import { useCryptoTrends } from "./hooks/useCryptoTrends";
 import { useWidgetSelector } from "../../../hooks/UseWidgetSelector";
 import { useCryptoTopGainers } from "./hooks/useCryptoTopGainers";
 import { WidgetOrigin } from "../../../hooks/types";
+// Types
+import type { ICryptoFilterData } from "../../../../../types/store/crypto";
 
 const CryptoWidget: React.FC<IGenericWidget> = ({
   isEditMode,
@@ -38,6 +39,7 @@ const CryptoWidget: React.FC<IGenericWidget> = ({
 
   // Execute all the crypto filters hooks
   cryptoFiltersHooks.forEach((hook) => hook({ cryptoFilterData, dispatch }));
+
 
   const { currentSelection, setWidgetSelection } = useWidgetSelector({
     selector: () => selectCryptoWidget,

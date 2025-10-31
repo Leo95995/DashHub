@@ -58,6 +58,7 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
           {!editMode && (
             <button
               onClick={() => setEditMode(!editMode)}
+              aria-label="Edit Button"
               className="cursor-pointer hover:text-blue-400"
             >
               <Edit style={{ height: "16px" }} />

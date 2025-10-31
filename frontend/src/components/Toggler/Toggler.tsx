@@ -7,6 +7,7 @@ const ModeToggler: React.FC = () => {
   return (
     <button
       onClick={toggleTheme}
+      aria-label={`${theme}`}
       className="
     p-2 rounded-md
     flex items-center justify-center

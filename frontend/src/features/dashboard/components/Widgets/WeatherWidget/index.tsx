@@ -132,12 +132,12 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
               width={50}
               decoding="async"
               loading="lazy"
-              src={`http://catamphetamine.github.io/country-flag-icons/3x2/${country}.svg`}
+              src={`https://catamphetamine.github.io/country-flag-icons/3x2/${country}.svg`}
               alt="coountry flag"
             />
           </h3>
           <img
-            src={`http://openweathermap.org/img/wn/${weatherInfo?.icon}@2x.png`}
+            src={`https://openweathermap.org/img/wn/${weatherInfo?.icon}@2x.png`}
             alt="weather"
             width={100}
             decoding="async"

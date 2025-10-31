@@ -12,6 +12,7 @@ const FilterList: React.FC<IFilterList> = ({ filters, onClick, applyFilters }) =
         >
           {id}
           <button
+          aria-label="Remove filter button"
             className="flex items-center justify-center cursor-pointer transition-transform duration-200 hover:scale-110"
             onClick={() => onClick(id)}
           >
