@@ -76,6 +76,7 @@ const WidgetFilters: React.FC<IFilters> = ({ expanded }) => {
                   value={colsLayout.grid_col.large}
                   onChange={(e) => handleChangeLayout(e)}
                   name="large"
+                  aria-label="Desktop columns selector"
                   className="
                 border border-gray-300 dark:border-gray-600
                 rounded-lg
@@ -103,6 +104,7 @@ const WidgetFilters: React.FC<IFilters> = ({ expanded }) => {
                   value={colsLayout.grid_col.medium}
                   onChange={(e) => handleChangeLayout(e)}
                   name="medium"
+                  aria-label="Tablet columns selector"
                   className="
                 border border-gray-300 dark:border-gray-600
                 rounded-lg
@@ -129,6 +131,7 @@ const WidgetFilters: React.FC<IFilters> = ({ expanded }) => {
                   onChange={(e) => handleChangeLayout(e)}
                   value={colsLayout.grid_col.small}
                   name="small"
+                  aria-label="Mobile columns selector"
                   className="
                 border border-gray-300 dark:border-gray-600
                 rounded-lg

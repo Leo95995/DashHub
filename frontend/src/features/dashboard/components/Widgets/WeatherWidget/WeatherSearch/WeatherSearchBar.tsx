@@ -50,7 +50,7 @@ const WeatherSearchBar: React.FC<IWeatherSearchBar> = ({
         border border-gray-300 dark:border-gray-600 border-l-0
         rounded-r-md
         px-4 py-2
-        bg-blue-500 dark:bg-blue-600
+        bg-blue-600 dark:bg-blue-600
         text-white
         font-semibold
         hover:bg-blue-600 dark:hover:bg-blue-700
