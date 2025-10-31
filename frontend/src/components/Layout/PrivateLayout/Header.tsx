@@ -1,7 +1,11 @@
+// Website logo
 import dashHub from "../../../assets/icons/dashhub.png";
+// Media Query
 import { isMobile } from "../../../utils/media-query";
+// Components
 import ProfileBar from "../../ProfileBar/ProfileBar";
 import ModeToggler from "../../Toggler/Toggler";
+// Types
 import type { IHeader } from "./types";
 
 

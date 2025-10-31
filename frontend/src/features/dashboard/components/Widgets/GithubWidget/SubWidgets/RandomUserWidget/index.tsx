@@ -1,9 +1,12 @@
+// React redux
 import {useSelector } from "react-redux";
+// Icons
 import { Ban, Infinity, Loader2 } from "lucide-react";
+// Components
 import LoaderWithMessage from "../../../../../../../components/Loaders/LoaderWithMessage";
 import ErrorMessage from "../../../../../../../components/Error/Error";
+// Hooks
 import { useRandomUser } from "./useRandomUser";
-import ReactLoader from "../../../../../../../components/Loaders/ReactLoaders";
 
 
 const RandomUserWidget: React.FC = () => {

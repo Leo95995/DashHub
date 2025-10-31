@@ -13,6 +13,7 @@ import { Calendar } from "lucide-react";
 import LoaderWithMessage from "../../../../../../components/Loaders/LoaderWithMessage";
 import { useGlobalAlert } from "../../../../../../hooks/useAlert";
 import { IGlobalAlertStatus } from "../../../../../../types/store/app";
+import { createProxyUrl } from "../../../../../../utils/url-utils";
 
 const ApodWidget: React.FC<IApodWidget> = ({ data, error, loading }) => {
   const { date, _id, img, description, title } = data;
@@ -63,14 +64,15 @@ const ApodWidget: React.FC<IApodWidget> = ({ data, error, loading }) => {
 
         <div className="relative rounded-2xl mb-3 w-full max-w-[12rem] flex justify-end aspect-square mx-auto overflow-hidden shadow-lg">
           <img
+          rel="preload"
             fetchPriority="high"
             alt="Nasa Pic of the day"
             className="w-full h-full object-cover cursor-zoom-in transition-transform duration-500 hover:scale-110"
-            loading="lazy"
+            // loading="lazy"
             onClick={() =>
               dispatch(setFullScreenImage({ isFullScreen: true, url: img }))
             }
-            src={img}
+            src={createProxyUrl(img)}
           />
           {showEnlarge && (
             <div className="flex justify-center  text-xs absolute bottom-0 w-full text-white z-99">

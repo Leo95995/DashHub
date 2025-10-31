@@ -15,6 +15,7 @@ import ErrorMessage from "../../../../../components/Error/Error";
 // Types
 import type { ItemStatus } from "../../../../../types/common/status";
 import type { IUserActivityData } from "../../../../../types/services/github";
+import { createProxyUrl } from "../../../../../utils/url-utils";
 
 const UserActivityCard: React.FC<{ item: ItemStatus<IUserActivityData> }> = ({
   item,
@@ -68,7 +69,7 @@ const UserActivityCard: React.FC<{ item: ItemStatus<IUserActivityData> }> = ({
       <>
         <div>
           <img
-            src={userActivityData.actor_avatar_url}
+            src={createProxyUrl(userActivityData.actor_avatar_url)}
             alt={userActivityData.actor_login}
             className="w-16 h-16 rounded-full border-2 border-gray-300 dark:border-gray-700"
           />

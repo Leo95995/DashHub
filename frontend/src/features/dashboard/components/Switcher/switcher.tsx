@@ -1,4 +1,3 @@
-import { useState } from "react";
 // Components
 import GenericModal from "../../../../components/Modal/Modal";
 // Types & Interfaces
