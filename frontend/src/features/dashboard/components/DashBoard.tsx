@@ -1,5 +1,5 @@
 //  REACT
-import React, { lazy, Suspense, useId, useMemo, useDeferredValue } from "react";
+import React, { lazy, Suspense, useId, useMemo } from "react";
 //  LAYOUT
 const DashBoardHeader = lazy(() => import("./Header/Header"));
 //  MEDIA QUERIES
