@@ -1,15 +1,14 @@
 //  REACT
-import React, { useId } from "react";
-// ----- COMPONENTS -----
+import React, { lazy, Suspense, useId, useMemo, useDeferredValue } from "react";
 //  LAYOUT
-import DashBoardHeader from "./Header/Header";
+const DashBoardHeader = lazy(() => import("./Header/Header"));
 //  MEDIA QUERIES
 import { isMobile } from "../../../utils/media-query";
 //  HOOKS
 import { useFullScreenApod } from "../hooks/useFullScreenApod";
 import { useDashboardLogic } from "../hooks/useDashBoardLogic";
-
 import { useWidgetRender } from "../hooks/useWidgetRender";
+import { getWidgetList } from "../data/widget-list";
 
 const DashBoard: React.FC = () => {
   const {
@@ -21,20 +20,30 @@ const DashBoard: React.FC = () => {
     toggleEditMode,
   } = useDashboardLogic();
 
-  const {getVisibleWidgetsNumber, handleDrop, renderWidgetByOrder, widgetOrder, setDraggedWidgetId}  = useWidgetRender(filters)
+  const widgetList = useMemo(() => getWidgetList(filters), [filters]);
+  const deferredWidgetList = useDeferredValue(widgetList);
+  const {
+    getVisibleWidgetsNumber,
+    handleDrop,
+    renderWidgetByOrder,
+    widgetOrder,
+    setDraggedWidgetId,
+  } = useWidgetRender(filters, deferredWidgetList);
 
   return (
     <>
       {useFullScreenApod()}
       <div className="w-full flex flex-col gap-5 ">
-        <DashBoardHeader
-          userData={userData}
-          isEditMode={isEditMode}
-          onClick={toggleEditMode}
-          widgetOrder={widgetOrder}
-          screenWidth={screenWidth}
-          visibleWidgets={getVisibleWidgetsNumber()}
-        />
+        <Suspense fallback="loading">
+          <DashBoardHeader
+            userData={userData}
+            isEditMode={isEditMode}
+            onClick={toggleEditMode}
+            widgetOrder={widgetOrder}
+            screenWidth={screenWidth}
+            visibleWidgets={getVisibleWidgetsNumber()}
+          />
+        </Suspense>
         <section
           className={`grid gap-6 ${
             isMobile(screenWidth) ? "pt-y px-4" : "px-8 py-8"
@@ -46,13 +55,15 @@ const DashBoard: React.FC = () => {
               return (
                 <React.Fragment key={id}>
                   {widget.visibility && (
-                    <widget.component
-                      widgetId={widget.widgetId}
-                      onHide={widget.onHide}
-                      isEditMode={isEditMode}
-                      handleDrop={handleDrop}
-                      setDraggedWidgetId={setDraggedWidgetId}
-                    />
+                    <Suspense fallback="Caricamento widget">
+                      <widget.component
+                        widgetId={widget.widgetId}
+                        onHide={widget.onHide}
+                        isEditMode={isEditMode}
+                        handleDrop={handleDrop}
+                        setDraggedWidgetId={setDraggedWidgetId}
+                      />
+                    </Suspense>
                   )}
                 </React.Fragment>
               );

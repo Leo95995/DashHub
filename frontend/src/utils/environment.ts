@@ -9,7 +9,9 @@ export const services_url = {
   github: environment.backend_url + "/github",
   crypto: environment.backend_url + "/crypto",
   weather: environment.backend_url + "/weather",
+  PROXY_ENDPOINT: "/proxy-image"
 };
+
 
 // Get current mode
 const getMode = () => {

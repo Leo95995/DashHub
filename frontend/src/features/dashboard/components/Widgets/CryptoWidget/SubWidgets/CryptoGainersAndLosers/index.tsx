@@ -6,6 +6,7 @@ import ErrorMessage from "../../../../../../../components/Error/Error";
 import React from "react";
 import LoaderWithMessage from "../../../../../../../components/Loaders/LoaderWithMessage";
 import type { ICryptoTopGainers } from "../../../../../../../types/store/crypto";
+import { createProxyUrl } from "../../../../../../../utils/url-utils";
 
 const CryptoGainersAndLosers: React.FC = () => {
   const topGainerData = useSelector(
@@ -15,8 +16,6 @@ const CryptoGainersAndLosers: React.FC = () => {
   const { genericFilters } = useSelector(
     (state: any) => state.crypto.filterData
   );
-
-  console.log(topGainerData);
 
   const dispatch = useDispatch();
 
@@ -70,7 +69,7 @@ const CryptoGainersAndLosers: React.FC = () => {
             <React.Fragment key={coin.id}>
               <div className="flex items-center cursor-pointer hover:rounded-md hover:bg-gradient-to-r from-gray-200 to-gray-500 hover:scale-105 hover:text-black gap-3 p-2 border dark:border-gray-600 border-gray-200 rounded transition">
                 <img
-                  src={coin.image}
+                  src={createProxyUrl(coin.image)}
                   alt={`Logo of ${coin.name}`}
                   className="w-8 h-8 rounded-full "
                   decoding="async"

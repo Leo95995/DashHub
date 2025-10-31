@@ -5,8 +5,6 @@ import UserActivityCard from "../../user-activity-card";
 import { useUserActivity } from "./useUserActivity";
 
 const UserActivityWidget: React.FC = () => {
-
-
   const { userActivity, onSearchChange } = useUserActivity()
 
   return (

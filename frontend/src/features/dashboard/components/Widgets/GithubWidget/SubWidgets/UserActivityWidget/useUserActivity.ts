@@ -1,4 +1,5 @@
-import { debounce } from "@mui/material";
+
+import { debounce } from "../../../../../../../utils/generic-utils";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserActivity } from "../../../../../../../store/githubSlice";

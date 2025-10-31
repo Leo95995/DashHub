@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setFullScreenImage } from "../../../store/nasaSlice";
+import { createProxyUrl } from "../../../utils/url-utils";
 
 const useFullScreenApod = (): React.ReactElement | null => {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const useFullScreenApod = (): React.ReactElement | null => {
         Press <kbd className="kbd">Esc</kbd> or click anywhere to close
       </span>
       <img
-        src={url}
+        src={createProxyUrl(url)}
         alt="Fullscreen"
         fetchPriority="high"
         className="max-w-full max-h-full object-contain rounded-xl border border-transparent hover:border-white/30 transition-all duration-400 hover:scale-105"

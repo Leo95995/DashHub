@@ -16,6 +16,7 @@ import type {
   IUserActivityData,
 } from "../../../../../../../types/services/github";
 import type { githubSteps } from "../../types";
+import { createProxyUrl } from "../../../../../../../utils/url-utils";
 
 const PopularReposWidget: React.FC = () => {
   const dispatch = useDispatch();
@@ -152,7 +153,7 @@ const PopularReposWidget: React.FC = () => {
               <div className="flex items-center  gap-10 space-x-2 mt-2">
                 <div className="flex items-center gap-2">
                   <img
-                    src={repo.owner_avatar_url}
+                    src={createProxyUrl(repo.owner_avatar_url)}
                     alt={repo.owner_login}
                     loading="lazy"
                     className="w-8 h-8 rounded-full"

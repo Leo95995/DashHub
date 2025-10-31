@@ -1,14 +1,19 @@
-// src/index.ts
+// Express
 import express, { Express } from "express";
+// Libraries
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cors from "cors";
+// Configs
 import { allowedHeaders, allowedOrigins } from "./config/configs";
+// Routers
 import nasa_router from "./routes/nasa/nasa-routes";
 import github_router from "./routes/github/github-routes";
 import weather_router from "./routes/weather/weather-routes";
 import crypto_router from "./routes/crypto/crypto-routes";
+// Middlewares
 import { loggingMiddleware } from "./Middlewares/log-middleware";
+import { ProxyMiddleWare } from "./Middlewares/proxy";
 
 dotenv.config();
 
@@ -32,10 +37,9 @@ const corsOptions = {
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "PUT"],
   allowedHeaders: allowedHeaders,
 };
-
 app.use(cors(corsOptions));
-
 app.use(loggingMiddleware);
+app.use('/proxy-image', ProxyMiddleWare)
 
 app.use("/nasa", nasa_router);
 app.use("/github", github_router);

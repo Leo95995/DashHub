@@ -13,12 +13,15 @@ import { Calendar } from "lucide-react";
 import LoaderWithMessage from "../../../../../../components/Loaders/LoaderWithMessage";
 import { useGlobalAlert } from "../../../../../../hooks/useAlert";
 import { IGlobalAlertStatus } from "../../../../../../types/store/app";
+import { createProxyUrl } from "../../../../../../utils/url-utils";
+import { useLcpPreloader } from "./hooks/useApodPreload";
 
 const ApodWidget: React.FC<IApodWidget> = ({ data, error, loading }) => {
   const { date, _id, img, description, title } = data;
   const dispatch = useDispatch();
   const [showEnlarge, setShowEnlarge] = useState<boolean>(false);
 
+  useLcpPreloader(createProxyUrl(img));
   const { handleAlert } = useGlobalAlert();
 
   useEffect(() => {
@@ -28,10 +31,6 @@ const ApodWidget: React.FC<IApodWidget> = ({ data, error, loading }) => {
 
   if (error) {
     return <>Errore nel caricamento</>;
-  }
-
-  if (loading) {
-    return <LoaderWithMessage text=" Loading Nasa Picture of the day" />;
   }
 
   return (
@@ -62,16 +61,19 @@ const ApodWidget: React.FC<IApodWidget> = ({ data, error, loading }) => {
         </p>
 
         <div className="relative rounded-2xl mb-3 w-full max-w-[12rem] flex justify-end aspect-square mx-auto overflow-hidden shadow-lg">
-          <img
-            fetchPriority="high"
-            alt="Nasa Pic of the day"
-            className="w-full h-full object-cover cursor-zoom-in transition-transform duration-500 hover:scale-110"
-            loading="lazy"
-            onClick={() =>
-              dispatch(setFullScreenImage({ isFullScreen: true, url: img }))
-            }
-            src={img}
-          />
+          {loading ? (
+            <LoaderWithMessage text=" Loading Nasa Picture of the day" />
+          ) : (
+            <img
+              fetchPriority="high"
+              alt="Nasa Pic of the day"
+              className="w-full h-full object-cover cursor-zoom-in transition-transform duration-500 hover:scale-110"
+              onClick={() =>
+                dispatch(setFullScreenImage({ isFullScreen: true, url: img }))
+              }
+              src={img ? createProxyUrl(img):''}
+            />
+          )}
           {showEnlarge && (
             <div className="flex justify-center  text-xs absolute bottom-0 w-full text-white z-99">
               <span className="flex   py-2">Click to view fullscreen</span>

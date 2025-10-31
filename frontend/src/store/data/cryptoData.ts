@@ -1,5 +1,8 @@
+// Types
 import type { CryptoWidgets } from "../../features/dashboard/types";
+// Services
 import cryptoKey from "../../services/storage/crypto";
+// Types
 import type { ItemStatus } from "../../types/common/status";
 import type {
   ICryptoTrendings,
@@ -38,9 +41,6 @@ const selectedWidget: CryptoWidgets =
 
 export const filterCurrenciesList: currency[] = ["eur", "usd"];
 
-/**
- * This datas then should be drilled down
- */
 const filterData: ICryptoFilterData = {
   genericFilters: {
     currency: "eur",
@@ -61,9 +61,9 @@ export const days = ["1", "7", "30", "90", "180", "365"];
 // Exported initial state
 export const initialState = {
   currenciesList,
-  cryptoData, // Data related to trending crypto
-  crypto_details_data,
-  crypto_top_data,
+  cryptoData, // Trending crypto
+  crypto_details_data, // Crypto Details
+  crypto_top_data, // Crypto Top Gainers
   selectedWidget,
   filterData, // Handles all the filters details
 };
