@@ -8,7 +8,6 @@ const GenericModal: React.FC<IGenericModal> = ({
   status,
   children,
   title,
-  width,
   closable = true
 }) => {
   const { open, setOpen } = status;
@@ -19,8 +18,7 @@ const GenericModal: React.FC<IGenericModal> = ({
       onClose={() => setOpen(false)}
     >
       <div
-        className={` bg-slate-100 border-gray-200 max-h-200  dark:bg-slate-700 mt-10 text-black dark:text-white  transition-all ${
-          width ?? "w-96"
+        className={` bg-slate-100 border-gray-200 max-h-200  dark:bg-slate-700 mt-10 text-black dark:text-white  transition-all w-80 md:w-120
         }  rounded-lg shadow-lg`}
       >
         <div className="flex justify-between items-center p-2 border-b dark:border-gray-600 border-gray-200">
