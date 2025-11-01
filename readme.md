@@ -2,6 +2,9 @@
 
 **DashHub is a modular, responsive dashboard built with React and Redux, featuring a secure backend that aggregates real-time data from NASA, Crypto, Weather, and GitHub APIs. Fully customizable, it demonstrates advanced frontend skills alongside real full-stack capabilities.** 
 
+**Live Demo:** 👉 [**dashhub.up.railway.app**](https://dashhub.up.railway.app)
+
+
 ## Core Features & User Experience
 
 DashHub provides a high level of personalization and control over the user interface, driven by a robust architecture.
