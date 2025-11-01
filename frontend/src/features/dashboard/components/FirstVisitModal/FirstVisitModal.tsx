@@ -30,12 +30,11 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({ firstVisit }) => {
         </p>
       </div>
       <div className="flex flex-col gap-2">
-        <label
-          htmlFor="username"
+        <span
           className="font-medium text-gray-800 dark:text-gray-200"
         >
           Username
-        </label>
+        </span>
         <InputSearch
           placeholder="Insert here your username..."
           onChange={(e) => {
@@ -52,12 +51,14 @@ const FirstVisitModal: React.FC<IFirstVisitModal> = ({ firstVisit }) => {
         )}
         <div className="flex flex-col gap-2">
           <label
-            htmlFor="username"
+            htmlFor="avatar_color"
             className="font-medium text-gray-800 dark:text-gray-200"
           >
             Avatar Color
           </label>
           <input
+            id="avatar_color"
+            name="avatar_color"
             type="color"
             onChange={(e) =>
               setUser({ ...userInfo, avatar_color: e.currentTarget.value })

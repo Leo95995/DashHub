@@ -27,7 +27,7 @@ const InputSearch: React.FC<InputSearchProps> = ({
           placeholder={placeholder ?? "Placeholder"}
           disabled={disabled || isLoading}
           defaultValue={defaultValue ?? ''}
-          aria-label=""
+          aria-label="username"
           onKeyUp={(e) => onKeyUp && onKeyUp(e.key)}
           onChange={(e) => onChange(e.currentTarget.value)}
           className={`${
