@@ -22,7 +22,7 @@ export const useWidgetRender = (filters: any, widgetList: any[]) => {
   const getVisibleWidgetsNumber = useCallback(() => {
     const result = widgetList.filter((widget)=> widget.visibility === true).length
     return result;
-  },[])
+  },[filters])
 
 
 
