@@ -1,10 +1,12 @@
-# Dashub: Centralized Dashboard Hub
+# DashHub: Centralized Dashboard Hub
 
-**Dashub is a highly customizable, responsive, and data-rich dashboard built with React, Redux, and a dedicated backend service. Though primarily a frontend project, it showcases full-stack proficiency in managing, personalizing, and securely visualizing real-time data from diverse APIs (NASA, Crypto, Weather, GitHub).**
+**DashHub is a modular, responsive dashboard built with React and Redux, featuring a secure backend that aggregates real-time data from NASA, Crypto, Weather, and GitHub APIs. Fully customizable, it demonstrates advanced frontend skills alongside real full-stack capabilities.** 
 
 ## Core Features & User Experience
 
-Dashub provides a high level of personalization and control over the user interface, driven by a robust architecture.
+DashHub provides a high level of personalization and control over the user interface, driven by a robust architecture.
+
+Features include dynamic drag & drop, theme switching, persistent layouts, and real-time API integrations.
 
 ### User Customization and Control
 
@@ -38,18 +40,9 @@ The dedicated backend service is crucial for security, efficient data handling, 
 | **Data Synchronization** | A daily **Cron Job** runs automatically at midnight to update and synchronize cryptocurrency collection data.                   | Ensures data freshness and availability.                     |
 | **Middleware & Logging** | A custom middleware intercepts all requests to save comprehensive logs (access, timings, errors).                               | Provides a crucial Audit Trail for monitoring and debugging. |
 
-The dedicated backend service is crucial for security, efficient data handling, and showcases **Full-Stack competency**.
-
-| Component                | Responsibility                                                                                                                  | Technical Highlight                                          |
-| :----------------------- | :------------------------------------------------------------------------------------------------------------------------------ | :----------------------------------------------------------- |
-| **Secure API Proxy**     | Proxies all external API calls. The server handles all **sensitive API keys**, ensuring they are never exposed to the frontend. | Enhanced Security Model.                                     |
-| **Data Aggregation**     | Consolidates data from multiple sources to optimize payload size and minimize client requests.                                  | Performance Optimization.                                    |
-| **Data Synchronization** | A daily **cron job** runs automatically at midnight to update and synchronize cryptocurrency collection data.                   | Ensures data freshness and availability.                     |
-| **Middleware & Logging** | A custom middleware intercepts all requests to save comprehensive logs (access, timings, errors).                               | Provides a crucial Audit Trail for monitoring and debugging. |
-
 ## Data Integration & Widget Types
 
-Dashub acts as a single, secure interface, featuring highly specific widgets powered by external APIs.
+DashHub acts as a single, secure interface, featuring highly specific widgets powered by external APIs.
 
 | Data Source     | Main Data Category              | Example Widgets Available                                                                           |
 | :-------------- | :------------------------------ | :-------------------------------------------------------------------------------------------------- |
@@ -73,24 +66,50 @@ This project is primarily a **Frontend showcase** but demonstrates proficiency i
 |              | API Client       | Fetch                       |                                               |
 |              | Logging          | Custom Middleware           |                                               |
 
+## Performance & Optimization Highlights
+
+<br/>
+
+| Area                        | Description                                                                                         | Technical Detail                                                 |
+| :-------------------------- | :-------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------- |
+| **Lighthouse Optimization** | Achieved high scores in **Performance, SEO, Best Practices, and Accessibility**.                    | Screenshots below show audit results across all key metrics.     |
+| **Backend Proxy Caching**   | Implemented an **Express-based proxy layer** to cache API and image responses.                      | Reduces API latency and improves image delivery speed.           |
+| **Lazy Loading**            | Applied lazy loading to critical components.                                                        | Boosts initial load time and reduces bundle size.                |
+| **Vite Build Optimization** | Customized **Vite configuration** for bundle splitting, minification, and optimized asset delivery. | Significantly improved loading performance and build efficiency. |
+| **Dockerized Environment**  | Both frontend and backend have dedicated **Dockerfiles** published on personal Docker Hub repo.     | Enables full environment replication and simplified deployment.  |
+| **LCP Preload Optimization** | Implemented a **custom React hook** to ensure preloading of critical assets impacting the Largest Contentful Paint. | Improves perceived load time and boosts Lighthouse performance metrics. |
+
+
+## Lighthouse Audit
+
+Dashhub achieves **high scores** across all Lighthouse metrics 
+**Performance, Accessibility, Best Practices, and SEO** reflecting a strong focus on optimization, code quality, and user experience.
+Optimized through Vite bundle splitting, lazy loading, proxy caching, and Dockerized builds.
+
+### Lighthouse Scores
+
+![Lighthouse overall score screenshot](docs/screenshots/ligthouse-1.jpeg)
+### Performance Scores
+![Lighthouse overall score screenshot](docs/screenshots/lighthouse-2.jpeg)
+
+
 # Visual Demo
 
-These demos highlight the most critical features that define Dashub's advanced user experience and full-stack capabilities.
+These demos highlight the most critical features that define DashHub's advanced user experience and full-stack capabilities.
 
 ### 1. Dynamic Layout Management
 
 This GIF showcases the ability to fluidly drag, drop, and reposition any widget on the grid. This feature, which was **manually implemented** (without external libraries), is critical proof of deep React/DOM and state management expertise.
 
-![GIF showing the manual Drag-and-Drop functionality of widgets on the grid]({LINK_TO_DRAG_AND_DROP_GIF})
+![GIF showing the manual Drag-and-Drop functionality of widgets on the grid](docs/screenshots/gifs/drag-and-drop.gif)
 
 ### 2. Centralized Control and Configuration Persistence
 
-This animation demonstrates the centralized control panel in action, showing how users can toggle widget visibility, adjust the column layout, and how these settings are immediately persistent via Local Storage.
+These animations demonstrate the centralized control panel in action, showing how users can toggle widget visibility, adjust the column layout, and how these settings are immediately persistent via Local Storage.
 
-![GIF showing the control panel opening, widget toggling, and layout adjustment]({LINK_TO_WIDGET_CONTROL_AND_PERSISTENCE_GIF})
 
-### 3. Global Feedback and Responsive Design (UX Focus)
+![GIF showing the control panel opening, widget toggling, and layout adjustment](docs/screenshots/gifs/dynamic-filters.gif)
 
-A quick look at the user experience, featuring the immediate switch between Light/Dark mode and an example of a success notification triggered by the Redux-managed error handling system.
 
-![GIF showing Light/Dark mode toggle and a success notification popup]({LINK_TO_THEME_AND_NOTIFICATIONS_GIF})
+![GIF showing the control panel opening, widget toggling, and layout adjustment](docs/screenshots/gifs/centralized-control-panel.gif)
+
