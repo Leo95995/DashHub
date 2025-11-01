@@ -17,17 +17,17 @@ const WeatherFilters: React.FC<IFilters> = ({ expanded }) => {
   const renderTemperatureSelector = () => {
     return (
       <div className="flex flex-col gap-2 w-48 py-2">
-        <label
-          htmlFor="temperature"
+        <span
           className="font-semibold text-gray-700 dark:text-gray-200"
         >
           Select temperature
-        </label>
+        </span>
         {temperatureType && (
           <select
             onChange={(e) =>changeTemperature(e)}
             value={temperatureType}
             name="temperature"
+            aria-label="temperature"
             id="temperature"
             className="
       border border-gray-300 dark:border-gray-600

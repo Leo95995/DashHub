@@ -101,12 +101,13 @@ const ProfileBar: React.FC<IProfileBar> = ({ expanded, screenWidth }) => {
             >
               <div className="shadow-2xl absolute items-start flex-col justify-end border bg-white dark:border-gray-700 border-gray-200 flex dark:bg-slate-800 dark:text-white p-2 mx-5 mt-4 rounded-md">
                 <div>
-                  <label className="block text-sm font-medium text-nowrap">
+                  <label htmlFor="internal-color" className="block text-sm font-medium text-nowrap">
                     Select Color
                   </label>
                   <input
                     name="color"
                     type="color"
+                    id="internal-color"
                     defaultValue={avatar_color}
                     onChange={changeAvatarColor}
                     className="block border-gray-300 rounded-md py-1 mt-1 cursor-pointer"

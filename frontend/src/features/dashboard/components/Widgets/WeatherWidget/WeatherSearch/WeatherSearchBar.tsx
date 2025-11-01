@@ -4,24 +4,23 @@ import React from "react";
 import { Loader2 } from "lucide-react";
 import type { IWeatherSearchBar } from "./types";
 
-
 const WeatherSearchBar: React.FC<IWeatherSearchBar> = ({
   setCityName,
   searchText,
   searchByCity,
   loading,
-  label
+  label,
 }) => {
   return (
     <div className="flex w-full flex-col gap-2">
-          {label && <label className="font-semibold" htmlFor="location"> City </label>}
+      {label && <span className="font-semibold"> City </span>}
       <div className="flex w-full">
         <div className="relative w-full">
           <input
             type="text"
             name="location"
             id="location"
-            aria-label={`${!label && 'City Name'}`}
+            aria-label={"City Name"}
             onChange={(e) => setCityName(e)}
             defaultValue={searchText ?? ""}
             placeholder="Search weather by city"

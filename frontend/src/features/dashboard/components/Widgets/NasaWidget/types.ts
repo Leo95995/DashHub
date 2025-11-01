@@ -9,6 +9,11 @@ export interface IApodWidget {
   error: string | null;
 }
 
+export interface ICmeWidget {
+  cme_data: CMEData[];
+  loading: boolean;
+  error: string | null;
+}
 
 export interface IWidgetContainer {
   apodStatus: IApodWidget;

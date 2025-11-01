@@ -33,24 +33,27 @@ const CmeMapper = (data: CmeResponse): CMEData[] => {
     const analyses = element.cmeAnalyses.find(
       (e: any) => e.isMostAccurate || {}
     );
-    const enlil = analyses.enlilList?.[0] || {};
+    const enlil = analyses?.enlilList?.[0] || {};
 
     const mappedCme: CMEData = {
-      id: element.activityID,
-      startTime: element.startTime ?? "",
-      speed: analyses.speed || null,
-      type: analyses.type ?? null,
-      sourceLocation: element.sourceLocation ?? "",
-      note: element.note ?? "",
-      link: element.link,
+      id: element?.activityID,
+      startTime: element?.startTime ?? "",
+      speed: analyses?.speed || null,
+      type: analyses?.type ?? null,
+      sourceLocation: element?.sourceLocation ?? "",
+      note: element?.note ?? "",
+      link: element?.link,
       impact: {
-        earth: enlil.isEarthGb || false,
-        eta: enlil.estimatedShockArrivalTime || null,
-        kpIndex: enlil.kp_90 || null,
+        earth: enlil?.isEarthGb || false,
+        eta: enlil?.estimatedShockArrivalTime || null,
+        kpIndex: enlil?.kp_90 || null,
       },
     };
+
     cme_result.push(mappedCme);
   }
+
+
   return cme_result as CMEData[];
 };
 
