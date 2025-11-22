@@ -2,7 +2,11 @@
   "extends": "./tsconfig.app.json",
   "compilerOptions": {
     "types": ["jest", "node", "@testing-library/jest-dom"],
-    "noEmit": true
+    "noEmit": true,
+    "module": "esnext",        
+    "target": "es2020",       
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src", "__tests__/**/*"]
 }
