@@ -22,6 +22,7 @@ const GithubWidget: React.FC<IGenericWidget> = ({
   widgetId,
   handleDrop,
   setDraggedWidgetId,
+  testId
 }) => {
   const dispatch = useDispatch();
   const githubWidget = useSelector((state: any) => state.github.selectedWidget);
@@ -44,6 +45,7 @@ const GithubWidget: React.FC<IGenericWidget> = ({
   return (
     <>
       <div
+        data-testid={testId}
         draggable={isEditMode}
         onDragStart={dragStartHandler}
         onDragEnd={dragEndHandler}

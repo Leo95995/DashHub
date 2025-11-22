@@ -30,13 +30,13 @@ export const useWidgetRender = (filters: any, widgetList: any[]) => {
     const orderedList: DraggableWidget[] = [];
 
     widgetOrder.map((number) => {
-      const res = widgetList.find(
-        (widget: DraggableWidget) => widget.widgetId === number
-      );
+      const res = widgetList.find((widget: DraggableWidget) => widget.widgetId === number);
+
       if (res) {
         orderedList.push(res);
       }
     });
+    
     return orderedList;
   }, [widgetOrder, filters]);
 

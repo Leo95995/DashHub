@@ -29,6 +29,7 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
   widgetId,
   handleDrop,
   setDraggedWidgetId,
+  testId,
 }) => {
   const weatherData = useSelector((state: any) => state.weather);
   // Drag and drop hook.
@@ -41,13 +42,8 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
   } = useDragDrop({ widgetId, handleDrop, setDraggedWidgetId });
 
   const dispatch = useDispatch();
-  const {
-    searchByCity,
-    setCityName,
-    temperatureType,
-    loading,
-    searchText,
-  } = useWeatherFilterLogic();
+  const { searchByCity, setCityName, temperatureType, loading, searchText } =
+    useWeatherFilterLogic();
 
   const { coordinates, weather, error } = weatherData;
 
@@ -127,12 +123,16 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
               width={50}
               decoding="async"
               loading="lazy"
-              src={createProxyUrl(`https://catamphetamine.github.io/country-flag-icons/3x2/${country}.svg`)}
+              src={createProxyUrl(
+                `https://catamphetamine.github.io/country-flag-icons/3x2/${country}.svg`
+              )}
               alt="country flag"
             />
           </h3>
           <img
-            src={createProxyUrl(`https://openweathermap.org/img/wn/${weatherInfo?.icon}@2x.png`)}
+            src={createProxyUrl(
+              `https://openweathermap.org/img/wn/${weatherInfo?.icon}@2x.png`
+            )}
             alt="weather"
             width={100}
             decoding="async"
@@ -226,6 +226,7 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
     weather?.weather && weather.weather.length > 0 && weather.weather[0];
   return (
     <div
+      data-testid={testId}
       draggable={isEditMode}
       onDragStart={dragStartHandler}
       onDragEnd={dragEndHandler}

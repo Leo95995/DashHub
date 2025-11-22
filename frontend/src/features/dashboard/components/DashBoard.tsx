@@ -9,6 +9,7 @@ import { useFullScreenApod } from "../hooks/useFullScreenApod";
 import { useDashboardLogic } from "../hooks/useDashBoardLogic";
 import { useWidgetRender } from "../hooks/useWidgetRender";
 import { getWidgetList } from "../data/widget-list";
+import { DraggableWidget } from "../types";
 
 const DashBoard: React.FC = () => {
   const {
@@ -37,6 +38,7 @@ const DashBoard: React.FC = () => {
           <DashBoardHeader
             userData={userData}
             isEditMode={isEditMode}
+            testId="dashboard_header"
             onClick={toggleEditMode}
             widgetOrder={widgetOrder}
             screenWidth={screenWidth}
@@ -49,15 +51,15 @@ const DashBoard: React.FC = () => {
           } flex-wrap h-190  overflow-y-scroll overflow-x-hidden ${getLayoutByMode()}`}
         >
           <>
-            {renderWidgetByOrder().map((widget: any) => {
+            {renderWidgetByOrder().map((widget: DraggableWidget) => {
               const id = useId();
               return (
                 <React.Fragment key={id}>
                   {widget.visibility && (
                     <Suspense fallback="Caricamento widget">
                       <widget.component
+                        testId={`widget-${widget.widgetId}`}
                         widgetId={widget.widgetId}
-                        onHide={widget.onHide}
                         isEditMode={isEditMode}
                         handleDrop={handleDrop}
                         setDraggedWidgetId={setDraggedWidgetId}

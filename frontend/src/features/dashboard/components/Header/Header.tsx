@@ -13,6 +13,7 @@ const DashBoardHeader: React.FC<IDashBoardHeader> = ({
   widgetOrder,
   screenWidth,
   visibleWidgets,
+  testId
 }) => {
   // Hooks responsible for saving the new widgets layout
   const { saveWidgetOrder } = useSaveWidget({
@@ -24,13 +25,14 @@ const DashBoardHeader: React.FC<IDashBoardHeader> = ({
   return (
     <>
       <div
+        data-testid={testId}
         className={`flex  flex-col md:flex-row ${
           isMobile(screenWidth) ? "px-4" : "px-6"
         } gap-5  `}
       >
         <div className="text-2xl font-bold m-0 duration-500">
           <div className="flex items-center gap-2 max-w-full overflow-hidden">
-            <b className="flex-shrink-0">Welcome</b>
+            <b data-testid="welcome_text" className="flex-shrink-0">Welcome</b>
             <span className="text-blue-500 dark:text-blue-300 truncate max-w-[200px] md:max-w-[300px]">
               {userData?.userInfo?.username
                 ? " " + userData.userInfo.username

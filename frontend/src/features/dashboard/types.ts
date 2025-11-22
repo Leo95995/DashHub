@@ -1,5 +1,7 @@
+import { ITestable } from "../../types/common/generic";
+
 //  Widget Layouts
-export interface IGenericWidget {
+export interface IGenericWidget extends ITestable {
   widgetId: number;
   isEditMode: boolean;
   handleDrop: (widgetId: number) => void;

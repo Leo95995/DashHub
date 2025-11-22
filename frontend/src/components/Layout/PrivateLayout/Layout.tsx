@@ -11,12 +11,11 @@ const PrivateLayout: React.FC = () => {
     <>
       <div className="z-1">
         <div className="flex mt-4 ">
-          <SideBar />
+          <SideBar testId="layout_sidebar" />
           <div className="flex flex-col w-full  ">
-            <Header screenWidth={screenWidth} />
-
+            <Header testId="layout_header" screenWidth={screenWidth} />
             <main>
-              <MainContent>
+              <MainContent testId="layout_maincontent">
                 <Outlet />
               </MainContent>
             </main>

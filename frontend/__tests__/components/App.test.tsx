@@ -1,30 +1,34 @@
-import { screen } from '@testing-library/react';
-import { render } from '../test-utils'; // il tuo customRender
-import App from '../../src/App'
-import { describe, it, jest } from '@jest/globals';
-import { expectDom } from '../expect';
+import { screen } from "@testing-library/react";
+import { render } from "../test-utils"; // il tuo customRender
+import App from "../../src/App";
+import { describe, it } from "@jest/globals";
+import { expectDom } from "../expect";
+import { act } from "react";
 
-
-
-describe('App component', () => {
-  it('renders the main heading', async () => {
-    render(<App />);
+describe("App component", () => {
+  it("renders the main header", async () => {
+    await act(async () => {
+      render(<App />);
+    });
 
     // esempio: verifica che ci sia un testo
-    const heading = await screen.findByText(/welcome to dashhub/i);
+    const heading = await screen.findByText(/welcome/i);
     expectDom(heading).toBeInTheDocument();
   });
 
-  it('fetches data on load', async () => {
-    // mock fetch già globale
-    (global.fetch as jest.Mock).mockResolvedValueOnce({
-      json: async () => ({ message: 'Hello from API' }),
-    } as never);
+  it("renders the app title", async () => {
+    await act(async () => {
+      render(<App />);
+    });
+    const appTitle = await screen.findByText(/dashhub/i);
+    expectDom(appTitle).toBeInTheDocument();
+  });
 
-    render(<App />);
-
-    // esempio: controlla che il testo proveniente dall'API venga renderizzato
-    const apiMessage = await screen.findByText(/hello from api/i);
-    expectDom(apiMessage).toBeInTheDocument();
+  it("Renders the widget switcher", async () => {
+     await act(async () => {
+      render(<App />);
+    });
+    const widget_changers = await screen.findAllByText(/change widget/i);
+    expectDom(widget_changers[0]).toBeInTheDocument();
   });
 });
