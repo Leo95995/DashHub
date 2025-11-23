@@ -116,3 +116,24 @@ These animations demonstrate the centralized control panel in action, showing ho
 
 ![GIF showing the control panel opening, widget toggling, and layout adjustment](docs/screenshots/gifs/centralized-control-panel.gif)
 
+
+
+## Testing & Quality Assurance
+
+DashHub ncludes comprehensive test coverage to ensure stability and reliability across the application:
+
+### End-to-End (E2E) Testing with Cypress
+
+Simulates real user interactions, verifying the correct functionality of widgets, filters, and the overall dashboard.
+
+Ensures that code changes do not break critical user flows.
+
+### Unit & Smoke Testing with React Testing Library
+
+Provides granular tests for individual components and utility functions.
+
+Validates that core interface elements work correctly in isolation.
+
+### Continuous Validation
+
+By combining unit and E2E tests, the project ensures that the dashboard and its widgets behave reliably during development
