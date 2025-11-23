@@ -11,6 +11,7 @@ const Switcher: React.FC<WidgetSwitcher> = ({
   widgetList,
   switcherTitle,
   switcherButtonText,
+  testId
 }) => {
 
 
@@ -24,6 +25,7 @@ const Switcher: React.FC<WidgetSwitcher> = ({
           return (
             <li key={e + index}>
               <button
+               data-testid={e+'_selector'}
                 onClick={() => {
                   changeSelectedWidget(e);
                   handleSelectWidget();
@@ -52,6 +54,7 @@ const Switcher: React.FC<WidgetSwitcher> = ({
     <>
       <button
         onClick={handleSelectWidget}
+        data-testid={`switcher_${testId}`}
         className="px-3 py-2 rounded-md text-white font-bold text-xs 
              bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500
              shadow-md hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 

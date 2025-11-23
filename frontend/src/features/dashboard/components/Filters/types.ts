@@ -1,5 +1,6 @@
+import { ITestable } from "../../../../types/common/generic";
 
-export interface IFilterSection {
+export interface IFilterSection extends ITestable {
   title: string;
   defaultOpen: boolean;
   children: React.ReactNode;

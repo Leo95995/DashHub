@@ -28,6 +28,7 @@ const CryptoFilters: React.FC<IFilters> = ({ expanded = true }) => {
           Select Crypto Widget
         </label>
         <GenericSelect
+          testId="crypto"
           itemList={crypto_widgets}
           selectedList={currentSelection}
           onSelection={(e) => setWidgetSelection(e)}
@@ -42,6 +43,7 @@ const CryptoFilters: React.FC<IFilters> = ({ expanded = true }) => {
     <>
       <FilterSection
         title={"CRYPTO"}
+        testId="crypto"
         defaultOpen={false}
         expanded={expanded as boolean}
       >

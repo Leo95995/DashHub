@@ -12,6 +12,7 @@ const FilterSection: React.FC<IFilterSection> = ({
   title,
   children,
   expanded,
+  testId
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(defaultOpen);
 
@@ -22,6 +23,7 @@ const FilterSection: React.FC<IFilterSection> = ({
     ${expanded ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}
     >
       <span
+        data-testid={"panel_"+testId}
         onClick={() => setIsOpen((prev) => !prev)}
         className={`${
           isOpen ? " dark:text-orange-300 mb-4" : "text-gray-600 dark:text-gray-200 mb-2"

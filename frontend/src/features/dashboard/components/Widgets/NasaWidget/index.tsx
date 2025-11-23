@@ -23,7 +23,7 @@ const NasaWidget: React.FC<IGenericWidget> = ({
   widgetId,
   handleDrop,
   setDraggedWidgetId,
-  testId
+  testId,
 }) => {
   const nasa_info = useSelector((state: any) => state.nasa);
   const dispatch = useDispatch();
@@ -45,7 +45,7 @@ const NasaWidget: React.FC<IGenericWidget> = ({
   const { currentSelection, setWidgetSelection } = useWidgetSelector({
     selector: () => widgetSelected,
     actionCreator: setSelectedWidget,
-    origin: WidgetOrigin.NASA
+    origin: WidgetOrigin.NASA,
   });
 
   const changeSelectedWidget = (newWidget: WidgetTypes) => {
@@ -81,6 +81,7 @@ const NasaWidget: React.FC<IGenericWidget> = ({
         <div>
           <div className="flex gap-5 justify-between items-center">
             <Switcher
+              testId="nasa"
               widgetList={nasa_widgets}
               widgetSelected={currentSelection}
               changeSelectedWidget={changeSelectedWidget}

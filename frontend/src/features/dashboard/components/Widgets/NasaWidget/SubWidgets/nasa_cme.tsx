@@ -69,7 +69,7 @@ const Cme_Widget: React.FC<ICmeWidget> = ({
       </div>
 
       <div className="flex justify-between items-center gap-4 mb-6">
-        <b className="flex gap-2 items-center text-lg">
+        <b data-testid="cme" className="flex gap-2 items-center text-lg">
           Total CME
           <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-1  rounded-full font-semibold">
             {cme_data.length}

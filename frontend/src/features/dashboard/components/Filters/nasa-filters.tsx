@@ -27,6 +27,7 @@ const NasaFilters: React.FC<IFilters> = ({ expanded }) => {
           Select Nasa Widget
         </label>
         <GenericSelect
+          testId="nasa"
           itemList={nasa_widgets}
           selectedList={currentSelection}
           onSelection={(e) => setWidgetSelection(e)}
@@ -42,6 +43,7 @@ const NasaFilters: React.FC<IFilters> = ({ expanded }) => {
     <>
       <FilterSection
         title={"NASA"}
+        testId="nasa"
         defaultOpen={false}
         expanded={expanded as boolean}
       >

@@ -1,11 +1,12 @@
 import type { ICheckbox } from "./types";
 
-const CustomCheckbox: React.FC<ICheckbox> = ({ option, onChange, selectedList }) => {
+const CustomCheckbox: React.FC<ICheckbox> = ({ option, onChange, selectedList, testId }) => {
   const selected = selectedList[option.value] ?? false;
 
   return (
     <label
       htmlFor={option.value}
+      data-testid={testId?.trim()}
       className="flex items-center gap-3 cursor-pointer border-transparent  border-b-2 select-none hover:brightness-120 hover:font-medium"
     >
       <input

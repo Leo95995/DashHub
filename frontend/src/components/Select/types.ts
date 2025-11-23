@@ -1,4 +1,6 @@
-export interface IGenericSelect<T> {
+import { ITestable } from "../../types/common/generic";
+
+export interface IGenericSelect<T>  extends ITestable{
   itemList: Array<T> | T;
   selectedList: Array<T>;
   onSelection: (value: any) => void;

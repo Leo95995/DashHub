@@ -154,7 +154,7 @@ const WidgetFilters: React.FC<IFilters> = ({ expanded }) => {
   };
 
   return (
-    <FilterSection expanded={expanded as boolean} title="WIDGETS " defaultOpen={true}>
+    <FilterSection expanded={expanded as boolean} testId="widget" title="WIDGETS " defaultOpen={true}>
       {renderVisibleWidgets()}
       {renderLayoutWidget()}
     </FilterSection>

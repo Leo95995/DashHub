@@ -142,7 +142,7 @@ const RandomUserWidget: React.FC = () => {
     <>
       <div className="flex flex-col">
         <div className="items-center flex justify-center gap-4 flex-col">
-          <h2 className="font-bold text-2xl"> Random user widget</h2>
+          <h2 data-testid="random_user" className="font-bold text-2xl"> Random user widget</h2>
           <button
             onClick={fetchRandomData}
             className="flex cursor-pointer items-center justify-between hover:scale-110 active:scale-95 w-40 px-4 py-2 rounded-2xl bg-gradient-to-r from-blue-300 to-blue-500 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400"

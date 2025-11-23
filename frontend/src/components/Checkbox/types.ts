@@ -1,10 +1,11 @@
 import type { IFilters } from "../../types/common/filters";
+import { ITestable } from "../../types/common/generic";
 
 export interface CheckboxOption {
   label: string;
   value: string;
 }
-export interface ICheckbox {
+export interface ICheckbox  extends ITestable{
   option: CheckboxOption;
   selectedList: any
   onChange?: (
