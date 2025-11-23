@@ -8,7 +8,7 @@ import {
   background_color,
 } from "../../src/utils/weather-utils";
 
-import { describe, it, expect, jest } from "@jest/globals";
+import { describe, it, expect } from "@jest/globals";
 
 describe("Weather utils", () => {
   it("kelvinToCelsius converts properly", () => {
