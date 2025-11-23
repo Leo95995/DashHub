@@ -12,6 +12,7 @@ const GenericSelect: React.FC<IGenericSelect<any>> = ({
   padding = "p-0",
   minHeigth,
   listPlacement,
+  testId,
   closePlacement,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -42,11 +43,13 @@ const GenericSelect: React.FC<IGenericSelect<any>> = ({
           }`}
         >
           {isOpen ? (
-            itemList?.map((option: string) => (
-              <li
-                key={option}
-                onClick={() => onSelection(option)}
-                className={`
+            itemList?.map((option: string) => {
+              return (
+                <li
+                  data-testid={"filterSelect_" + option}
+                  key={option}
+                  onClick={() => onSelection(option)}
+                  className={`
                 z-20
                 px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 
                 cursor-pointer 
@@ -59,11 +62,11 @@ const GenericSelect: React.FC<IGenericSelect<any>> = ({
                     : ""
                 }
               `}
-              >
-                <span className="truncate">{option}</span>
-                {selectedList?.includes(option) && (
-                  <span
-                    className="
+                >
+                  <span className="truncate">{option}</span>
+                  {selectedList?.includes(option) && (
+                    <span
+                      className="
                     inline-flex items-center 
                     px-1.5 py-0.5 sm:px-2 sm:py-0.5 
                     rounded-full 
@@ -71,16 +74,21 @@ const GenericSelect: React.FC<IGenericSelect<any>> = ({
                     font-semibold
                     bg-green-500 text-white shadow-sm gap-1
                   "
-                  >
-                    <CircleCheck size={14} /> Selected
-                  </span>
-                )}
-              </li>
-            ))
+                    >
+                      <CircleCheck size={14} /> Selected
+                    </span>
+                  )}
+                </li>
+              );
+            })
           ) : (
             <>
-              <li  onClick={() => setIsOpen(true)}  className="p-2 w-full">
-                  {defaultText}
+              <li
+                data-testid={`click_${testId}`}
+                onClick={() => setIsOpen(true)}
+                className="p-2 w-full"
+              >
+                {defaultText}
               </li>
             </>
           )}

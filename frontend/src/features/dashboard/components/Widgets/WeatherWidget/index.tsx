@@ -74,9 +74,10 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
       return (
         <>
           <ErrorMessage message={"Failed to load weather data"} />
-          <h2 className="py-2 font-black">Search another city</h2>
+          <h2 data-testid="failed_weather_title" className="py-2 font-black">Search another city</h2>
           <div className="flex">
             <WeatherSearchBar
+              data-testid={'failed_weather_search'}
               width="w-full"
               setCityName={setCityName}
               searchText={searchText ?? ""}
@@ -109,6 +110,7 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
       <div className="transition-opacity duration-500 min-w-20">
         <div className="flex w-full">
           <WeatherSearchBar
+            testId="widget_weather_search"
             setCityName={setCityName}
             searchText={searchText ?? ""}
             searchByCity={searchByCity}
@@ -118,7 +120,7 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
 
         <div className="flex items-center justify-between">
           <h3 className="text-2xl font-bold flex gap-2 items-center">
-            {name}, {state}
+           <p className="m-0 p-0" data-testid="city_searched"> {name}</p>, {state}
             <img
               width={50}
               decoding="async"
@@ -149,7 +151,7 @@ const WeatherWidget: React.FC<IGenericWidget> = ({
           <p className="font-semibold text-lg mb-2">Temperature</p>
           <div className="flex justify-between px-2 gap-4 text-center">
             <div>
-              <p className={`text-lg font-bold text-gray-900  dark:text-white`}>
+              <p data-testid="temperature_type" className={`text-lg font-bold text-gray-900  dark:text-white`}>
                 {standard}
               </p>
               <span className="text-sm text-gray-800 dark:text-gray-200">

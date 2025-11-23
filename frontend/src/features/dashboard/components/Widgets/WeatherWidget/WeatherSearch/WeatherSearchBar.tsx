@@ -10,6 +10,7 @@ const WeatherSearchBar: React.FC<IWeatherSearchBar> = ({
   searchByCity,
   loading,
   label,
+  testId
 }) => {
   return (
     <div className="flex w-full flex-col gap-2">
@@ -20,6 +21,7 @@ const WeatherSearchBar: React.FC<IWeatherSearchBar> = ({
             type="text"
             name="location"
             id="location"
+            data-testid={testId}
             aria-label={"City Name"}
             onChange={(e) => setCityName(e)}
             defaultValue={searchText ?? ""}

@@ -1,7 +1,7 @@
 // Redux and slice
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { setSelectedGithubWidget } from "../../../../store/githubSlice";
-// Types 
+// Types
 
 import type { IFilters } from "./types";
 // Components
@@ -16,11 +16,11 @@ const GithubFilters: React.FC<IFilters> = ({ expanded }) => {
   const github_widget = useSelector(
     (state: any) => state.github.selectedWidget
   );
-  
+
   const { currentSelection, setWidgetSelection } = useWidgetSelector({
     selector: () => github_widget,
     actionCreator: setSelectedGithubWidget,
-    origin: WidgetOrigin.GITHUB
+    origin: WidgetOrigin.GITHUB,
   });
 
   const renderGithubSelector = () => {
@@ -33,6 +33,7 @@ const GithubFilters: React.FC<IFilters> = ({ expanded }) => {
           Select Github Widget
         </label>
         <GenericSelect
+          testId="github"
           itemList={github_widgets}
           selectedList={currentSelection}
           onSelection={(e) => setWidgetSelection(e)}
@@ -48,6 +49,7 @@ const GithubFilters: React.FC<IFilters> = ({ expanded }) => {
     <>
       <FilterSection
         title={"GITHUB"}
+        testId="github"
         defaultOpen={false}
         expanded={expanded as boolean}
       >

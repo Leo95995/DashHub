@@ -24,6 +24,7 @@ const WeatherFilters: React.FC<IFilters> = ({ expanded }) => {
         </span>
         {temperatureType && (
           <select
+          data-testid="temp_filter"
             onChange={(e) =>changeTemperature(e)}
             value={temperatureType}
             name="temperature"
@@ -41,7 +42,7 @@ const WeatherFilters: React.FC<IFilters> = ({ expanded }) => {
     "
           >
             <option value={"celsius"}>Celsius</option>
-            <option value={"kelvin"}>Kelvin</option>
+            <option  value={"kelvin"}>Kelvin</option>
           </select>
         )}
       </div>
@@ -50,8 +51,8 @@ const WeatherFilters: React.FC<IFilters> = ({ expanded }) => {
 
   return (
     <>
-      <FilterSection title={"WEATHER"} defaultOpen={false} expanded={expanded as boolean}>
-        <WeatherSearchBar label setCityName={setCityName } searchText={searchText ?? ''} searchByCity={searchByCity} loading={loading}/>
+      <FilterSection testId="weather" title={"WEATHER"} defaultOpen={false} expanded={expanded as boolean}>
+        <WeatherSearchBar testId="filter_weather_search" label setCityName={setCityName } searchText={searchText ?? ''} searchByCity={searchByCity} loading={loading}/>
         {renderTemperatureSelector()}
       </FilterSection>
     </>

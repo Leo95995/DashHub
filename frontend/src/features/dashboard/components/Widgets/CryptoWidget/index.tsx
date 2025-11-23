@@ -75,6 +75,7 @@ const CryptoWidget: React.FC<IGenericWidget> = ({
         <div className="flex flex-col gap-4 h-full ">
           <div className="flex justify-between">
             <Switcher
+              testId="crypto"
               changeSelectedWidget={setWidgetSelection}
               widgetSelected={currentSelection}
               widgetList={crypto_widgets}
