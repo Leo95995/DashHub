@@ -42,7 +42,7 @@ const widgetLayout = getWidgetLayout();
 const filterOptions = getFilterOptions();
 
 const initialState = {
-  filters: filterOptions.widgetVisibility ?filterOptions : initialFilterOptions,
+  filters: filterOptions.widgetVisibility ? filterOptions : initialFilterOptions,
   widgetLayout: widgetLayout ?? {
     grid_col: {
       large: 2,

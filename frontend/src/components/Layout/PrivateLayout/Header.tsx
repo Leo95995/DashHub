@@ -9,10 +9,10 @@ import ModeToggler from "../../Toggler/Toggler";
 import type { IHeader } from "./types";
 
 
-const Header: React.FC<IHeader> = ({ screenWidth }) => {
+const Header: React.FC<IHeader> = ({ screenWidth, testId }) => {
   return (
     <>
-      <header className="p-4 items-center border-1 rounded-tl-2xl bg-white border-l-0  border-gray-200  dark:bg-slate-800 dark:border-slate-800 dark:text-white flex gap-5">
+      <header data-testid={testId} className="p-4 items-center border-1 rounded-tl-2xl bg-white border-l-0  border-gray-200  dark:bg-slate-800 dark:border-slate-800 dark:text-white flex gap-5">
         <p>
           <img
             src={dashHub}

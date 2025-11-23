@@ -7,22 +7,22 @@ export const chunkArray = <T>(array: T[], size: number) => {
 };
 
 export const pickRandomElement = (array: any[]) => {
+
   const length = array.length;
   const randomNumber = Math.floor(Math.random() * length);
 
   return array[randomNumber];
 };
 
-
-// Style
-
 export const generateDistinctColors = (count: number, alpha = 0.7): string[] => {
+  
+  
   const colors: string[] = [];
 
   for (let i = 0; i < count; i++) {
-    const hue = Math.floor((i * 360) / count); // distribuisci gli hue uniformemente
-    const saturation = 80; // colori accesi
-    const lightness = 55; // leggibili
+    const hue = Math.floor((i * 360) / count);
+    const saturation = 80; 
+    const lightness = 55; 
 
     colors.push(`hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`);
   }
@@ -57,7 +57,7 @@ export const debounce = (func: any, delay: any) => {
  */
 
 export  const createShortName = (username: string) => { 
-    if(!username){
+    if(!username || username === ''){
       return "G";
     }
     const splittedName = username.split(' ');

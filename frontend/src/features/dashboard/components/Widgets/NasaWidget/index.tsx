@@ -23,6 +23,7 @@ const NasaWidget: React.FC<IGenericWidget> = ({
   widgetId,
   handleDrop,
   setDraggedWidgetId,
+  testId
 }) => {
   const nasa_info = useSelector((state: any) => state.nasa);
   const dispatch = useDispatch();
@@ -61,6 +62,7 @@ const NasaWidget: React.FC<IGenericWidget> = ({
   return (
     <>
       <div
+        data-testid={testId}
         draggable={isEditMode}
         onDragStart={dragStartHandler}
         onDragEnd={dragEndHandler}

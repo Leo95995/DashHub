@@ -4,7 +4,7 @@
  * @param offestDays
  * @returns
  */
-const getTodayFormattedDate = (offsetDays = 0) => {
+export const getTodayFormattedDate = (offsetDays = 0) => {
   const date = new Date();
   date.setDate(date.getDate() + offsetDays);
   const yyyy = date.getFullYear();

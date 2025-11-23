@@ -1,7 +1,7 @@
 // Page to handle the app settings
 const SettingsPage: React.FC = () => {
-  return <div>
-    Setting :
+  return <div data-testid="settings_container">
+    Settings :
 
     Theme customization
   </div>;

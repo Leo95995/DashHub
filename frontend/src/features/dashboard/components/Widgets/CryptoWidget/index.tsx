@@ -21,6 +21,7 @@ const CryptoWidget: React.FC<IGenericWidget> = ({
   widgetId,
   handleDrop,
   setDraggedWidgetId,
+  testId,
 }) => {
   const dispatch = useDispatch();
   const cryptoFilterData: ICryptoFilterData = useSelector(
@@ -40,11 +41,10 @@ const CryptoWidget: React.FC<IGenericWidget> = ({
   // Execute all the crypto filters hooks
   cryptoFiltersHooks.forEach((hook) => hook({ cryptoFilterData, dispatch }));
 
-
   const { currentSelection, setWidgetSelection } = useWidgetSelector({
     selector: () => selectCryptoWidget,
     actionCreator: setSelectedCryptoWidget,
-    origin: WidgetOrigin.CRYPTO
+    origin: WidgetOrigin.CRYPTO,
   });
 
   const {
@@ -58,6 +58,7 @@ const CryptoWidget: React.FC<IGenericWidget> = ({
   return (
     <>
       <div
+        data-testid={testId}
         draggable={isEditMode}
         onDragStart={dragStartHandler}
         onDragEnd={dragEndHandler}
